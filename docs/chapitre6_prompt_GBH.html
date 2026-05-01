@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; Sorting Data — Analysis of Categorization – Help Me Do It on My Own: Sensory Data Analysis with jamovi and the SEDA Module</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./chapitre7_prompt_GBH.html" rel="next">
+<link href="./chapitre5_prompt_GBH.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-b7c2d8834e08b04a63bb76a724ffbcac.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapitre6_prompt_GBH.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sorting Data — Analysis of Categorization</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Help Me Do It on My Own: Sensory Data Analysis with jamovi and the SEDA Module</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro_ppt_GB.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapitre1_prompt_GBH.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">QDA Data — Characterization of the Sensory Space</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapitre2_prompt_GBH.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">QDA Data — Multivariate Representation with Ellipses</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapitre3_prompt_GBH.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">CATA Data — Analysis of Checked Terms</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapitre4_prompt_GBH.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">JAR Data — Defect and Penalty Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapitre5_prompt_GBH.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Napping Data — Consensus Representation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapitre6_prompt_GBH.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sorting Data — Analysis of Categorization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapitre7_prompt_GBH.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Hedonic Data — Preference Mapping</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">7.1</span> Introduction</a></li>
+  <li><a href="#understanding-what-happens-under-the-hood" id="toc-understanding-what-happens-under-the-hood" class="nav-link" data-scroll-target="#understanding-what-happens-under-the-hood"><span class="header-section-number">7.2</span> Understanding what happens under the hood</a>
+  <ul class="collapse">
+  <li><a href="#the-stimuli-are-the-individuals-in-the-analysis" id="toc-the-stimuli-are-the-individuals-in-the-analysis" class="nav-link" data-scroll-target="#the-stimuli-are-the-individuals-in-the-analysis"><span class="header-section-number">7.2.1</span> The stimuli are the individuals in the analysis</a></li>
+  <li><a href="#an-mca-on-the-categorizations-provided-by-the-subjects" id="toc-an-mca-on-the-categorizations-provided-by-the-subjects" class="nav-link" data-scroll-target="#an-mca-on-the-categorizations-provided-by-the-subjects"><span class="header-section-number">7.2.2</span> An MCA on the categorizations provided by the subjects</a></li>
+  <li><a href="#the-role-of-ventilation-level" id="toc-the-role-of-ventilation-level" class="nav-link" data-scroll-target="#the-role-of-ventilation-level"><span class="header-section-number">7.2.3</span> The role of Ventilation level (%)</a></li>
+  <li><a href="#textual-description-of-the-stimuli" id="toc-textual-description-of-the-stimuli" class="nav-link" data-scroll-target="#textual-description-of-the-stimuli"><span class="header-section-number">7.2.4</span> Textual description of the stimuli</a></li>
+  <li><a href="#automatic-description-of-the-dimensions-and-clustering" id="toc-automatic-description-of-the-dimensions-and-clustering" class="nav-link" data-scroll-target="#automatic-description-of-the-dimensions-and-clustering"><span class="header-section-number">7.2.5</span> Automatic description of the dimensions and clustering</a></li>
+  </ul></li>
+  <li><a href="#expected-data-structure" id="toc-expected-data-structure" class="nav-link" data-scroll-target="#expected-data-structure"><span class="header-section-number">7.3</span> Expected data structure</a></li>
+  <li><a href="#interface-guide" id="toc-interface-guide" class="nav-link" data-scroll-target="#interface-guide"><span class="header-section-number">7.4</span> Interface guide</a>
+  <ul class="collapse">
+  <li><a href="#variables-to-complete" id="toc-variables-to-complete" class="nav-link" data-scroll-target="#variables-to-complete"><span class="header-section-number">7.4.1</span> Variables to complete</a></li>
+  <li><a href="#read-me-before-running" id="toc-read-me-before-running" class="nav-link" data-scroll-target="#read-me-before-running"><span class="header-section-number">7.4.2</span> Read me before running</a></li>
+  <li><a href="#random-assignment-for-rare-categories-ventilation-level" id="toc-random-assignment-for-rare-categories-ventilation-level" class="nav-link" data-scroll-target="#random-assignment-for-rare-categories-ventilation-level"><span class="header-section-number">7.4.3</span> Random Assignment for Rare Categories: Ventilation level (%)</a></li>
+  <li><a href="#graphic-options-collapsed-by-default" id="toc-graphic-options-collapsed-by-default" class="nav-link" data-scroll-target="#graphic-options-collapsed-by-default"><span class="header-section-number">7.4.4</span> Graphic Options <em>(collapsed by default)</em></a></li>
+  <li><a href="#numerical-indicators-collapsed-by-default" id="toc-numerical-indicators-collapsed-by-default" class="nav-link" data-scroll-target="#numerical-indicators-collapsed-by-default"><span class="header-section-number">7.4.5</span> Numerical Indicators <em>(collapsed by default)</em></a></li>
+  <li><a href="#clustering-collapsed-by-default" id="toc-clustering-collapsed-by-default" class="nav-link" data-scroll-target="#clustering-collapsed-by-default"><span class="header-section-number">7.4.6</span> Clustering <em>(collapsed by default)</em></a></li>
+  </ul></li>
+  <li><a href="#step-by-step-procedure" id="toc-step-by-step-procedure" class="nav-link" data-scroll-target="#step-by-step-procedure"><span class="header-section-number">7.5</span> Step-by-step procedure</a></li>
+  <li><a href="#interpretation-of-results" id="toc-interpretation-of-results" class="nav-link" data-scroll-target="#interpretation-of-results"><span class="header-section-number">7.6</span> Interpretation of results</a>
+  <ul class="collapse">
+  <li><a href="#description-of-the-stimuli" id="toc-description-of-the-stimuli" class="nav-link" data-scroll-target="#description-of-the-stimuli"><span class="header-section-number">7.6.1</span> Description of the Stimuli</a></li>
+  <li><a href="#representation-of-the-individuals-stimulus-map" id="toc-representation-of-the-individuals-stimulus-map" class="nav-link" data-scroll-target="#representation-of-the-individuals-stimulus-map"><span class="header-section-number">7.6.2</span> Representation of the Individuals — stimulus map</a></li>
+  <li><a href="#representation-of-the-categories-category-map" id="toc-representation-of-the-categories-category-map" class="nav-link" data-scroll-target="#representation-of-the-categories-category-map"><span class="header-section-number">7.6.3</span> Representation of the Categories — category map</a></li>
+  <li><a href="#representation-of-the-variables-variable-map" id="toc-representation-of-the-variables-variable-map" class="nav-link" data-scroll-target="#representation-of-the-variables-variable-map"><span class="header-section-number">7.6.4</span> Representation of the Variables — variable map</a></li>
+  <li><a href="#eigenvalue-decomposition-eigenvalue-table" id="toc-eigenvalue-decomposition-eigenvalue-table" class="nav-link" data-scroll-target="#eigenvalue-decomposition-eigenvalue-table"><span class="header-section-number">7.6.5</span> Eigenvalue Decomposition — eigenvalue table</a></li>
+  <li><a href="#automatic-description-of-the-dimensions" id="toc-automatic-description-of-the-dimensions" class="nav-link" data-scroll-target="#automatic-description-of-the-dimensions"><span class="header-section-number">7.6.6</span> Automatic Description of the Dimensions</a></li>
+  <li><a href="#representation-of-the-individuals-according-to-clusters-available-if-representation-of-the-clusters-is-activated" id="toc-representation-of-the-individuals-according-to-clusters-available-if-representation-of-the-clusters-is-activated" class="nav-link" data-scroll-target="#representation-of-the-individuals-according-to-clusters-available-if-representation-of-the-clusters-is-activated"><span class="header-section-number">7.6.7</span> Representation of the Individuals According to Clusters <em>(available if “Representation of the clusters” is activated)</em></a></li>
+  <li><a href="#numerical-tables-optional" id="toc-numerical-tables-optional" class="nav-link" data-scroll-target="#numerical-tables-optional"><span class="header-section-number">7.6.8</span> Numerical tables <em>(optional)</em></a></li>
+  </ul></li>
+  <li><a href="#example-the-perfumes_sorting-dataset" id="toc-example-the-perfumes_sorting-dataset" class="nav-link" data-scroll-target="#example-the-perfumes_sorting-dataset"><span class="header-section-number">7.7</span> Example: the <strong>perfumes_sorting</strong> dataset</a>
+  <ul class="collapse">
+  <li><a href="#example-settings" id="toc-example-settings" class="nav-link" data-scroll-target="#example-settings"><span class="header-section-number">7.7.1</span> Example settings</a></li>
+  <li><a href="#analysis-of-the-description-of-the-stimuli-table" id="toc-analysis-of-the-description-of-the-stimuli-table" class="nav-link" data-scroll-target="#analysis-of-the-description-of-the-stimuli-table"><span class="header-section-number">7.7.2</span> Analysis of the <em>Description of the Stimuli</em> table</a></li>
+  <li><a href="#analysis-of-the-representation-of-the-individuals-graph" id="toc-analysis-of-the-representation-of-the-individuals-graph" class="nav-link" data-scroll-target="#analysis-of-the-representation-of-the-individuals-graph"><span class="header-section-number">7.7.3</span> Analysis of the <em>Representation of the Individuals</em> graph</a></li>
+  <li><a href="#analysis-of-the-eigenvalue-decomposition-table" id="toc-analysis-of-the-eigenvalue-decomposition-table" class="nav-link" data-scroll-target="#analysis-of-the-eigenvalue-decomposition-table"><span class="header-section-number">7.7.4</span> Analysis of the <em>Eigenvalue Decomposition</em> table</a></li>
+  <li><a href="#analysis-of-the-automatic-description-of-the-dimensions-table" id="toc-analysis-of-the-automatic-description-of-the-dimensions-table" class="nav-link" data-scroll-target="#analysis-of-the-automatic-description-of-the-dimensions-table"><span class="header-section-number">7.7.5</span> Analysis of the <em>Automatic Description of the Dimensions</em> table</a></li>
+  <li><a href="#analysis-of-the-representation-of-the-individuals-according-to-clusters-graph" id="toc-analysis-of-the-representation-of-the-individuals-according-to-clusters-graph" class="nav-link" data-scroll-target="#analysis-of-the-representation-of-the-individuals-according-to-clusters-graph"><span class="header-section-number">7.7.6</span> Analysis of the <em>Representation of the Individuals According to Clusters</em> graph</a></li>
+  <li><a href="#synthetic-interpretation" id="toc-synthetic-interpretation" class="nav-link" data-scroll-target="#synthetic-interpretation"><span class="header-section-number">7.7.7</span> Synthetic interpretation</a></li>
+  </ul></li>
+  <li><a href="#practical-tips" id="toc-practical-tips" class="nav-link" data-scroll-target="#practical-tips"><span class="header-section-number">7.8</span> Practical tips</a></li>
+  <li><a href="#in-summary" id="toc-in-summary" class="nav-link" data-scroll-target="#in-summary"><span class="header-section-number">7.9</span> In summary</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sorting Data — Analysis of Categorization</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">7.1</span> Introduction</h2>
+<p>This analysis is designed for <strong>free sorting</strong> (<em>sorting task</em>) data, in which each subject groups stimuli into categories according to their own perception. It makes it possible to obtain a <strong>multivariate representation of the stimuli</strong> from the categorizations provided by the subjects, and, if needed, an <strong>automatic classification</strong> of the stimuli into groups. When the groups have been verbalized, the function also provides a <strong>textual description of the stimuli</strong> based on the words used to name these groups.</p>
+<p><strong>Why not use a standard alternative?</strong></p>
+<p>A classical approach consists of transforming the sorting data into a similarity matrix between stimuli, then applying a projection method such as MDS. This strategy is useful, but it removes part of the individual information carried by each subject. Here, the function directly analyzes the columns in <strong>Subjects</strong> as qualitative variables and applies a <strong>Multiple Correspondence Analysis (MCA)</strong>, which preserves more of the structure of individual responses and makes it possible to represent stimuli and categories simultaneously in the same space.</p>
+</section>
+<section id="understanding-what-happens-under-the-hood" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="understanding-what-happens-under-the-hood"><span class="header-section-number">7.2</span> Understanding what happens under the hood</h2>
+<section id="the-stimuli-are-the-individuals-in-the-analysis" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="the-stimuli-are-the-individuals-in-the-analysis"><span class="header-section-number">7.2.1</span> The stimuli are the individuals in the analysis</h3>
+<p>The function reads the columns placed in <strong>Subjects</strong> as categorical variables. Each row corresponds to a <strong>stimulus</strong>, and each column indicates in which group a subject placed this stimulus. If <strong>Stimuli Labels</strong> is completed, this variable is used to name the stimuli in the outputs; otherwise, the function uses row numbers.</p>
+</section>
+<section id="an-mca-on-the-categorizations-provided-by-the-subjects" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="an-mca-on-the-categorizations-provided-by-the-subjects"><span class="header-section-number">7.2.2</span> An MCA on the categorizations provided by the subjects</h3>
+<p>The core of the function is an <strong>MCA</strong> applied to the columns in <strong>Subjects</strong>. In this framework, two stimuli are close if they have often been grouped in a similar way by the subjects. The columns placed in <strong>Supplementary Subjects</strong>, if any, are projected as supplementary qualitative variables: they appear in the factor space, but do not participate in the construction of the axes.</p>
+</section>
+<section id="the-role-of-ventilation-level" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="the-role-of-ventilation-level"><span class="header-section-number">7.2.3</span> The role of Ventilation level (%)</h3>
+<p>The <strong>Ventilation level (%)</strong> parameter reduces the effect of very infrequent categories in the factorial results. In free sorting, some subjects may isolate a stimulus in a single-item group, creating a very rare category that would otherwise have a disproportionate influence on the MCA. This threshold limits this leverage effect. The default value is 5%.</p>
+</section>
+<section id="textual-description-of-the-stimuli" class="level3" data-number="7.2.4">
+<h3 data-number="7.2.4" class="anchored" data-anchor-id="textual-description-of-the-stimuli"><span class="header-section-number">7.2.4</span> Textual description of the stimuli</h3>
+<p>The function constructs a stimuli × words correspondence table from the group labels, then applies a frequency description procedure. This part is used to identify, for each stimulus, the most characteristic words among the labels used by the subjects. It becomes particularly useful when the groups have been named with interpretable sensory terms.</p>
+</section>
+<section id="automatic-description-of-the-dimensions-and-clustering" class="level3" data-number="7.2.5">
+<h3 data-number="7.2.5" class="anchored" data-anchor-id="automatic-description-of-the-dimensions-and-clustering"><span class="header-section-number">7.2.5</span> Automatic description of the dimensions and clustering</h3>
+<p>Once the MCA has been computed, the function produces an <strong>automatic description of the dimensions</strong> according to <strong>Significance threshold (%)</strong> and <strong>Number of dimensions</strong>. If you activate <strong>Representation of the clusters</strong>, the function applies an <strong>HCA</strong> to the MCA components. By default, clustering is based on the <strong>first 5 components</strong>, and <strong>Number of clusters = -1</strong> lets the function choose the number of groups automatically.</p>
+</section>
+</section>
+<section id="expected-data-structure" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="expected-data-structure"><span class="header-section-number">7.3</span> Expected data structure</h2>
+<p>The data must contain:</p>
+<ul>
+<li>one optional column for <strong>Stimuli Labels</strong>;</li>
+<li>at least <strong>two</strong> categorical columns in <strong>Subjects</strong>;</li>
+<li>optionally, categorical columns in <strong>Supplementary Subjects</strong>.</li>
+</ul>
+<p>Each row corresponds to a <strong>stimulus</strong>. This point is important: unlike in other analyses, here a row does not correspond to an individual response, but to a stimulus described by the categorizations provided by several subjects.</p>
+<p>Before running the analysis in jamovi, check in the <strong>Data</strong> tab that:</p>
+<ul>
+<li><strong>Stimuli Labels</strong> is categorical if you use it;</li>
+<li>all columns in <strong>Subjects</strong> are categorical (factors);</li>
+<li>all columns in <strong>Supplementary Subjects</strong> are categorical;</li>
+<li>you have placed at least <strong>two</strong> variables in <strong>Subjects</strong>.</li>
+</ul>
+</section>
+<section id="interface-guide" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="interface-guide"><span class="header-section-number">7.4</span> Interface guide</h2>
+<p>The analysis appears in <strong>SEDA &gt; Analysis of Sorting Data</strong>. The interface includes three variable drop zones, a <strong>Read me before running</strong> checkbox, and then the <strong>Random Assignment for Rare Categories</strong>, <strong>Graphic Options</strong>, <strong>Numerical Indicators</strong>, and <strong>Clustering</strong> sections.</p>
+<section id="variables-to-complete" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="variables-to-complete"><span class="header-section-number">7.4.1</span> Variables to complete</h3>
+<section id="stimuli-labels" class="level4" data-number="7.4.1.1">
+<h4 data-number="7.4.1.1" class="anchored" data-anchor-id="stimuli-labels"><span class="header-section-number">7.4.1.1</span> Stimuli Labels</h4>
+<p><strong>Role:</strong> provides the names of the stimuli in the outputs. <strong>Impact on the computation:</strong> it does not modify the MCA, but determines the labels displayed in the graphs and the names associated with the saved coordinates. <strong>Practical tip:</strong> use short and unique labels; otherwise, the maps become difficult to read.</p>
+</section>
+<section id="subjects" class="level4" data-number="7.4.1.2">
+<h4 data-number="7.4.1.2" class="anchored" data-anchor-id="subjects"><span class="header-section-number">7.4.1.2</span> Subjects</h4>
+<p><strong>Role:</strong> groups together the sorting variables, one per subject. <strong>Impact on the computation:</strong> these are the active variables of the MCA. They are also used for the textual description and clustering. At least <strong>two</strong> variables are required. <strong>Practical tip:</strong> check that each column is categorical in jamovi.</p>
+</section>
+<section id="supplementary-subjects" class="level4" data-number="7.4.1.3">
+<h4 data-number="7.4.1.3" class="anchored" data-anchor-id="supplementary-subjects"><span class="header-section-number">7.4.1.3</span> Supplementary Subjects</h4>
+<p><strong>Role:</strong> groups together variables projected as supplementary qualitative variables. <strong>Impact on the computation:</strong> they do not influence the construction of the axes, but their position in the space can help interpretation. <strong>Practical tip:</strong> useful for projecting a second group of subjects without modifying the main result.</p>
+</section>
+</section>
+<section id="read-me-before-running" class="level3" data-number="7.4.2">
+<h3 data-number="7.4.2" class="anchored" data-anchor-id="read-me-before-running"><span class="header-section-number">7.4.2</span> Read me before running</h3>
+<p><strong>Role:</strong> displays integrated help in the results. <strong>Impact on the computation:</strong> none. <strong>Practical tip:</strong> leave it checked during the first uses. It is <strong>enabled by default</strong>.</p>
+</section>
+<section id="random-assignment-for-rare-categories-ventilation-level" class="level3" data-number="7.4.3">
+<h3 data-number="7.4.3" class="anchored" data-anchor-id="random-assignment-for-rare-categories-ventilation-level"><span class="header-section-number">7.4.3</span> Random Assignment for Rare Categories: Ventilation level (%)</h3>
+<p><strong>Role:</strong> sets the threshold below which a category is considered rare and treated in a way that reduces its influence. <strong>Impact on the computation:</strong> categories whose relative frequency is below this threshold have a reduced weight in the MCA. The default value is 5%. <strong>Practical tip:</strong> leave 5% for a first trial. If some very rare categories seem to dominate the map, you can test a slightly higher threshold.</p>
+</section>
+<section id="graphic-options-collapsed-by-default" class="level3" data-number="7.4.4">
+<h3 data-number="7.4.4" class="anchored" data-anchor-id="graphic-options-collapsed-by-default"><span class="header-section-number">7.4.4</span> Graphic Options <em>(collapsed by default)</em></h3>
+<section id="x-axis-and-y-axis" class="level4" data-number="7.4.4.1">
+<h4 data-number="7.4.4.1" class="anchored" data-anchor-id="x-axis-and-y-axis"><span class="header-section-number">7.4.4.1</span> X-axis and Y-axis</h4>
+<p><strong>Role:</strong> choose the dimensions displayed on the horizontal and vertical axes. <strong>Impact on the computation:</strong> they do not modify the MCA, but change the displayed factor plane. <strong>Practical tip:</strong> start with <strong>X-axis = 1</strong> and <strong>Y-axis = 2</strong>, the default values.</p>
+</section>
+<section id="active-categories" class="level4" data-number="7.4.4.2">
+<h4 data-number="7.4.4.2" class="anchored" data-anchor-id="active-categories"><span class="header-section-number">7.4.4.2</span> Active categories</h4>
+<p><strong>Role:</strong> controls the display of active categories on the category map. <strong>Impact on the computation:</strong> no effect on the MCA; it only affects visibility in the graph. <strong>Practical tip:</strong> leave it checked at first. Uncheck it if the map is too crowded.</p>
+</section>
+<section id="selection-of-categories" class="level4" data-number="7.4.4.3">
+<h4 data-number="7.4.4.3" class="anchored" data-anchor-id="selection-of-categories"><span class="header-section-number">7.4.4.3</span> Selection of categories</h4>
+<p><strong>Role:</strong> filters the displayed categories according to a quality-of-representation criterion. <strong>Impact on the computation:</strong> no effect on the MCA; it only affects display. <strong>Practical tip:</strong> the default value <strong>cos2 10</strong> is a good compromise for lightening the map without losing the best-represented categories.</p>
+</section>
+<section id="supplementary-categories" class="level4" data-number="7.4.4.4">
+<h4 data-number="7.4.4.4" class="anchored" data-anchor-id="supplementary-categories"><span class="header-section-number">7.4.4.4</span> Supplementary categories</h4>
+<p><strong>Role:</strong> controls the display of categories derived from <strong>Supplementary Subjects</strong>. <strong>Impact on the computation:</strong> no effect on the MCA. <strong>Practical tip:</strong> leave it checked if you use supplementary variables and want to compare them visually with the active categories.</p>
+</section>
+</section>
+<section id="numerical-indicators-collapsed-by-default" class="level3" data-number="7.4.5">
+<h3 data-number="7.4.5" class="anchored" data-anchor-id="numerical-indicators-collapsed-by-default"><span class="header-section-number">7.4.5</span> Numerical Indicators <em>(collapsed by default)</em></h3>
+<section id="significance-threshold" class="level4" data-number="7.4.5.1">
+<h4 data-number="7.4.5.1" class="anchored" data-anchor-id="significance-threshold"><span class="header-section-number">7.4.5.1</span> Significance threshold (%)</h4>
+<p><strong>Role:</strong> sets the significance threshold for the automatic description of the dimensions. <strong>Impact on the computation:</strong> the stricter the threshold, the more selective the output. <strong>Practical tip:</strong> the default value of 5% is well suited to a first reading.</p>
+</section>
+<section id="number-of-dimensions" class="level4" data-number="7.4.5.2">
+<h4 data-number="7.4.5.2" class="anchored" data-anchor-id="number-of-dimensions"><span class="header-section-number">7.4.5.2</span> Number of dimensions</h4>
+<p><strong>Role:</strong> determines the number of axes described automatically. <strong>Impact on the computation:</strong> it controls the dimension description output. <strong>Practical tip:</strong> leave 2 for a first trial.</p>
+</section>
+<section id="level-description" class="level4" data-number="7.4.5.3">
+<h4 data-number="7.4.5.3" class="anchored" data-anchor-id="level-description"><span class="header-section-number">7.4.5.3</span> Level description (%)</h4>
+<p><strong>Role:</strong> sets the threshold used for the textual description of the stimuli. <strong>Impact on the computation:</strong> a stricter threshold produces a shorter description; a broader threshold retains more words. <strong>Practical tip:</strong> leave 5% at first. If the textual description is too sparse, test a slightly broader threshold.</p>
+</section>
+<section id="long-format-dataset" class="level4" data-number="7.4.5.4">
+<h4 data-number="7.4.5.4" class="anchored" data-anchor-id="long-format-dataset"><span class="header-section-number">7.4.5.4</span> Long format dataset</h4>
+<p><strong>Role:</strong> displays the intermediate textual dataset in long format. <strong>Impact on the computation:</strong> it does not add a new calculation; it makes it possible to check how the labels were reorganized before the textual analysis. <strong>Practical tip:</strong> activate this option if you want to inspect the transformation of the verbal data.</p>
+</section>
+<section id="individual-table-options-coordinates-contributions-cosine" class="level4" data-number="7.4.5.5">
+<h4 data-number="7.4.5.5" class="anchored" data-anchor-id="individual-table-options-coordinates-contributions-cosine"><span class="header-section-number">7.4.5.5</span> Individual Table Options — Coordinates, Contributions, Cosine</h4>
+<p><strong>Role:</strong> activate the display of the numerical tables of coordinates, contributions, and cosines for the stimuli. <strong>Impact on the computation:</strong> no effect on the MCA; they add numerical result tables. <strong>Practical tip:</strong> disabled by default. Activate them if you want precise values for complementary analyses.</p>
+</section>
+<section id="variable-table-options-coordinates-contributions-cosine" class="level4" data-number="7.4.5.6">
+<h4 data-number="7.4.5.6" class="anchored" data-anchor-id="variable-table-options-coordinates-contributions-cosine"><span class="header-section-number">7.4.5.6</span> Variable Table Options — Coordinates, Contributions, Cosine</h4>
+<p><strong>Role:</strong> same principle for the MCA categories. <strong>Impact on the computation:</strong> no effect on the MCA. <strong>Practical tip:</strong> useful if you want to relate the categories precisely to the factor map.</p>
+</section>
+<section id="number-of-components-save" class="level4" data-number="7.4.5.7">
+<h4 data-number="7.4.5.7" class="anchored" data-anchor-id="number-of-components-save"><span class="header-section-number">7.4.5.7</span> Number of components <em>(Save)</em></h4>
+<p><strong>Role:</strong> defines the number of components calculated and saved in <strong>Coordinates</strong>, and used for the classification. <strong>Impact on the computation:</strong> clustering computes distances on these components. <strong>Practical tip:</strong> the default value of 5 is consistent with the clustering proposed by the function.</p>
+</section>
+<section id="coordinates-save" class="level4" data-number="7.4.5.8">
+<h4 data-number="7.4.5.8" class="anchored" data-anchor-id="coordinates-save"><span class="header-section-number">7.4.5.8</span> Coordinates <em>(Save)</em></h4>
+<p><strong>Role:</strong> saves the factorial coordinates of the stimuli in the jamovi data sheet. <strong>Impact on the computation:</strong> no effect on the MCA. <strong>Practical tip:</strong> activate it if you want to reuse the components in other jamovi analyses.</p>
+</section>
+</section>
+<section id="clustering-collapsed-by-default" class="level3" data-number="7.4.6">
+<h3 data-number="7.4.6" class="anchored" data-anchor-id="clustering-collapsed-by-default"><span class="header-section-number">7.4.6</span> Clustering <em>(collapsed by default)</em></h3>
+<section id="representation-of-the-clusters" class="level4" data-number="7.4.6.1">
+<h4 data-number="7.4.6.1" class="anchored" data-anchor-id="representation-of-the-clusters"><span class="header-section-number">7.4.6.1</span> Representation of the clusters</h4>
+<p><strong>Role:</strong> activates the computation of the hierarchical classification and the display of the corresponding graph. <strong>Impact on the computation:</strong> triggers an HCA on the MCA components. It is unchecked by default. <strong>Practical tip:</strong> leave it unchecked for a first reading, then activate it to complement the factor map with a group-based reading.</p>
+</section>
+<section id="number-of-clusters" class="level4" data-number="7.4.6.2">
+<h4 data-number="7.4.6.2" class="anchored" data-anchor-id="number-of-clusters"><span class="header-section-number">7.4.6.2</span> Number of clusters</h4>
+<p><strong>Role:</strong> sets the number of clusters to extract. <strong>Impact on the computation:</strong> with -1, the number is chosen automatically; any positive value imposes that number. <strong>Practical tip:</strong> start with -1, then set a number only if you have a clear analytical reason.</p>
+</section>
+<section id="cluster-variable-save" class="level4" data-number="7.4.6.3">
+<h4 data-number="7.4.6.3" class="anchored" data-anchor-id="cluster-variable-save"><span class="header-section-number">7.4.6.3</span> Cluster variable <em>(Save)</em></h4>
+<p><strong>Role:</strong> saves the cluster membership of each stimulus in the jamovi data sheet. <strong>Impact on the computation:</strong> it does not add a new calculation, but saves the classification results. <strong>Practical tip:</strong> useful if you then want to cross the clusters with other variables in jamovi.</p>
+</section>
+</section>
+</section>
+<section id="step-by-step-procedure" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="step-by-step-procedure"><span class="header-section-number">7.5</span> Step-by-step procedure</h2>
+<ol type="1">
+<li>Open your dataset in jamovi.</li>
+<li>In the <strong>Data</strong> tab, check that all columns in <strong>Subjects</strong> are categorical and that you have at least two of them.</li>
+<li>Check that <strong>Stimuli Labels</strong> is categorical if you use it.</li>
+<li>Open <strong>SEDA &gt; Analysis of Sorting Data</strong>.</li>
+<li>Place the stimulus name variable in <strong>Stimuli Labels</strong>.</li>
+<li>Place the sorting variables in <strong>Subjects</strong>.</li>
+<li>If needed, place other sorting variables in <strong>Supplementary Subjects</strong>.</li>
+<li>Leave <strong>Ventilation level (%) = 5</strong>, <strong>X-axis = 1</strong>, <strong>Y-axis = 2</strong>, <strong>Significance threshold (%) = 5</strong>, <strong>Level description (%) = 5</strong>, <strong>Number of dimensions = 2</strong>, and <strong>Number of components = 5</strong> for a first trial.</li>
+<li>If subjects verbalized their groups, first read <strong>Description of the Stimuli</strong>, then <strong>Representation of the Individuals</strong>, then <strong>Representation of the Categories</strong>.</li>
+<li>Consult <strong>Automatic Description of the Dimensions</strong> to interpret the axes.</li>
+<li>Read the eigenvalue table to assess whether the 1/2 plane summarizes the data well.</li>
+<li>Activate <strong>Representation of the clusters</strong> if you want an automatic classification.</li>
+</ol>
+</section>
+<section id="interpretation-of-results" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="interpretation-of-results"><span class="header-section-number">7.6</span> Interpretation of results</h2>
+<section id="description-of-the-stimuli" class="level3" data-number="7.6.1">
+<h3 data-number="7.6.1" class="anchored" data-anchor-id="description-of-the-stimuli"><span class="header-section-number">7.6.1</span> Description of the Stimuli</h3>
+<p>This table describes each stimulus based on the words used in the group labels. It is truly informative only if the groups were named with interpretable words.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>First column</em></td>
+<td>Stimulus concerned</td>
+</tr>
+<tr class="even">
+<td><strong>Word</strong></td>
+<td>Characteristic word</td>
+</tr>
+<tr class="odd">
+<td><strong>Inter %</strong></td>
+<td>Percentage of the word for this stimulus</td>
+</tr>
+<tr class="even">
+<td><strong>Global %</strong></td>
+<td>Global percentage of the word</td>
+</tr>
+<tr class="odd">
+<td><strong>Intern frequency</strong></td>
+<td>Frequency of the word for this stimulus</td>
+</tr>
+<tr class="even">
+<td><strong>Global frequency</strong></td>
+<td>Global frequency of the word</td>
+</tr>
+<tr class="odd">
+<td><strong>p</strong></td>
+<td>P-value of the test</td>
+</tr>
+<tr class="even">
+<td><strong>Vtest</strong></td>
+<td>Standardized intensity of the association</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>A word with an <strong>Intern %</strong> clearly higher than <strong>Global %r</strong> characterizes this stimulus more strongly.</li>
+<li>A low <strong>p-value</strong> indicates a clearer association.</li>
+<li>A positive <strong>V-test</strong> indicates over-representation of the word for this stimulus; a negative <strong>V-test</strong> indicates under-representation.</li>
+</ul>
+</section>
+<section id="representation-of-the-individuals-stimulus-map" class="level3" data-number="7.6.2">
+<h3 data-number="7.6.2" class="anchored" data-anchor-id="representation-of-the-individuals-stimulus-map"><span class="header-section-number">7.6.2</span> Representation of the Individuals — stimulus map</h3>
+<p>This is the important result of the function. It represents the stimuli in the MCA factor space.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Two close stimuli</td>
+<td>They were often placed in the same groups</td>
+</tr>
+<tr class="even">
+<td>Two distant stimuli</td>
+<td>They were rarely grouped together</td>
+</tr>
+<tr class="odd">
+<td>Compact group of stimuli</td>
+<td>Family of stimuli often sorted together</td>
+</tr>
+</tbody>
+</table>
+<p>The percentage displayed on each axis indicates the share of variance explained. Without verbalizations, this map remains more difficult to name: in that case, rely more on the category map and the automatic description of the dimensions.</p>
+</section>
+<section id="representation-of-the-categories-category-map" class="level3" data-number="7.6.3">
+<h3 data-number="7.6.3" class="anchored" data-anchor-id="representation-of-the-categories-category-map"><span class="header-section-number">7.6.3</span> Representation of the Categories — category map</h3>
+<p>This map represents the categories derived from the sorting variables. Categories close to stimuli are more strongly associated with them. The <strong>Active categories</strong>, <strong>Supplementary categories</strong>, and <strong>Selection of categories</strong> options control what is displayed.</p>
+<blockquote class="blockquote">
+<p><strong>Point of vigilance:</strong> with many subjects, this map can become very crowded. The default value <strong>cos2 10</strong> helps keep only a more readable subset of categories.</p>
+</blockquote>
+</section>
+<section id="representation-of-the-variables-variable-map" class="level3" data-number="7.6.4">
+<h3 data-number="7.6.4" class="anchored" data-anchor-id="representation-of-the-variables-variable-map"><span class="header-section-number">7.6.4</span> Representation of the Variables — variable map</h3>
+<p>This map represents the qualitative variables of the MCA, that is, the subjects or sorting variables. It helps show to what extent the partitions of different subjects are aligned with the consensus axes. A subject with high coordinates on an axis has strongly structured their partition according to that axis.</p>
+</section>
+<section id="eigenvalue-decomposition-eigenvalue-table" class="level3" data-number="7.6.5">
+<h3 data-number="7.6.5" class="anchored" data-anchor-id="eigenvalue-decomposition-eigenvalue-table"><span class="header-section-number">7.6.5</span> Eigenvalue Decomposition — eigenvalue table</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Dim.</strong></td>
+<td>Dimension number</td>
+</tr>
+<tr class="even">
+<td><strong>Eigenvalue</strong></td>
+<td>Eigenvalue</td>
+</tr>
+<tr class="odd">
+<td><strong>% of variance</strong></td>
+<td>Share explained by the dimension</td>
+</tr>
+<tr class="even">
+<td><strong>Cumulative %</strong></td>
+<td>Cumulative share explained</td>
+</tr>
+</tbody>
+</table>
+<p>If the first two dimensions explain a large share of the variance, the 1/2 plane summarizes the structure of the sorting data well. Otherwise, explore other factor planes.</p>
+</section>
+<section id="automatic-description-of-the-dimensions" class="level3" data-number="7.6.6">
+<h3 data-number="7.6.6" class="anchored" data-anchor-id="automatic-description-of-the-dimensions"><span class="header-section-number">7.6.6</span> Automatic Description of the Dimensions</h3>
+<p>This textual output identifies the categories and variables most associated with each dimension, according to <strong>Significance threshold (%)</strong> and <strong>Number of dimensions</strong>. It is essential for giving sensory meaning to the axes, especially in the absence of verbalizations.</p>
+</section>
+<section id="representation-of-the-individuals-according-to-clusters-available-if-representation-of-the-clusters-is-activated" class="level3" data-number="7.6.7">
+<h3 data-number="7.6.7" class="anchored" data-anchor-id="representation-of-the-individuals-according-to-clusters-available-if-representation-of-the-clusters-is-activated"><span class="header-section-number">7.6.7</span> Representation of the Individuals According to Clusters <em>(available if “Representation of the clusters” is activated)</em></h3>
+<p>This graph represents the stimuli on the factor map, grouped according to the clusters derived from the HCA.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 41%">
+<col style="width: 58%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Stimuli in the same cluster</td>
+<td>Stimuli often perceived as close</td>
+</tr>
+<tr class="even">
+<td>Clearly separated clusters</td>
+<td>More differentiated families of stimuli</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="numerical-tables-optional" class="level3" data-number="7.6.8">
+<h3 data-number="7.6.8" class="anchored" data-anchor-id="numerical-tables-optional"><span class="header-section-number">7.6.8</span> Numerical tables <em>(optional)</em></h3>
+<p>The coordinate, contribution, and cosine tables for stimuli and categories appear only if you check the corresponding options in <strong>Numerical Indicators</strong>. They provide precise values to complement the visual interpretation.</p>
+</section>
+</section>
+<section id="example-the-perfumes_sorting-dataset" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="example-the-perfumes_sorting-dataset"><span class="header-section-number">7.7</span> Example: the <strong>perfumes_sorting</strong> dataset</h2>
+<p>The <strong>perfumes_sorting</strong> dataset concerns 12 perfumes grouped by 60 subjects during a free sorting task. It is used to illustrate the function outputs. Some groups were also verbalized, which allows the function to produce both a factorial representation of the perfumes and a textual description of the profiles. The numerical values and graphics discussed below come directly from the analysis results. To load this dataset, open jamovi, click the icon in the top left corner, the three stacked lines, then <strong>Open</strong> → <strong>Data Library</strong> → <strong>SEDA</strong>.</p>
+<section id="example-settings" class="level3" data-number="7.7.1">
+<h3 data-number="7.7.1" class="anchored" data-anchor-id="example-settings"><span class="header-section-number">7.7.1</span> Example settings</h3>
+<p>To reproduce this example, use the following values.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 48%">
+<col style="width: 51%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Stimuli Labels</strong></td>
+<td>variable identifying the 12 perfumes</td>
+</tr>
+<tr class="even">
+<td><strong>Subjects</strong></td>
+<td>the first 50 sorting columns</td>
+</tr>
+<tr class="odd">
+<td><strong>Supplementary Subjects</strong></td>
+<td>from column 51 to 58</td>
+</tr>
+<tr class="even">
+<td><strong>Ventilation level (%)</strong></td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td><strong>X-axis / Y-axis</strong></td>
+<td>1 / 2</td>
+</tr>
+<tr class="even">
+<td><strong>Significance threshold (%)</strong></td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td><strong>Number of dimensions</strong></td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td><strong>Level description (%)</strong></td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td><strong>Number of components</strong></td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td><strong>Representation of the clusters</strong></td>
+<td>checked to visualize the classification</td>
+</tr>
+<tr class="odd">
+<td><strong>Number of clusters</strong></td>
+<td>-1</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="analysis-of-the-description-of-the-stimuli-table" class="level3" data-number="7.7.2">
+<h3 data-number="7.7.2" class="anchored" data-anchor-id="analysis-of-the-description-of-the-stimuli-table"><span class="header-section-number">7.7.2</span> Analysis of the <em>Description of the Stimuli</em> table</h3>
+<p>The table shows that several perfumes have very marked lexical profiles. A few particularly clear readings, with the actual values from the analysis:</p>
+<p><strong>Aromatics Elixir</strong> is strongly associated with <em>strong</em> (test value 4.08, p &lt; .001; 14.16% of internal occurrences versus 4.65% overall), <em>ammonia</em> (test value 2.26), and <em>spicy</em> (2.18). Conversely, it is clearly under-represented by <em>fruit</em> (test value -2.63), <em>flower</em> (-2.40), and <em>sweet</em> (-2.10): it is the most intense and least floral or sweet perfume in the panel.</p>
+<p><strong>Chanel N5</strong> stands out with <em>soap</em> (test value 3.72, p &lt; .001; 7.69% versus 1.61% overall), <em>deodorant</em> (2.06), and <em>unpleasant</em> (1.99), while being under-represented by <em>fruit</em> (-2.47) and <em>flower</em> (-2.21).</p>
+<p><strong>Lolita Lempicka</strong> is characterized by <em>sweet</em> (test value 3.94, p &lt; .001; 14.55% versus 4.98% overall) and <em>vanilla</em> (2.09), but is under-represented by <em>flower</em> (-2.34).</p>
+<p><strong>Pleasures</strong> is the perfume most associated with <em>flower</em> (test value 3.46, p &lt; .001; 15.00% versus 5.70% overall) and <em>fresh</em> (2.05), and clearly opposed to <em>strong</em> (-2.46).</p>
+<p><strong>Shalimar</strong> is characterized by <em>old</em> (test value 2.67, p = 0.008) and <em>sun</em> (2.40), and under-represented by <em>flower</em> (-2.42).</p>
+<p><strong>Angel</strong> is associated with <em>vanilla</em> (2.23), <em>heady</em> (1.99), and <em>too</em> (1.99), but under-represented by <em>fresh</em> (-2.03) and <em>flower</em> (-2.19).</p>
+</section>
+<section id="analysis-of-the-representation-of-the-individuals-graph" class="level3" data-number="7.7.3">
+<h3 data-number="7.7.3" class="anchored" data-anchor-id="analysis-of-the-representation-of-the-individuals-graph"><span class="header-section-number">7.7.3</span> Analysis of the <em>Representation of the Individuals</em> graph</h3>
+<p>The map reveals a readable perceptual structure on the Dim. 1 (15.53%) / Dim. 2 (14.14%) plane. On the right side of the plane, <em>Shalimar</em>, <em>Aromatics Elixir</em>, and <em>Chanel N5</em> form a group — confirming their strong, spicy, and low-floral profile. On the lower left, <em>J’adore ET</em>, <em>J’adore EP</em>, and <em>Pleasures</em> group together around a floral and fresh profile. At the top, <em>Angel</em> and <em>Lolita Lempicka</em> occupy a clearly distinct position on the second dimension — a vanilla and sweet profile. <em>Cinéma</em>, <em>L’instant</em>, and <em>Coco Mademoiselle</em> form an intermediate central-left area, with profiles that are more difficult to name without the textual description.</p>
+</section>
+<section id="analysis-of-the-eigenvalue-decomposition-table" class="level3" data-number="7.7.4">
+<h3 data-number="7.7.4" class="anchored" data-anchor-id="analysis-of-the-eigenvalue-decomposition-table"><span class="header-section-number">7.7.4</span> Analysis of the <em>Eigenvalue Decomposition</em> table</h3>
+<p>The first two dimensions explain 29.67% of the total variance (15.53% + 14.14%). This is clearly less concentrated than in a classical PCA: in free sorting, subjects have very different ways of structuring the space, which spreads the information across many dimensions. The 1/2 plane is a useful but partial summary — as confirmed by the following dimensions (Dim. 3: 11.03%, Dim. 4: 9.97%, etc.).</p>
+</section>
+<section id="analysis-of-the-automatic-description-of-the-dimensions-table" class="level3" data-number="7.7.5">
+<h3 data-number="7.7.5" class="anchored" data-anchor-id="analysis-of-the-automatic-description-of-the-dimensions-table"><span class="header-section-number">7.7.5</span> Analysis of the <em>Automatic Description of the Dimensions</em> table</h3>
+<p>On <strong>Dim. 1</strong>, the categories most strongly associated with the positive side (right, strong perfumes) are <em>solvent</em> (S52, estimate 1.31), <em>unpleasant</em> (S46, 1.27), <em>spicy</em> (S40, 1.24), <em>very;strong;perfume;woman;old</em> (S15, 1.32), <em>soap;ancient</em> (S48, 1.26), and <em>acid</em> (S54, 1.22). The negative side is associated with <em>flower;fresh</em> (S43, -0.60), <em>fresh;light</em> (S23, -0.81), and <em>flower</em> (S47, -0.68). Dim. 1 therefore clearly opposes <strong>strong, spicy, acidic, or unpleasant</strong> perfumes to <strong>fresh and floral</strong> perfumes.</p>
+<p>On <strong>Dim. 2</strong>, the positive side is dominated by <em>vanilla;spicy;hot</em> (S16, 1.51), <em>woman;mature</em> (S7, 1.55), <em>sweet;too;strong</em> (S11, 1.43), <em>teenage;likeable</em> (S51, 1.54), and <em>vanilla;sweet</em> (S34, 1.05). The negative side includes <em>soap</em> (S12, -1.03) and <em>fresh</em> (S10, -0.50). Dim. 2 therefore opposes <strong>vanilla, sweet, enveloping</strong> perfumes to <strong>fresher or soapy</strong> profiles.</p>
+</section>
+<section id="analysis-of-the-representation-of-the-individuals-according-to-clusters-graph" class="level3" data-number="7.7.6">
+<h3 data-number="7.7.6" class="anchored" data-anchor-id="analysis-of-the-representation-of-the-individuals-according-to-clusters-graph"><span class="header-section-number">7.7.6</span> Analysis of the <em>Representation of the Individuals According to Clusters</em> graph</h3>
+<p>With <strong>Number of clusters = -1</strong>, the automatic classification retains <strong>six clusters</strong>:</p>
+<ul>
+<li>a cluster grouping <strong>J’adore ET</strong>, <strong>J’adore EP</strong>, and <strong>Pleasures</strong> (floral, fresh);</li>
+<li>a cluster grouping <strong>Coco Mademoiselle</strong>, <strong>L’instant</strong>, and <strong>Cinéma</strong> (intermediate profiles);</li>
+<li>a cluster containing only <strong>Pure Poison</strong> (singular profile);</li>
+<li>a cluster grouping <strong>Angel</strong> and <strong>Lolita Lempicka</strong> (vanilla, sweet);</li>
+<li>a cluster containing only <strong>Chanel N5</strong> (soapy, unpleasant);</li>
+<li>a cluster grouping <strong>Shalimar</strong> and <strong>Aromatics Elixir</strong> (strong, spicy, old).</li>
+</ul>
+</section>
+<section id="synthetic-interpretation" class="level3" data-number="7.7.7">
+<h3 data-number="7.7.7" class="anchored" data-anchor-id="synthetic-interpretation"><span class="header-section-number">7.7.7</span> Synthetic interpretation</h3>
+<p>This example clearly shows the value of the function. It does not only provide a proximity map between perfumes: it also shows <strong>which words</strong> subjects associate with each perfume, <strong>which oppositions structure the space</strong>, and <strong>which groups of perfumes</strong> emerge from the classification. Cross-reading the description table, the factor map, and the classification makes it possible to name the families more precisely than with the map alone.</p>
+<blockquote class="blockquote">
+<p><strong>What we take away from this example:</strong> free sorting analysis makes it possible to link the factorial structure of the categorizations, their verbal interpretation, and the formation of coherent families of stimuli.</p>
+</blockquote>
+</section>
+</section>
+<section id="practical-tips" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="practical-tips"><span class="header-section-number">7.8</span> Practical tips</h2>
+<ul>
+<li>Always check that all columns in <strong>Subjects</strong> are categorical before running the analysis.</li>
+<li>Use <strong>Stimuli Labels</strong> almost systematically to obtain readable maps.</li>
+<li>Start with <strong>Ventilation level (%) = 5</strong>.</li>
+<li>If the category map is too crowded, keep <strong>Selection of categories = cos2 10</strong> and uncheck <strong>Active categories</strong> if necessary.</li>
+<li>Leave <strong>Number of clusters = -1</strong> for automatic determination at first.</li>
+<li>Keep <strong>Number of components = 5</strong> for a first clustering.</li>
+<li>If the first two dimensions explain little variance, explore other factor planes.</li>
+<li>Activate <strong>Coordinates</strong> and <strong>Cluster variable</strong> if you want to reuse the results in other jamovi analyses.</li>
+</ul>
+</section>
+<section id="in-summary" class="level2" data-number="7.9">
+<h2 data-number="7.9" class="anchored" data-anchor-id="in-summary"><span class="header-section-number">7.9</span> In summary</h2>
+<p>This analysis transforms free sorting data into a reading of the stimuli that is simultaneously <strong>factorial</strong>, <strong>textual</strong>, and <strong>typological</strong>. It combines an <strong>MCA</strong> on the categorizations provided by the subjects, a <strong>description of the stimuli based on the labels</strong>, and, if desired, an <strong>automatic classification</strong> of the stimuli. Its main value is to preserve subjects’ individual information while constructing a consensus and directly interpretable view of the perceptual space of the stimuli.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./chapitre5_prompt_GBH.html" class="pagination-link" aria-label="Napping Data — Consensus Representation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Napping Data — Consensus Representation</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./chapitre7_prompt_GBH.html" class="pagination-link" aria-label="Hedonic Data — Preference Mapping">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Hedonic Data — Preference Mapping</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

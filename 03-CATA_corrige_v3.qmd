@@ -1,0 +1,189 @@
+# Analyse de données de type CATA (*Check-All-That-Apply*)
+
+## Introduction
+
+L’objectif de ce chapitre est de détailler les étapes de traitement statistique réalisées par le module *SEDA* lors d’une analyse de type *Check-All-That-Apply* (CATA).
+
+Dans un questionnaire CATA, chaque répondant coche tous les descripteurs (items) qu’il juge adaptés à un produit. Les données recueillies permettent de quantifier la **fréquence de citation** de chaque item pour chaque produit. L’analyse se déroule généralement en deux étapes clés :
+
+1.  **Synthèse des données** : passage du format brut à une **table de contingence** (produits × items).
+2.  **Interprétation statistique** : caractérisation des produits (quels items les définissent ?) et **visualisation** des associations produits–items via une Analyse des Correspondances (AC).
+
+Nous illustrons cette démarche avec une étude sur des bières (fichier `cata.omv`). Pour la reproduction sous R, nous utilisons l’export `beers_cata.xlsx`.
+
+## Importons les données
+
+Nous utilisons la fonction `read_excel()` du *package* `readxl`. Les données importées sont stockées dans l’objet `cata_data`.
+
+```{r}
+# Si non installé
+# install.packages("readxl")
+
+library(readxl)
+
+cata_data <- read_excel(path = "beers_cata.xlsx")
+cata_data <- as.data.frame(cata_data) # Conversion en data frame standard
+
+head(cata_data)    # Vérification visuelle des premières lignes
+summary(cata_data) # Aperçu des variables
+```
+
+Ces **données brutes** suivent un format *répondant × produit* : chaque ligne indique si un répondant a coché (1) ou non (0) un item pour un produit donné.
+
+## Construisons la table de contingence
+
+Pour rendre ces données exploitables, nous devons convertir ce format binaire en un format de fréquences : la **table de contingence**.
+
+### Principe sur un seul item
+
+La fonction `tapply()` permet d’agréger les données. Ici, nous additionnons les "1" (citations) pour l’item situé en 3e colonne, en regroupant par produit.
+
+```{r}
+cont_tab_item1 <- tapply(cata_data[[3]], cata_data$Product, sum, na.rm = TRUE)
+cont_tab_item1
+```
+
+### Automatisation pour l’ensemble des items
+
+Plutôt que de traiter chaque item manuellement, nous utilisons `aggregate()` pour calculer les sommes de citations de toutes les colonnes d’items d’un seul coup.
+
+```{r}
+# Sélection des colonnes d'items (à adapter selon votre fichier)
+items_cols <- 3:17
+
+# Agrégation par produit
+cont_tab <- aggregate(
+  cata_data[, items_cols],
+  by = list(Product = cata_data$Product),
+  FUN = function(x) sum(x, na.rm = TRUE)
+)
+
+# Mise en forme : les noms de produits deviennent les noms de lignes
+rownames(cont_tab) <- cont_tab$Product
+cont_tab <- cont_tab[, -1] # Suppression de la colonne Product redondante
+
+cont_tab
+```
+
+> Conseil : dans un script “robuste”, il est préférable de sélectionner les colonnes par leurs noms plutôt que par des indices numériques (pour éviter les erreurs si la structure du fichier change).
+
+## Caractérisation des produits : quels items les définissent ?
+
+Une fois la table construite, nous cherchons à identifier les items significativement associés à chaque produit. Le package *FactoMineR* propose la fonction `descfreq()` pour réaliser cette analyse des profils de fréquences.
+
+```{r}
+# Si non installé
+# install.packages("FactoMineR")
+
+library(FactoMineR)
+
+res_descfreq <- descfreq(cont_tab)
+names(res_descfreq)
+```
+
+Par exemple, pour la bière **SSA** :
+
+```{r}
+res_descfreq[["SSA"]]
+```
+
+**Interprétation du V-test :**
+
+-   **valeur positive et significative** : l’item est sur-cité pour ce produit (il le caractérise) ;
+-   **valeur négative et significative** : l’item est sous-cité (il est “évité” relativement à la moyenne).
+
+## Visualisation multivariée : l’Analyse des Correspondances (AC)
+
+L’Analyse des Correspondances est la méthode de référence pour synthétiser une table de contingence. Elle permet de visualiser, sur un même plan, les proximités entre produits et leurs associations avec les items.
+
+```{r}
+#| fig-cap: "Carte produits–items (Analyse des Correspondances)"
+res_ca <- CA(cont_tab, graph = FALSE)
+plot(res_ca)
+```
+
+## Comprendre les résultats dans jamovi (module *SEDA*)
+
+Dans jamovi, l’analyse CATA suit exactement la logique que nous venons de reproduire dans R :
+
+1.  **agréger** les données brutes (0/1) pour construire une table *produits × items* ;
+2.  **tester** quels items discriminent les produits (test Q de Cochran) ;
+3.  **décrire** les produits par leurs items saillants ;
+4.  **visualiser** les associations produits–items via une Analyse des Correspondances (AC).
+
+### Préparer les données dans jamovi
+
+1.  Ouvrez jamovi, puis **Fichier \> Ouvrir** et sélectionnez `beers_cata.xlsx`.
+2.  Vérifiez que :
+    -   une colonne `Product` identifie bien les produits ;
+    -   les items CATA sont bien codés **0/1** (ou 1/vide, selon votre protocole).
+
+> Astuce : si vos items sont codés “Oui/Non”, “TRUE/FALSE” ou contiennent des caractères, recodez-les en 0/1 avant l’analyse (onglet **Données \> Transformer**), sinon certaines sorties peuvent être incorrectes.
+
+### Vérifions le type de mesure des variables
+
+C’est un point crucial dans jamovi : un mauvais typage est la source d’erreur la plus fréquente.
+
+-   `Product` (et éventuellement `Panelist` / `Consumer` si présent) : **Nominal** (icône “trois cercles”).
+-   Items CATA : variables **numériques** contenant des 0/1, avec un type de mesure **Continu** (icône “réglette”).
+
+Si une icône n’est pas correcte : - double-cliquez sur l’en-tête de la colonne pour ouvrir l’éditeur de variable ; - corrigez **Type de données** (numérique) et **Type de mesure** (Continu).
+
+### Où trouver l’analyse CATA ?
+
+1.  Allez dans l’onglet **Analyses**.
+2.  Ouvrez **SEDA**.
+3.  Choisissez **Check All That Apply (CATA)**.
+
+#### 1) Renseigner les variables
+
+-   **Produit** : glissez `Product`.
+-   **Juge / Répondant** : si votre fichier contient une colonne `Panelist` (ou `Consumer`), glissez-la ici.
+-   **CATA Attributes** : sélectionnez tous les items (colonnes 0/1) et glissez-les dans la zone dédiée.
+
+#### 2) Paramétrer les sorties
+
+Une fois l’analyse lancée, regardez le panneau d’options (à gauche). Selon la version, vous trouverez notamment :
+
+-   **Cochran’s Q test** : permet de tester, item par item, si la fréquence de citation varie selon le produit.
+-   **Correspondence Analysis** : produit la carte produits–items (AC), très utile pour l’interprétation globale.
+-   **Threshold (seuil)** : par défaut 0.05. Vous pouvez le baisser (0.01) si vous avez beaucoup d’items, pour ne faire ressortir que les différences les plus marquées.
+-   **Sort by (tri)** : trier par *p-value* (croissante) ou par statistique de test (décroissante) pour identifier rapidement les items clés.
+
+### Lecture guidée des résultats
+
+Jamovi génère plusieurs blocs qu’il faut lire conjointement.
+
+**1) Table produits × items (fréquences / proportions)**\
+Elle correspond à la table `cont_tab` construite dans R : chaque cellule indique combien de fois l’item a été coché pour le produit (ou la proportion correspondante).\
+C’est la première sortie à vérifier pour s’assurer que l’importation est correcte.
+
+**2) Items discriminants (test Q de Cochran)**\
+Pour chaque item, le test indique si la fréquence de citation varie significativement d’un produit à l’autre.
+
+-   si *p* \< 0.05 : l’item **discrimine** les produits ;
+-   si *p* \> 0.05 : l’item est cité de manière homogène (il discrimine peu).
+
+**3) Caractérisation des produits (items “saillants”)**\
+C’est la sortie la plus “métier” : pour chaque produit, jamovi liste les items sur-cités (et parfois sous-cités), avec un indicateur de test et une *p-value*.\
+Vous obtenez ainsi une première “carte d’identité CATA” de chaque produit.
+
+> Conseil pratique : les tableaux jamovi sont interactifs. Si vous avez beaucoup d’items, copiez le tableau (**clic droit \> Copy**) et collez-le dans Excel pour filtrer rapidement les lignes pertinentes.
+
+**4) Carte produits–items (Analyse des Correspondances)**\
+C’est le résultat visuel central.
+
+-   **Proximité produit–item** : si un produit est proche d’un item, cet item est souvent cité pour ce produit.
+-   **Proximité entre produits** : deux produits proches ont des profils de citation similaires.
+-   Les points proches de l’origine contribuent peu à structurer la carte (ils discriminent moins).
+
+> Astuce d’interprétation : contrairement à l’ACP (flèches pour les variables), l’AC représente produits et items par des **points**. Cherchez les associations en repérant quels items se trouvent dans la même zone que les produits.
+
+### Exporter et réutiliser
+
+-   **Tableaux** : clic droit sur un tableau → **Copy** (ou export selon votre version).
+-   **Graphiques** : clic droit sur le graphique → **Image \> Export…**
+    -   privilégiez **PDF/EPS** (vectoriel) pour un rapport ou des slides,
+    -   ou **PNG** pour une insertion rapide.
+
+En résumé, jamovi automatise toute la chaîne (table de contingence → tests → carte), tout en permettant d’itérer rapidement (tri, seuil, export).

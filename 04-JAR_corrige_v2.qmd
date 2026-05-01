@@ -1,0 +1,174 @@
+# Analyse de données de type JAR (*Just-About-Right*)
+
+## Introduction
+
+L’objectif de ce chapitre est de détailler les mécanismes statistiques qui soutiennent l’analyse des données *Just-About-Right* (JAR) dans jamovi (via le module *SEDA*).
+
+Dans un questionnaire JAR, on demande aux répondants d’évaluer l’intensité d’un attribut par rapport à leur niveau idéal. Les réponses se structurent généralement en trois catégories :
+
+-   **Pas assez** (en dessous de l’optimum),
+-   **Juste comme il faut** (*Just-About-Right*),
+-   **Trop** (au-dessus de l’optimum).
+
+Le point crucial de cette méthode est qu’elle lie l’intensité perçue à l’**appréciation globale** (*Liking*). L’enjeu est d’estimer des **pénalités** : quelle est la baisse moyenne de `Liking` lorsqu’un défaut (“pas assez” / “trop”) est perçu ?
+
+Nous illustrons cette démarche avec une étude sur des milkshakes (fichier `jar.omv`). Pour la reproduction sous R, nous utilisons l’export `milkshakes_jar.xlsx`.
+
+## Importons et préparons les données
+
+```{r}
+# Si non installé
+# install.packages("readxl")
+
+library(readxl)
+
+jar_data <- read_excel(path = "milkshakes_jar.xlsx")
+jar_data
+```
+
+Comme dans les chapitres précédents, `jar_data` est un *tibble*. Nous le convertissons en *data frame* pour rester dans un format très standard.
+
+```{r}
+jar_data <- as.data.frame(jar_data)
+```
+
+Jetons un coup d’œil à la structure :
+
+```{r}
+summary(jar_data)
+```
+
+### Typage des variables
+
+Pour que R traite correctement les données, nous devons définir la nature de chaque colonne : la variable `Liking` est quantitative, tandis que les identifiants et les réponses JAR sont des facteurs.
+
+```{r}
+# Conversion des identifiants (Panelist, Product)
+for (i in 1:2) jar_data[, i] <- factor(jar_data[, i])
+
+# Conversion des réponses JAR (colonnes 4 à 13)
+for (i in 4:13) jar_data[, i] <- factor(jar_data[, i])
+
+summary(jar_data)
+```
+
+## Du diagnostic JAR aux variables de défaut
+
+En analyse de pénalités, on ne traite pas l’attribut JAR comme une échelle continue. On transforme chaque réponse en **variables indicatrices** (0/1) : chaque modalité de “défaut” devient une variable explicative à part entière.
+
+Cette étape s’appelle le codage disjonctif (ou codage en **variables factices**, *dummy variables*). Nous utilisons ici la fonction `acm.disjonctif()` du package *ade4*.
+
+```{r}
+# Si non installé
+# install.packages("ade4")
+
+library(ade4)
+
+jar_dummy <- acm.disjonctif(jar_data[, 4:13])
+jar_dummy[1:5, 1:6]
+```
+
+L’idée est maintenant de considérer ces défauts comme des variables explicatives pour comprendre la variabilité de `Liking`.
+
+## Estimer l’impact des défauts via un modèle linéaire
+
+Nous fusionnons les informations de base (panéliste, produit, `Liking`) avec la table de défauts.
+
+```{r}
+jar_model_data <- cbind(jar_data[, 1:3], jar_dummy)
+```
+
+Nous construisons ensuite un modèle linéaire pour quantifier l’effet de chaque défaut sur l’appréciation, tout en tenant compte :
+
+-   d’un effet **Produit** (certains produits sont globalement plus appréciés) ;
+-   d’un effet **Panéliste** (certains répondants notent plus sévèrement).
+
+```{r}
+# Si non installé
+# install.packages("FactoMineR")
+
+library(FactoMineR)
+
+res_lm <- LinearModel(
+  Liking ~ Color.A_little_plain + Color.Too_plain + 
+           Fluidity.Not_enough_fluid + Product + Panelist,
+  data = jar_model_data
+)
+
+names(res_lm)
+```
+
+### Lire les résultats : F-test et pénalités
+
+-   Le **F-test** (ANOVA) indique si, globalement, les défauts (et les effets de structure) expliquent une part significative de la variabilité de `Liking`.
+-   Les **coefficients** (t-test) permettent d’estimer les **pénalités** : un coefficient négatif et significatif correspond à une baisse de `Liking` lorsque le défaut est présent.
+
+```{r}
+res_lm$Ftest
+```
+
+```{r}
+round(res_lm$Ttest, 3)[1:12, ]
+```
+
+> Lecture : si un défaut a une estimation de `-1.50` (et qu’il est significatif), cela signifie qu’en moyenne la présence de ce défaut est associée à une baisse d’environ 1,5 point de `Liking` (sur l’échelle utilisée), toutes choses égales par ailleurs.
+
+## De R à jamovi
+
+Dans jamovi, l’analyse JAR vise à transformer les réponses “pas assez / JAR / trop” en **défauts** et à estimer leur **impact sur l’appréciation** (*Liking*). L’interface automatise les étapes que nous avons reproduites en R : codage des défauts, calcul des pénalités, tableaux de fréquences et graphiques de synthèse.
+
+### Importons les données
+
+1.  Ouvrez jamovi, puis **Fichier \> Ouvrir** et sélectionnez `milkshakes_jar.xlsx`.
+2.  Vérifiez visuellement que :
+    -   `Liking` est bien une colonne numérique (notes),
+    -   les attributs JAR contiennent bien des modalités cohérentes (par exemple “Pas assez”, “Juste comme il faut”, “Trop”).
+
+### Vérifions le type de mesure des variables
+
+Le bon typage est crucial dans jamovi :
+
+-   `Product` et `Panelist` : **Nominal** (icône “trois boules”).
+-   `Liking` : **Continu** (icône “réglette”).
+-   Variables JAR (par attribut) : **Ordinal** est recommandé, avec un ordre logique du type\
+    *Pas assez* \< *Juste comme il faut* \< *Trop*.
+
+Si une variable n’a pas le bon type : - double-cliquez sur l’en-tête de colonne → éditeur de variable → corrigez **Type de mesure** ; - si les libellés diffèrent (orthographe, accents, espaces), harmonisez-les avant l’analyse (recode).
+
+> Piège classique : si `Liking` est importé comme texte (virgule, caractère parasite), jamovi le bascule en *Nominal* et l’analyse JAR ne fonctionnera pas correctement.
+
+### Lancer l’analyse JAR dans *SEDA*
+
+Dans le menu *SEDA*, sélectionnez l’analyse JAR / *Penalty Analysis*.
+
+Renseignez : - **Liking** : la variable d’appréciation (numérique), - **Produit** : `Product` (utile pour comparer les défauts entre produits), - **Juge / Répondant** : `Panelist` si disponible (selon votre plan d’expérience), - **Attributs JAR** : les colonnes JAR (une par attribut).
+
+Selon les options disponibles, vous pouvez aussi définir : - la modalité de référence (le niveau “JAR”, *juste comme il faut*), - un **seuil** de significativité (souvent 0.05), - les sorties à afficher (table de fréquences, tableaux de pénalités, graphiques).
+
+### Lecture guidée des sorties jamovi
+
+Jamovi propose généralement trois niveaux de lecture.
+
+**1) Fréquences des défauts (produits × défauts)**\
+Cette table indique à quelle fréquence chaque défaut apparaît selon les produits. Elle sert à distinguer : - un défaut rare (même s’il pénalise fort) ; - un défaut fréquent (souvent plus critique en pratique).
+
+**2) Tableau des pénalités (estimations et significativité)**\
+Pour chaque attribut et pour chaque défaut (souvent “pas assez” et “trop”), jamovi fournit : - une **pénalité** (baisse moyenne de `Liking`), - une **p-valeur** ou un indicateur de significativité, - et parfois la fréquence associée.
+
+Règle de lecture : - pénalité **négative** et **significative** : défaut problématique (baisse d’appréciation) ; - pénalité proche de 0 ou non significative : effet faible ou incertain.
+
+**3) Graphique de Penalty Analysis (pénalité × fréquence)**\
+C’est la synthèse la plus opérationnelle : elle met en regard - la **fréquence** (défaut courant ou rare), - et l’**ampleur** de la pénalité (défaut plus ou moins coûteux en liking).
+
+En pratique, les priorités R&D sont souvent : - défauts **fréquents** et **fortement pénalisants** (à traiter en premier).
+
+### Exporter et réutiliser
+
+-   **Tableaux** : clic droit → **Copy** (puis Excel/Word), ou export si disponible.
+-   **Graphiques** : clic droit → **Image \> Export…**
+    -   **PDF/EPS** pour une qualité vectorielle (rapport/diapos),
+    -   **PNG** pour une insertion rapide.
+
+Avant d’exporter, pensez à agrandir le graphique dans jamovi (coin bas-droit) et à ajuster la taille des labels si nécessaire : c’est souvent plus propre qu’une capture d’écran.
+
+En résumé, jamovi fournit la même logique que notre script R (défauts → modèle/pénalités), mais ajoute des sorties directement actionnables (fréquences, pénalités, graphique pénalité×fréquence).

@@ -1,0 +1,308 @@
+# Free Sorting Data — Analysis of Categorisations
+
+## Introduction
+
+This analysis is designed for **free sorting** (*sorting task*) data, in which each subject groups stimuli into categories according to their own perception. It makes it possible to obtain a **multivariate representation of the stimuli** from the categorizations provided by the subjects and, if needed, an **automatic classification** of the stimuli into groups. When the groups have been verbalised, the function also provides a **textual description of the stimuli** based on the words used to name these groups.
+
+**Why not use a standard alternative?**
+
+A traditional approach consists in transforming the sorts into a similarity matrix between stimuli, then applying a projection method such as MDS. This strategy is useful, but it removes part of the individual information carried by each subject. Here, the function directly analyses the columns of **Subjects** as qualitative variables and applies a **Multiple Correspondence Analysis (MCA)**, which preserves more of the structure of the individual responses and makes it possible to represent stimuli and categories simultaneously in the same space.
+
+## Understanding what is happening “under the bonnet”
+
+### The stimuli are the individuals in the analysis
+
+The function reads the columns placed in **Subjects** as categorical variables. Each row corresponds to a **stimulus**, and each column indicates into which group a subject placed that stimulus. If **Stimuli Labels** is entered, this variable is used to name the stimuli in the outputs; otherwise, the function uses the row numbers.
+
+### An MCA on the categorizations provided by the subjects
+
+At the core of the function is an **MCA** applied to the columns of **Subjects**. In this framework, two stimuli are close if they were often grouped in a similar way by the subjects. The columns placed in **Supplementary Subjects**, if any, are projected as supplementary qualitative variables: they appear in the factor space, but do not contribute to the construction of the axes.
+
+### The role of Ventilation level (%)
+
+The **Ventilation level (%)** parameter attenuates the effect of very infrequent categories in the factorial results. In free sorting, some subjects may isolate a stimulus in a one-item group, thereby creating a very rare category that would otherwise have a disproportionate influence on the **MCA**. This threshold makes it possible to limit that leverage effect. The default value is **5%**.
+
+### Textual description of the stimuli
+
+The function constructs a stimuli × words correspondence table from the group labels, then applies a frequency-description procedure. This part is used to identify, for each stimulus, the words that are most characteristic among the labels used by the subjects. It becomes particularly useful when the groups have been named using interpretable sensory terms.
+
+### Automatic description of the dimensions and clustering
+
+Once the **MCA** has been computed, the function produces an **automatic description of the dimensions** according to **Significance threshold (%)** and **Number of dimensions**. If you activate **Representation of the clusters**, the function applies a **hierarchical clustering** to the components of the **MCA**. By default, the clustering is based on the **first 5 components**, and **Number of clusters = -1** leaves the function to choose the number of groups automatically.
+
+## Expected data structure
+
+The data must contain:
+
+-   an optional column for **Stimuli Labels**;
+-   at least **two** categorical columns in **Subjects**;
+-   optionally, categorical columns in **Supplementary Subjects**.
+
+Each row corresponds to a **stimulus**. This point is important: unlike in other analyses, here a row does not correspond to an individual response, but to a stimulus described by the categorizations provided by several subjects.
+
+Before running the analysis in jamovi, check in the **Data** tab that:
+
+-   **Stimuli Labels** is categorical if you use it;
+-   all the columns in **Subjects** are categorical (factors);
+-   all the columns in **Supplementary Subjects** are categorical;
+-   you have indeed placed at least **two** variables in **Subjects**.
+
+## Guide to the interface
+
+The analysis appears in **SEDA \> Analysis of Sorting Data**. The interface includes three variable drop zones, a **Read me before running** tick box, then the sections **Random Assignment for Rare Categories**, **Graphic Options**, **Numerical Indicators**, and **Clustering**.
+
+### Variables to enter
+
+#### Stimuli Labels
+
+**Role:** provides the names of the stimuli in the outputs. **Impact on the calculation:** does not modify the **MCA**, but determines the labels displayed in the graphs and the names associated with the saved coordinates. **Practical advice:** use short, unique labels; otherwise the maps become difficult to read.
+
+#### Subjects
+
+**Role:** groups together the sorting variables, one per subject. **Impact on the calculation:** these are the active variables of the **MCA**. They are also used for the textual description and the clustering. At least **two** variables are required. **Practical advice:** check that each column is categorical in jamovi.
+
+#### Supplementary Subjects
+
+**Role:** groups together variables projected as supplementary qualitative variables. **Impact on the calculation:** they do not influence the construction of the axes, but their position in the space may help with interpretation. **Practical advice:** useful for projecting a second group of subjects without modifying the main result.
+
+### Read me before running
+
+**Role:** displays built-in help in the results. **Impact on the calculation:** no statistical effect. **Practical advice:** leave it ticked for the first few uses. It is **enabled by default**.
+
+### Random Assignment for Rare Categories: Ventilation level (%)
+
+**Role:** sets the threshold below which a category is considered rare and treated in such a way as to attenuate its influence. **Impact on the calculation:** categories whose relative frequency is below this threshold carry less weight in the **MCA**. The default value is **5%**. **Practical advice:** leave **5%** for a first attempt. If some very rare categories seem to dominate the map, you can try a slightly higher threshold.
+
+### Graphic Options *(menu folded by default)*
+
+#### X-axis and Y-axis
+
+**Role:** choose the dimensions displayed on the x- and y-axes. **Impact on the calculation:** do not modify the **MCA**, but change the displayed factor plane. **Practical advice:** start with **X-axis = 1** and **Y-axis = 2** (default values).
+
+#### Active categories
+
+**Role:** controls the display of active categories on the category map. **Impact on the calculation:** no effect on the **MCA**; it affects only visibility in the graph. **Practical advice:** leave it ticked at first. Untick it if the map is too crowded.
+
+#### Selection of categories
+
+**Role:** filters the categories displayed according to a representation-quality criterion. **Impact on the calculation:** no effect on the **MCA**; it affects only the display. **Practical advice:** the default value **cos2 10** is a good compromise for lightening the map without losing the best represented categories.
+
+#### Supplementary categories
+
+**Role:** controls the display of categories coming from **Supplementary Subjects**. **Impact on the calculation:** no effect on the **MCA**. **Practical advice:** leave it ticked if you use supplementary variables and want to compare them visually with the active categories.
+
+### Numerical Indicators *(menu folded by default)*
+
+#### Significance threshold (%)
+
+**Role:** sets the significance threshold for the automatic description of the dimensions. **Impact on the calculation:** the stricter the threshold, the more selective the output. **Practical advice:** the default value of **5%** is a good starting point.
+
+#### Number of dimensions
+
+**Role:** determines the number of axes described automatically. **Impact on the calculation:** drives the dimension-description output. **Practical advice:** leave **2** for a first attempt.
+
+#### Level description (%)
+
+**Role:** sets the threshold used for the textual description of the stimuli. **Impact on the calculation:** a stricter threshold produces a shorter description; a wider threshold retains more words. **Practical advice:** leave **5%** initially. If the textual description is too sparse, try a slightly wider threshold.
+
+#### Long format dataset
+
+**Role:** displays the intermediate textual dataset in long format. **Impact on the calculation:** adds no new calculation; it makes it possible to check how the labels were reorganised before the textual analysis. **Practical advice:** activate this option if you want to inspect the transformation of the verbal data.
+
+#### Individual Table Options — Coordinates, Contributions, Cosine
+
+**Role:** activate the display of the numerical tables of stimulus coordinates, contributions, and cosines. **Impact on the calculation:** no effect on the **MCA**; they add numerical result tables. **Practical advice:** disabled by default. Activate them if you want exact values for complementary analyses.
+
+#### Variable Table Options — Coordinates, Contributions, Cosine
+
+**Role:** the same, but for the categories of the **MCA**. **Impact on the calculation:** no effect on the **MCA**. **Practical advice:** useful if you want to relate the categories precisely to the factor map.
+
+#### Number of components *(Save)*
+
+**Role:** defines the number of components computed and saved in **Coordinates**, and used for the classification. **Impact on the calculation:** the clustering computes distances on these components. **Practical advice:** the default value of **5** is consistent with the clustering proposed by the function.
+
+#### Coordinates *(Save)*
+
+**Role:** saves the factor coordinates of the stimuli in the jamovi data sheet. **Impact on the calculation:** no effect on the **MCA**. **Practical advice:** activate this if you want to reuse the components in other jamovi analyses.
+
+### Clustering *(menu folded by default)*
+
+#### Representation of the clusters
+
+**Role:** activates the computation of the hierarchical classification and the display of the corresponding graph. **Impact on the calculation:** triggers a hierarchical clustering on the components of the **MCA**. It is unticked by default. **Practical advice:** leave it unticked for a first reading, then activate it to complement the factor map with a grouped reading.
+
+#### Number of clusters
+
+**Role:** sets the number of clusters to extract. **Impact on the calculation:** with **-1**, the number is chosen automatically; any positive value imposes that number. **Practical advice:** start with **-1**, then fix a number only if you have a clear analytical reason.
+
+#### Cluster variable *(Save)*
+
+**Role:** saves the membership of each stimulus to a cluster in the jamovi data sheet. **Impact on the calculation:** it adds no new calculation, but saves the results of the classification. **Practical advice:** useful if you then want to cross the clusters with other variables in jamovi.
+
+## Step-by-step procedure
+
+1.  Open your dataset in jamovi.
+2.  In the **Data** tab, check that all the columns in **Subjects** are categorical and that you have at least two of them.
+3.  Check that **Stimuli Labels** is categorical if you use it.
+4.  Open **SEDA \> Analysis of Sorting Data**.
+5.  Place the variable containing the names of the stimuli in **Stimuli Labels**.
+6.  Place the sorting variables in **Subjects**.
+7.  Place, if necessary, other sorting variables in **Supplementary Subjects**.
+8.  Leave **Ventilation level (%) = 5**, **X-axis = 1**, **Y-axis = 2**, **Significance threshold (%) = 5**, **Level description (%) = 5**, **Number of dimensions = 2**, and **Number of components = 5** for a first attempt.
+9.  If the subjects verbalised their groups, first read **Description of the Stimuli**, then **Representation of the Individuals**, then **Representation of the Categories**.
+10. Consult **Automatic Description of the Dimensions** to interpret the axes.
+11. Read the eigenvalue table to judge whether the 1/2 plane summarises the data well.
+12. Activate **Representation of the clusters** if you want an automatic classification.
+
+## Interpreting the results
+
+### Description of the Stimuli
+
+This table describes each stimulus through the words used in the group labels. It is truly informative only if the groups were named using interpretable words.
+
+| Element              | Meaning                                   |
+|----------------------|-------------------------------------------|
+| *(first column)*       | Stimulus concerned                        |
+| **Word**             | Characteristic word                       |
+| **Intern %**          | Percentage of the word for this stimulus  |
+| **Global %**         | Overall percentage of the word            |
+| **Intern frequency** | Frequency of the word for this stimulus   |
+| **Global frequency** | Overall frequency of the word             |
+| **p**                | P-value of the test                       |
+| **Vtest**            | Standardised intensity of the association |
+
+-   A word with an **Intern %** clearly higher than **Global %** characterises this stimulus more strongly.
+-   A low **p-value** indicates a clearer association.
+-   A positive **V-test** indicates an over-representation of the word for this stimulus; a negative **V-test** indicates an under-representation.
+
+### Representation of the Individuals — stimulus map
+
+This is the important result produced by the function. It represents the stimuli in the factor space of the **MCA**.
+
+| Element                  | Meaning                                   |
+|--------------------------|-------------------------------------------|
+| Two nearby stimuli       | They were often placed in the same groups |
+| Two distant stimuli      | They were rarely grouped together         |
+| Compact group of stimuli | Family of stimuli often sorted together   |
+
+The percentage displayed on each axis indicates the proportion of variance explained. Without verbalisation, this map is more difficult to name: in that case, rely more heavily on the category map and the automatic description of the dimensions.
+
+### Representation of the Categories — category map
+
+This map represents the categories resulting from the sorting variables. Categories close to stimuli are more strongly associated with them. The options **Active categories**, **Supplementary categories**, and **Selection of categories** control what is displayed.
+
+> **Point of attention:** with many subjects, this map can become very crowded. The default value **cos2 10** helps precisely by keeping only a more readable subset of the categories: the 10 categories best represented in the factorial representation.
+
+### Representation of the Variables — variable map
+
+This map represents the qualitative variables of the **MCA**, that is, the subjects or sorting variables. It helps to show the extent to which the partitions of different subjects are aligned with the consensual axes. A subject with high coordinates on one axis has strongly structured their partition according to that axis.
+
+### Eigenvalue Decomposition — eigenvalue table
+
+| Element           | Meaning                               |
+|-------------------|---------------------------------------|
+| **Dim.**          | Dimension number                      |
+| **Eigenvalue**    | Eigenvalue                            |
+| **% of variance** | Proportion explained by the dimension |
+| **Cumulative %**  | Cumulative proportion explained       |
+
+If the first two dimensions explain a substantial proportion of the variance, the 1/2 plane summarises the structure of the sorts well. Otherwise, explore other factor planes.
+
+### Automatic Description of the Dimensions
+
+This textual output identifies the categories and variables most strongly associated with each dimension, according to **Significance threshold (%)** and **Number of dimensions**. It is essential for giving the axes a sensory meaning, especially in the absence of verbalisation.
+
+### Representation of the Individuals According to Clusters *(available if "Representation of the clusters" is activated)*
+
+This graph represents the stimuli on the factor map, grouped according to the clusters resulting from the hierarchical clustering.
+
+| Element                     | Meaning                                  |
+|-----------------------------|------------------------------------------|
+| Stimuli in the same cluster | Stimuli often perceived in a similar way |
+| Clearly separated clusters  | More differentiated families of stimuli  |
+
+### Numerical tables *(optional)*
+
+The coordinate, contribution, and cosine tables for the stimuli and the categories appear only if you tick the corresponding options in **Numerical Indicators**. They provide the exact values needed to complement the visual interpretation.
+
+## Worked example
+
+The **perfumes_sorting** dataset concerns 12 perfumes grouped by 60 subjects in a free-sorting task. To load this dataset, open jamovi, click the icon in the top left-hand corner, then go to **Open** → **Data Library** → **SEDA**. Some groups were also verbalised, which allows the function to produce both a factorial representation of the perfumes and a textual description of the profiles.
+
+### Recommended settings
+
+| Option                             | Value                                |
+|-----------------------------------|-------------------------------------|
+| **Stimuli Labels**                 | Product |
+| **Subjects**                       | the first 50 subjects from S1 to S50    |
+| **Supplementary Subjects**         | the rest of the subjects from S51 to S58          |
+| **Ventilation level (%)**          | 5                                    |
+| **X-axis / Y-axis**                | 1 / 2                                |
+| **Significance threshold (%)**     | 5                                    |
+| **Number of dimensions**           | 2                                    |
+| **Level description (%)**          | 5                                    |
+| **Number of components**           | 5                                    |
+| **Representation of the clusters** | ticked to examine the classification |
+| **Number of clusters**             | -1                                   |
+
+### Reading the Description of the Stimuli table
+
+The table shows that several perfumes have strongly marked lexical profiles. A few particularly clear readings, using the actual values resulting from the analysis:
+
+**Aromatics Elixir** is strongly associated with *strong* (V-test = 4.08, p \< .001; 14.16% of internal occurrences versus 4.65% overall), *ammonia* (V-test = 2.26), and *spicy* (2.18). Conversely, it is clearly under-represented for *fruit* (V-test = -2.63), *flower* (-2.40), and *sweet* (-2.10): it is the most intense and the least floral or sweet perfume in the panel.
+
+**Chanel N5** stands out through *soap* (V-test = 3.72, p \< .001; 7.69% versus 1.61% overall), *deodorant* (2.06), and *unpleasant* (1.99), while being under-represented for *fruit* (-2.47) and *flower* (-2.21).
+
+**Lolita Lempicka** is characterised by *sweet* (V-test = 3.94, p \< .001; 14.55% versus 4.98% overall) and *vanilla* (2.09), but under-represented for *flower* (-2.34).
+
+**Pleasures** is the perfume most strongly associated with *flower* (V-test = 3.46, p \< .001; 15.00% versus 5.70% overall) and *fresh* (2.05), and is clearly opposed to *strong* (-2.46).
+
+**Shalimar** is characterised by *old* (V-test = 2.67, p = 0.008) and *sun* (2.40), and under-represented for *flower* (-2.42).
+
+**Angel** is associated with *vanilla* (2.23), *heady* (1.99), and *too* (1.99), but under-represented for *fresh* (-2.03) and *flower* (-2.19).
+
+### Reading the Representation of the Individuals map
+
+The map reveals a readable perceptual structure on the Dim. 1 (15.53%) / Dim. 2 (14.14%) plane. On the right-hand side of the plane, *Shalimar*, *Aromatics Elixir*, and *Chanel N5* form a group — confirming their strong, spicy, and weakly floral profile. On the left and at the bottom, *J'adore ET*, *J'adore EP*, and *Pleasures* are grouped around a floral and fresh profile. At the top, *Angel* and *Lolita Lempicka* occupy a position that clearly differs on the second dimension — a vanilla and sweet profile. *Cinéma*, *L'instant*, and *Coco Mademoiselle* form an intermediate central-left zone, with profiles that are harder to name without the textual description.
+
+### Reading the Eigenvalue Decomposition table
+
+The first two dimensions explain **29.67%** of the total variance (15.53% + 14.14%). This is much less concentrated than in a traditional PCA: in free sorting, subjects structure the space in very different ways, which spreads the information across many dimensions. The 1/2 plane is a useful but partial summary — as confirmed by the following dimensions (Dim. 3: 11.03%, Dim. 4: 9.97%, etc.).
+
+### Reading the automatic description of the dimensions
+
+On **Dim. 1**, the categories most strongly associated with the positive side (right-hand side, strong perfumes) are *solvent* (S52, estimate 1.31), *unpleasant* (S46, 1.27), *spicy* (S40, 1.24), *very;strong;perfume;woman;old* (S15, 1.32), *soap;ancient* (S48, 1.26), and *acid* (S54, 1.22). The negative side is associated with *flower;fresh* (S43, -0.60), *fresh;light* (S23, -0.81), and *flower* (S47, -0.68). Dim. 1 therefore clearly opposes **strong, spicy, acidic, or unpleasant** perfumes to **fresh and floral** perfumes.
+
+On **Dim. 2**, the positive side is dominated by *vanilla;spicy;hot* (S16, 1.51), *woman;mature* (S7, 1.55), *sweet;too;strong* (S11, 1.43), *teenage;likeable* (S51, 1.54), and *vanilla;sweet* (S34, 1.05). The negative side includes *soap* (S12, -1.03) and *fresh* (S10, -0.50). Dim. 2 therefore opposes **vanilla, sweet, enveloping** perfumes to **fresher or more soapy** profiles.
+
+### Reading the Representation of the Individuals According to Clusters graph
+
+With **Number of clusters = -1**, the automatic classification retains **six clusters**:
+
+-   one cluster grouping **J'adore ET**, **J'adore EP**, and **Pleasures** (floral, fresh);
+-   one cluster grouping **Coco Mademoiselle**, **L'instant**, and **Cinéma** (intermediate profiles);
+-   one cluster reduced to **Pure Poison** (singular profile);
+-   one cluster grouping **Angel** and **Lolita Lempicka** (vanilla, sweet);
+-   one cluster reduced to **Chanel N5** (soapy, unpleasant);
+-   one cluster grouping **Shalimar** and **Aromatics Elixir** (strong, spicy, old-fashioned).
+
+### Synthetic interpretation
+
+This example clearly shows the value of the function. One does not simply obtain a proximity map between perfumes: one also sees **which words** the subjects associate with each perfume, **which oppositions structure the space**, and **which groups of perfumes** emerge from the classification. The combination of the description table, the factor map, and the classification makes it possible to name the families more precisely than with the map alone.
+
+> **What this example shows:** free-sorting analysis makes it possible to relate the factorial structure of the categorizations, their verbal interpretation, and the formation of coherent families of stimuli.
+
+## Practical advice
+
+-   Always check that all the columns in **Subjects** are categorical before running the analysis.
+-   Use **Stimuli Labels** almost systematically in order to obtain readable maps.
+-   Start with **Ventilation level (%) = 5**.
+-   If the category map is too crowded, keep **Selection of categories = cos2 10** and untick **Active categories** if necessary.
+-   Leave **Number of clusters = -1** for an automatic determination initially.
+-   Keep **Number of components = 5** for a first clustering.
+-   If the first two dimensions explain little variance, explore other factor planes.
+-   Activate **Coordinates** and **Cluster variable** if you want to reuse the results in other jamovi analyses.
+
+## In summary
+
+This analysis transforms free-sorting data into a reading of the stimuli that is at once **factorial**, **textual**, and **typological**. It combines an **MCA** on the categorizations provided by the subjects, a **description of the stimuli based on the labels**, and then, if desired, an **automatic classification** of the stimuli. Its main interest lies in preserving the individual information provided by the subjects while building a consensual and directly interpretable view of the perceptual space of the stimuli.

@@ -1,0 +1,247 @@
+# Napping Data — Consensual Representation
+
+## Introduction
+
+This analysis is designed for **Napping** (*projective mapping*) data, in which each subject positions a set of stimuli in a two-dimensional space according to their perceived similarities and differences. It makes it possible to build a **consensual representation** of the stimuli from several individual maps and, if required, to group the stimuli into **clusters**. The function relies on **Multiple Factor Analysis (MFA)** to merge the different pairs of coordinates into a single space.
+
+**Why not use a standard alternative?**
+
+A PCA applied directly to all the coordinate columns would treat each variable as independent, whereas in Napping the data are naturally organised into **X/Y pairs** provided by each subject. Here, each pair is treated as a **group** in the MFA, which makes it possible to build a compromise better suited to the different individual maps. In addition, this MFA is performed **without standardising the data**: by positioning the stimuli on a rectangle of fixed dimensions, each subject implicitly indicates that their first dimension of variability is more important than the second. Standardising the data would erase this fundamental information.
+
+## Understanding what is happening “under the bonnet”
+
+### The data are read as pairs of coordinates
+
+The function expects, in **(X,Y) Coordinates**, a set of numeric columns organised in pairs: X then Y for a first subject, X then Y for a second subject, and so on. The same principle applies to **Supplementary (X,Y) Coordinates**. If the number of columns is odd in either of the two blocks, the analysis is rejected. In practice, the main block must contain at least **4 columns**, that is, **2 pairs**.
+
+### An MFA on groups of size 2, without standardisation
+
+At the core of the analysis is an **MFA**. Each X/Y pair in **(X,Y) Coordinates** is treated as a group of two quantitative variables. The MFA constructs a common space that summarises the information carried by all the subjects, while **balancing the contribution of each group**: a subject who has differentiated the stimuli only slightly will not have more influence than a subject who has discriminated them very clearly. The data are not standardised, which preserves the relative importance of the two axes of the rectangle.
+
+### The role of supplementary coordinates
+
+If you provide variables in **Supplementary (X,Y) Coordinates**, they are projected as **supplementary groups** in the MFA. They do not contribute to the construction of the axes, but make it possible to position other subjects in the same space.
+
+### Automatic description of the dimensions
+
+Once the MFA has been computed, the function produces an **automatic description of the dimensions**, filtered by **Significance threshold (%)** and **Number of dimensions**. This output helps to understand which variables are most strongly linked to the first axes.
+
+### Saving components and clustering
+
+The **Number of components** field determines how many components are computed and saved in **Coordinates**. If you activate **Representation of the clusters**, the function runs a **hierarchical clustering** on the MFA result. By default, the clustering is based on the **first 5 components**, and **Number of clusters = -1** means that the number of clusters is chosen automatically.
+
+## Expected data structure
+
+The data must contain:
+
+-   an optional but strongly recommended column for **Stimuli Labels**;
+-   at least **two pairs** of numeric columns in **(X,Y) Coordinates**;
+-   optionally, numeric pairs in **Supplementary (X,Y) Coordinates**.
+
+Each row corresponds to a **stimulus**. This distinguishes this analysis from other analyses in which each row corresponds to an individual response. If **Stimuli Labels** is not entered, the function uses the row numbers as the names of the stimuli.
+
+Before running the analysis in jamovi, check in the **Data** tab that:
+
+-   **Stimuli Labels** is categorical if you use it;
+-   all the columns in **(X,Y) Coordinates** are numeric;
+-   all the columns in **Supplementary (X,Y) Coordinates** are numeric;
+-   the number of columns in each of the two coordinate blocks is **even**.
+
+## Guide to the interface
+
+The analysis appears in **SEDA \> Analysis of Napping Data**. The interface includes three variable drop zones, followed by the sections **Graphic Options**, **Numerical Indicators**, and **Clustering**.
+
+### Variables to enter
+
+#### Stimuli Labels
+
+**Role:** provides the names of the stimuli in the outputs. **Impact on the calculation:** this variable does not modify the MFA itself, but determines the labels displayed in the graphs and the names associated with the saved coordinates. **Practical advice:** use short and unique labels; otherwise the maps quickly become difficult to read.
+
+#### (X,Y) Coordinates
+
+**Role:** groups together the active coordinates used to construct the consensual representation. **Impact on the calculation:** each X/Y pair becomes a group in the MFA. The number of columns must be even, and in practice the function requires at least **4 columns**. **Practical advice:** follow the order X, Y, X, Y strictly in order to avoid an incoherent map.
+
+#### Supplementary (X,Y) Coordinates
+
+**Role:** adds pairs of coordinates projected as supplementary groups. **Impact on the calculation:** these coordinates do not influence the construction of the axes, but are projected into the MFA space. **Practical advice:** use this block to project a second panel or additional information without modifying the main compromise.
+
+### Read me before running
+
+**Role:** displays built-in help in the results. **Impact on the calculation:** no statistical effect. **Practical advice:** leave this option ticked for the first few uses. It is **enabled by default**.
+
+### Graphic Options
+
+#### X-axis
+
+**Role:** chooses the dimension displayed on the x-axis. **Impact on the calculation:** it does not modify the MFA, but changes the factor plane displayed in the graphs. **Practical advice:** start with **1** (default value).
+
+#### Y-axis
+
+**Role:** chooses the dimension displayed on the y-axis. **Impact on the calculation:** it does not modify the MFA, but changes the factor plane displayed in the graphs. **Practical advice:** start with **2** (default value).
+
+### Numerical Indicators
+
+#### Significance threshold (%)
+
+**Role:** sets the significance threshold for the automatic description of the dimensions. **Impact on the calculation:** the stricter the threshold, the more selective the automatic description. **Practical advice:** the default value of **5%** is a good starting point.
+
+#### Number of dimensions
+
+**Role:** determines the number of axes automatically described. **Impact on the calculation:** this controls the dimensional description output and also influences the minimum number of computed components. **Practical advice:** leave **2** for an initial reading.
+
+#### Number of components
+
+**Role:** defines the number of components computed and saved. **Impact on the calculation:** it directly affects the coordinates recorded in **Coordinates** and serves as the basis for clustering. **Practical advice:** the default value of **5** is consistent with the clustering proposed by the function.
+
+#### Coordinates
+
+**Role:** makes it possible to save the factor coordinates of the stimuli in the jamovi data sheet. **Impact on the calculation:** it adds no new calculation, but saves the MFA results. **Practical advice:** activate this output if you want to reuse the dimensions in other jamovi analyses.
+
+### Clustering
+
+#### Representation of the clusters
+
+**Role:** activates the display of the clustering graph. **Impact on the calculation:** when this option is ticked, the function computes the hierarchical clustering if necessary and displays the map of the stimuli by cluster. **Practical advice:** leave it unticked for an initial reading, then activate it to complement the consensual map with a grouped reading.
+
+#### Number of clusters
+
+**Role:** sets the number of clusters to extract. **Impact on the calculation:** with **-1**, the number of clusters is determined automatically; any positive value imposes that number. **Practical advice:** start with **-1**, then set a number only if you have a clear analytical justification.
+
+#### Cluster variable
+
+**Role:** records the membership of each stimulus to a cluster as a new variable in jamovi. **Impact on the calculation:** it adds no new calculation, but saves the classification results. **Practical advice:** useful if you then want to cross the clusters with other variables in jamovi.
+
+## Step-by-step procedure
+
+1.  Open your dataset in jamovi.
+2.  In the **Data** tab, check that the coordinate columns are numeric and organised in X/Y pairs.
+3.  If you have a column of stimulus identifiers, check that it is categorical.
+4.  Open **SEDA \> Analysis of Napping Data**.
+5.  Place the stimulus name column in **Stimuli Labels**.
+6.  Place all the active pairs in **(X,Y) Coordinates**.
+7.  Place, if needed, the supplementary pairs in **Supplementary (X,Y) Coordinates**.
+8.  Check that the number of columns in each of the coordinate blocks is even.
+9.  Leave **X-axis = 1** and **Y-axis = 2**.
+10. Leave **Significance threshold (%) = 5**, **Number of dimensions = 2**, and **Number of components = 5**.
+11. First read **Representation of the Stimuli**, then **Representation of the Subjects**, then the eigenvalue table.
+12. Then consult **Automatic Description of the Dimensions**.
+13. Activate **Representation of the clusters** if you want to add a grouped reading, then examine **Representation of the Stimuli According to Clusters**.
+
+## Interpreting the results
+
+### Representation of the Stimuli
+
+This is the central map of the function. It represents the stimuli in the consensus factor space constructed by the MFA.
+
+| Element                  | Meaning                                   |
+|--------------------------|-------------------------------------------|
+| Two nearby stimuli       | Similar overall perceptions               |
+| Two distant stimuli      | Different overall perceptions             |
+| Compact group of stimuli | Family of stimuli perceived as neighbours |
+
+> **Point of attention:** the stimulus map shows a perceptual structure, but it is not always sufficient for naming the axes. Adding supplementary information (verbalisation) can greatly help interpretation.
+
+### Representation of the Subjects
+
+This map represents the X/Y coordinate groups — that is, the subjects or individual maps — in the factor space. It helps to assess the level of consensus between subjects.
+
+| Element | Meaning |
+|------------------------------------|------------------------------------|
+| Nearby subjects | Overall consistency between individual maps |
+| Dispersed subjects | Lower consensus |
+| Subject close to the origin | Perception less aligned with the dominant axes |
+
+### Eigenvalue Decomposition — eigenvalue table
+
+| Element           | Meaning                        |
+|-------------------|--------------------------------|
+| **Dim.**          | Dimension number               |
+| **Eigenvalue**    | Importance of the dimension    |
+| **% of variance** | Share of explained variability |
+| **Cumulative %**  | Cumulative share explained     |
+
+If the first two dimensions explain a substantial share of the variance, the 1/2 plane provides a good summary; otherwise, it may be useful to explore other factor planes.
+
+### Automatic Description of the Dimensions
+
+This output automatically describes the retained dimensions according to **Significance threshold (%)** and **Number of dimensions**. It helps to identify which variables are most strongly linked to the axes and becomes particularly useful when **Supplementary (X,Y) Coordinates** have been added.
+
+### Representation of the Stimuli According to Clusters *(available if "Representation of the clusters" is activated or if "Cluster variable" is requested)*
+
+This graph shows the stimuli in the factor space, grouped according to the clusters resulting from the hierarchical clustering.
+
+| Element                     | Meaning                                 |
+|-----------------------------|-----------------------------------------|
+| Stimuli in the same cluster | Similar positioning profiles            |
+| Clearly separated clusters  | Well-differentiated families of stimuli |
+
+### Coordinates *(data output)*
+
+This output records the factor coordinates of the stimuli on the first computed dimensions. Each column corresponds to a dimension (`Dim. 1`, `Dim. 2`, etc.).
+
+### Cluster variable *(data output)*
+
+This output records the membership of each stimulus to a cluster, as a nominal variable. It is useful for subsequent analyses in jamovi.
+
+## Worked example
+
+The **perfumes_napping** dataset describes 12 perfumes positioned on a rectangle by 60 subjects, giving 120 coordinate columns (one X/Y pair per subject). To load this dataset, open jamovi, click the icon in the top left-hand corner (three horizontal lines), then go to **Open** → **Data Library** → **SEDA**.
+
+### Recommended settings
+
+| Option | Value |
+|---------------------------------|---------------------------------------|
+| **Stimuli Labels** | Ident|
+| **(X,Y) Coordinates** | the first 60 coordinate columns (30 pairs) |
+| **Supplementary (X,Y) Coordinates** | the next 60 coordinate columns (30 pairs) |
+| **X-axis / Y-axis** | 1 / 2 |
+| **Significance threshold (%)** | 5 |
+| **Number of dimensions** | 2 |
+| **Number of components** | 5 |
+| **Representation of the clusters** | ticked to examine the classification |
+| **Number of clusters** | -1 |
+
+### Reading the Representation of the Stimuli map
+
+The map reveals a fairly clear perceptual structure on the Dim. 1 (25.07%) / Dim. 2 (18.03%) plane. On the horizontal axis, **Aromatics Elixir** and **Shalimar** are clearly positioned on the right (positive coordinates on Dim. 1), while **J'adore EP**, **J'adore ET**, **Coco Mademoiselle**, **Cinéma**, **Pleasures**, and **Pure Poison** lie on the left. **Chanel N5** stands apart from this right-hand group by a low position on the second dimension (strongly negative value on Dim. 2), which slightly isolates it from the Shalimar / Aromatics Elixir pair. On the vertical axis, **Angel**, **Lolita Lempicka**, and **L'instant** are clearly located above the centre, forming a coherent perceptual group at the top of the plane.
+
+### Reading the Representation of the Subjects map
+
+The subjects map represents each subject (S1 to S60) by their coordinate on the two dimensions. The subjects with high coordinates on Dim. 1 (**S1**, **S20**, **S16**, **S57**, **S60**) strongly structured their rectangle around the main opposition — the one separating Aromatics Elixir / Shalimar from the group on the left. Conversely, subjects such as **S4**or **S2** have higher coordinates on Dim. 2, contributing more strongly to the vertical structure that isolates Angel and Lolita Lempicka. The subjects close to the origin (many in the centre of the map) contribute more moderately to one or other of the dimensions.
+
+### Reading the Eigenvalue Decomposition table
+
+The first two dimensions explain **43.09%** of the total variance (Dim. 1: 25.07%, Dim. 2: 18.03%). In Napping, because individual rectangles differ greatly from one subject to another, this concentration of information is quite good for two dimensions. The following dimensions make decreasing but still non-negligible contributions (Dim. 3: 12.31%, Dim. 4: 9.58%, Dim. 5: 7.96%) — which means that other factor planes might reveal additional oppositions not visible here.
+
+### Reading the automatic description of the dimensions
+
+The **Automatic Description of the Dimensions** output identifies the individual coordinates (X and Y for each subject) most strongly correlated with each axis. For **Dim. 1**, the strongest positive correlations are **X20** (r = 0.9254), **X1** (r = 0.9187), and **Y21** (r = 0.9003): these subjects placed the perfumes on the right at the far right of their rectangle. The strongest negative correlations are **Y48** (r = -0.9126) and **X42** (r = -0.8539): these subjects, by contrast, placed the perfumes on the left at the far right of their own rectangle. This consistency across very different subjects confirms that Dim. 1 captures a strong and shared perceptual opposition, even if not all subjects express it with the same intensity.
+
+### Reading the Representation of the Stimuli According to Clusters graph
+
+With **Number of clusters = -1**, the automatic classification retains **three clusters**:
+
+-   **Cluster 1** (black): **Coco Mademoiselle**, **J'adore EP**, **J'adore ET**, **Cinéma**, **Pleasures**, and **Pure Poison** — perfumes located on the left of the plane, generally perceived as lighter or more floral;
+-   **Cluster 2** (red): **Angel**, **Lolita Lempicka**, and **L'instant** — perfumes located at the top of the plane, perceived as forming a distinct family on the second dimension;
+-   **Cluster 3** (green): **Shalimar**, **Aromatics Elixir**, and **Chanel N5** — perfumes located on the right and lower down, perceived as stronger or more intense.
+
+### Synthetic interpretation
+
+This example clearly shows the value of the function. One does not merely obtain an average map of the perfumes: one also sees how the perfumes are distributed in a **consensual space**, the extent to which the **subjects converge** on this structure, and which **groups of perfumes** emerge from the classification. The overall structure clearly opposes three perceptual families, even though the first two dimensions capture only 43% of the total variability.
+
+> **What this example shows:** Napping analysis makes it possible to turn a set of individual maps into a readable consensual representation, while also showing the degree of convergence between subjects and the major groups of stimuli.
+
+## Practical advice
+
+-   Always check that the columns in **(X,Y) Coordinates** are indeed provided in X/Y pairs and that their total number is even.
+-   Use **Stimuli Labels** almost systematically to avoid reading maps with simple row numbers.
+-   Start with **X-axis = 1** and **Y-axis = 2**; if the first two dimensions summarise little variance, explore other factor planes.
+-   Keep **Number of components = 5** for a first attempt, especially if you are considering clustering.
+-   Leave **Number of clusters = -1** at first so that the function can choose automatically.
+-   Do not read the stimulus map without also looking at **Representation of the Subjects**: it helps to assess consensus between subjects.
+-   The stimulus map does not speak for itself: use **Supplementary (X,Y) Coordinates** or verbalisation data to give the axes a sensory meaning.
+-   Activate **Coordinates** and **Cluster variable** if you want to reuse the results in other jamovi analyses.
+
+## In summary
+
+This analysis builds a **consensual map of the stimuli** from Napping data by combining the individual maps through a non-standardised **MFA** that balances the contribution of each subject. It simultaneously represents the structure of the stimuli and the level of consensus between subjects, and can be complemented by an **automatic clustering** of the stimuli. Its main interest lies in transforming a set of individual maps into a common, directly interpretable representation of perceptual proximities, without requiring a predefined list of attributes.

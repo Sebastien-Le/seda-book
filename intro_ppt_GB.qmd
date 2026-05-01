@@ -1,0 +1,73 @@
+# Introduction
+
+## Presenting jamovi
+
+### What is jamovi?
+
+In one sentence: *jamovi is a free, modern, and accessible statistics package, designed for both teaching and research*.
+
+Developed by contributors from the JASP project, jamovi relies on R for its statistical calculations while providing a graphical interface that requires no code at all. In practical terms, its interface works like a dynamic spreadsheet[^intro_ppt-1]: the data are visible and editable in a sheet on the left, and the results update in real time on the right. This organisation makes the tool accessible to both beginners and experienced users.
+
+[^intro_ppt-1]: A *spreadsheet* is a data-processing tool organised into rows and columns, such as Microsoft Excel or Google Sheets.
+
+One often underestimated advantage of jamovi is its ability to save everything in a single `.omv` file: the data, the analysis options selected, and the results. This greatly facilitates reproducibility and the sharing of work, two areas in which traditional spreadsheets show their limits.
+
+A comparison with other common tools is useful for situating jamovi:
+
+| Feature | Excel / Google Sheets | jamovi |
+|------------------|--------------------------|-----------------------------|
+| Data entry | \ok | \ok |
+| Statistical analyses | \ko (requires external tools) | \ok (built in natively) |
+| Reproducibility | \warn difficult to track | \ok via the `.omv` format |
+| Advanced modules | \ko | \ok via extensions |
+| Open source | \ko | \ok |
+
+**What about XLSTAT?** XLSTAT is a paid-for Excel plug-in that adds advanced statistical functions. Although it is powerful, it remains proprietary, dependent on Microsoft Excel, and its cost may be a barrier for students or organisations with limited budgets. jamovi offers comparable features, and in some areas superior ones, while being entirely free and independent.
+
+### How do you install jamovi?
+
+Installation is straightforward and requires no technical skills. jamovi is cross-platform: it works in the same way on Windows, macOS, and Linux. To install it, go to [jamovi.org/download](https://www.jamovi.org/download.html), choose your operating system, then run the downloaded file.
+
+On the download page, two versions are offered. The **Solid** version is the most stable and thoroughly tested: it is the one to favour for teaching, practical classes, and research. The **Current** version includes the very latest features but may contain a few minor instabilities.
+
+## Modules in jamovi
+
+In jamovi, a module is the equivalent of a package in R or Python: it adds specific features to the software, whether in the form of new types of analyses, graphs, or statistical models.
+
+The jamovi module ecosystem is already rich and covers many needs:
+
+| Module | Main features |
+|-------------------|-----------------------------------------------------|
+| **GAMLj** | [Linear, logistic, and hierarchical models](https://gamlj.github.io){target="_blank"} |
+| **semlj** | [Structural equation models](https://semlj.github.io){target="_blank"} |
+| **jsq** | Bayesian methods |
+| **PAMLj** | [Statistical power analysis](https://blog.jamovi.org/2024/10/28/pamlj.html){target="_blank"} |
+| **lsj** | Interactive exercises from the *Learning Stats* manual |
+| **MEDA** | PCA, CA, MCA, MFA (FactoMineR under jamovi) |
+| **SEDA** | Sensory data analysis (SensoMineR under jamovi) |
+
+To install a module, simply open jamovi, go to the **Modules** tab in the top right-hand corner, select **jamovi library**, then choose the module you want and click **Install**. Some modules still under development may also be installed manually from a `.jmo` file.
+
+## The SEDA module
+
+SEDA (*Sensory Evaluation Data Analysis*) is the jamovi module dedicated to the statistical analysis of sensory data. It is based on the R package *SensoMineR* and makes the main statistical methods used in sensory analysis available through a graphical interface — without requiring a single line of code.
+
+Its menu is organised into three sections corresponding to three broad ways of producing sensory data.
+
+The first section, **Fixed List of Attributes**, brings together methods in which subjects evaluate stimuli using a list of attributes defined in advance. This is the classic case of QDA (*Quantitative Descriptive Analysis*) data, where a trained panel scores the intensity of each attribute for each product. Here, SEDA offers two complementary analyses: one to **characterise the stimuli attribute by attribute** (by identifying which attributes differentiate them and which characterise each stimulus in particular), and another to **represent the sensory space in a multivariate way** (by producing a map of the stimuli enriched with confidence ellipses reflecting the stability of the positions according to panel composition). This section also includes the analysis of **CATA** (*Check-All-That-Apply*) data, in which respondents tick from a list the terms they feel are present in a stimulus, and the analysis of **JAR** (*Just About Right*) data, in which respondents indicate whether each attribute is too strong, too weak, or just about right — making it possible to estimate the *penalties* these deviations impose on liking.
+
+The second section brings together **holistic approaches**, in which subjects evaluate the stimuli globally, without any predefined list of attributes. Two methods are covered: **Napping** (*projective mapping*), in which each subject positions the stimuli on a rectangle according to their perceived similarities, and **free sorting** (*sorting task*), in which each subject freely groups the stimuli into categories. In both cases, SEDA produces a consensual representation of the stimuli by combining the individual maps — by Multiple Factor Analysis for Napping, and by Multiple Correspondence Analysis for free sorting — and may complement this representation with an automatic classification of the stimuli.
+
+The third section, **Hedonic Data**, is dedicated to **liking data**. It contains **preference mapping**, which combines an already constructed representation space (for example, from a PCA) with individual liking scores in order to produce a response surface indicating, for each area of the space, the proportion of consumers who would theoretically respond favourably to it. This analysis is the natural extension of the previous analyses: once the sensory space has been constructed and interpreted, the preference map makes it possible to locate the product optimum within that space.
+
+This booklet covers all seven of these analyses, in the order of the SEDA menu. Throughout the rest of this booklet, the terms *product* and *stimulus* mean the same thing and are used interchangeably.
+
+## Some useful references
+
+-   Official website: [jamovi.org](https://www.jamovi.org){target="_blank"}
+-   [Online documentation](https://docs.jamovi.org/index.html){target="_blank"}
+-   [jamovi user manual](https://www.jamovi.org/user-manual.html){target="_blank"}
+-   Navarro, D., Foxcroft, D., & Meunier, J.-M. (2020). [*Apprentissage des statistiques avec Jamovi*](https://hal.science/hal-02335912){target="_blank"}.
+-   Love, J., Selker, R., Marsman, M. et al. (2019). *JASP: Graphical statistical software for common statistical designs*. [Journal of Statistical Software, 88, 1–17](https://www.jstatsoft.org/article/view/v088i02){target="_blank"}.
+-   Navarro, D., & Foxcroft, D. (2018). [*Learning statistics with jamovi*](https://www.learnstatswithjamovi.com){target="_blank"}.
+-   Community and modules: [forum.jamovi.org](https://forum.jamovi.org){target="_blank"}

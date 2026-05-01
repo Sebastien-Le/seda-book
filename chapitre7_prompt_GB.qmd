@@ -1,0 +1,231 @@
+# Hedonic Data — Preference Mapping
+
+## Introduction
+
+This analysis makes it possible to construct a **preference map** from two types of information: an already computed **two-dimensional representation space** and several **Liking Variables** corresponding to liking scores. It is used to identify which areas of this space are associated with stronger preference and to visualise **what proportion of subjects** would theoretically be attracted to each region of the plane. In SEDA, this principle can be used both for **external preference mapping** (sensory space) and for **internal preference mapping** (hedonic space), depending on the origin of the two axes used.
+
+**Why not use a standard alternative?**
+
+An average liking score by product makes it possible to compare products with one another, but it does not make it possible to relate preferences to an already constructed representation space. Here, the function fits a preference model **for each liking variable**, then combines these models into a **surface** indicating the **% of consumers** associated with each area of the plane. This provides a spatial reading of preferences, which is more informative than a simple table of means.
+
+## Understanding what is happening “under the bonnet”
+
+### The function does not itself construct the representation space
+
+The function does not compute the axes of the plane: it expects you to provide a variable for **X-axis** and a variable for **Y-axis**. The built-in help text explicitly specifies the recommended workflow: for an external map, these axes may come from a PCA on sensory attributes; for an internal map, they may come from a PCA on hedonic scores. In both cases, the two components must first have been **saved** in the data and then selected in this module.
+
+> **How to retrieve the dimensions from the MEDA module**
+>
+> 1.  Open the **MEDA** module (menu **MEDA \> PCA**).
+> 2.  Place your variables in the appropriate fields: for an external map, use your sensory attributes; for an internal map, use your hedonic variables.
+> 3.  Expand the **Numerical Indicators** section, then the **Save** subsection.
+> 4.  In the **Number of components** field, enter **2** (or more if you wish to explore other planes).
+> 5.  Activate the **Coordinates** output: jamovi will then automatically create two new columns in your data sheet, named by default **Dim. 1** and **Dim. 2**, containing the coordinates of each stimulus on the first two components.
+> 6.  Then return to **SEDA \> Hedonic Data \> Preference Mapping** and place **Dim. 1** in **X-axis** and **Dim. 2** in **Y-axis**.
+>
+> If your dataset contains the sensory attributes, the hedonic scores, and the stimulus identifiers in the same file — as is the case for the **senso_hedo_cocktail** dataset — this operation can be carried out entirely within jamovi, with no intermediate export or import.
+
+### A model is fitted for each liking variable
+
+The function first gathers the two plane coordinates and all the columns placed in **Liking Variables**. It then fits a separate model for each liking variable. The type of model depends on **Regression Model**:
+
+-   **Quadratic** (default): linear effects, quadratic terms, and interaction between the two axes. This is the most flexible model. It requires a sufficient number of products — at least 7, ideally 10 or more — to be fitted reliably.
+-   **Vector**: linear effects only. It looks for an overall direction of preference in the space.
+-   **Circular**: linear effects with a common radial quadratic structure. It looks for a more central optimum.
+-   **Elliptical**: linear and quadratic effects separated by axis, without interaction. It allows an optimal area stretched in certain directions.
+
+A simple way to understand them is as follows: **Vector** assumes a monotonic trend; **Quadratic** allows a flexible optimal area; **Circular** and **Elliptical** assume a more or less concentrated local optimum.
+
+### Construction of the preference surface
+
+Once the models have been fitted, the function constructs a **regular grid** over the plane defined by **X-axis** and **Y-axis**. For each liking variable, it computes the predicted values on this grid, centres these predictions, then counts at each point how many subjects exceed a certain reference level. The final result is converted into a **percentage** and displayed on the map as **% of consumers**.
+
+### What the final map really represents
+
+The final map does not directly show the observed scores product by product. It shows a **modelled surface**, constructed from the individual models fitted on the plane. The coloured areas indicate regions of the space where a larger proportion of liking variables is predicted above the reference level. This is what explains the legend title **% of consumers**.
+
+## Expected data structure
+
+The data must contain:
+
+-   an optional column for **Stimuli Labels**;
+-   a numeric column for **X-axis**;
+-   a numeric column for **Y-axis**;
+-   at least **two** numeric columns in **Liking Variables**.
+
+Each row corresponds to a **stimulus**. The two coordinates represent its position in the 2D space, and the columns in **Liking Variables** contain the scores associated with that same stimulus. The function requires at least **2** liking variables; otherwise, it rejects the analysis.
+
+Before running the analysis in jamovi, check in the **Data** tab that:
+
+-   **Stimuli Labels** is categorical if you use it;
+-   **X-axis** and **Y-axis** are numeric;
+-   all the columns in **Liking Variables** are numeric;
+-   you have indeed selected at least **two** variables in **Liking Variables**.
+
+## Guide to the interface
+
+The analysis appears in **SEDA \> Hedonic Data \> Preference Mapping**. The interface includes four variable drop zones, a **Read me before running** tick box, the **Regression Model** menu, then two colour menus in **Graphic Options**.
+
+### Variables to enter
+
+#### Stimuli Labels
+
+**Role:** provides the names displayed for the stimuli on the map. **Impact on the calculation:** does not change the calculation of the surface, but determines the labels plotted next to the points. The function automatically replaces missing labels with numeric identifiers. **Practical advice:** use short and distinct labels, otherwise the map quickly becomes difficult to read.
+
+#### X-axis
+
+**Role:** provides the horizontal coordinate of the stimuli in the representation space. **Impact on the calculation:** enters directly into the regression models and defines the first axis of the surface. **Practical advice:** use an already saved dimension, typically the first component resulting from a PCA previously performed in the MEDA module.
+
+#### Y-axis
+
+**Role:** provides the vertical coordinate of the stimuli in the representation space. **Impact on the calculation:** enters into the regression models and defines the second axis of the surface. **Practical advice:** use the second component from the same space as the one chosen for **X-axis**.
+
+#### Liking Variables
+
+**Role:** groups together the liking scores used to construct the map. **Impact on the calculation:** the function fits a separate model for each variable, then aggregates the results into the final surface. The more variables you have, the more faithfully the surface represents a percentage of subjects. **Practical advice:** use the available individual scores, not just means. At least **2 variables** are required.
+
+### Read me before running
+
+**Role:** displays built-in help in the results, including the recommended workflow for external and internal maps. **Impact on the calculation:** no statistical effect. **Practical advice:** leave it ticked for the first few uses. It is **enabled by default**.
+
+### Regression Model
+
+**Role:** chooses the form of the model fitted for each liking variable. **Impact on the calculation:** this option directly modifies the shape of the preference surface.
+
+| Model | Description | Recommended use |
+|------------------------|------------------------|------------------------|
+| **Quadratic** (default) | Linear effects, quadratic terms, and interaction | General case; ideally ≥ 10 products |
+| **Vector** | Linear effects only | Few products or monotonic preference |
+| **Circular** | Common radial quadratic structure | Optimum assumed to be centred |
+| **Elliptical** | Quadratic terms separated by axis, without interaction | Optimum assumed to be elongated |
+
+**Practical advice:** start with **Quadratic** (default value). If you have fewer than 10 products, prefer **Vector** or **Circular**.
+
+### Graphic Options
+
+#### Color for low preference areas
+
+**Role:** defines the colour of low-preference areas. **Impact on the calculation:** no effect on the models; it only changes the graphical palette. **Practical advice:** the default value is **Blue**. The palette used is a gradient from this colour to white, then towards the high-preference colour.
+
+#### Color for high preference areas
+
+**Role:** defines the colour of high-preference areas. **Impact on the calculation:** no effect on the models; it only changes the palette. **Practical advice:** the default value is **Red**. Keeping **Blue** for low-preference areas and **Red** for high-preference areas is generally the most readable combination.
+
+## Step-by-step procedure
+
+1.  Open your file in jamovi.
+2.  If you do not yet have the coordinates of the 2D space, construct them first in the **MEDA** module: run a **PCA**, activate **Coordinates** in the **Save** subsection of **Numerical Indicators**, and enter **2** in **Number of components**. Two new columns (**Dim. 1** and **Dim. 2**) will then appear automatically in your data sheet.
+3.  In the **Data** tab, check that both axes and the liking variables are numeric.
+4.  Open **SEDA \> Hedonic Data \> Preference Mapping**.
+5.  Place the variable containing the names of the stimuli in **Stimuli Labels**.
+6.  Place the first saved component in **X-axis**.
+7.  Place the second saved component in **Y-axis**.
+8.  Place all the score columns in **Liking Variables** (at least **2**).
+9.  Leave **Regression Model = Quadratic** for a first attempt.
+10. Leave the default colours (**Blue** / **Red**) if you do not wish to customise the palette.
+11. Read the map by identifying the most favourable areas and the positions of the stimuli.
+12. Optionally test another **Regression Model** to see whether the interpretation remains stable.
+
+## Interpreting the results
+
+### Preference Mapping — main graph
+
+The function produces a single output: the preference map. It represents the provided factor space as a background, on which a modelled density surface is superimposed.
+
+| Element | Meaning |
+|------------------------------------|------------------------------------|
+| Areas tending towards **Color for high preference areas** (default: red) | Regions where a high percentage of subjects would have an estimated favourable appreciation |
+| Areas tending towards **Color for low preference areas** (default: blue) | Less liked regions |
+| White areas | Intermediate regions |
+| Contour lines | Indicate the exact percentage of consumers (0 to 100) |
+| Close contour lines | Rapid change in percentage in this area |
+| Squares with labels | Position of the tested stimuli in the factor space |
+
+The area closest to the high-preference colour corresponds to the region of the plane where the estimated proportion of “favourable” subjects is the greatest. This may be interpreted as an **optimal preference area** in the chosen space.
+
+> **Point of attention:** the map is based on modelling. It does not show only the observed products, but an interpolation over the whole plane. Care is needed when interpreting areas far from the stimuli actually present: extrapolation is less reliable there.
+
+> **Point of attention:** the surface depends both on the number of stimuli available for fitting the models and on the number of liking variables used to build the percentage. A visually smooth map does not in itself guarantee strong robustness.
+
+### Absence of numerical tables
+
+In the current configuration of the module, no numerical results table is produced. Interpretation therefore relies entirely on the **Preference Mapping** graph.
+
+## Worked example
+
+The **senso_hedo_cocktail** dataset contains sensory and hedonic evaluations of 13 cocktails described by 13 sensory attributes and rated by a panel of subjects. To load this dataset, open jamovi, click the icon in the top left-hand corner (three horizontal lines), then go to **Open** → **Data Library** → **SEDA**. The example below illustrates the construction of an **external map**: the sensory space is first built by PCA in MEDA, then the hedonic scores are projected into it via this module.
+
+### Recommended settings
+
+| Option                          | Value                                   |
+|---------------------------------|-----------------------------------------|
+| Stimuli Labels                  | Product      |
+| X-axis                          | Dim. 1 (saved from the PCA)             |
+| Y-axis                          | Dim. 2 (saved from the PCA)             |
+| Liking Variables                | all the hedonic score columns (O to DJ) |
+| Regression Model                | Quadratic                               |
+| Color for low preference areas  | Blue                                    |
+| Color for high preference areas | Red                                     |
+
+### Step 1 — Constructing the sensory space in MEDA (PCA)
+
+In the **MEDA** module, run a PCA on the 13 sensory attributes with the following settings:
+
+| Option                      | Value                     |
+|-----------------------------|---------------------------|
+| Active Variables            | the 13 sensory attributes |
+| Scale to unit variance      | Ticked                    |
+| Number of components (Save) | 2                         |
+| Coordinates (Save)          | Enabled                   |
+
+The PCA produces a two-dimensional space: **Dim. 1 explains 53.25%** of the variance and **Dim. 2 explains 24.13%**, giving **77.37% cumulative variance**. The 1/2 plane therefore provides a good summary of the sensory profiles of the cocktails.
+
+The automatic description of the dimensions confirms the interpretation of the axes:
+
+-   **Dim. 1** opposes *acidity* (correlation 0.93), *bitterness* (0.88), *odor.orange* (0.75), and *intensity* (0.73) on one side to *odor.banana* (-0.93), *sweet* (-0.93), *thickness* (-0.88), and *pulp* (-0.70) on the other. This is a clear opposition between acidic and intense cocktails versus sweet, thick, and banana-flavoured cocktails.
+-   **Dim. 2** is more strongly structured by *odor.lemon* (0.77), *odor.mango* (0.69), *persistence* (0.66), and *color.intensity* (0.58), with *odor.orange* (-0.61) on the negative side.
+
+On the individuals map, the cocktails are widely distributed across the plane. **386** is located in the top right-hand corner (strong on Dim. 2), **131** at the bottom centre, **447** and **312** on the left (sweet, thick), and **194**, **233**, and **245** on the right (acidic, intense). Once the PCA has been run, the **Dim. 1** and **Dim. 2** columns appear automatically in the jamovi data sheet.
+
+### Step 2 — Constructing the preference map in SEDA
+
+Return to **SEDA \> Hedonic Data \> Preference Mapping** and use the following settings:
+
+| Option                          | Value                                   |
+|---------------------------------|-----------------------------------------|
+| Stimuli Labels                  | variable identifying the cocktails      |
+| X-axis                          | Dim. 1 (saved from the PCA)             |
+| Y-axis                          | Dim. 2 (saved from the PCA)             |
+| Liking Variables                | all the hedonic score columns (O to DJ) |
+| Regression Model                | Quadratic                               |
+| Color for low preference areas  | Blue                                    |
+| Color for high preference areas | Red                                     |
+
+### Reading the preference map
+
+The resulting map overlays the density surface on the positions of the 13 cocktails in the sensory space. The dark red area — corresponding to more than 80–90% of favourable consumers — is located **on the left-hand side of the plane**, in the region of negative coordinates on Dim. 1, where cocktails **182**, **444**, **343**, and **447** are located. These cocktails, characterised by sweeter, thicker, and more banana-like profiles, correspond to the optimal preference area.
+
+Conversely, the blue area — corresponding to fewer than 20% of favourable consumers — is located **on the right-hand side of the plane**, where cocktails **194**, **233**, and **245** are found, characterised by acidic and intense profiles.
+
+Cocktails **131** (at the bottom centre) and **386** (at the top right) lie in intermediate low-preference areas (light blue, 10–25%).
+
+### Synthetic interpretation
+
+The sensory space structured by the PCA, based on the opposition between acidic-intense and sweet-thick, is directly readable on the preference map. The optimum lies on the sweet-thick side, while acidic and intense profiles are less appreciated. No cocktail lies exactly in the area of maximum preference, which suggests more of a **formulation improvement direction** than an already optimal product.
+
+> **What this example shows:** preference mapping directly links the sensory space and hedonic preferences, making it possible to identify an optimal area even when no existing product occupies it exactly.
+
+## Practical advice
+
+-   Always carry out a prior PCA in the MEDA module and save the components before using this module.
+-   Check that **X-axis** and **Y-axis** come from the same representation space.
+-   Use individual scores in **Liking Variables**, not only means.
+-   At least **two** variables in **Liking Variables** are required to produce the map.
+-   Start with **Regression Model = Quadratic**; if you have fewer than 10 products, test **Vector** or **Circular**.
+-   Do not over-interpret too far from the products actually present on the plane.
+-   An optimal area outside the existing products mainly indicates a formulation or development direction.
+-   Keep a contrasting palette in order to distinguish clearly between low and high preference areas.
+
+## In summary
+
+This analysis constructs a **preference map** from an already available 2D space and several hedonic variables. It fits a preference model for each variable in **Liking Variables**, then combines these models into a surface expressed as **% of consumers**. Its main interest lies in linking, within the same framework, a representation space and individual preferences, so as to identify the most favourable areas of the plane for the greatest number of people — and thus guide product development towards the most appreciated characteristics.

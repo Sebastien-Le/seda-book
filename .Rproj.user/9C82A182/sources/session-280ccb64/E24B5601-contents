@@ -1,0 +1,270 @@
+# Analyse univariée de données de type QDA (Quantitative Descriptive Analysis)
+
+## Introduction
+
+L'objectif de ce chapitre est de comprendre comment le module *SEDA* permet de caractériser un espace produits à partir de données QDA.
+
+Comme jamovi s'appuie sur R pour les calculs, nous allons reproduire les étapes clés dans R afin de mieux comprendre ce que fait l'interface.
+
+## Comprendre les données de type QDA avec R et le package *SensoMineR*
+
+Les données de type QDA se présentent de la façon suivante (*cf.* @fig-perfumes_qda_xlsx) : un premier ensemble de facteurs explicatifs de la variabilité des descripteurs sensoriels (`Panelist`, `Session`, `Rank`, `Product`), puis un ensemble de descripteurs sensoriels (à partir de `Spicy`). Ces données se trouvent dans le fichier `perfumes_qda.xlsx`.
+
+![Les données de type QDA dans Excel](images/qda/perfumes_qda_xlsx.png){#fig-perfumes_qda_xlsx width="95%"}
+
+### Importons les données
+
+Pour importer ces données, nous utilisons la fonction `read_excel()` du *package* `readxl` : R lit le fichier Excel et enregistre le résultat dans un objet appelé `qda_data`.
+
+```{r}
+# Si non installé
+# install.packages("readxl")
+
+library(readxl)
+
+qda_data <- read_excel(
+  path = "perfumes_qda.xlsx"
+)
+```
+
+Si vous souhaitez vérifier que l'importation a bien été effectuée, vous pouvez simplement afficher l'objet `qda_data` en écrivant son nom.
+
+```{r}
+qda_data
+```
+
+La première ligne de la sortie indique que `qda_data` est un *tibble*, un format de données moderne et très pratique dans de nombreuses situations. Par précaution, nous convertissons cet objet en *data frame*[^01-qda_uni_corrige_v3-1], un format standard compatible avec toutes les fonctions du package `SensoMineR`.
+
+[^01-qda_uni_corrige_v3-1]: Pour manipuler des variables catégorielles de façon plus “tidy”, vous pouvez consulter <https://forcats.tidyverse.org>. Pour les *rownames* des *tibbles*, voir <https://tibble.tidyverse.org/reference/rownames.html>.
+
+Transformons `qda_data` en un objet de type *data frame* avec la fonction `as.data.frame()` (et ré-enregistrons le résultat issu de cette transformation dans le même objet).
+
+```{r}
+qda_data <- as.data.frame(qda_data)
+```
+
+Jetons maintenant un coup d'œil à nos données avec la fonction `summary()`.
+
+```{r}
+summary(qda_data)
+```
+
+La sortie de `summary()` indique que les variables `Panelist` et `Product` sont de classe *character* (du texte). Elle indique aussi que les autres variables du jeu de données sont de classe *numeric* : ce sont des nombres réels (on peut calculer des indicateurs statistiques de base comme le minimum, les quartiles, le maximum).
+
+Transformons les variables `Panelist` et `Product` en facteurs, puis vérifions.
+
+```{r}
+qda_data$Panelist <- factor(qda_data$Panelist)
+qda_data$Product  <- factor(qda_data$Product)
+
+summary(qda_data)
+```
+
+Les variables `Panelist` et `Product` sont maintenant considérées comme des facteurs.
+
+### Réalisons une analyse de variance avec la fonction `LinearModel()` du package *FactoMineR*
+
+Dans cette section, nous cherchons à expliquer la *variabilité* de l'attribut sensoriel `Heady` à partir des variables `Product` et `Panelist`. Autrement dit : les différences de notes observées sur cet attribut proviennent-elles principalement des produits testés, des panélistes, ou des deux ?
+
+Pour répondre à cette question, nous la reformulons sous la forme d'une hypothèse, ce qui nous amène à considérer un *modèle statistique* permettant de quantifier l'effet de chaque facteur. Pour commencer simplement, nous utilisons ici un modèle à deux facteurs (produit + panéliste), sans inclure l'effet `Session`, ni les effets d'interaction :
+
+$$
+Attribut \sim Produit + Panéliste
+$$
+
+Ce modèle exprime l'idée que les notes attribuées à l'attribut `Heady` dépendent d'un effet produit (certains produits étant perçus comme plus entêtants que d'autres) et d'un effet panéliste (chaque panéliste pouvant avoir une échelle de notation ou une sensibilité différente).
+
+Nous allons donc tester ce modèle à l'aide d'une analyse de la variance (ANOVA), afin de déterminer dans quelle mesure chacun de ces facteurs contribue à la variabilité observée (celle des notes).
+
+Pour cela, nous utilisons la fonction `LinearModel()` du package *FactoMineR* et stockons le résultat dans l'objet `res_lm`.
+
+```{r}
+# Si non installé
+# install.packages("FactoMineR")
+
+library(FactoMineR)
+
+res_lm <- LinearModel(
+  Heady ~ Product + Panelist,
+  data = qda_data
+)
+```
+
+L'objet `res_lm` est une liste composée de plusieurs composantes. Pour en connaître les noms, on applique la fonction `names()`.
+
+```{r}
+names(res_lm)
+```
+
+Jetons un coup d'œil à la composante qui contient les résultats globaux du modèle, notamment le *F-test* permettant d'évaluer la significativité des effets principaux.
+
+```{r}
+res_lm$Ftest
+```
+
+Les effets principaux `Product` et `Panelist` sont significatifs : cela signifie que les différences observées sur l'attribut `Heady` proviennent à la fois des produits testés et des panélistes.
+
+Se pose maintenant une autre question : quel est le produit le plus entêtant ? Pour répondre à ce type de question, il nous faut changer de prisme et regarder des résultats au niveau des modalités (produits). Pour cela, nous écrivons le modèle sous une autre forme, plus adaptée à une analyse au niveau des produits :
+
+$$
+Y_{ij} = \mu + \alpha_i + \beta_j + \epsilon_{ij},
+$$
+
+où $Y_{ij}$ est la note de l'attribut `Heady` donnée par le panéliste $j$ pour le produit $i$, $\mu$ est la moyenne générale, $\alpha_i$ est l'effet du produit $i$, $\beta_j$ est l'effet du panéliste $j$, et $\epsilon_{ij}$ est le résidu (c'est-à-dire ce qui n'est pas expliqué par le modèle).
+
+Les coefficients du modèle sont estimés avec la contrainte suivante :
+
+$$
+\sum_{i=1}^{I} \alpha_i = 0,
+$$
+
+où $I$ est le nombre de produits évalués.
+
+La caractérisation d'un produit repose sur le test de significativité du coefficient $\alpha_i$ par rapport à 0 : si $\alpha_i$ est significativement supérieur à 0, cela indique que le produit $i$ est perçu comme plus entêtant que la moyenne ; à l'inverse, si $\alpha_i$ est significativement inférieur à 0, cela indique que le produit $i$ est perçu comme moins entêtant que la moyenne.
+
+Regardons maintenant les résultats au niveau des modalités (*t-test*), autrement dit, regardons les estimations des paramètres du modèle.
+
+```{r}
+res_lm$Ttest
+```
+
+La colonne *Estimate* correspond à l'estimation des paramètres du modèle (les $\alpha_i$ et les $\beta_j$). Le produit perçu comme le plus entêtant est celui dont l'estimation est la plus élevée. Dans notre exemple, il s'agit du parfum *Aromatics Elixir* (avec un coefficient estimé à 4.35).
+
+### Réalisons automatiquement des analyses de variance avec la fonction `decat()` du package *SensoMineR*
+
+La fonction `decat()` est une fonction clé du package *SensoMineR*. Elle réalise une analyse de la variance pour l'ensemble des attributs sensoriels, en utilisant un modèle spécifié par l'utilisateur, puis fournit les résultats nécessaires à l'interprétation des différences entre les produits.
+
+Pour cette fonction, il est important de placer l'effet produit en premier dans la formule du modèle, afin que les sorties soient correctement orientées vers une interprétation “produit”.
+
+La fonction `decat()` génère des résultats numériques détaillés et deux représentations graphiques principales : la première concerne le *F-test* (effet global du produit pour chaque attribut), la seconde concerne le *t-test* (différences au niveau des produits).
+
+```{r}
+# Si non installé
+# install.packages("SensoMineR")
+
+library(SensoMineR)
+
+res_decat <- decat(
+  qda_data,
+  formul   = "~Product+Panelist",
+  firstvar = 5
+)
+```
+
+Comme dans l'exploration d'un modèle d'ANOVA classique, nous obtenons une première figure exprimant un résultat au niveau des attributs sensoriels et une seconde exprimant un résultat au niveau des produits.
+
+Sur la première figure, les attributs sont triés de la plus significative à la moins significative selon l'effet `Product`. Dans notre exemple, `Heady` est un attribut très discriminant.
+
+Sur la seconde figure, on visualise les principales différences entre produits : les produits et les attributs sont triés (bleu si $\alpha_i > 0$ de manière significative, rouge si $\alpha_i < 0$).
+
+Regardons maintenant les indicateurs numériques.
+
+```{r}
+names(res_decat)
+```
+
+Le résultat principal est la description automatique de chaque produit, que l'on retrouve dans `res_decat$resT`. Cet objet est lui-même une liste.
+
+```{r}
+names(res_decat$resT)
+```
+
+Jetons un coup d'œil aux parfums *Angel* et *Coco Mademoiselle*, par exemple.
+
+```{r}
+res_decat$resT$Angel
+```
+
+Comme vous pouvez le constater, la valeur associée à `Heady` est cohérente avec celle obtenue via le premier modèle pour la modalité correspondant à *Angel*.
+
+```{r}
+res_decat$resT$`Coco Mademoiselle`
+```
+
+## Comprendre les données de type QDA avec jamovi et le module *SEDA*
+
+Dans cette partie, nous passons du code R à l'interface jamovi. L'objectif est le même que précédemment :
+
+1. repérer les **attributs qui discriminent** l'espace produits (test global de l'effet *Produit*) ;
+2. produire la **caractérisation** de chaque produit (attributs significativement au-dessus / en dessous de la moyenne).
+
+<!-- Pour éviter toute ambiguïté, voici l'équivalence des noms utilisés dans ce chapitre : -->
+
+<!-- -   **Produit** = `Product` -->
+<!-- -   **Juge / Panéliste** = `Panelist` -->
+<!-- -   **Attributs sensoriels** = colonnes de notes (ex. `Spicy`, `Heady`,...) -->
+
+### Importons les données
+
+Dans jamovi, l'analyse commence par l'importation (ou l'ouverture) d'un fichier de données :
+
+-   si vous partez d'un fichier Excel, ouvrez `perfumes_qda.xlsx` (*cf.* @fig-import_qda) ;
+-   si vous partez d'un fichier jamovi, ouvrez directement un fichier `.omv` (il peut déjà contenir les options et les résultats).
+
+![Importation de données depuis un fichier Excel](images/qda/import_qda.png){#fig-import_qda width="75%"}
+
+Dans la suite, nous supposons que vous importez `perfumes_qda.xlsx` : les données apparaissent ensuite sous forme de tableur (*cf.* @fig-qda_data).
+
+![Données de type QDA](images/qda/data_qda.png){#fig-qda_data width="85%"}
+
+**Attention au piège des types de mesure !** C'est l'erreur la plus fréquente : si jamovi considère vos notes (0 à 10) comme des variables *nominales* (par exemple à cause d'une virgule/point mal interprété, d'un espace, ou d'un caractère non numérique importé), le module *SEDA* peut refuser de les accepter dans **Attributs** ou produire des calculs incorrects.
+
+La check-list avant de lancer l'analyse :
+
+-   `Product` → icône **trois boules colorées** (**Nominal**).
+-   `Panelist` → icône **trois boules colorées** (**Nominal**).
+-   Attributs (`Spicy`, `Heady`, …) → icône **réglette** (**Continu**).
+
+Si une icône n'est pas correcte :
+
+1.  double-cliquez sur l'en-tête de la colonne pour ouvrir l'éditeur de variable (*cf.* @fig-qda_recode) ;
+2.  corrigez le **Type de mesure** (Nominal / Ordinal / Continu) ;
+3.  vérifiez aussi le **Type de données** (Texte, Entier, Décimal). Si une variable censée être numérique a été importée comme texte, nettoyez d'abord le fichier source (séparateur décimal, espaces, caractères cachés), puis ré-importez.
+
+![Recoder une variable dans jamovi](images/qda/qda_recode.png){#fig-qda_recode width="85%"}
+
+### Réalisons la « Caractérisation de l'espace des stimuli » dans *SEDA*
+
+Une fois les données importées et les variables correctement paramétrées :
+
+1.  allez dans l'onglet **Analyses** ;
+2.  dans le module *SEDA*, choisissez « Caractérisation de l'espace des stimuli » ;
+3.  renseignez (*cf.* @fig-decat_api) :
+    -   **Produit / Stimulus** : `Product`
+    -   **Juge / Panéliste** : `Panelist`
+    -   **Attributs sensoriels** : sélectionnez toutes les colonnes de notes (de `Spicy` à la dernière variable sensorielle).
+    
+Le modèle utilisé ici est le même que dans la partie R : **effet Produit + effet Panéliste**. Si votre plan expérimental inclut des sessions et que vous souhaitez les modéliser explicitement, vous pourrez le faire avec R dans une analyse plus avancée.
+
+![Caractérisation des produits : paramétrage](images/qda/decat_api.png){#fig-decat_api width="60%"}
+
+
+Une fois les variables sélectionnées et le seuil de significativité fixé, jamovi réalise automatiquement une ANOVA pour chaque attribut (comme `decat()` en R) et met à jour les tableaux en temps réel.
+
+![Caractérisation des produits : sélection des variables](images/qda/decat_api_full.png){#fig-decat_api_full width="60%" fig-pos="h"}
+
+> Enregistrez le fichier au format `.omv` dès que l'analyse est paramétrée. Vous conservez ainsi, dans un seul fichier, **données + options + résultats**.
+
+L'interface affiche deux tableaux principaux. Ils correspondent exactement à ce que nous avons vu dans la partie R : un résultat **global** par attribut (analogue au *F-test*), puis une description **produit par produit** (analogue aux *t-tests* au niveau des modalités).
+
+Le premier tableau (*cf.* @fig-decat_result_F) liste tous les descripteurs dont la *p-valeur* est inférieure au seuil spécifié par l'utilisateur.
+
+-   Si *p* \< 0.05, l'attribut discrimine les produits (au sens du test global de l'effet *Produit*).
+-   Si *p* $\geq$ 0.05, l'attribut varie trop peu entre produits (dans cet espace produits précis) pour être considéré comme discriminant.
+
+![Attributs discriminants (ANOVA globale)](images/qda/decat_result_F.png){#fig-decat_result_F width="35%"}
+
+> Conseil pratique : les tableaux jamovi sont interactifs. Si la liste est longue, copiez le tableau (clic droit → **Copy**) et collez-le dans Excel pour filtrer/ordonner rapidement.
+
+Le deuxième tableau (*cf.* @fig-decat_result_t) liste, par produit, les attributs **saillants** (significativement au-dessus ou en dessous de la moyenne).
+
+-   **Estimate positif** → le produit est **au-dessus** de la moyenne sur l'attribut (ex. “plus entêtant”).
+-   **Estimate négatif** → le produit est **en dessous** de la moyenne (ex. “moins floral”).
+
+![Caractérisation de chacun des produits](images/qda/decat_result_t.png){#fig-decat_result_t width="60%"}
+
+> Bon réflexe : dans le tableau “Description des produits”, regardez toujours **le signe**, **la p-valeur** et l'**ordre de grandeur** de l'estimation. Un effet statistiquement significatif mais très petit peut être peu pertinent en pratique.
+
+Vous obtenez ainsi une “carte d'identité sensorielle” de chaque produit. Par exemple, si pour *Angel* vous observez `Heady` avec une estimation positive et `Floral` avec une estimation négative, vous pouvez conclure : “*Angel* est caractérisé par un profil plus entêtant et moins floral que la moyenne des parfums étudiés.”
+
+<!-- Dans le chapitre suivant, nous verrons comment ces résultats univariés alimentent une représentation multivariée : l'ACP est réalisée sur un tableau de **moyennes ajustées** par produit, ce qui permet de visualiser l'espace produits en intégrant l'ensemble des attributs (et, si besoin, d'ajouter des ellipses de confiance). -->

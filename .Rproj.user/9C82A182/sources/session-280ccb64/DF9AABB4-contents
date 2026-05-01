@@ -1,0 +1,39 @@
+project:
+  type: book
+
+book:
+  title: "Apprends moi à faire seul: analyse de données sensorielles avec jamovi et R"
+  author: "Sébastien Lê"
+  date: "12/8/2024"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - 01-qda_uni.qmd
+    - 02-qda_multi.qmd
+    - 03-CATA.qmd
+    - summary.qmd
+    - references.qmd
+
+bibliography: references.bib
+lang: fr
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-title: "Table des matières"
+    number-sections: true
+    fig-cap-location: bottom
+  pdf:
+    documentclass: scrreprt
+    #include-in-header:
+      #text: |
+        #\renewcommand{\contentsname}{Table des matières}
+    toc: true
+    header-includes:
+      - \usepackage{fontawesome5}
+      - \newcommand{\ok}{\faCheck}
+      - \newcommand{\ko}{\faTimes}
+      - \newcommand{\warn}{\faExclamationTriangle}
+
+editor: visual
+

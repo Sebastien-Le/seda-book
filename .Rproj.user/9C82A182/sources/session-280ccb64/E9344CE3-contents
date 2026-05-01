@@ -1,0 +1,210 @@
+# Analysis of CATA Data
+
+## Introduction
+
+Cette analyse est conçue pour les données de type **CATA** (*Check-All-That-Apply*), c'est-à-dire lorsque des répondants cochent, parmi une liste prédéfinie, tous les termes qu'ils jugent présents dans un stimulus. Elle permet de répondre à deux questions complémentaires : **quels termes caractérisent chaque stimulus** et **comment les stimuli s'organisent globalement selon leurs profils CATA**. Le module produit un tableau de contingence, une description des stimuli selon les termes CATA, puis, si le nombre de termes est suffisant, une **analyse des correspondances** suivie d'une **classification automatique** des stimuli.
+
+**Pourquoi ne pas utiliser une alternative standard ?**
+
+Les données CATA sont, à l'origine, des réponses binaires par répondant et par terme. Une comparaison de moyennes classique n'est donc pas l'outil le plus adapté pour représenter la structure globale de ces données. Le module commence par agréger les réponses dans un **tableau de contingence stimuli × termes**, puis applique des méthodes adaptées à cette structure : description fréquentielle, analyse des correspondances et, si possible, classification.
+
+------------------------------------------------------------------------
+
+## Comprendre ce qui se passe "sous le capot"
+
+### Construction du tableau de contingence
+
+La première étape consiste à regrouper les réponses par stimulus. Le module additionne les colonnes placées dans **CATA** pour chaque modalité de **Stimulus Effect**. On obtient ainsi un tableau où les lignes sont les stimuli, les colonnes sont les termes CATA, et chaque cellule indique combien de fois un terme a été coché pour un stimulus donné. C'est ce tableau qui sert de base à toutes les sorties suivantes.
+
+### Description des stimuli par les termes
+
+À partir de ce tableau de contingence, le module applique une procédure de description fréquentielle pilotée par le seuil défini dans **Significance threshold (%)**. Pour chaque stimulus, il repère les termes qui sont significativement plus ou moins fréquents que dans l'ensemble du tableau. Cette logique est proche de celle d'une description statistique des profils, mais adaptée ici à des fréquences de coche plutôt qu'à des notes continues. Le même seuil s'applique ensuite à la description des clusters.
+
+> Un terme absent du tableau de description n'est pas significativement associé à un stimulus au seuil choisi. Cela peut signifier qu'il est coché de façon assez homogène entre les stimuli, ou qu'il est trop rare pour ressortir clairement.
+
+### Analyse des correspondances
+
+Si au moins **trois** variables sont placées dans **CATA**, le module réalise une **analyse des correspondances** sur le tableau de contingence. Cette méthode représente simultanément les stimuli et les termes dans un même espace factoriel. Deux stimuli proches sur la carte ont tendance à partager des profils CATA proches ; deux termes proches ont tendance à être cochés pour des stimuli similaires. Les axes résument les grandes oppositions de profils entre stimuli et termes.
+
+### Classification automatique des stimuli
+
+Lorsque l'analyse des correspondances a été calculée, le module lance ensuite une **classification hiérarchique sur composantes principales** avec un nombre de groupes déterminé automatiquement. Il produit une carte des stimuli selon leurs clusters, puis une description des clusters avec le même seuil de significativité que pour la description des stimuli.
+
+### Ce qui se passe si le nombre de termes est insuffisant
+
+Le module exige au moins **deux** variables dans **CATA** pour démarrer l'analyse. En dessous, il s'arrête avec un message indiquant que le nombre de facteurs est trop faible. Avec exactement **deux** termes, les tableaux peuvent être produits, mais les graphiques de représentation et la classification ne sont pas calculés : ils nécessitent au moins **trois** variables CATA.
+
+------------------------------------------------------------------------
+
+## Structure des données attendues
+
+Les données doivent contenir :
+
+-   une colonne catégorielle identifiant les **stimuli** ;
+-   plusieurs colonnes numériques correspondant aux **termes CATA**. Dans la pratique, ces colonnes sont le plus souvent codées en **0/1**, puisque le module les additionne par stimulus pour construire le tableau de contingence.
+
+Chaque ligne correspond à l'évaluation d'un stimulus par un répondant. Si 40 répondants évaluent 6 stimuli, le fichier contient en général une ligne par répondant et par stimulus, avec une colonne par terme CATA.
+
+Avant de lancer l'analyse dans jamovi, vérifiez dans l'onglet **Données** que :
+
+-   la variable destinée à **Stimulus Effect** est bien catégorielle ;
+-   les variables destinées à **CATA** sont bien numériques et contiennent des valeurs cohérentes (le plus souvent des 0 et des 1) ;
+-   vous avez sélectionné au moins **deux** variables dans **CATA**, et idéalement **trois ou plus** si vous souhaitez obtenir les graphiques et la classification.
+
+------------------------------------------------------------------------
+
+## Guide de l'interface
+
+L'analyse apparaît dans le menu **SEDA \> Fixed List of Attributes \> Analysis of CATA Data**, avec le sous-titre **SensoMineR::CATA**. L'interface comporte deux zones de dépôt de variables, une case à cocher **Read me before running**, puis un champ numérique **Significance threshold (%)**.
+
+### Variables à renseigner
+
+#### Stimulus Effect
+
+**Rôle :** identifie les stimuli à comparer. **Impact sur le calcul :** cette variable définit les lignes du tableau de contingence et organise l'ensemble des sorties descriptives et graphiques. **Conseil pratique :** utilisez des libellés courts et clairs, car ils apparaîtront dans les tableaux et dans les graphiques.
+
+#### CATA
+
+**Rôle :** regroupe les termes de la liste CATA. **Impact sur le calcul :** ces variables définissent les colonnes du tableau de contingence ; elles servent ensuite à la description des stimuli, à l'analyse des correspondances et, si possible, à la classification. Seules des variables numériques sont acceptées. **Conseil pratique :** sélectionnez toutes les colonnes CATA pertinentes. Il faut au moins **deux** variables pour lancer l'analyse, et au moins **trois** pour obtenir les graphiques et la classification.
+
+------------------------------------------------------------------------
+
+### Option générale
+
+#### Read me before running
+
+**Rôle :** affiche une aide intégrée dans les résultats. **Impact sur le calcul :** aucun effet statistique ; cette option agit seulement sur l'affichage des instructions. **Conseil pratique :** laissez-la cochée lors des premières utilisations. Elle est **activée par défaut**.
+
+------------------------------------------------------------------------
+
+### Seuil de significativité
+
+#### Significance threshold (%)
+
+**Rôle :** définit le seuil de la p-value utilisé pour sélectionner les termes caractéristiques des stimuli et des clusters. **Impact sur le calcul :** un seuil faible produit des résultats plus conservateurs ; un seuil plus élevé retient davantage de termes dans les tables descriptives. Ce même seuil s'applique à la description des stimuli individuels et à la description des clusters. **Conseil pratique :** la valeur par défaut est **5 %**, bon point de départ pour un premier essai. Si les tableaux sont trop pauvres, testez **10 %**, puis éventuellement **20 %** en exploration.
+
+------------------------------------------------------------------------
+
+## Procédure pas à pas
+
+1.  Ouvrez votre jeu de données dans jamovi.
+2.  Dans l'onglet **Données**, vérifiez que la variable stimulus est catégorielle et que les variables CATA sont numériques.
+3.  Ouvrez **SEDA \> Fixed List of Attributes \> Analysis of CATA Data**.
+4.  Placez la variable stimulus dans **Stimulus Effect**.
+5.  Placez les colonnes CATA dans **CATA**.
+6.  Vérifiez que vous avez sélectionné au moins **deux** termes, et de préférence **trois ou plus** si vous voulez les graphiques.
+7.  Laissez **Read me before running** coché si vous souhaitez afficher l'aide intégrée.
+8.  Laissez **Significance threshold (%)** à **5 %** pour un premier essai.
+9.  Commencez par lire le tableau de contingence pour vérifier que les fréquences ont du sens.
+10. Lisez ensuite la description des stimuli pour repérer les termes les plus caractéristiques.
+11. Si au moins trois termes ont été fournis, consultez la carte **Representation of the Stimuli and the CATA**, puis **Representation of the Stimuli According to Clusters**, et enfin la description des clusters.
+12. Si les tableaux de description sont trop vides, augmentez légèrement **Significance threshold (%)**.
+
+------------------------------------------------------------------------
+
+## Interprétation des résultats
+
+### Tableau de contingence
+
+Ce premier tableau croise les stimuli en lignes et les termes CATA en colonnes. Chaque cellule indique le nombre de fois où un terme a été coché pour un stimulus donné. La dernière ligne présente le total par terme. Le module l'utilise comme base pour toutes les étapes suivantes.
+
+| Situation observée | Lecture possible |
+|------------------------------------|------------------------------------|
+| Valeur élevée dans une cellule | Le terme a souvent été coché pour ce stimulus |
+| Ligne avec plusieurs valeurs élevées | Le stimulus est associé à plusieurs termes fréquents |
+| Colonne élevée pour presque tous les stimuli | Terme fréquent, mais pas forcément discriminant |
+
+> **Point de vigilance :** un terme très fréquent n'est pas automatiquement un terme caractéristique. S'il est coché pour presque tous les stimuli, il contribuera peu à les distinguer.
+
+### Description of the Stimuli According to CATA
+
+Ce tableau décrit chaque stimulus par les termes qui lui sont significativement associés, regroupés par stimulus. Les termes sont triés par v-test décroissant au sein de chaque groupe.
+
+| Colonne              | Signification                                       |
+|----------------------|-----------------------------------------------------|
+| *(première colonne)* | Stimulus concerné                                   |
+| **CATA**             | Terme caractéristique                               |
+| **Intern %**         | Pourcentage d'utilisation du terme pour ce stimulus |
+| **Global %**         | Pourcentage global d'utilisation du terme           |
+| **Intern frequency** | Fréquence absolue du terme pour ce stimulus         |
+| **Global frequency** | Fréquence absolue totale du terme                   |
+| **p**                | P-value du test                                     |
+| **Vtest**            | Intensité standardisée de l'association             |
+
+-   Un **Vtest positif** indique que le terme est plus fréquemment coché pour ce stimulus que dans l'ensemble.
+-   Un **Vtest négatif** indique qu'il est moins fréquemment coché — et est tout aussi informatif.
+-   Une **p-value** faible indique une caractérisation plus nette.
+
+> Un stimulus absent de ce tableau n'est pas "sans profil" ; il se situe simplement proche de la moyenne de l'ensemble des stimuli au seuil choisi.
+
+### Representation of the Stimuli and the CATA *(disponible avec ≥ 3 termes)*
+
+Ce graphique n'est produit que si au moins **trois** termes sont placés dans **CATA**. Il représente simultanément les stimuli et les termes dans l'espace factoriel issu de l'analyse des correspondances.
+
+-   Deux stimuli proches ont des profils CATA proches.
+-   Un terme proche d'un stimulus sur la carte est davantage associé à ce stimulus.
+-   Le pourcentage affiché sur chaque axe indique la part de l'information totale capturée par cette dimension.
+
+Cette carte donne une vue d'ensemble, mais elle ne remplace pas la table descriptive. Les deux doivent être lues ensemble.
+
+### Representation of the Stimuli According to Clusters *(disponible avec ≥ 3 termes)*
+
+Ce graphique n'apparaît que si la classification a pu être calculée. Il représente les stimuli sur la même carte factorielle, avec un code couleur indiquant à quel cluster appartient chaque stimulus.
+
+-   Des stimuli dans le même cluster ont des profils CATA proches.
+-   Des clusters éloignés correspondent à des familles de stimuli plus contrastées.
+-   Cette sortie aide à résumer la structure globale des stimuli.
+
+### Description of the Clusters *(disponible avec ≥ 3 termes)*
+
+Lorsque la classification est disponible, le module produit aussi une table décrivant chaque cluster par les termes qui lui sont significativement associés, avec la même logique que pour la description des stimuli.
+
+| Colonne         | Signification                              |
+|-----------------|--------------------------------------------|
+| **cluster**     | Groupe de stimuli concerné                 |
+| **word**        | Terme caractéristique                      |
+| **internper**   | Pourcentage du terme dans le cluster       |
+| **globper**     | Pourcentage global du terme                |
+| **internfreq**  | Fréquence absolue du terme dans le cluster |
+| **globfreq**    | Fréquence absolue totale du terme          |
+| **pvaluedfres** | P-value                                    |
+| **vtest**       | Intensité standardisée de l'association    |
+
+Cette table est particulièrement utile pour résumer les grandes familles de stimuli, au-delà du détail stimulus par stimulus.
+
+------------------------------------------------------------------------
+
+## Exemple concret
+
+Un scénario réaliste consiste à étudier **6 jus d'orange** évalués par **40 répondants**, à partir d'une liste de **15 termes CATA** comme *Sweet*, *Acidic*, *Orange*, *Thick* ou *Astringent*. Chaque ligne du fichier correspond à un répondant pour un jus donné, avec une colonne par terme.
+
+### Réglages conseillés
+
+| Option                     | Valeur                         |
+|----------------------------|--------------------------------|
+| Stimulus Effect            | variable identifiant les jus   |
+| CATA                       | les 15 termes numériques (0/1) |
+| Significance threshold (%) | 5                              |
+
+### Lecture plausible
+
+Dans le tableau de contingence, *Sweet* et *Acidic* peuvent présenter des fréquences très différentes selon les jus. Dans la table **Description of the Stimuli According to CATA**, *Juice 1* peut apparaître avec *Acidic* et *Astringent* comme termes surreprésentés (Vtest positif) et *Sweet* comme terme sous-représenté (Vtest négatif). Sur la carte **Representation of the Stimuli and the CATA**, *Juice 1* se situerait du côté de ces termes. La classification pourrait regrouper plusieurs jus partageant un profil plus fruité et épais dans un même cluster, décrit par les termes *Orange* et *Thick*.
+
+------------------------------------------------------------------------
+
+## Conseils pratiques
+
+-   Commencez avec **Significance threshold (%) = 5 %** ; augmentez à **10 %** si les tables de description sont trop vides.
+-   Vérifiez toujours le tableau de contingence avant d'interpréter les graphiques : des termes avec des fréquences proches de zéro n'apporteront pas d'information utile.
+-   Il faut **au moins trois termes** dans **CATA** pour obtenir la carte factorielle et la classification.
+-   Un **Vtest négatif** est aussi informatif qu'un Vtest positif : il signale qu'un terme est significativement moins coché pour un stimulus que pour les autres.
+-   Ne surinterpretez pas l'absence d'un stimulus dans la table descriptive : il peut simplement avoir un profil proche de la moyenne générale.
+-   La classification est automatique — jugez sa pertinence en croisant le graphique et la description des clusters.
+-   Lisez la carte de correspondances conjointement avec le tableau de description : la carte donne une vue d'ensemble, le tableau fournit les détails statistiques.
+-   Assurez-vous que les colonnes CATA sont bien cohérentes et, le plus souvent, codées en 0/1.
+
+------------------------------------------------------------------------
+
+## En résumé
+
+Cette analyse transforme des réponses CATA en une lecture structurée des profils sensoriels des stimuli. Elle combine un **tableau de contingence**, une **description statistique des stimuli**, puis, si le nombre de termes est suffisant, une **analyse des correspondances** et une **classification automatique**. Son intérêt principal est de passer d'une simple accumulation de coches à une vision à la fois **descriptive**, **factorielle** et **typologique** des stimuli, dans un enchaînement entièrement automatisé.

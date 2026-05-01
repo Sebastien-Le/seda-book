@@ -1,0 +1,127 @@
+# Analyse de données de type Sorting (tri libre)
+
+## Introduction
+
+L’objectif de ce chapitre est de détailler les mécanismes statistiques utilisés par le module *SEDA* de jamovi pour analyser des données de **tri libre** (*Free Sorting Task*).
+
+Dans une tâche de tri, on demande aux participants de regrouper les produits selon leurs similarités perceptives. Cette méthode est souvent complétée par une phase de **description libre**, où les participants qualifient chaque groupe de produits par des mots-clés. L’analyse doit donc traiter deux flux d’informations :
+
+1. **l’organisation du tri** : l’appartenance des produits à des groupes (données qualitatives) ;
+2. **le contenu sémantique** : les termes utilisés pour décrire les produits (données textuelles).
+
+Nous illustrons cette démarche avec une étude sur des parfums (fichier `sorting.omv`). Pour la reproduction sous R, nous utilisons l’export `perfumes_sorting.xlsx`.
+
+## Importons les données
+
+```{r}
+# Si non installé
+# install.packages("readxl")
+
+library(readxl)
+
+sorting_data <- read_excel(path = "perfumes_sorting.xlsx")
+sorting_data
+```
+
+Pour ce chapitre, nous allons utiliser deux formats :
+
+* un format **long** pour l’analyse textuelle ;
+* un format **large** pour l’analyse multivariée (ACM).
+
+## Préparons un format long pour l’analyse textuelle
+
+Pour analyser le vocabulaire, nous transformons le tableau afin d’obtenir une ligne par couple *produit × participant*. Nous utilisons `pivot_longer()` (fonction moderne de *tidyr*).
+
+```{r}
+# Si non installé
+# install.packages("tidyr")
+
+library(tidyr)
+
+sorting_long_data <- as.data.frame(sorting_data)
+
+sorting_long_data <- pivot_longer(
+  sorting_long_data,
+  cols      = -Product,
+  names_to  = "Subject",
+  values_to = "Description"
+)
+
+head(sorting_long_data)
+```
+
+## Préparons un format large pour l’analyse du tri
+
+Pour l’analyse multivariée, nous préparons une table où chaque colonne représente un participant. Les réponses sont converties en **facteurs** (catégories).
+
+```{r}
+sorting_mca_data <- as.data.frame(sorting_data)
+row.names(sorting_mca_data) <- sorting_mca_data[, 1]
+sorting_mca_data <- sorting_mca_data[, -1]
+
+# Conversion de toutes les colonnes en facteurs
+sorting_mca_data[] <- lapply(sorting_mca_data, factor)
+
+dim(sorting_mca_data)
+summary(sorting_mca_data[, 1:min(5, ncol(sorting_mca_data))])
+```
+
+## Décrire les produits à partir des mots
+
+Nous utilisons la fonction `textual()` du package *FactoMineR* pour traiter les descriptions. Elle transforme les mots séparés par des délimiteurs (ici le point-virgule) en une table de contingence.
+
+```{r}
+# Si non installé
+# install.packages("FactoMineR")
+
+library(FactoMineR)
+
+res_textual <- textual(
+  sorting_long_data,
+  num.text       = 3,  # colonne du texte
+  contingence.by = 1,  # regroupement par produit
+  sep.word       = ";"
+)
+
+names(res_textual)
+```
+
+Le premier output est une table de contingence (produits en lignes, mots en colonnes). On peut l’utiliser pour décrire chaque produit par les mots qui lui sont le plus associés via `descfreq()`.
+
+```{r}
+res_desc <- descfreq(res_textual$cont.table)
+names(res_desc)
+```
+
+```{r}
+# Exemple : description automatique du premier produit de la liste
+res_desc[[1]]
+```
+
+## Structurer l’espace du tri : l’Analyse des Correspondances Multiples (ACM)
+
+Puisque chaque participant a créé ses propres catégories (données qualitatives), l’**ACM** (Multiple Correspondence Analysis) est une méthode naturelle pour synthétiser ces tris. Elle projette les produits sur une carte : plus deux produits sont proches, plus ils ont été classés fréquemment dans le même groupe par l’ensemble des participants.
+
+```{r}
+res_mca <- MCA(sorting_mca_data, graph = FALSE)
+```
+
+```{r}
+#| fig-cap: "ACM (tri libre) : carte des produits"
+plot.MCA(res_mca, choix = "ind")
+```
+
+On peut également obtenir une description automatique des axes (dimensions) avec `dimdesc()`.
+
+```{r}
+res_dim <- dimdesc(res_mca)
+names(res_dim)
+```
+
+## De R à jamovi
+
+Le module *SEDA* de jamovi intègre ces deux approches :
+
+1. **Synthèse spatiale** : ACM pour fournir une carte des produits (espace perceptuel du tri) ;
+2. **Aide à l’interprétation** : description des produits à partir des mots (logique proche de `textual()` + `descfreq()`) ;
+3. **Lecture facilitée** : on repère rapidement quelles familles de termes décrivent des régions de l’espace factoriel (par exemple “frais”, “floral”, etc.).

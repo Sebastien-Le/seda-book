@@ -1,0 +1,88 @@
+project:
+  type: book
+
+book:
+  #title: "Apprends moi à faire seul : analyse de données sensorielles avec jamovi et le module SEDA"
+  title: "Help Me Do It on My Own: Sensory Data Analysis with jamovi and the SEDA Module"
+  author: "Sébastien Lê"
+  chapters:
+    - index.qmd
+    - intro_ppt.qmd
+    - chapitre1_prompt_harmonise.qmd
+    - chapitre2_prompt_harmonise.qmd
+    - chapitre3_prompt_harmonise.qmd
+    - chapitre4_prompt_harmonise.qmd
+    - chapitre5_prompt_harmonise.qmd
+    - chapitre6_prompt_harmonise.qmd
+    - chapitre7_prompt_harmonise.qmd
+lang: fr-FR
+#lang: en-GB
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-title: "Table des matières"
+    #toc-title: "Table of contents"
+    number-sections: true
+    fig-cap-location: bottom
+  pdf:
+    documentclass: scrbook # Passage à scrbook pour twoside et openright
+    classoption: [a4paper, twoside, openright, fontsize=12pt]
+    toc: true
+    
+    # --- CONFIGURATION LAX POUR TEMPLATE SFAS MIXTE ---
+    header-includes: |
+      % 1. POLICES (Proche Arial/Calibri)
+      \usepackage{tgheros}
+      \renewcommand{\familydefault}{\sfdefault}
+      \usepackage[T1]{fontenc}
+      
+      % 2. MARGES (Template Word: Normales, twoside)
+      \usepackage[top=2.5cm, bottom=2.5cm, left=3.17cm, right=3.17cm]{geometry}
+      
+      % 3. EN-TÊTES ET PIEDS DE PAGE (Template SFAS)
+      \usepackage{scrlayer-scrpage}
+      \clearpairofpagestyles
+      \ihead{\fontsize{9pt}{11pt}\selectfont \textbf{Cahier n°01}}
+      \ohead{\fontsize{9pt}{11pt}\selectfont \textbf{Help Me Do It on My Own}}
+      \ifoot{\fontsize{9pt}{11pt}\selectfont \today}
+      \ofoot{\fontsize{9pt}{11pt}\selectfont \textbf{Cahier SFAS 2026}}
+      \cfoot[\pagemark]{\pagemark}
+      \setheadsepline{0.4pt}
+      \setfootsepline{0.4pt}
+      
+      % 4. GESTION DES COLONNES ET TABLEAUX
+      \usepackage{multicol} % Pour le texte en 2 colonnes
+      \setlength{\columnsep}{1cm} % Espace entre colonnes
+      
+      % Pour forcer les tableaux sur une colonne centrée (float barrier)
+      \usepackage{float}
+      \usepackage{capt-of} % Pour les légendes hors environnement float
+      
+      % Redéfinition des tableaux standards pour qu'ils soient centrés sur la page entière
+      \makeatletter
+      \renewenvironment{table}[1][]{%
+        \begin{table*}[h!]% Utilisation de la version étoilée pour traverser les colonnes
+        \centering%
+      }{%
+        \end{table*}%
+      }
+      \makeatother
+
+      % 5. STYLE DES TITRES
+      \usepackage{sectsty}
+      \chapterfont{\raggedright\fontsize{18pt}{22pt}\selectfont\textbf}
+      \sectionfont{\raggedright\fontsize{14pt}{17pt}\selectfont\textbf}
+      \subsectionfont{\raggedright\fontsize{12pt}{15pt}\selectfont\textbf}
+      
+      % 6. PARAGRAPHES
+      \setlength{\parindent}{0pt}
+      \setlength{\parskip}{6pt plus 2pt minus 1pt}
+      
+      % 7. ICÔNES
+      \usepackage{fontawesome5}
+      \newcommand{\ok}{\faCheck}
+      \newcommand{\ko}{\faTimes}
+      \newcommand{\warn}{\faExclamationTriangle}
+
+editor: visual

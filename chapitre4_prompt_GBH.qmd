@@ -1,0 +1,263 @@
+# JAR Data — Defect and Penalty Analysis
+
+## Introduction
+
+This analysis is designed for **JAR** (*Just About Right*) data, in which subjects evaluate a sensory attribute on a scale such as *too little / just about right / too much*. In this function, the analysis focuses on **defects**, that is, on all levels different from the reference JAR level, and on their relationship with the liking score. It makes it possible to describe stimuli according to their defects, to represent stimuli and defects in the same space, and then to estimate **liking penalties** associated with these defects.
+
+**Why not use a standard alternative?**
+
+A mean liking score by stimulus does not indicate which defects explain a decrease in liking. A simple reading of JAR responses also does not clearly distinguish what corresponds to a lack or an excess relative to the ideal level. Here, the function recodes each attribute around the level defined in the **Coding of the JAR level** field, constructs a stimuli × defects contingency table, and then computes liking penalties relative to the full set of stimuli.
+
+## Understanding what happens under the hood
+
+### Recoding of the JAR level
+
+The function first uses the value entered in **Coding of the JAR level** to redefine, in each variable in **Sensory Attributes**, the reference level. The default value is `"jar"`. All other levels are then treated as **defects**, that is, as deviations from the level judged to be “just about right”.
+
+### Construction of the defect frequency table
+
+After this recoding, the function removes the reference level and counts, for each stimulus, how many times each defect was observed. The intermediate result is a **defects × stimuli** matrix, then transposed to display a **stimuli × defects** table in jamovi. This frequency table is the basis for the description of stimuli and the factorial representation.
+
+### Description of stimuli by defects
+
+From this table, the function applies a frequency description procedure. For each stimulus, it identifies the defects that are significantly more or less associated than in the whole table. The logic is close to that used for CATA data: the frequency of a defect for a stimulus is compared with its global frequency, and significant associations are reported with their frequencies, p-values, and V-tests.
+
+### Representation of products according to defects
+
+The function then performs a **correspondence analysis** on the defect table and produces the graph entitled **Representation of the Products According to Defects**. This map simultaneously represents the stimuli and the defects in the same factor space, in order to visualize proximities between defect profiles.
+
+### Calculation of penalties
+
+The function calculates penalties from **Stimulus Effect**, **Subject Effect**, **Liking Variable**, and **Sensory Attributes**. The penalty measures the loss in liking associated with a defect: it is the difference between the mean liking score of subjects who checked the JAR level and that of subjects who checked the defect level. This difference is calculated across all stimuli simultaneously, which gives it a global interpretation, not a stimulus-specific one.
+
+> The penalty is a negative or zero value: it represents a loss in liking. The larger the absolute value, the more penalizing the defect is.
+
+### A penalty graph for each stimulus
+
+The function produces a penalty graph for **each** stimulus. The display order depends on the order of the **Stimulus Effect** levels in jamovi. It is therefore possible to place another stimulus first by modifying the order of the levels in the **Data** tab.
+
+## Expected data structure
+
+The data must contain:
+
+-   one categorical column for **Stimulus Effect**;
+-   one categorical column for **Subject Effect**;
+-   one numeric column for **Liking Variable**;
+-   one or more categorical columns for **Sensory Attributes**.
+
+Each row corresponds to the evaluation of one stimulus by one subject. The variables in **Sensory Attributes** must be factors, because the function modifies their reference level using **Coding of the JAR level**.
+
+Before running the analysis in jamovi, check in the **Data** tab that:
+
+-   **Stimulus Effect** is categorical;
+-   **Subject Effect** is categorical;
+-   **Liking Variable** is numeric;
+-   all variables in **Sensory Attributes** are categorical;
+-   the JAR level used in your data corresponds exactly to the value entered in **Coding of the JAR level**.
+
+## Interface guide
+
+The analysis appears in **SEDA \> Fixed List of Attributes \> Analysis of JAR Data**. The interface includes four variable drop zones, the **Read me before running** checkbox, and the text field **Coding of the JAR level**.
+
+### Variables to complete
+
+#### Stimulus Effect
+
+**Role:** identifies the stimuli to analyze. **Impact on the computation:** this variable defines the groups for which defect frequencies are calculated and for which the penalty graphs are generated. **Practical tip:** the order of the levels of this variable determines the display order of the penalty graphs. Modify this order in the **Data** tab if you want to see a particular stimulus first.
+
+#### Subject Effect
+
+**Role:** identifies the subjects. **Impact on the computation:** this variable is passed to the penalty calculation and is used to structure observations by subject. **Practical tip:** check that the same subject keeps exactly the same identifier throughout the file.
+
+#### Liking Variable
+
+**Role:** contains the overall liking score used to calculate the penalties. **Impact on the computation:** this is the numeric variable on which the function estimates the effect of defects. The penalty measures the loss on this score. **Practical tip:** make sure that the liking scale is consistent for all stimuli and all subjects.
+
+#### Sensory Attributes
+
+**Role:** groups together the JAR variables, one per sensory attribute. **Impact on the computation:** each variable is recoded around the level defined in **Coding of the JAR level**; all other levels become defects. **Practical tip:** check that each variable does contain the JAR level with the exact expected label.
+
+### Read me before running
+
+**Role:** displays integrated help in the results. **Impact on the computation:** none. **Practical tip:** leave it checked during the first uses. It is **enabled by default**.
+
+### Coding of the JAR level: Coding of the JAR level
+
+**Role:** indicates the exact label of the level considered as the reference JAR level. **Impact on the computation:** this parameter determines the level removed from the defect table and used as the reference in the recoding. If the value does not match the data, the analysis may fail or produce inconsistent results. **Practical tip:** the default value is `jar`. Adapt it exactly to the label used in your file, respecting case.
+
+## Step-by-step procedure
+
+1.  Open your dataset in jamovi.
+2.  In the **Data** tab, check that the stimulus variable is categorical, the subject variable is categorical, the liking variable is numeric, and all JAR variables are categorical.
+3.  Note the exact label of the “just about right” level used in your JAR variables.
+4.  Open **SEDA \> Fixed List of Attributes \> Analysis of JAR Data**.
+5.  Place the stimulus variable in **Stimulus Effect**.
+6.  Place the subject variable in **Subject Effect**.
+7.  Place the liking variable in **Liking Variable**.
+8.  Place all JAR variables in **Sensory Attributes**.
+9.  Enter in **Coding of the JAR level** the exact label of the JAR level; leave `jar` if this is indeed the label used in your data.
+10. First read the defect frequency table to check the data structure.
+11. Then consult the description of stimuli according to defects.
+12. Examine the **Representation of the Products According to Defects** map for an overview.
+13. Read the penalty table, then the **Penalties for Product ...** graphs to identify priority defects.
+
+## Interpretation of results
+
+### Frequency Table — defect frequency table
+
+This table crosses stimuli in rows and non-JAR levels in columns. Each cell indicates the number of times a defect was observed for a given stimulus. It is the basis for all subsequent outputs.
+
+| Element | Meaning |
+|------------------------------------|------------------------------------|
+| High value in a cell | The defect is frequent for this stimulus |
+| Row with several high values | The stimulus accumulates several frequent defects |
+| Column high for several stimuli | Frequent defect, but not necessarily specific |
+
+> **Point of vigilance:** a very rare defect will contribute little to the interpretation. A column with very low frequencies generally indicates a weakly discriminating defect.
+
+### Description of the Stimuli According to Defects
+
+This table describes, stimulus by stimulus, the significantly associated defects.
+
+| Element              | Meaning                                            |
+|--------------------|----------------------------------------------------|
+| *(first column)*     | Stimulus concerned                                 |
+| **Defect**           | Characteristic defect                              |
+| **Intern %r**        | Percentage of the defect for this stimulus         |
+| **Global %**         | Global percentage of the defect                    |
+| **Intern frequency** | Absolute frequency of the defect for this stimulus |
+| **Global frequency** | Total absolute frequency of the defect             |
+| **p**                | P-value of the test                                |
+| **Vtest**            | Standardized intensity of the association          |
+
+-   A positive **V-test** indicates that the defect is over-represented for this stimulus.
+-   A negative **V-test** indicates that it is under-represented — which is also informative.
+-   A low **p-value** indicates a clearer association.
+
+> A stimulus absent from this table has no defect significantly associated at the threshold used: its defect profile is close to the mean of the full set of stimuli.
+
+### Representation of the Products According to Defects — graph
+
+This graph comes from the correspondence analysis on the defect table. It simultaneously represents the stimuli and the defects in the same factor space. Two close stimuli have similar defect profiles; a defect close to a stimulus is more strongly associated with it. The percentage displayed on each axis indicates the share of information captured by that dimension.
+
+This map gives an overview and should be complemented by reading the description table for the statistical details.
+
+### Penalty Table — penalty table
+
+This table presents, for each defect, the estimated effect on the liking score.
+
+| Element        | Meaning                                              |
+|----------------|------------------------------------------------------|
+| **Defect**     | Defect concerned                                     |
+| **Penalty**    | Estimated loss in liking associated with this defect |
+| **Std. Error** | Standard error of the estimate                       |
+| **p**          | P-value of the test                                  |
+
+-   The larger the absolute value of **Penalty**, the stronger the estimated effect.
+-   A low **p-value** suggests an effect more clearly supported by the data.
+-   A weakly significant penalty does not necessarily imply the absence of an effect: the defect may simply be too rare to be estimated precisely.
+
+### Penalties for Product ... — graphs by stimulus
+
+The function generates a penalty graph for each stimulus. The x-axis corresponds to the frequency of the defect for this stimulus; the y-axis corresponds to the penalty calculated across all stimuli. Error bars are drawn around the points, defects with p \< 0.05 are visually distinguished, and labels appear for defects with p \< 0.20.
+
+| Element | Meaning |
+|------------------------------------|------------------------------------|
+| High frequency + marked penalty | Priority defect: frequent and strongly penalizing |
+| High frequency + weak penalty | Frequent but less penalizing defect |
+| Low frequency + marked penalty | Rare but potentially problematic defect |
+| Low frequency + weak penalty | Secondary defect |
+
+> **Point of vigilance:** the graph crosses **local** information (the frequency of the defect for the displayed stimulus) with **global** information (the penalty calculated across all stimuli). This point is essential to avoid overinterpreting an isolated point on the graph.
+
+## Example: the **milkshake** dataset
+
+The **milkshake** dataset concerns three milkshakes evaluated using several JAR attributes related in particular to odor, texture, fluidity, sweetness, and acidity. It is used to illustrate the function outputs. The numerical values and graphics discussed below come directly from the analysis results. To load this dataset, open jamovi, click the icon in the top left corner, the three stacked lines, then **Open** → **Data Library** → **SEDA**.
+
+### Example settings
+
+To reproduce this example, use the following values.
+
+| Option                      | Value                                     |
+|-----------------------------|-------------------------------------------|
+| **Stimulus Effect**         | Product                                   |
+| **Subject Effect**          | Panelist                                  |
+| **Liking Variable**         | Liking                                    |
+| **Sensory Attributes**      | all JAR variables from Color to Taste_Van |
+| **Coding of the JAR level** | `jar`                                     |
+
+### Analysis of the *Frequency Table (Stimuli × Defects)*
+
+The frequency table shows that the three products have very different defect profiles.
+
+The **859** milkshake is strongly marked by *Not_enough_texture*, mentioned by 38 subjects out of 47 (80.85%), and *Too_fluid* (70.21%); these are the two most frequent defects in the whole set.
+
+The **972** milkshake stands out mainly through *Not_enough_odor_int* (53.19%), *Not_enough_odor_fruit* (46.81%), *Not_enough_odor_van* (44.68%), and *Too_much_sweetness* (42.55%).
+
+The **284** milkshake has several frequent but less extreme defects: *Not_enough_texture* (57.45%), *Not_enough_odor_int* (48.94%), *Too_fluid* (46.81%), and *Not_enough_odor_van* (44.68%).
+
+This first reading is important: it makes it possible to identify which defects dominate sensorially for each product, even before knowing whether they are truly associated with a decrease in liking.
+
+### Analysis of the *Description of the Products According to Defects* table
+
+This table identifies the defects that are significantly over- or under-represented for each product relative to the *average product*.
+
+The **859** milkshake is the one whose profile stands out most clearly. It is more strongly associated with *Not_enough_texture* (p = 0.055, V-test = 1.92) and *Too_fluid* (p = 0.080, V-test = 1.75). Conversely, it is significantly less associated with *A_little_plain* (p = 0.040, V-test = -2.05) and *Not_enough_odor_van* (p = 0.049, V-test = -1.97). Its sensory profile is therefore mainly driven by texture and fluidity defects, rather than by a lack of vanilla odor.
+
+The **972** milkshake is more strongly associated with *Too_much_sweetness* (p = 0.087, V-test = 1.71), while the other positive associations are far from significant at the 5% threshold. Conversely, it is less associated with *Not_enough_texture* (p = 0.072, V-test = -1.80) and *Not_enough_sweetness* (p = 0.099, V-test = -1.65), which places it in partial opposition to the **859** milkshake on these dimensions.
+
+The **284** milkshake appears much closer to the mean profile. No defect stands out clearly at the 5% threshold, suggesting a product less singular than the other two from the point of view of its defects.
+
+### Analysis of the *Representation of the Products According to Defects* graph
+
+The first dimension explains 74.78% of the inertia and clearly opposes the **859** milkshake to the **972** milkshake. On the **859** side, the main defects are *Too_fluid*, *Not_enough_texture*, and *Not_enough_sweetness*. On the **972** side, the defects are rather *Too_much_sweetness*, *Too_much_odor_van*, and *Not_enough_odor_fruit*.
+
+The second dimension (25.22%) may be more specific to the **284** milkshake, which is associated with defects related to fruity or vanilla odors.
+
+> As an essential complement to the tables, this graph, derived from a correspondence analysis, represents the associations between products and defects, making proximities and oppositions between products immediately visible.
+
+### Analysis of the *Penalties Obtained from All Defects* table
+
+The penalty table provides a **global** reading of the impact of defects on liking, across all products. It does not say how frequently a defect appears for a given product; it indicates how much this defect is associated with an average loss in liking when it is observed.
+
+In this example, only one defect is significant at the 5% threshold: *Too_much_odor_fruit*, with a penalty of -2.67 and a p-value of 0.018. It is therefore the only defect whose negative effect on liking is clearly supported by the data. Several other defects show notable penalties without reaching this significance threshold, for example *Too_much_acidity* (-4.03, p = 0.082), *Too_much_texture* (-1.78, p = 0.089), and *Not_enough_acidity* (-1.03, p = 0.087). They cannot be considered statistically significant here, but they are weak signals to monitor.
+
+> **Point of vigilance:** penalties are calculated across all products simultaneously. They measure **global** information — which defect penalizes liking the most, across all products — and not **local** information, such as how frequently this defect appears for a given product. It is precisely the combination of these two pieces of information that will be useful.
+
+### Analysis of the *Representation of the Penalties for Each Product* graphs
+
+These three graphs cross two essential pieces of information for product optimization:
+
+-   on the **x-axis**, the **frequency** of the defect for the displayed product, derived from the *Frequencies of Defects by Product and Sensory Attribute* table;
+-   on the **y-axis**, the **penalty** associated with this defect, calculated across the full panel and all products, derived from the *Penalties Obtained from All Defects* table.
+
+By construction, a defect therefore keeps the same y-coordinate from one graph to another; only its x-coordinate varies according to its prevalence in the product considered. Red points indicate defects whose penalty is statistically significant at the 5% threshold. In our example, only *Too_much_odor_fruit* stands out through a significant penalty.
+
+To be operational, it is essential to combine this reading with the *Description of the Products According to Defects* table, which identifies the **specificity** of each defect (over- or under-representation). A frequent defect is not necessarily specific, and conversely, strong specificity does not systematically imply a strong penalty on liking. Taking these three pieces of information into account (local frequency, global penalty, specificity) makes it possible to prioritize improvement levers.
+
+For the **284** milkshake, no defect stands out significantly in the descriptive table (profile close to the mean). The graph shows that the critical defect *Too_much_odor_fruit* is very rare (6.38%). As for *Too_much_acidity*, although it is strongly penalizing (-4.03), its complete absence for this product (0.00%) disqualifies it as an improvement avenue. Lacks of vanilla or fruity odor are frequent, but without being specific to the product or penalizing. The **284** milkshake therefore presents no priority optimization lever.
+
+The analysis of the **859** milkshake shows a clear convergence between a tendency toward over-representation (V-test \> 1.7, without significance at the 5% threshold) and high prevalence for texture defects (*Too_fluid* at 70.21% and *Not_enough_texture* at 80.85%). Although their global hedonic cost is moderate, they are the clearest negative traits of this product. Moreover, the critical defect *Too_much_odor_fruit* remains marginal (4.26%). The main issue for **859** therefore lies in correcting its **fluidity** and **texture**, rather than adjusting its aroma.
+
+The **972** milkshake presents a different configuration. Its most over-represented defect is **Too_much_sweetness** (V-test = 1.71, p = 0.087), which is relatively frequent (42.55%). However, since its global penalty is low, it does not represent a major optimization lever. As for the other products, the critical defect *Too_much_odor_fruit* is almost absent (4.26%). The other aromatic lacks are frequent but have little impact. The **972** milkshake therefore does not show any defect combining high frequency, specificity, and marked penalty.
+
+### Synthetic interpretation
+
+In summary, these graphs clearly show that the **penalty** provides information about the **hedonic cost** of a defect, while its **frequency** indicates its actual weight for a given product. To turn this reading into an optimization avenue, however, it must be crossed with the **specificity** of the defect, as shown in *Description of the Products According to Defects*. This threefold reading leads here to three distinct diagnoses: the **284** milkshake appears close to the mean profile, with no clearly identified priority lever; the **859** milkshake is mainly distinguished by **texture** and **fluidity** defects, both specific and very frequent; the **972** milkshake presents an excess of **sweetness** that is more specific than truly penalizing.
+
+> **What we take away from this example:** JAR analysis is not only used to identify the most frequent defects, but to distinguish those that are **frequent**, those that are **specific to the product**, those that are **penalizing**, and above all those that combine several of these dimensions. It is this cross-reading that makes it possible to prioritize product optimization actions.
+
+## Practical tips
+
+-   Always check that **Coding of the JAR level** corresponds exactly to the label used in your data, including case.
+-   Make sure that all JAR variables are categorical in jamovi before running the analysis.
+-   Always read the frequency table before interpreting penalties: a high penalty on a very rare defect is difficult to use in product optimization.
+-   Focus first on defects that are both frequent and associated with a marked and significant penalty.
+-   Do not overinterpret a weakly significant penalty as a complete absence of effect.
+-   Keep in mind that the penalty is calculated globally across all stimuli, whereas the frequency displayed in the graph is specific to the displayed stimulus.
+-   Use the **Representation of the Products According to Defects** map for the overview, and the tables for the details.
+-   If you want to display another stimulus first in the penalty graphs, modify the order of the **Stimulus Effect** levels in the **Data** tab.
+
+## In summary
+
+This analysis transforms JAR responses into a structured reading of perceived defects and their relationship with liking. It combines a **defect frequency table**, a **description of stimuli according to defects**, a **factorial representation of products and defects**, and then an **estimation of the penalties** associated with each defect. Its main value is to connect, within the same framework, the frequency of deviations from the ideal level (jar) and their impact on liking, in order to guide product optimization.

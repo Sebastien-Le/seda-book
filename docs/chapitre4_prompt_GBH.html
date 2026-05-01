@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; JAR Data — Defect and Penalty Analysis – Help Me Do It on My Own: Sensory Data Analysis with jamovi and the SEDA Module</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./chapitre5_prompt_GBH.html" rel="next">
+<link href="./chapitre3_prompt_GBH.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-b7c2d8834e08b04a63bb76a724ffbcac.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapitre4_prompt_GBH.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">JAR Data — Defect and Penalty Analysis</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Help Me Do It on My Own: Sensory Data Analysis with jamovi and the SEDA Module</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro_ppt_GB.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapitre1_prompt_GBH.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">QDA Data — Characterization of the Sensory Space</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapitre2_prompt_GBH.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">QDA Data — Multivariate Representation with Ellipses</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapitre3_prompt_GBH.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">CATA Data — Analysis of Checked Terms</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapitre4_prompt_GBH.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">JAR Data — Defect and Penalty Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapitre5_prompt_GBH.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Napping Data — Consensus Representation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapitre6_prompt_GBH.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sorting Data — Analysis of Categorization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapitre7_prompt_GBH.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Hedonic Data — Preference Mapping</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">5.1</span> Introduction</a></li>
+  <li><a href="#understanding-what-happens-under-the-hood" id="toc-understanding-what-happens-under-the-hood" class="nav-link" data-scroll-target="#understanding-what-happens-under-the-hood"><span class="header-section-number">5.2</span> Understanding what happens under the hood</a>
+  <ul class="collapse">
+  <li><a href="#recoding-of-the-jar-level" id="toc-recoding-of-the-jar-level" class="nav-link" data-scroll-target="#recoding-of-the-jar-level"><span class="header-section-number">5.2.1</span> Recoding of the JAR level</a></li>
+  <li><a href="#construction-of-the-defect-frequency-table" id="toc-construction-of-the-defect-frequency-table" class="nav-link" data-scroll-target="#construction-of-the-defect-frequency-table"><span class="header-section-number">5.2.2</span> Construction of the defect frequency table</a></li>
+  <li><a href="#description-of-stimuli-by-defects" id="toc-description-of-stimuli-by-defects" class="nav-link" data-scroll-target="#description-of-stimuli-by-defects"><span class="header-section-number">5.2.3</span> Description of stimuli by defects</a></li>
+  <li><a href="#representation-of-products-according-to-defects" id="toc-representation-of-products-according-to-defects" class="nav-link" data-scroll-target="#representation-of-products-according-to-defects"><span class="header-section-number">5.2.4</span> Representation of products according to defects</a></li>
+  <li><a href="#calculation-of-penalties" id="toc-calculation-of-penalties" class="nav-link" data-scroll-target="#calculation-of-penalties"><span class="header-section-number">5.2.5</span> Calculation of penalties</a></li>
+  <li><a href="#a-penalty-graph-for-each-stimulus" id="toc-a-penalty-graph-for-each-stimulus" class="nav-link" data-scroll-target="#a-penalty-graph-for-each-stimulus"><span class="header-section-number">5.2.6</span> A penalty graph for each stimulus</a></li>
+  </ul></li>
+  <li><a href="#expected-data-structure" id="toc-expected-data-structure" class="nav-link" data-scroll-target="#expected-data-structure"><span class="header-section-number">5.3</span> Expected data structure</a></li>
+  <li><a href="#interface-guide" id="toc-interface-guide" class="nav-link" data-scroll-target="#interface-guide"><span class="header-section-number">5.4</span> Interface guide</a>
+  <ul class="collapse">
+  <li><a href="#variables-to-complete" id="toc-variables-to-complete" class="nav-link" data-scroll-target="#variables-to-complete"><span class="header-section-number">5.4.1</span> Variables to complete</a></li>
+  <li><a href="#read-me-before-running" id="toc-read-me-before-running" class="nav-link" data-scroll-target="#read-me-before-running"><span class="header-section-number">5.4.2</span> Read me before running</a></li>
+  <li><a href="#coding-of-the-jar-level-coding-of-the-jar-level" id="toc-coding-of-the-jar-level-coding-of-the-jar-level" class="nav-link" data-scroll-target="#coding-of-the-jar-level-coding-of-the-jar-level"><span class="header-section-number">5.4.3</span> Coding of the JAR level: Coding of the JAR level</a></li>
+  </ul></li>
+  <li><a href="#step-by-step-procedure" id="toc-step-by-step-procedure" class="nav-link" data-scroll-target="#step-by-step-procedure"><span class="header-section-number">5.5</span> Step-by-step procedure</a></li>
+  <li><a href="#interpretation-of-results" id="toc-interpretation-of-results" class="nav-link" data-scroll-target="#interpretation-of-results"><span class="header-section-number">5.6</span> Interpretation of results</a>
+  <ul class="collapse">
+  <li><a href="#frequency-table-defect-frequency-table" id="toc-frequency-table-defect-frequency-table" class="nav-link" data-scroll-target="#frequency-table-defect-frequency-table"><span class="header-section-number">5.6.1</span> Frequency Table — defect frequency table</a></li>
+  <li><a href="#description-of-the-stimuli-according-to-defects" id="toc-description-of-the-stimuli-according-to-defects" class="nav-link" data-scroll-target="#description-of-the-stimuli-according-to-defects"><span class="header-section-number">5.6.2</span> Description of the Stimuli According to Defects</a></li>
+  <li><a href="#representation-of-the-products-according-to-defects-graph" id="toc-representation-of-the-products-according-to-defects-graph" class="nav-link" data-scroll-target="#representation-of-the-products-according-to-defects-graph"><span class="header-section-number">5.6.3</span> Representation of the Products According to Defects — graph</a></li>
+  <li><a href="#penalty-table-penalty-table" id="toc-penalty-table-penalty-table" class="nav-link" data-scroll-target="#penalty-table-penalty-table"><span class="header-section-number">5.6.4</span> Penalty Table — penalty table</a></li>
+  <li><a href="#penalties-for-product-graphs-by-stimulus" id="toc-penalties-for-product-graphs-by-stimulus" class="nav-link" data-scroll-target="#penalties-for-product-graphs-by-stimulus"><span class="header-section-number">5.6.5</span> Penalties for Product … — graphs by stimulus</a></li>
+  </ul></li>
+  <li><a href="#example-the-milkshake-dataset" id="toc-example-the-milkshake-dataset" class="nav-link" data-scroll-target="#example-the-milkshake-dataset"><span class="header-section-number">5.7</span> Example: the <strong>milkshake</strong> dataset</a>
+  <ul class="collapse">
+  <li><a href="#example-settings" id="toc-example-settings" class="nav-link" data-scroll-target="#example-settings"><span class="header-section-number">5.7.1</span> Example settings</a></li>
+  <li><a href="#analysis-of-the-frequency-table-stimuli-defects" id="toc-analysis-of-the-frequency-table-stimuli-defects" class="nav-link" data-scroll-target="#analysis-of-the-frequency-table-stimuli-defects"><span class="header-section-number">5.7.2</span> Analysis of the <em>Frequency Table (Stimuli × Defects)</em></a></li>
+  <li><a href="#analysis-of-the-description-of-the-products-according-to-defects-table" id="toc-analysis-of-the-description-of-the-products-according-to-defects-table" class="nav-link" data-scroll-target="#analysis-of-the-description-of-the-products-according-to-defects-table"><span class="header-section-number">5.7.3</span> Analysis of the <em>Description of the Products According to Defects</em> table</a></li>
+  <li><a href="#analysis-of-the-representation-of-the-products-according-to-defects-graph" id="toc-analysis-of-the-representation-of-the-products-according-to-defects-graph" class="nav-link" data-scroll-target="#analysis-of-the-representation-of-the-products-according-to-defects-graph"><span class="header-section-number">5.7.4</span> Analysis of the <em>Representation of the Products According to Defects</em> graph</a></li>
+  <li><a href="#analysis-of-the-penalties-obtained-from-all-defects-table" id="toc-analysis-of-the-penalties-obtained-from-all-defects-table" class="nav-link" data-scroll-target="#analysis-of-the-penalties-obtained-from-all-defects-table"><span class="header-section-number">5.7.5</span> Analysis of the <em>Penalties Obtained from All Defects</em> table</a></li>
+  <li><a href="#analysis-of-the-representation-of-the-penalties-for-each-product-graphs" id="toc-analysis-of-the-representation-of-the-penalties-for-each-product-graphs" class="nav-link" data-scroll-target="#analysis-of-the-representation-of-the-penalties-for-each-product-graphs"><span class="header-section-number">5.7.6</span> Analysis of the <em>Representation of the Penalties for Each Product</em> graphs</a></li>
+  <li><a href="#synthetic-interpretation" id="toc-synthetic-interpretation" class="nav-link" data-scroll-target="#synthetic-interpretation"><span class="header-section-number">5.7.7</span> Synthetic interpretation</a></li>
+  </ul></li>
+  <li><a href="#practical-tips" id="toc-practical-tips" class="nav-link" data-scroll-target="#practical-tips"><span class="header-section-number">5.8</span> Practical tips</a></li>
+  <li><a href="#in-summary" id="toc-in-summary" class="nav-link" data-scroll-target="#in-summary"><span class="header-section-number">5.9</span> In summary</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">JAR Data — Defect and Penalty Analysis</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">5.1</span> Introduction</h2>
+<p>This analysis is designed for <strong>JAR</strong> (<em>Just About Right</em>) data, in which subjects evaluate a sensory attribute on a scale such as <em>too little / just about right / too much</em>. In this function, the analysis focuses on <strong>defects</strong>, that is, on all levels different from the reference JAR level, and on their relationship with the liking score. It makes it possible to describe stimuli according to their defects, to represent stimuli and defects in the same space, and then to estimate <strong>liking penalties</strong> associated with these defects.</p>
+<p><strong>Why not use a standard alternative?</strong></p>
+<p>A mean liking score by stimulus does not indicate which defects explain a decrease in liking. A simple reading of JAR responses also does not clearly distinguish what corresponds to a lack or an excess relative to the ideal level. Here, the function recodes each attribute around the level defined in the <strong>Coding of the JAR level</strong> field, constructs a stimuli × defects contingency table, and then computes liking penalties relative to the full set of stimuli.</p>
+</section>
+<section id="understanding-what-happens-under-the-hood" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="understanding-what-happens-under-the-hood"><span class="header-section-number">5.2</span> Understanding what happens under the hood</h2>
+<section id="recoding-of-the-jar-level" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="recoding-of-the-jar-level"><span class="header-section-number">5.2.1</span> Recoding of the JAR level</h3>
+<p>The function first uses the value entered in <strong>Coding of the JAR level</strong> to redefine, in each variable in <strong>Sensory Attributes</strong>, the reference level. The default value is <code>"jar"</code>. All other levels are then treated as <strong>defects</strong>, that is, as deviations from the level judged to be “just about right”.</p>
+</section>
+<section id="construction-of-the-defect-frequency-table" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="construction-of-the-defect-frequency-table"><span class="header-section-number">5.2.2</span> Construction of the defect frequency table</h3>
+<p>After this recoding, the function removes the reference level and counts, for each stimulus, how many times each defect was observed. The intermediate result is a <strong>defects × stimuli</strong> matrix, then transposed to display a <strong>stimuli × defects</strong> table in jamovi. This frequency table is the basis for the description of stimuli and the factorial representation.</p>
+</section>
+<section id="description-of-stimuli-by-defects" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="description-of-stimuli-by-defects"><span class="header-section-number">5.2.3</span> Description of stimuli by defects</h3>
+<p>From this table, the function applies a frequency description procedure. For each stimulus, it identifies the defects that are significantly more or less associated than in the whole table. The logic is close to that used for CATA data: the frequency of a defect for a stimulus is compared with its global frequency, and significant associations are reported with their frequencies, p-values, and V-tests.</p>
+</section>
+<section id="representation-of-products-according-to-defects" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="representation-of-products-according-to-defects"><span class="header-section-number">5.2.4</span> Representation of products according to defects</h3>
+<p>The function then performs a <strong>correspondence analysis</strong> on the defect table and produces the graph entitled <strong>Representation of the Products According to Defects</strong>. This map simultaneously represents the stimuli and the defects in the same factor space, in order to visualize proximities between defect profiles.</p>
+</section>
+<section id="calculation-of-penalties" class="level3" data-number="5.2.5">
+<h3 data-number="5.2.5" class="anchored" data-anchor-id="calculation-of-penalties"><span class="header-section-number">5.2.5</span> Calculation of penalties</h3>
+<p>The function calculates penalties from <strong>Stimulus Effect</strong>, <strong>Subject Effect</strong>, <strong>Liking Variable</strong>, and <strong>Sensory Attributes</strong>. The penalty measures the loss in liking associated with a defect: it is the difference between the mean liking score of subjects who checked the JAR level and that of subjects who checked the defect level. This difference is calculated across all stimuli simultaneously, which gives it a global interpretation, not a stimulus-specific one.</p>
+<blockquote class="blockquote">
+<p>The penalty is a negative or zero value: it represents a loss in liking. The larger the absolute value, the more penalizing the defect is.</p>
+</blockquote>
+</section>
+<section id="a-penalty-graph-for-each-stimulus" class="level3" data-number="5.2.6">
+<h3 data-number="5.2.6" class="anchored" data-anchor-id="a-penalty-graph-for-each-stimulus"><span class="header-section-number">5.2.6</span> A penalty graph for each stimulus</h3>
+<p>The function produces a penalty graph for <strong>each</strong> stimulus. The display order depends on the order of the <strong>Stimulus Effect</strong> levels in jamovi. It is therefore possible to place another stimulus first by modifying the order of the levels in the <strong>Data</strong> tab.</p>
+</section>
+</section>
+<section id="expected-data-structure" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="expected-data-structure"><span class="header-section-number">5.3</span> Expected data structure</h2>
+<p>The data must contain:</p>
+<ul>
+<li>one categorical column for <strong>Stimulus Effect</strong>;</li>
+<li>one categorical column for <strong>Subject Effect</strong>;</li>
+<li>one numeric column for <strong>Liking Variable</strong>;</li>
+<li>one or more categorical columns for <strong>Sensory Attributes</strong>.</li>
+</ul>
+<p>Each row corresponds to the evaluation of one stimulus by one subject. The variables in <strong>Sensory Attributes</strong> must be factors, because the function modifies their reference level using <strong>Coding of the JAR level</strong>.</p>
+<p>Before running the analysis in jamovi, check in the <strong>Data</strong> tab that:</p>
+<ul>
+<li><strong>Stimulus Effect</strong> is categorical;</li>
+<li><strong>Subject Effect</strong> is categorical;</li>
+<li><strong>Liking Variable</strong> is numeric;</li>
+<li>all variables in <strong>Sensory Attributes</strong> are categorical;</li>
+<li>the JAR level used in your data corresponds exactly to the value entered in <strong>Coding of the JAR level</strong>.</li>
+</ul>
+</section>
+<section id="interface-guide" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="interface-guide"><span class="header-section-number">5.4</span> Interface guide</h2>
+<p>The analysis appears in <strong>SEDA &gt; Fixed List of Attributes &gt; Analysis of JAR Data</strong>. The interface includes four variable drop zones, the <strong>Read me before running</strong> checkbox, and the text field <strong>Coding of the JAR level</strong>.</p>
+<section id="variables-to-complete" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="variables-to-complete"><span class="header-section-number">5.4.1</span> Variables to complete</h3>
+<section id="stimulus-effect" class="level4" data-number="5.4.1.1">
+<h4 data-number="5.4.1.1" class="anchored" data-anchor-id="stimulus-effect"><span class="header-section-number">5.4.1.1</span> Stimulus Effect</h4>
+<p><strong>Role:</strong> identifies the stimuli to analyze. <strong>Impact on the computation:</strong> this variable defines the groups for which defect frequencies are calculated and for which the penalty graphs are generated. <strong>Practical tip:</strong> the order of the levels of this variable determines the display order of the penalty graphs. Modify this order in the <strong>Data</strong> tab if you want to see a particular stimulus first.</p>
+</section>
+<section id="subject-effect" class="level4" data-number="5.4.1.2">
+<h4 data-number="5.4.1.2" class="anchored" data-anchor-id="subject-effect"><span class="header-section-number">5.4.1.2</span> Subject Effect</h4>
+<p><strong>Role:</strong> identifies the subjects. <strong>Impact on the computation:</strong> this variable is passed to the penalty calculation and is used to structure observations by subject. <strong>Practical tip:</strong> check that the same subject keeps exactly the same identifier throughout the file.</p>
+</section>
+<section id="liking-variable" class="level4" data-number="5.4.1.3">
+<h4 data-number="5.4.1.3" class="anchored" data-anchor-id="liking-variable"><span class="header-section-number">5.4.1.3</span> Liking Variable</h4>
+<p><strong>Role:</strong> contains the overall liking score used to calculate the penalties. <strong>Impact on the computation:</strong> this is the numeric variable on which the function estimates the effect of defects. The penalty measures the loss on this score. <strong>Practical tip:</strong> make sure that the liking scale is consistent for all stimuli and all subjects.</p>
+</section>
+<section id="sensory-attributes" class="level4" data-number="5.4.1.4">
+<h4 data-number="5.4.1.4" class="anchored" data-anchor-id="sensory-attributes"><span class="header-section-number">5.4.1.4</span> Sensory Attributes</h4>
+<p><strong>Role:</strong> groups together the JAR variables, one per sensory attribute. <strong>Impact on the computation:</strong> each variable is recoded around the level defined in <strong>Coding of the JAR level</strong>; all other levels become defects. <strong>Practical tip:</strong> check that each variable does contain the JAR level with the exact expected label.</p>
+</section>
+</section>
+<section id="read-me-before-running" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="read-me-before-running"><span class="header-section-number">5.4.2</span> Read me before running</h3>
+<p><strong>Role:</strong> displays integrated help in the results. <strong>Impact on the computation:</strong> none. <strong>Practical tip:</strong> leave it checked during the first uses. It is <strong>enabled by default</strong>.</p>
+</section>
+<section id="coding-of-the-jar-level-coding-of-the-jar-level" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="coding-of-the-jar-level-coding-of-the-jar-level"><span class="header-section-number">5.4.3</span> Coding of the JAR level: Coding of the JAR level</h3>
+<p><strong>Role:</strong> indicates the exact label of the level considered as the reference JAR level. <strong>Impact on the computation:</strong> this parameter determines the level removed from the defect table and used as the reference in the recoding. If the value does not match the data, the analysis may fail or produce inconsistent results. <strong>Practical tip:</strong> the default value is <code>jar</code>. Adapt it exactly to the label used in your file, respecting case.</p>
+</section>
+</section>
+<section id="step-by-step-procedure" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="step-by-step-procedure"><span class="header-section-number">5.5</span> Step-by-step procedure</h2>
+<ol type="1">
+<li>Open your dataset in jamovi.</li>
+<li>In the <strong>Data</strong> tab, check that the stimulus variable is categorical, the subject variable is categorical, the liking variable is numeric, and all JAR variables are categorical.</li>
+<li>Note the exact label of the “just about right” level used in your JAR variables.</li>
+<li>Open <strong>SEDA &gt; Fixed List of Attributes &gt; Analysis of JAR Data</strong>.</li>
+<li>Place the stimulus variable in <strong>Stimulus Effect</strong>.</li>
+<li>Place the subject variable in <strong>Subject Effect</strong>.</li>
+<li>Place the liking variable in <strong>Liking Variable</strong>.</li>
+<li>Place all JAR variables in <strong>Sensory Attributes</strong>.</li>
+<li>Enter in <strong>Coding of the JAR level</strong> the exact label of the JAR level; leave <code>jar</code> if this is indeed the label used in your data.</li>
+<li>First read the defect frequency table to check the data structure.</li>
+<li>Then consult the description of stimuli according to defects.</li>
+<li>Examine the <strong>Representation of the Products According to Defects</strong> map for an overview.</li>
+<li>Read the penalty table, then the <strong>Penalties for Product …</strong> graphs to identify priority defects.</li>
+</ol>
+</section>
+<section id="interpretation-of-results" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="interpretation-of-results"><span class="header-section-number">5.6</span> Interpretation of results</h2>
+<section id="frequency-table-defect-frequency-table" class="level3" data-number="5.6.1">
+<h3 data-number="5.6.1" class="anchored" data-anchor-id="frequency-table-defect-frequency-table"><span class="header-section-number">5.6.1</span> Frequency Table — defect frequency table</h3>
+<p>This table crosses stimuli in rows and non-JAR levels in columns. Each cell indicates the number of times a defect was observed for a given stimulus. It is the basis for all subsequent outputs.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>High value in a cell</td>
+<td>The defect is frequent for this stimulus</td>
+</tr>
+<tr class="even">
+<td>Row with several high values</td>
+<td>The stimulus accumulates several frequent defects</td>
+</tr>
+<tr class="odd">
+<td>Column high for several stimuli</td>
+<td>Frequent defect, but not necessarily specific</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><strong>Point of vigilance:</strong> a very rare defect will contribute little to the interpretation. A column with very low frequencies generally indicates a weakly discriminating defect.</p>
+</blockquote>
+</section>
+<section id="description-of-the-stimuli-according-to-defects" class="level3" data-number="5.6.2">
+<h3 data-number="5.6.2" class="anchored" data-anchor-id="description-of-the-stimuli-according-to-defects"><span class="header-section-number">5.6.2</span> Description of the Stimuli According to Defects</h3>
+<p>This table describes, stimulus by stimulus, the significantly associated defects.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 72%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>(first column)</em></td>
+<td>Stimulus concerned</td>
+</tr>
+<tr class="even">
+<td><strong>Defect</strong></td>
+<td>Characteristic defect</td>
+</tr>
+<tr class="odd">
+<td><strong>Intern %r</strong></td>
+<td>Percentage of the defect for this stimulus</td>
+</tr>
+<tr class="even">
+<td><strong>Global %</strong></td>
+<td>Global percentage of the defect</td>
+</tr>
+<tr class="odd">
+<td><strong>Intern frequency</strong></td>
+<td>Absolute frequency of the defect for this stimulus</td>
+</tr>
+<tr class="even">
+<td><strong>Global frequency</strong></td>
+<td>Total absolute frequency of the defect</td>
+</tr>
+<tr class="odd">
+<td><strong>p</strong></td>
+<td>P-value of the test</td>
+</tr>
+<tr class="even">
+<td><strong>Vtest</strong></td>
+<td>Standardized intensity of the association</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>A positive <strong>V-test</strong> indicates that the defect is over-represented for this stimulus.</li>
+<li>A negative <strong>V-test</strong> indicates that it is under-represented — which is also informative.</li>
+<li>A low <strong>p-value</strong> indicates a clearer association.</li>
+</ul>
+<blockquote class="blockquote">
+<p>A stimulus absent from this table has no defect significantly associated at the threshold used: its defect profile is close to the mean of the full set of stimuli.</p>
+</blockquote>
+</section>
+<section id="representation-of-the-products-according-to-defects-graph" class="level3" data-number="5.6.3">
+<h3 data-number="5.6.3" class="anchored" data-anchor-id="representation-of-the-products-according-to-defects-graph"><span class="header-section-number">5.6.3</span> Representation of the Products According to Defects — graph</h3>
+<p>This graph comes from the correspondence analysis on the defect table. It simultaneously represents the stimuli and the defects in the same factor space. Two close stimuli have similar defect profiles; a defect close to a stimulus is more strongly associated with it. The percentage displayed on each axis indicates the share of information captured by that dimension.</p>
+<p>This map gives an overview and should be complemented by reading the description table for the statistical details.</p>
+</section>
+<section id="penalty-table-penalty-table" class="level3" data-number="5.6.4">
+<h3 data-number="5.6.4" class="anchored" data-anchor-id="penalty-table-penalty-table"><span class="header-section-number">5.6.4</span> Penalty Table — penalty table</h3>
+<p>This table presents, for each defect, the estimated effect on the liking score.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 77%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Defect</strong></td>
+<td>Defect concerned</td>
+</tr>
+<tr class="even">
+<td><strong>Penalty</strong></td>
+<td>Estimated loss in liking associated with this defect</td>
+</tr>
+<tr class="odd">
+<td><strong>Std. Error</strong></td>
+<td>Standard error of the estimate</td>
+</tr>
+<tr class="even">
+<td><strong>p</strong></td>
+<td>P-value of the test</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The larger the absolute value of <strong>Penalty</strong>, the stronger the estimated effect.</li>
+<li>A low <strong>p-value</strong> suggests an effect more clearly supported by the data.</li>
+<li>A weakly significant penalty does not necessarily imply the absence of an effect: the defect may simply be too rare to be estimated precisely.</li>
+</ul>
+</section>
+<section id="penalties-for-product-graphs-by-stimulus" class="level3" data-number="5.6.5">
+<h3 data-number="5.6.5" class="anchored" data-anchor-id="penalties-for-product-graphs-by-stimulus"><span class="header-section-number">5.6.5</span> Penalties for Product … — graphs by stimulus</h3>
+<p>The function generates a penalty graph for each stimulus. The x-axis corresponds to the frequency of the defect for this stimulus; the y-axis corresponds to the penalty calculated across all stimuli. Error bars are drawn around the points, defects with p &lt; 0.05 are visually distinguished, and labels appear for defects with p &lt; 0.20.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>High frequency + marked penalty</td>
+<td>Priority defect: frequent and strongly penalizing</td>
+</tr>
+<tr class="even">
+<td>High frequency + weak penalty</td>
+<td>Frequent but less penalizing defect</td>
+</tr>
+<tr class="odd">
+<td>Low frequency + marked penalty</td>
+<td>Rare but potentially problematic defect</td>
+</tr>
+<tr class="even">
+<td>Low frequency + weak penalty</td>
+<td>Secondary defect</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><strong>Point of vigilance:</strong> the graph crosses <strong>local</strong> information (the frequency of the defect for the displayed stimulus) with <strong>global</strong> information (the penalty calculated across all stimuli). This point is essential to avoid overinterpreting an isolated point on the graph.</p>
+</blockquote>
+</section>
+</section>
+<section id="example-the-milkshake-dataset" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="example-the-milkshake-dataset"><span class="header-section-number">5.7</span> Example: the <strong>milkshake</strong> dataset</h2>
+<p>The <strong>milkshake</strong> dataset concerns three milkshakes evaluated using several JAR attributes related in particular to odor, texture, fluidity, sweetness, and acidity. It is used to illustrate the function outputs. The numerical values and graphics discussed below come directly from the analysis results. To load this dataset, open jamovi, click the icon in the top left corner, the three stacked lines, then <strong>Open</strong> → <strong>Data Library</strong> → <strong>SEDA</strong>.</p>
+<section id="example-settings" class="level3" data-number="5.7.1">
+<h3 data-number="5.7.1" class="anchored" data-anchor-id="example-settings"><span class="header-section-number">5.7.1</span> Example settings</h3>
+<p>To reproduce this example, use the following values.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 59%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Stimulus Effect</strong></td>
+<td>Product</td>
+</tr>
+<tr class="even">
+<td><strong>Subject Effect</strong></td>
+<td>Panelist</td>
+</tr>
+<tr class="odd">
+<td><strong>Liking Variable</strong></td>
+<td>Liking</td>
+</tr>
+<tr class="even">
+<td><strong>Sensory Attributes</strong></td>
+<td>all JAR variables from Color to Taste_Van</td>
+</tr>
+<tr class="odd">
+<td><strong>Coding of the JAR level</strong></td>
+<td><code>jar</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="analysis-of-the-frequency-table-stimuli-defects" class="level3" data-number="5.7.2">
+<h3 data-number="5.7.2" class="anchored" data-anchor-id="analysis-of-the-frequency-table-stimuli-defects"><span class="header-section-number">5.7.2</span> Analysis of the <em>Frequency Table (Stimuli × Defects)</em></h3>
+<p>The frequency table shows that the three products have very different defect profiles.</p>
+<p>The <strong>859</strong> milkshake is strongly marked by <em>Not_enough_texture</em>, mentioned by 38 subjects out of 47 (80.85%), and <em>Too_fluid</em> (70.21%); these are the two most frequent defects in the whole set.</p>
+<p>The <strong>972</strong> milkshake stands out mainly through <em>Not_enough_odor_int</em> (53.19%), <em>Not_enough_odor_fruit</em> (46.81%), <em>Not_enough_odor_van</em> (44.68%), and <em>Too_much_sweetness</em> (42.55%).</p>
+<p>The <strong>284</strong> milkshake has several frequent but less extreme defects: <em>Not_enough_texture</em> (57.45%), <em>Not_enough_odor_int</em> (48.94%), <em>Too_fluid</em> (46.81%), and <em>Not_enough_odor_van</em> (44.68%).</p>
+<p>This first reading is important: it makes it possible to identify which defects dominate sensorially for each product, even before knowing whether they are truly associated with a decrease in liking.</p>
+</section>
+<section id="analysis-of-the-description-of-the-products-according-to-defects-table" class="level3" data-number="5.7.3">
+<h3 data-number="5.7.3" class="anchored" data-anchor-id="analysis-of-the-description-of-the-products-according-to-defects-table"><span class="header-section-number">5.7.3</span> Analysis of the <em>Description of the Products According to Defects</em> table</h3>
+<p>This table identifies the defects that are significantly over- or under-represented for each product relative to the <em>average product</em>.</p>
+<p>The <strong>859</strong> milkshake is the one whose profile stands out most clearly. It is more strongly associated with <em>Not_enough_texture</em> (p = 0.055, V-test = 1.92) and <em>Too_fluid</em> (p = 0.080, V-test = 1.75). Conversely, it is significantly less associated with <em>A_little_plain</em> (p = 0.040, V-test = -2.05) and <em>Not_enough_odor_van</em> (p = 0.049, V-test = -1.97). Its sensory profile is therefore mainly driven by texture and fluidity defects, rather than by a lack of vanilla odor.</p>
+<p>The <strong>972</strong> milkshake is more strongly associated with <em>Too_much_sweetness</em> (p = 0.087, V-test = 1.71), while the other positive associations are far from significant at the 5% threshold. Conversely, it is less associated with <em>Not_enough_texture</em> (p = 0.072, V-test = -1.80) and <em>Not_enough_sweetness</em> (p = 0.099, V-test = -1.65), which places it in partial opposition to the <strong>859</strong> milkshake on these dimensions.</p>
+<p>The <strong>284</strong> milkshake appears much closer to the mean profile. No defect stands out clearly at the 5% threshold, suggesting a product less singular than the other two from the point of view of its defects.</p>
+</section>
+<section id="analysis-of-the-representation-of-the-products-according-to-defects-graph" class="level3" data-number="5.7.4">
+<h3 data-number="5.7.4" class="anchored" data-anchor-id="analysis-of-the-representation-of-the-products-according-to-defects-graph"><span class="header-section-number">5.7.4</span> Analysis of the <em>Representation of the Products According to Defects</em> graph</h3>
+<p>The first dimension explains 74.78% of the inertia and clearly opposes the <strong>859</strong> milkshake to the <strong>972</strong> milkshake. On the <strong>859</strong> side, the main defects are <em>Too_fluid</em>, <em>Not_enough_texture</em>, and <em>Not_enough_sweetness</em>. On the <strong>972</strong> side, the defects are rather <em>Too_much_sweetness</em>, <em>Too_much_odor_van</em>, and <em>Not_enough_odor_fruit</em>.</p>
+<p>The second dimension (25.22%) may be more specific to the <strong>284</strong> milkshake, which is associated with defects related to fruity or vanilla odors.</p>
+<blockquote class="blockquote">
+<p>As an essential complement to the tables, this graph, derived from a correspondence analysis, represents the associations between products and defects, making proximities and oppositions between products immediately visible.</p>
+</blockquote>
+</section>
+<section id="analysis-of-the-penalties-obtained-from-all-defects-table" class="level3" data-number="5.7.5">
+<h3 data-number="5.7.5" class="anchored" data-anchor-id="analysis-of-the-penalties-obtained-from-all-defects-table"><span class="header-section-number">5.7.5</span> Analysis of the <em>Penalties Obtained from All Defects</em> table</h3>
+<p>The penalty table provides a <strong>global</strong> reading of the impact of defects on liking, across all products. It does not say how frequently a defect appears for a given product; it indicates how much this defect is associated with an average loss in liking when it is observed.</p>
+<p>In this example, only one defect is significant at the 5% threshold: <em>Too_much_odor_fruit</em>, with a penalty of -2.67 and a p-value of 0.018. It is therefore the only defect whose negative effect on liking is clearly supported by the data. Several other defects show notable penalties without reaching this significance threshold, for example <em>Too_much_acidity</em> (-4.03, p = 0.082), <em>Too_much_texture</em> (-1.78, p = 0.089), and <em>Not_enough_acidity</em> (-1.03, p = 0.087). They cannot be considered statistically significant here, but they are weak signals to monitor.</p>
+<blockquote class="blockquote">
+<p><strong>Point of vigilance:</strong> penalties are calculated across all products simultaneously. They measure <strong>global</strong> information — which defect penalizes liking the most, across all products — and not <strong>local</strong> information, such as how frequently this defect appears for a given product. It is precisely the combination of these two pieces of information that will be useful.</p>
+</blockquote>
+</section>
+<section id="analysis-of-the-representation-of-the-penalties-for-each-product-graphs" class="level3" data-number="5.7.6">
+<h3 data-number="5.7.6" class="anchored" data-anchor-id="analysis-of-the-representation-of-the-penalties-for-each-product-graphs"><span class="header-section-number">5.7.6</span> Analysis of the <em>Representation of the Penalties for Each Product</em> graphs</h3>
+<p>These three graphs cross two essential pieces of information for product optimization:</p>
+<ul>
+<li>on the <strong>x-axis</strong>, the <strong>frequency</strong> of the defect for the displayed product, derived from the <em>Frequencies of Defects by Product and Sensory Attribute</em> table;</li>
+<li>on the <strong>y-axis</strong>, the <strong>penalty</strong> associated with this defect, calculated across the full panel and all products, derived from the <em>Penalties Obtained from All Defects</em> table.</li>
+</ul>
+<p>By construction, a defect therefore keeps the same y-coordinate from one graph to another; only its x-coordinate varies according to its prevalence in the product considered. Red points indicate defects whose penalty is statistically significant at the 5% threshold. In our example, only <em>Too_much_odor_fruit</em> stands out through a significant penalty.</p>
+<p>To be operational, it is essential to combine this reading with the <em>Description of the Products According to Defects</em> table, which identifies the <strong>specificity</strong> of each defect (over- or under-representation). A frequent defect is not necessarily specific, and conversely, strong specificity does not systematically imply a strong penalty on liking. Taking these three pieces of information into account (local frequency, global penalty, specificity) makes it possible to prioritize improvement levers.</p>
+<p>For the <strong>284</strong> milkshake, no defect stands out significantly in the descriptive table (profile close to the mean). The graph shows that the critical defect <em>Too_much_odor_fruit</em> is very rare (6.38%). As for <em>Too_much_acidity</em>, although it is strongly penalizing (-4.03), its complete absence for this product (0.00%) disqualifies it as an improvement avenue. Lacks of vanilla or fruity odor are frequent, but without being specific to the product or penalizing. The <strong>284</strong> milkshake therefore presents no priority optimization lever.</p>
+<p>The analysis of the <strong>859</strong> milkshake shows a clear convergence between a tendency toward over-representation (V-test &gt; 1.7, without significance at the 5% threshold) and high prevalence for texture defects (<em>Too_fluid</em> at 70.21% and <em>Not_enough_texture</em> at 80.85%). Although their global hedonic cost is moderate, they are the clearest negative traits of this product. Moreover, the critical defect <em>Too_much_odor_fruit</em> remains marginal (4.26%). The main issue for <strong>859</strong> therefore lies in correcting its <strong>fluidity</strong> and <strong>texture</strong>, rather than adjusting its aroma.</p>
+<p>The <strong>972</strong> milkshake presents a different configuration. Its most over-represented defect is <strong>Too_much_sweetness</strong> (V-test = 1.71, p = 0.087), which is relatively frequent (42.55%). However, since its global penalty is low, it does not represent a major optimization lever. As for the other products, the critical defect <em>Too_much_odor_fruit</em> is almost absent (4.26%). The other aromatic lacks are frequent but have little impact. The <strong>972</strong> milkshake therefore does not show any defect combining high frequency, specificity, and marked penalty.</p>
+</section>
+<section id="synthetic-interpretation" class="level3" data-number="5.7.7">
+<h3 data-number="5.7.7" class="anchored" data-anchor-id="synthetic-interpretation"><span class="header-section-number">5.7.7</span> Synthetic interpretation</h3>
+<p>In summary, these graphs clearly show that the <strong>penalty</strong> provides information about the <strong>hedonic cost</strong> of a defect, while its <strong>frequency</strong> indicates its actual weight for a given product. To turn this reading into an optimization avenue, however, it must be crossed with the <strong>specificity</strong> of the defect, as shown in <em>Description of the Products According to Defects</em>. This threefold reading leads here to three distinct diagnoses: the <strong>284</strong> milkshake appears close to the mean profile, with no clearly identified priority lever; the <strong>859</strong> milkshake is mainly distinguished by <strong>texture</strong> and <strong>fluidity</strong> defects, both specific and very frequent; the <strong>972</strong> milkshake presents an excess of <strong>sweetness</strong> that is more specific than truly penalizing.</p>
+<blockquote class="blockquote">
+<p><strong>What we take away from this example:</strong> JAR analysis is not only used to identify the most frequent defects, but to distinguish those that are <strong>frequent</strong>, those that are <strong>specific to the product</strong>, those that are <strong>penalizing</strong>, and above all those that combine several of these dimensions. It is this cross-reading that makes it possible to prioritize product optimization actions.</p>
+</blockquote>
+</section>
+</section>
+<section id="practical-tips" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="practical-tips"><span class="header-section-number">5.8</span> Practical tips</h2>
+<ul>
+<li>Always check that <strong>Coding of the JAR level</strong> corresponds exactly to the label used in your data, including case.</li>
+<li>Make sure that all JAR variables are categorical in jamovi before running the analysis.</li>
+<li>Always read the frequency table before interpreting penalties: a high penalty on a very rare defect is difficult to use in product optimization.</li>
+<li>Focus first on defects that are both frequent and associated with a marked and significant penalty.</li>
+<li>Do not overinterpret a weakly significant penalty as a complete absence of effect.</li>
+<li>Keep in mind that the penalty is calculated globally across all stimuli, whereas the frequency displayed in the graph is specific to the displayed stimulus.</li>
+<li>Use the <strong>Representation of the Products According to Defects</strong> map for the overview, and the tables for the details.</li>
+<li>If you want to display another stimulus first in the penalty graphs, modify the order of the <strong>Stimulus Effect</strong> levels in the <strong>Data</strong> tab.</li>
+</ul>
+</section>
+<section id="in-summary" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="in-summary"><span class="header-section-number">5.9</span> In summary</h2>
+<p>This analysis transforms JAR responses into a structured reading of perceived defects and their relationship with liking. It combines a <strong>defect frequency table</strong>, a <strong>description of stimuli according to defects</strong>, a <strong>factorial representation of products and defects</strong>, and then an <strong>estimation of the penalties</strong> associated with each defect. Its main value is to connect, within the same framework, the frequency of deviations from the ideal level (jar) and their impact on liking, in order to guide product optimization.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./chapitre3_prompt_GBH.html" class="pagination-link" aria-label="CATA Data — Analysis of Checked Terms">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">CATA Data — Analysis of Checked Terms</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./chapitre5_prompt_GBH.html" class="pagination-link" aria-label="Napping Data — Consensus Representation">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Napping Data — Consensus Representation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

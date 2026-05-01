@@ -1,0 +1,112 @@
+# Analyse de données de type Napping (positionnement spatial)
+
+## Introduction
+
+L’objectif de ce chapitre est de détailler les principes statistiques qui sous-tendent l’analyse des données de **Napping** (ou *Projective Mapping*) dans jamovi (via le module *SEDA*).
+
+Le principe du Napping est intuitif : chaque évaluateur place simultanément un ensemble de produits sur une “nappe” (une surface 2D). La règle d’or est la distance : deux produits proches sont perçus comme similaires, tandis que deux produits éloignés sont perçus comme différents. Pour l’analyste, les données brutes consistent, pour chaque évaluateur, en un couple de **coordonnées ($x$, $y$)** pour chaque produit.
+
+Nous illustrons cette méthode avec une étude sur des parfums (fichier `napping.omv`). Pour la reproduction sous R, nous utilisons l’export `perfumes_napping.xlsx`.
+
+## Importons et mettons en forme les données
+
+Nous utilisons `read_excel()` pour charger les données. Comme dans les chapitres précédents, nous convertissons le *tibble* initial en *data frame* pour faciliter la manipulation des noms de lignes (produits).
+
+```{r}
+# Si non installé
+# install.packages("readxl")
+
+library(readxl)
+
+napping_data <- read_excel(path = "perfumes_napping.xlsx")
+napping_data
+```
+
+```{r}
+napping_data <- as.data.frame(napping_data)
+
+# Utilisation de la première colonne pour nommer les lignes (produits)
+row.names(napping_data) <- napping_data[, 1]
+napping_data <- napping_data[, -1] # suppression de la colonne devenue redondante
+
+# Vérification : 2 colonnes (x, y) par évaluateur
+dim(napping_data)
+head(napping_data[, 1:6])
+```
+
+## Standardisation : faut-il centrer-réduire ?
+
+En Napping, une question méthodologique majeure se pose : faut-il standardiser les coordonnées ?
+
+Contrairement à des variables hédoniques classiques, les axes $x$ et $y$ appartiennent au même espace physique. Si la nappe est rectangulaire, l’amplitude de l’axe horizontal peut être naturellement plus grande que celle de l’axe vertical.
+
+* **Standardiser** (centrer-réduire) ramènerait les deux axes à une variance égale, mais cela peut déformer la géométrie réelle des distances ;
+* **Ne pas standardiser** préserve la configuration spatiale fournie par l’évaluateur.
+
+Comparons l’impact sur un seul évaluateur (évaluateur 1, colonnes 1 et 2) :
+
+```{r}
+# Si non installé
+# install.packages("FactoMineR")
+
+library(FactoMineR)
+
+# 1) ACP avec standardisation (par défaut)
+res_pca_scaled <- PCA(napping_data[, 1:2], graph = FALSE)
+
+# 2) ACP sans standardisation
+res_pca_raw <- PCA(napping_data[, 1:2], scale.unit = FALSE, graph = FALSE)
+```
+
+```{r}
+#| fig-cap: "ACP sur un évaluateur : données standardisées (par défaut)"
+plot.PCA(res_pca_scaled)
+```
+
+```{r}
+#| fig-cap: "ACP sur un évaluateur : données non standardisées"
+plot.PCA(res_pca_raw)
+```
+
+Dans l’analyse du Napping, on privilégie généralement la version **non standardisée** pour respecter la configuration spatiale d’origine.
+
+## Analyse Factorielle Multiple (AFM) : synthèse multi-évaluateurs
+
+Pour traiter l’ensemble des évaluateurs simultanément, la méthode de référence est l’**Analyse Factorielle Multiple (AFM)**. Chaque évaluateur constitue un *groupe* de deux variables ($x$, $y$). L’AFM permet de :
+
+1. construire une **carte consensus** des produits (l’espace perceptuel moyen) ;
+2. évaluer l’**accord entre évaluateurs** (carte des groupes) ;
+3. projeter les trajectoires individuelles pour visualiser des comportements atypiques.
+
+```{r}
+# Nombre d’évaluateurs déduit du tableau : 2 colonnes par évaluateur
+stopifnot(ncol(napping_data) %% 2 == 0)
+n_eval <- ncol(napping_data) / 2
+
+res_mfa <- MFA(
+  napping_data,
+  group = rep(2, n_eval),
+  type  = rep("c", n_eval), # "c" = variables continues
+  graph = FALSE
+)
+```
+
+```{r}
+#| fig-cap: "AFM (Napping) : carte consensus des produits"
+plot.MFA(res_mfa, choix = "ind")
+```
+
+```{r}
+#| fig-cap: "AFM (Napping) : carte des groupes (évaluateurs)"
+plot.MFA(res_mfa, choix = "group")
+```
+
+## De R à jamovi
+
+Le module *SEDA* de jamovi propose une implémentation simplifiée et robuste de l’AFM dédiée au Napping.
+
+Ce qu’il faut retenir :
+
+1. **Choix par défaut cohérent** : les coordonnées ne sont pas standardisées à l’intérieur des groupes (les nappes), ce qui préserve la géométrie des distances ;
+2. **Lecture immédiate** : la carte des produits aide à repérer des clusters de similarité ;
+3. **Exploitation** : vous pouvez exporter les coordonnées factorielles des produits pour réaliser, par exemple, une classification (CAH) directement dans jamovi.

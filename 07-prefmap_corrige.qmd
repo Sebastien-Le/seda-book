@@ -1,0 +1,121 @@
+# Cartographie des préférences (*PrefMap*) : relier profils sensoriels et préférences
+
+## Introduction
+
+L’objectif de ce chapitre est de détailler les principes de la **cartographie des préférences** (*Preference Mapping*, ou *PrefMap*) telle qu’elle est implémentée dans jamovi (via le module *SEDA*).
+
+Une étude de *PrefMap* croise deux sources de données :
+
+* un **profil sensoriel** (descripteurs mesurés par un jury entraîné) ;
+* des **données hédoniques** (notes d’appréciation globale attribuées par des consommateurs).
+
+L’idée centrale est de construire un **espace sensoriel** (carte des produits basée sur leurs caractéristiques) puis d’y projeter les préférences des consommateurs. On peut ainsi repérer des “zones” de l’espace associées à une forte (ou faible) appréciation.
+
+Nous illustrons cette démarche avec l’exemple des cocktails (fichier `prefmap.omv`). Pour la reproduction sous R, nous utilisons l’export `cocktails_prefmap.xlsx`.
+
+## Importons et mettons en forme les données
+
+```{r}
+# Si non installé
+# install.packages("readxl")
+
+library(readxl)
+
+prefmap_data <- read_excel(path = "cocktails_prefmap.xlsx")
+prefmap_data
+```
+
+Comme précédemment, nous convertissons en *data frame* et nous utilisons la première colonne pour nommer les produits (ce n’est pas une variable).
+
+```{r}
+prefmap_data <- as.data.frame(prefmap_data)
+
+row.names(prefmap_data) <- prefmap_data[, 1]
+prefmap_data <- prefmap_data[, -1]
+
+dim(prefmap_data)
+head(prefmap_data[, 1:6])
+```
+
+Dans ce jeu de données, les colonnes 1 à 13 correspondent aux attributs sensoriels, puis viennent les notes hédoniques de consommateurs.
+
+```{r}
+n_sens <- 13
+n_cons <- ncol(prefmap_data) - n_sens
+c(n_attributs_sensoriels = n_sens, n_consommateurs = n_cons)
+```
+
+## Étape 1 : construire l’espace sensoriel
+
+Avant de parler de préférence, il faut définir la “carte” sensorielle. On réalise une ACP sur les descripteurs sensoriels (colonnes 1 à 13). Les produits sont ainsi positionnés selon leurs similarités sensorielles.
+
+```{r}
+# Si non installé
+# install.packages("FactoMineR")
+
+library(FactoMineR)
+
+res_pca_sens <- PCA(prefmap_data[, 1:n_sens], graph = FALSE)
+```
+
+```{r}
+#| fig-cap: "Carte sensorielle des produits (ACP sur les attributs sensoriels)"
+plot.PCA(res_pca_sens)
+```
+
+Les coordonnées des produits sur les axes (Dim.1, Dim.2, …) serviront ensuite de variables explicatives des notes de consommateurs.
+
+## Étape 2 : relier une préférence individuelle à la carte sensorielle
+
+Le principe du modèle vectoriel (le plus simple) est le suivant : pour un consommateur donné, on explique sa note d’appréciation en fonction de la position des produits sur la carte sensorielle (ici Dim.1 et Dim.2).
+
+Fusionnons les coordonnées factorielles avec les données originales :
+
+```{r}
+prefmap_dim_data <- cbind(prefmap_data, res_pca_sens$ind$coord)
+```
+
+Exemple pour un consommateur : plutôt que de supposer un nom de colonne, on récupère le *premier* consommateur du fichier (cela rend le script robuste).
+
+```{r}
+consumers <- names(prefmap_data)[(n_sens + 1):ncol(prefmap_data)]
+consumer_ex <- consumers[1]
+
+form_ex <- as.formula(paste0(consumer_ex, " ~ Dim.1 + Dim.2"))
+
+res_ex <- LinearModel(form_ex, data = prefmap_dim_data)
+res_ex$Ftest
+```
+
+Si le modèle est significatif, cela signifie que les préférences de ce consommateur sont structurées par l’espace sensoriel. La direction du “vecteur de préférence” indique vers quels types de produits il est attiré.
+
+## Étape 3 : visualiser globalement les préférences
+
+Plutôt que d’examiner un grand nombre de modèles séparément, on peut projeter l’ensemble des consommateurs comme **variables quantitatives supplémentaires** sur l’ACP sensorielle.
+
+Concrètement, on relance une ACP en déclarant les colonnes hédoniques comme *supplémentaires* :
+
+```{r}
+res_pca_pref <- PCA(
+  prefmap_data,
+  quanti.sup = (n_sens + 1):ncol(prefmap_data),
+  graph      = FALSE
+)
+```
+
+```{r}
+#| fig-cap: "Projection des consommateurs (variables supplémentaires) sur l’espace sensoriel"
+plot.PCA(res_pca_pref, choix = "var")
+```
+
+Les consommateurs dont les flèches pointent dans une même direction ont des préférences similaires (ils “aiment” les mêmes zones de l’espace sensoriel).
+
+## De R à jamovi
+
+L’outil *PrefMap* de jamovi (basé sur la fonction `carto()` du package *SensoMineR*) va plus loin en générant des **cartes de préférence** (surfaces ou grilles) à partir des modèles individuels.
+
+Ce qu’il faut retenir :
+
+1. **Surfaces de réponse** : jamovi estime la préférence sur l’ensemble de la carte, comme une carte de niveau ;
+2. **Lecture par zones** : les zones “chaudes” correspondent aux régions de l’espace associées à une forte appréciation ;
+3. **Aide à la décision** : on visualise si un nouveau prototype se situe dans une zone favorable ou dans un “désert” hédonique.

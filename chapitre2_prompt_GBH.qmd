@@ -1,0 +1,277 @@
+# QDA Data — Multivariate Representation with Ellipses
+
+## Introduction
+
+This analysis is designed for **Quantitative Descriptive Analysis (QDA)** data, that is, when several subjects evaluate several stimuli using a fixed list of sensory attributes. It extends the univariate characterization of the sensory space by providing a multivariate representation of the stimuli and their variability. It answers two complementary questions: **which stimuli are sensorially similar** and **is this proximity stable despite variability between subjects**? Its central output is a map of the stimuli enriched with **ellipses**, which visualize not only the position of the stimuli, but also the robustness of this position under panel resampling.
+
+**Why not use a standard alternative?**
+
+A PCA applied directly to the raw data may mix two sources of variation: the **stimulus** effect and the **subject** effect. In sensory analysis, some subjects systematically rate higher or lower than others, or use the scale more or less broadly. This analysis takes this subject/stimulus structure into account to produce a representation better suited to QDA data.
+
+## Understanding what happens under the hood
+
+### Selection of sensory attributes
+
+Before constructing the map, the function identifies the attributes that discriminate the stimuli sufficiently. This selection depends on the value of **p-value of the Stimulus effect (%)**. The stricter the threshold, the more streamlined the map will be; the broader it is, the more exhaustive the representation will be, although sometimes more crowded. The default value is 20%, which makes it a good starting point for exploration.
+
+### Correction of the subject effect
+
+A simple way to understand the next step is to say that the analysis reconstructs **mean sensory profiles by stimulus**, while taking differences between subjects into account. Two options are involved here:
+
+-   **Center by subject** corrects differences in average level between subjects;
+-   **Scale by subject** corrects differences in the amplitude with which subjects use the scale.
+
+The objective is to prevent a very generous, very severe, or very “spread-out” subject from artificially distorting the map of the stimuli.
+
+### Principal component analysis
+
+A **PCA** is then performed on the resulting table of sensory profiles. It produces the stimulus map, the sensory attribute map, the eigenvalue table, and the automatic description of the dimensions. This factor space is then used as the reference space for projecting the virtual panels.
+
+### Virtual panels and supplementary individuals
+
+The key point of the function is the use of **resampling**. In PCA, it is possible to distinguish between **active individuals** — those used to construct the axes — and **supplementary individuals** — those projected afterwards, without modifying the axes. This is precisely the mechanism that makes it possible to construct the ellipses.
+
+At each simulation, a subset of subjects is drawn with replacement from the original panel, new mean stimulus profiles are recalculated, and then projected into the factor space as supplementary individuals. The dispersion of these projections around each stimulus is then summarized by an ellipse.
+
+These ellipses therefore describe the variability of the **mean position of the stimuli when the composition of the panel changes**, not the simple raw dispersion of individual ratings.
+
+> **Note:** the computation may take a few seconds, because it relies on a large number of virtual panels. During this computation, it is better to avoid changing other options so as not to restart the procedure unnecessarily.
+
+### Comparison between stimuli
+
+The function also computes a comparison between pairs of stimuli, presented as a matrix of **p-values**. This output complements the visual reading of the ellipses by adding a numerical measure of the difference between stimuli.
+
+### Automatic description of the dimensions
+
+Finally, the function provides an automatic description of the axes, filtered according to the value of **Significance threshold (%)**. It helps identify which attributes are most strongly associated with each dimension and gives a *sensory* meaning to the axes.
+
+## Expected data structure
+
+The data must contain:
+
+-   one column identifying the **stimuli**;
+-   one column identifying the **subjects**;
+-   several numeric columns corresponding to the **sensory attributes**.
+
+Each row corresponds to the evaluation of one stimulus by one subject. If a subject evaluates the same stimulus several times (repetitions or sessions), each evaluation must appear on a separate row.
+
+Before running the analysis in jamovi, check in the **Data** tab that:
+
+-   the variable intended for **Stimulus Effect** is categorical;
+-   the variable intended for **Subject Effect** is categorical;
+-   all variables intended for **Sensory Attributes** are numeric.
+
+## Interface guide
+
+The analysis appears in the menu **SEDA \> Fixed List of Attributes \> Representation of the Stimulus Space**. The interface includes three variable drop zones, integrated help, and then three collapsible menus: **Graphic Options**, **Resampling Options**, and **Numerical Indicators**.
+
+### Variables to complete
+
+#### Stimulus Effect
+
+**Role:** identifies the stimuli to be represented on the map. **Impact on the computation:** each level of this variable becomes a mean point and, where applicable, an ellipse on the map. **Practical tip:** use clear labels, because they will appear directly in the graphics.
+
+#### Subject Effect
+
+**Role:** identifies the subjects. **Impact on the computation:** this variable is essential for correcting the subject effect and for generating the virtual panels used in the bootstrap. **Practical tip:** check that the same subject keeps exactly the same identifier throughout the file.
+
+#### Sensory Attributes
+
+**Role:** groups together the sensory attributes used to construct the factor space. **Impact on the computation:** only numeric attributes are accepted; the number of calculable dimensions depends on the number of retained attributes. **Practical tip:** start by including all relevant sensory attributes, then refine the selection with **p-value of the Stimulus effect (%)**.
+
+### Read me before running
+
+**Role:** displays integrated help in the results. **Impact on the computation:** none. **Practical tip:** leave it checked during the first uses. It is **enabled by default**.
+
+### Standardization of the Sensory Attributes: Scale to unit variance
+
+**Role:** standardizes the sensory attributes when performing the PCA. **Impact on the computation:** when checked, each attribute contributes equally to the construction of the axes; when unchecked, the most dispersed attributes have a greater influence on the construction of the axes. **Practical tip:** leave this option checked in most analyses. It is **enabled by default**.
+
+### Selection of the Sensory Attributes: p-value of the Stimulus effect (%)
+
+**Role:** sets the threshold for selecting attributes according to their relationship with the stimulus effect. **Impact on the computation:** a low threshold retains few attributes and produces a more readable map; a higher threshold retains more attributes and gives a broader view. **Practical tip:** the default value is 20%, a good starting point for exploration. For a stricter version, start at 5%.
+
+### Graphic Options
+
+#### Components to Plot — X-axis and Y-axis
+
+**Role:** choose the dimensions displayed on the horizontal and vertical axes. **Impact on the computation:** they do not change the PCA itself, but they modify the displayed factor plane. The selected dimensions must exist in the analysis, otherwise the function generates an error. **Practical tip:** start with X-axis = 1 and Y-axis = 2, the default values.
+
+#### Individual variability around stimuli
+
+**Role:** adds a graph showing the dispersion of individual evaluations around each stimulus. **Impact on the computation:** it does not add a new analysis, but provides an additional graphical output useful for assessing consensus between subjects. **Practical tip:** activate this option if you want to distinguish a consensual stimulus from a stimulus perceived more variably. The default value is **disabled**.
+
+#### Variability around sensory attributes
+
+**Role:** adds a graph showing the variability of sensory attributes under resampling. **Impact on the computation:** it provides a graphical output useful for assessing the stability of attribute interpretation. **Practical tip:** activate this option when you want to comment on the robustness of the axes. The default value is **disabled**.
+
+### Resampling Options
+
+#### Number of subjects
+
+**Role:** defines the number of subjects drawn in each virtual panel. **Impact on the computation:** the closer this value is to the actual panel size, the more similar the simulated panels will be to it. **Practical tip:** use the actual panel size as a starting point. The default value is 20.
+
+#### Number of panels
+
+**Role:** sets the total number of simulated virtual panels. **Impact on the computation:** the larger this number, the more stable the ellipses will be from one run to another, but computation time increases. **Practical tip:** 300 is a good compromise to start with; for a final rendering, it may be useful to increase this number to 500. The default value is 300.
+
+#### Threshold (%)
+
+**Role:** defines the level used to draw the ellipses. **Impact on the computation:** a low threshold produces wider ellipses corresponding to a higher confidence level. **Practical tip:** leave 5% for a first trial. This is the default value.
+
+#### Center by subject
+
+**Role:** centers responses subject by subject. **Impact on the computation:** corrects differences in average level between subjects and often improves the comparison between profiles. **Practical tip:** leave this option checked in almost all analyses. It is **enabled by default**.
+
+#### Scale by subject
+
+**Role:** standardizes responses subject by subject. **Impact on the computation:** corrects differences in amplitude between subjects, but modifies the initial structure more strongly than centering alone. **Practical tip:** leave this option unchecked at first. It is **disabled by default**.
+
+### Numerical Indicators
+
+#### Significance threshold (%)
+
+**Role:** defines the significance threshold for the automatic description of the dimensions. **Impact on the computation:** the stricter the threshold, the more selective the automatic description will be. **Practical tip:** the default value, 5%, is well suited to a first reading.
+
+#### Number of dimensions
+
+**Role:** defines the number of dimensions to calculate and describe. **Impact on the computation:** this value is limited by the dimensions that can actually be calculated by the PCA. **Practical tip:** the default value, 2, is appropriate for an initial reading.
+
+## Step-by-step procedure
+
+1.  Open your dataset in jamovi.
+2.  In the **Data** tab, check that the stimulus variable is categorical, the subject variable is categorical, and the sensory attributes are numeric.
+3.  Open **SEDA \> Fixed List of Attributes \> Representation of the Stimulus Space**.
+4.  Place the stimulus variable in **Stimulus Effect**.
+5.  Place the subject variable in **Subject Effect**.
+6.  Place all sensory attributes in **Sensory Attributes**.
+7.  Leave **Scale to unit variance** checked.
+8.  Set **p-value of the Stimulus effect (%)** to 20% for an initial exploration, or to 5% for a stricter selection.
+9.  Keep X-axis = 1 and Y-axis = 2.
+10. Leave **Center by subject** checked and **Scale by subject** unchecked at first.
+11. Set **Number of subjects** to the panel size or a close value, leave **Number of panels** at 300 and **Threshold (%)** at 5.
+12. Activate **Individual variability around stimuli** and/or **Variability around sensory attributes** according to your needs.
+13. In **Numerical Indicators**, keep the default values for a first trial.
+14. First read **Representation of the Stimuli with Ellipses**, then **Eigenvalue Decomposition**, then **Automatic Description of the Dimensions**.
+15. Then return to the settings to test the stability of your conclusions.
+
+## Interpretation of results
+
+### Representation of the Stimuli with Ellipses
+
+This is the central graph of the function. Each stimulus is represented by a mean point in the factor space, surrounded by an ellipse. The axes come from the PCA, and the percentage displayed on each axis indicates the share of variance explained.
+
+| Element | Meaning |
+|------------------------------|------------------------------------------|
+| Two close stimuli | Similar sensory profiles |
+| Strongly overlapping ellipses | Weakly significant difference (with respect to a change in panel) |
+| Small ellipse | Position stable across simulated panels |
+| Large ellipse | More uncertain position |
+| Clearly separated ellipses | More significant difference |
+
+> **Point of vigilance:** the ellipses describe the variability of the mean position of the stimuli under panel resampling. They do not directly represent the raw dispersion of individual ratings.
+
+### Representation of the Stimuli
+
+This map shows the relative positions of the stimuli without emphasizing the ellipses. It is useful for quickly identifying the main groupings and oppositions between stimuli.
+
+### Representation of the Sensory Attributes
+
+This map shows the sensory attributes in the factor space. It is read using three simple cues:
+
+-   **direction**: toward which stimuli the attribute “pulls” the structure;
+-   **length**: the longer an attribute is, the better it is represented on the plane;
+-   **the angle between two attributes**: small angle = positive correlation; angle close to 180° = opposition; angle close to 90° = near-independence.
+
+This is the map that gives sensory meaning to the axes.
+
+### Individual variability around stimuli *(available only if the option is activated)*
+
+This output shows the dispersion of individual evaluations around the mean point of each stimulus. A compact cloud indicates strong consensus; a dispersed cloud indicates a more heterogeneous perception between subjects.
+
+### Variability around sensory attributes *(available only if the option is activated)*
+
+This output shows the dispersion of the position of sensory attributes in the virtual panels. A compact cloud means that the attribute is stable; a dispersed cloud indicates that its interpretation is more fragile and depends more strongly on the composition of the panel.
+
+### Eigenvalue Decomposition
+
+This table gives, for each dimension, the eigenvalue, the percentage of variance explained, and the cumulative percentage. If the first two dimensions explain a large share of the variance, the 2D map summarizes the data well. Otherwise, it is prudent to explore other planes, for example Dim 1 / Dim 3.
+
+### Automatic Description of the Dimensions
+
+This textual output identifies the attributes most strongly linked to each dimension, filtered by **Significance threshold (%)**. It helps name the axes in sensory terms and complements the attribute map well.
+
+### Product-by-product comparison table *(available only if Number of subjects \> 1)*
+
+This p-value matrix compares each pair of stimuli in the factor space. A low p-value suggests a clearer difference between two stimuli; a high p-value suggests a more plausible proximity. This table complements the visual reading of the ellipses, especially when their overlap is difficult to interpret by eye.
+
+## Example: the **sensochoc** dataset
+
+The **sensochoc** dataset describes 6 chocolates evaluated by 29 subjects on 14 sensory attributes. It is used to illustrate the function outputs. The numerical values and graphics discussed below come directly from the analysis results. To load this dataset, open jamovi, click the icon in the top left corner, the three stacked lines, then **Open** → **Data Library** → **SEDA**.
+
+### Example settings
+
+To reproduce this example, use the following values.
+
+| Option                                 | Value                  |
+|----------------------------------------|------------------------|
+| **Stimulus Effect**                    | Product                |
+| **Subject Effect**                     | Panelist               |
+| **Sensory Attributes**                 | all sensory attributes |
+| **Scale to unit variance**             | Checked                |
+| **p-value of the Stimulus effect (%)** | 20                     |
+| **X-axis / Y-axis**                    | 1 / 2                  |
+| **Number of subjects**                 | 20                     |
+| **Number of panels**                   | 300                    |
+| **Threshold (%)**                      | 5                      |
+| **Center by subject**                  | Checked                |
+| *Scale by subject*                     | Unchecked              |
+| **Significance threshold (%)**         | 5                      |
+| **Number of dimensions**               | 2                      |
+
+> **Note:** The results presented in this section are obtained from the default parameter values. The number of subjects making up the panel should be set to 29, the actual number of subjects in the experiment.
+
+### Analysis of the *Representation of the Stimuli with Ellipses* graph
+
+The map shows the 6 chocolates in the Dim. 1 / Dim. 2 plane. The first dimension alone accounts for 88.79% of the total variance — this 2D plane is therefore a very faithful representation of the data. The second dimension explains an additional 7.58%.
+
+On the horizontal axis (Dim. 1), **choc1** and **choc3** occupy the two opposite extremes: **choc1** on the left (bitter, cocoa side), **choc3** on the right (milky, sweet side). These are the two chocolates whose profiles are most clearly opposed, which is consistent with the results of the previous chapter. **choc2**, **choc5**, and **choc6** are grouped in the center, close to the origin. **choc4** is located slightly above the horizontal axis, between choc1 and the central group.
+
+The ellipses provide information about the robustness of these positions. The ellipses of **choc2**, **choc5**, and **choc6** overlap widely. In other words, if the composition of the panel were changed, their order could be reversed. Conversely, **choc1** and **choc3** have ellipses clearly separated from all the others: their position is stable, and their difference from the other chocolates can be considered reliable.
+
+### Analysis of the *Hotelling Test* table
+
+The *p-value* table quantitatively confirms what the ellipses show visually. The pairs **choc2 / choc5** (p = 0.76) and **choc5 / choc6** (p = 0.16) have high p-values: one cannot conclude that there is a significant difference between these chocolates in the sensory space. The pair **choc2 / choc6** is borderline (p = 0.04). By contrast, all comparisons involving **choc1** or **choc3** give p-values of 0.00: these two chocolates differ significantly from all the others.
+
+### Analysis of the *Representation of the Sensory Attributes* graph
+
+The 14 attributes are distributed very clearly around the horizontal axis. On the right are grouped *MilkF*, *Sweetness*, *Caramel*, *Vanilla*, *MilkA*, and *Melting* — this is the profile of **choc3.** On the left are grouped *CocoaF*, *CocoaA*, *Bitterness*, *Astringency*, *Acidity*, *Crunchy*, and *Granular* — this is the profile of **choc1**. The horizontal axis therefore clearly corresponds to an opposition between **sweet milk chocolate / bitter dark chocolate**.
+
+The length of the arrows also indicates the quality of representation of each attribute on this plane. *Crunchy* has a shorter arrow pointing downward, reflecting part of its variability on the second dimension — confirming that this attribute is less stable in subjects’ perception than *CocoaF* or *MilkF*, whose arrows almost reach the edge of the circle.
+
+### Analysis of the *Automatic Description of the Dimensions* table
+
+The automatic description of the dimensions confirms these readings. On Dim. 1, the most positively correlated attributes are *MilkF* (correlation 0.86), *Sweetness* (0.66), and *Caramel* (0.65); the most negatively correlated are *CocoaF* (-0.79) and *Bitterness* (-0.70). On Dim. 2, *Sticky* (0.59), *Acidity* (0.58), and *Astringency* (0.57) appear on the positive side, while *Melting* (-0.15) is slightly negative.
+
+### Synthetic interpretation
+
+The sensory space of the chocolates is very largely structured by a single strong opposition, carried by the first dimension: on one side, a milky, sweet, and melting profile; on the other, a bitter, cocoa, and more textured profile. The stimulus map and the attribute map converge toward the same overall reading. The ellipses additionally show that not all stimuli are differentiated with the same robustness. Finally, the Hotelling test confirms that some proximities observed on the map do not correspond to clearly established differences.
+
+> **What we take away from this example:** the analysis does not only show where the stimuli are located in the sensory space, but also how robustly they can be distinguished.
+
+## Practical tips
+
+-   Always start with X-axis = 1 and Y-axis = 2.
+-   Leave **Scale to unit variance** checked in most cases.
+-   Use **Center by subject** almost systematically.
+-   Activate **Scale by subject** only if you have a good reason to think that subjects use the scale with very different amplitudes.
+-   Start with 300 simulated panels; increase to 500 or more for a more stable final version.
+-   Set **p-value of the Stimulus effect (%)** between 5% and 20% depending on whether you want a streamlined or more exhaustive map.
+-   Never interpret the stimulus map without looking at the attribute map.
+-   Do not conclude too quickly that there is a difference when the ellipses overlap strongly.
+-   Consult **Product-by-product comparison table** to complement the visual reading when the overlap is ambiguous.
+-   If the first two dimensions summarize little variance, explore other factor planes.
+
+## In summary
+
+This analysis produces a multivariate representation of stimuli suited to QDA data, while taking the subject effect into account in the construction of sensory profiles. It enriches the classical factor map with ellipses obtained by resampling, making it possible to assess the robustness of the observed positions. It therefore shows not only **where the stimuli are located**, but also **how confidently they can be located there**.

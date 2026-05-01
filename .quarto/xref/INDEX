@@ -1,0 +1,152 @@
+{
+  "index.qmd": {
+    "index.html": "8f9133cc"
+  },
+  "intro.qmd": {
+    "intro.html": "86de7088"
+  },
+  "summary.qmd": {
+    "summary.html": "3d7fceef"
+  },
+  "references.qmd": {
+    "references.html": "c5c04eb4"
+  },
+  "01-qda.qmd": {
+    "01-qda.html": "d4d80490"
+  },
+  "01-qda_uni.qmd": {
+    "01-qda_uni.html": "d311704c"
+  },
+  "02-qda_multi.qmd": {
+    "02-qda_multi.html": "e08ba4c4"
+  },
+  "03-analyse_qda_univariee_final.qmd": {
+    "03-analyse_qda_univariee_final.html": "be789c92"
+  },
+  "04-analyse_qda_univariee_seda.qmd": {
+    "04-analyse_qda_univariee_seda.html": "07483540"
+  },
+  "03-CATA.qmd": {
+    "03-CATA.html": "d1b449f4"
+  },
+  "04-JAR.qmd": {
+    "04-JAR.html": "acac6949"
+  },
+  "05-napping.qmd": {
+    "05-napping.html": "a16976cd"
+  },
+  "06-sorting.qmd": {
+    "06-sorting.html": "49c7705f"
+  },
+  "07-prefmap.qmd": {
+    "07-prefmap.html": "2d1a58b5"
+  },
+  "01-qda_uni_corrige.qmd": {
+    "01-qda_uni_corrige.html": "2ace72f3"
+  },
+  "01-qda_uni_corrige_v2.qmd": {
+    "01-qda_uni_corrige_v2.html": "7bf93d84"
+  },
+  "02-qda_multi_corrige.qmd": {
+    "02-qda_multi_corrige.html": "5a28fb03"
+  },
+  "02-qda_multi_corrige_v2.qmd": {
+    "02-qda_multi_corrige_v2.html": "1b5adc46"
+  },
+  "01-qda_uni_corrige_v3.qmd": {
+    "01-qda_uni_corrige_v3.html": "6c8b35e4"
+  },
+  "02-qda_multi_corrige_v3.qmd": {
+    "02-qda_multi_corrige_v3.html": "b41df06c"
+  },
+  "03-CATA_corrige_v2.qmd": {
+    "03-CATA_corrige_v2.html": "8669d5a0"
+  },
+  "04-JAR_corrige_v2.qmd": {
+    "04-JAR_corrige_v2.html": "113e3d64"
+  },
+  "02-qda_multi_corrige_v4.qmd": {
+    "02-qda_multi_corrige_v4.html": "d02663fb"
+  },
+  "03-CATA_corrige_v3.qmd": {
+    "03-CATA_corrige_v3.html": "99f8de61"
+  },
+  "04-JAR_corrige_v3.qmd": {
+    "04-JAR_corrige_v3.html": "4c382b65"
+  },
+  "01-qda_uni_corrige_v4.qmd": {
+    "01-qda_uni_corrige_v4.html": "c176d6af"
+  },
+  "01-qda_uni_corrige_ppt.qmd": {
+    "01-qda_uni_corrige_ppt.html": "fc5ce2be"
+  },
+  "02-qda_multi_ppt.qmd": {
+    "02-qda_multi_ppt.html": "2cf9e589"
+  },
+  "01-qda_uni_ppt.qmd": {
+    "01-qda_uni_ppt.html": "666d4115"
+  },
+  "03-CATA_ppt.qmd": {
+    "03-CATA_ppt.html": "9e2b7171"
+  },
+  "04-JAR_ppt.qmd": {
+    "04-JAR_ppt.html": "81505c52"
+  },
+  "05-napping_ppt.qmd": {
+    "05-napping_ppt.html": "444ec4c1"
+  },
+  "06-sorting_ppt.qmd": {
+    "06-sorting_ppt.html": "d1f91603"
+  },
+  "07-carto_ppt.qmd": {
+    "07-carto_ppt.html": "f2756ca1"
+  },
+  "intro_ppt.qmd": {
+    "intro_ppt.html": "72e7c1bf"
+  },
+  "chapitre2_prompt_harmonise.qmd": {
+    "chapitre2_prompt_harmonise.html": "50910ea7"
+  },
+  "chapitre1_prompt_harmonise.qmd": {
+    "chapitre1_prompt_harmonise.html": "3b1e0f18"
+  },
+  "chapitre3_prompt_harmonise.qmd": {
+    "chapitre3_prompt_harmonise.html": "b87f4e83"
+  },
+  "chapitre4_prompt_harmonise.qmd": {
+    "chapitre4_prompt_harmonise.html": "55b8d972"
+  },
+  "chapitre5_prompt_harmonise.qmd": {
+    "chapitre5_prompt_harmonise.html": "42a3c216"
+  },
+  "chapitre6_prompt_harmonise.qmd": {
+    "chapitre6_prompt_harmonise.html": "3953ff46"
+  },
+  "chapitre7_prompt_harmonise.qmd": {
+    "chapitre7_prompt_harmonise.html": "5c3c87f5"
+  },
+  "intro_ppt_GB.qmd": {
+    "intro_ppt_GB.html": "03b1d875"
+  },
+  "chapitre1_prompt_GBH.qmd": {
+    "chapitre1_prompt_GBH.html": "e8a1a1b7"
+  },
+  "chapitre2_prompt_GBH.qmd": {
+    "chapitre2_prompt_GBH.html": "4f7d2f24"
+  },
+  "chapitre3_prompt_GBH.qmd": {
+    "chapitre3_prompt_GBH.html": "a4f823bc"
+  },
+  "chapitre4_prompt_GBH.qmd": {
+    "chapitre4_prompt_GBH.html": "c6188bee"
+  },
+  "chapitre5_prompt_GBH.qmd": {
+    "chapitre5_prompt_GBH.html": "22c82f2c"
+  },
+  "chapitre6_prompt_GBH.qmd": {
+    "chapitre6_prompt_GBH.html": "278da90b"
+  },
+  "chapitre7_prompt_GBH.qmd": {
+    "chapitre7_prompt_GBH.html": "374b1c21"
+  }
+}

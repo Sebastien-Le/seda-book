@@ -1,0 +1,259 @@
+# Analyse multivariée de données de type QDA (ACP et ellipses)
+
+L’objectif de cette partie est de comprendre ce qui se cache derrière les fonctions du module *SEDA* dédiées à la représentation multidimensionnelle d’un espace produits décrit par des données de type QDA.
+
+Nous allons (1) construire le **tableau des moyennes ajustées** par produit, (2) réaliser une **ACP** sur ce tableau pour représenter simultanément produits et attributs sensoriels, puis (3) introduire la notion d’**information supplémentaire** et le principe des **panels virtuels** utilisés pour tracer des ellipses.
+
+## Un peu de théorie
+
+Dans le cadre de données QDA, chaque produit est évalué sur plusieurs attributs sensoriels par plusieurs panélistes (et parfois sur plusieurs sessions). Un modèle d’ANOVA permet d’estimer l’effet produit en tenant compte d’un effet panéliste. À partir de ce modèle, on peut calculer, pour chaque produit et chaque attribut, une **moyenne ajustée** (moyenne “corrigée” de l’effet panéliste).
+
+Le tableau des moyennes ajustées (noté `adjmean` dans `SensoMineR`) a alors une forme simple :
+
+* **lignes** : produits
+* **colonnes** : attributs sensoriels
+* **cellules** : moyennes ajustées par produit et par attribut
+
+C’est ce tableau qui sert de base à la représentation multivariée de l’espace produits : on applique une **ACP** sur `adjmean` afin d’obtenir une carte des produits (individus) et une carte des attributs (variables).
+
+Dans la suite, nous utilisons le jeu de données des **parfums** (`perfumes_qda.xlsx`).
+
+## Comprendre l’approche avec *R*
+
+### Importons les données
+
+Pour importer des données, nous utilisons la fonction `read_excel()` du *package* `readxl`. Ici, nous enregistrons le résultat de la lecture dans un objet appelé `qda_data`, que l’on peut ensuite afficher pour vérifier que tout s’est bien déroulé.
+
+```{r}
+# Si non installé
+# install.packages("readxl")
+
+library(readxl)
+
+qda_data <- read_excel(
+  path = "perfumes_qda.xlsx"
+)
+
+qda_data
+```
+
+Comme précédemment, `qda_data` est un *tibble*. Nous le convertissons en *data frame* pour rester dans un format très standard (et homogène avec le chapitre précédent).
+
+[^bts_qda_multivariate-1]: En réalité, on peut aussi nommer les lignes d’un *tibble*, mais c’est un peu moins pratique. Voir [https://tibble.tidyverse.org/reference/rownames.html](https://tibble.tidyverse.org/reference/rownames.html).
+
+```{r}
+qda_data <- as.data.frame(qda_data)
+```
+
+Jetons maintenant un œil à nos données, puis transformons `Panelist` et `Product` en facteurs.
+
+```{r}
+summary(qda_data)
+
+qda_data$Panelist <- factor(qda_data$Panelist)
+qda_data$Product  <- factor(qda_data$Product)
+
+summary(qda_data)
+```
+
+[^bts_qda_multivariate-2]: N’hésitez pas à consulter [https://forcats.tidyverse.org](https://forcats.tidyverse.org).
+
+### Construisons le tableau des moyennes ajustées (par produit)
+
+Le tableau `adjmean` est produit par la fonction `decat()` du package `SensoMineR`. Nous lui indiquons :
+
+* la formule du modèle (`~Product+Panelist`) : effet produit + effet panéliste,
+* la position de la première variable sensorielle (`firstvar = 5`),
+* `graph = FALSE` : pas de graphiques automatiques ici.
+
+```{r}
+# Si non installé
+# install.packages("SensoMineR")
+
+library(SensoMineR)
+
+res_decat <- decat(
+  qda_data,
+  formul   = "~Product+Panelist",
+  firstvar = 5,
+  graph    = FALSE
+)
+```
+
+Jetons un œil au tableau des moyennes ajustées :
+
+```{r}
+res_decat$adjmean
+```
+
+### Réalisons une ACP sur la table des moyennes ajustées
+
+Nous appliquons maintenant une **ACP** sur `adjmean`. Cette ACP fournit :
+
+* une représentation des **produits** (individus),
+* une représentation des **attributs** (variables).
+
+```{r}
+# Si non installé
+# install.packages("FactoMineR")
+
+library(FactoMineR)
+
+res_pca <- PCA(res_decat$adjmean, graph = FALSE)
+```
+
+Représentation des parfums (produits) :
+
+```{r}
+plot.PCA(
+  res_pca,
+  choix = "ind",
+  title = "Représentation des parfums (ACP sur moyennes ajustées)"
+)
+```
+
+Représentation des attributs sensoriels :
+
+```{r}
+plot.PCA(
+  res_pca,
+  choix = "var",
+  title = "Représentation des attributs sensoriels"
+)
+```
+
+### Illustrons la notion d’information supplémentaire
+
+En ACP, on distingue :
+
+* les **individus actifs** (ceux qui servent à construire les axes),
+* les **individus supplémentaires** (projetés *a posteriori*, sans modifier les axes),
+* les **variables supplémentaires** (elles aussi projetées *a posteriori*).
+
+Dit simplement, nous allons créer un “panel virtuel” en ré-échantillonnant des **panélistes** avec remise (bootstrap). C’est une version simplifiée du principe utilisé pour générer des ellipses autour des produits : on simule plusieurs panels, on recalcule des tableaux de moyennes ajustées, puis on projette ces produits “virtuels” en **individus supplémentaires** sur l’ACP du tableau initial.
+
+```{r}
+set.seed(123)
+
+# Ré-échantillonnage avec remise au niveau des panélistes (blocs)
+panel_levels <- levels(qda_data$Panelist)
+boot_panels  <- sample(panel_levels, length(panel_levels), replace = TRUE)
+
+qda_data_boot <- do.call(
+  rbind,
+  lapply(boot_panels, function(p) qda_data[qda_data$Panelist == p, ])
+)
+
+qda_data_boot$Panelist <- factor(qda_data_boot$Panelist)
+qda_data_boot$Product  <- factor(qda_data_boot$Product)
+```
+
+On applique la même procédure : calcul des moyennes ajustées avec les produits en ligne.
+
+```{r}
+res_decat_boot <- decat(
+  qda_data_boot,
+  formul   = "~Product+Panelist",
+  firstvar = 5,
+  graph    = FALSE
+)
+
+res_decat_boot$adjmean
+```
+
+#### Individus supplémentaires : projeter les produits “virtuels” sur l’ACP
+
+On combine la table initiale et la table “bootstrap” en empilant les lignes. On obtient donc deux fois la liste des produits : les premiers (actifs) et les seconds (supplémentaires).
+
+```{r}
+adjmean_illu <- rbind(res_decat$adjmean, res_decat_boot$adjmean)
+
+n_prod <- nrow(res_decat$adjmean)
+
+res_pca_ind_sup <- PCA(
+  adjmean_illu,
+  ind.sup = (n_prod + 1):(2 * n_prod),
+  graph   = FALSE
+)
+
+plot.PCA(
+  res_pca_ind_sup,
+  choix = "ind",
+  title = "Produits actifs + produits supplémentaires (panel virtuel)"
+)
+```
+
+Dans ce graphique, les produits supplémentaires sont projetés sur les mêmes axes que les produits actifs : ils **n’interviennent pas dans le calcul** des axes, mais permettent de visualiser la variabilité liée au panel.
+
+#### Variables supplémentaires : illustrer l’ajout de variables sans changer les axes
+
+On peut aussi illustrer l’ajout de variables supplémentaires en concaténant des colonnes. Pour éviter des noms de colonnes dupliqués, on renomme les variables “bootstrap”.
+
+```{r}
+boot_adj <- res_decat_boot$adjmean
+colnames(boot_adj) <- paste0(colnames(boot_adj), "_boot")
+
+adjmean_illu_var <- cbind(res_decat$adjmean, boot_adj)
+
+p <- ncol(res_decat$adjmean)
+
+res_pca_var_sup <- PCA(
+  adjmean_illu_var,
+  quanti.sup = (p + 1):ncol(adjmean_illu_var),
+  graph      = FALSE
+)
+
+plot.PCA(
+  res_pca_var_sup,
+  choix = "var",
+  title = "Variables actives + variables supplémentaires"
+)
+```
+
+Comme vous le voyez, l’ajout d’informations supplémentaires ne change pas les résultats principaux de l’ACP : les axes sont construits uniquement à partir des données actives, et les informations supplémentaires sont projetées ensuite.
+
+### La fonction `panellipse()` du package `SensoMineR`
+
+Ce que nous venons de décrire peut être réalisé plus simplement avec la fonction `panellipse()` du package `SensoMineR`. Elle automatise la génération de panels virtuels et permet d’obtenir des représentations avec ellipses (selon les options choisies), en lui indiquant où se trouvent les variables `Product` et `Panelist`.
+
+```{r}
+res_ellipse <- panellipse(
+  qda_data,
+  col.p    = 4,  # colonne Product (à adapter si l'ordre change)
+  col.j    = 1,  # colonne Panelist (à adapter si l'ordre change)
+  firstvar = 5
+)
+```
+
+> Remarque : `col.p` et `col.j` dépendent de la position des colonnes dans votre fichier. Ici, on suppose que `Panelist` est en colonne 1 et `Product` en colonne 4, comme dans la structure présentée plus haut.
+
+## Comprendre les résultats dans *jamovi* (module *SEDA*)
+
+Les résultats clés que nous venons de générer sont ceux intégrés dans *jamovi* via *SEDA* :
+
+1. **ACP sur le tableau des moyennes ajustées** (produits × attributs)
+2. **Projection de produits issus de panels virtuels** afin de visualiser la variabilité et de tracer des ellipses autour des produits
+
+Les données QDA ont la structure suivante (*cf.* @fig-qda_data) : un premier ensemble de facteurs explicatifs (par exemple `Panelist`, `Session`, `Rank`, `Product`), puis un ensemble de descripteurs sensoriels (à partir du premier attribut sensoriel).
+
+![Données de type QDA](images/qda/data_qda.png){#fig-qda_data width="75%"}
+
+### Analyses de données multivariées : ACP
+
+La fonction dédiée à la visualisation de l’espace produits (*cf.* @fig-menu_ellipse) génère deux types de résultats :
+
+* une ACP réalisée sur le **tableau des moyennes ajustées**, calculé à partir des analyses de variance ;
+* des **panels virtuels** générés par tirages aléatoires avec remise (bootstrap), permettant de projeter des produits supplémentaires et de construire des ellipses autour des produits.
+
+![Menu SEDA : la représentation des produits](images/qda/menu_ellipse.png){#fig-menu_ellipse width="35%"}
+
+Le tableau des moyennes ajustées se compose de lignes représentant les produits et de colonnes correspondant aux attributs sensoriels. À l’intersection des lignes et des colonnes se trouve une moyenne ajustée par produit et par attribut (effet panéliste pris en compte). L’ACP est réalisée sur ce tableau.
+
+Des panels virtuels sont ensuite générés par tirage aléatoire avec remise. Pour chaque panel, la même procédure est appliquée : calcul d’un tableau de moyennes ajustées, puis projection des produits correspondants comme **individus supplémentaires** sur l’ACP du tableau initial. La dispersion de ces produits projetés permet de tracer des ellipses autour des produits (représentant l’incertitude/variabilité liée au panel).
+
+En pratique, les paramètres à renseigner sont similaires à ceux des analyses précédentes : il faut identifier les facteurs *Produit*, *Juge*, ainsi que les attributs sensoriels (*cf.* @fig-decat_api_pca).
+
+![Menu SEDA : la visualisation de l'espace produits](images/qda/decat_api_pca.png){#fig-decat_api_pca width="50%"}
+
+Il est également nécessaire de préciser si l’ACP doit être réalisée sur des données réduites (option activée par défaut), ainsi que le seuil de sélection des attributs sensoriels (si l’on souhaite ne conserver que les attributs discriminants).
+

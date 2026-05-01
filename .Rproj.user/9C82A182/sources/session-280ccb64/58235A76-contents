@@ -1,0 +1,269 @@
+# Analyse de données de type JAR
+
+## Introduction
+
+Cette analyse est conçue pour les données **JAR** (*Just About Right*), dans lesquelles les répondants évaluent un attribut sensoriel selon une échelle du type *too little / just about right / too much*. Dans ce module SEDA, l'analyse se concentre sur les **défauts**, c'est-à-dire sur toutes les modalités différentes du niveau JAR de référence, et sur leur lien avec la note d'appréciation. Elle permet de décrire les stimuli selon leurs défauts, de représenter les stimuli et les défauts dans un même espace, puis d'estimer des **pénalités** d'appréciation associées à ces défauts.
+
+**Pourquoi ne pas utiliser une alternative standard ?**
+
+Une moyenne de la note d'appréciation par stimulus ne dit pas quels défauts expliquent une baisse d'appréciation. Une simple lecture des réponses JAR ne distingue pas non plus clairement ce qui relève d'un manque ou d'un excès par rapport au niveau idéal. Ici, le module recode chaque attribut autour du niveau défini dans **Coding of the JAR level**, construit un tableau de contingence stimuli × défauts, puis calcule des pénalités d'appréciation relativement à l'ensemble des stimuli.
+
+
+
+## Comprendre ce qui se passe "sous le capot"
+
+### Recodage du niveau JAR
+
+Le module commence par utiliser la valeur renseignée dans **Coding of the JAR level** pour redéfinir, dans chaque variable de **Sensory Attributes**, la modalité de référence. La valeur par défaut est `"jar"`. Toutes les autres modalités sont alors traitées comme des **défauts**, c'est-à-dire comme des écarts au niveau jugé "juste comme il faut".
+
+### Construction du tableau de fréquences des défauts
+
+Après ce recodage, le module retire la modalité de référence et compte, pour chaque stimulus, combien de fois chaque défaut a été observé. Le résultat intermédiaire est une matrice **défauts × stimuli**, ensuite transposée pour afficher dans jamovi un tableau **stimuli × défauts**. Ce tableau de fréquences constitue la base de la description des stimuli et de la représentation factorielle.
+
+### Description des stimuli par les défauts
+
+À partir de ce tableau, le module applique une procédure de description fréquentielle. Pour chaque stimulus, il identifie les défauts qui sont significativement plus ou moins associés que dans l'ensemble du tableau. La logique est proche de celle utilisée pour les données CATA : on compare la fréquence d'un défaut pour un stimulus à sa fréquence globale, et les associations significatives sont rapportées avec leurs fréquences, p-values et v-tests.
+
+### Représentation des produits selon les défauts
+
+Le module réalise ensuite une **analyse des correspondances** sur le tableau des défauts et produit le graphique intitulé **Representation of the Products According to Defects**. Cette carte représente simultanément les stimuli et les défauts dans un même espace factoriel, afin de visualiser les proximités entre profils de défauts.
+
+### Calcul des pénalités
+
+Le module calcule les pénalités à partir de **Stimulus Effect**, **Subject Effect**, **Liking Variable** et **Sensory Attributes**. La pénalité mesure la perte en appréciation associée à un défaut : c'est la différence entre la note d'appréciation moyenne des répondants ayant coché le niveau JAR et celle des répondants ayant coché le niveau défaut. Cette différence est calculée sur l'ensemble des stimuli simultanément, ce qui lui donne une interprétation globale, et non spécifique à un stimulus.
+
+> La pénalité est une valeur négative ou nulle : elle représente une perte en appréciation. Plus la valeur absolue est grande, plus le défaut est pénalisant.
+
+### Un graphique de pénalités par stimulus
+
+Le module produit un graphique de pénalités pour **chaque** stimulus. L'ordre d'affichage dépend de l'ordre des niveaux de **Stimulus Effect** dans jamovi. Il est donc possible de mettre un autre stimulus en premier en modifiant l'ordre des niveaux dans l'onglet **Données**.
+
+
+
+## Structure des données attendues
+
+Les données doivent contenir :
+
+-   une colonne catégorielle pour **Stimulus Effect** ;
+-   une colonne catégorielle pour **Subject Effect** ;
+-   une colonne numérique pour **Liking Variable** ;
+-   une ou plusieurs colonnes catégorielles pour **Sensory Attributes**.
+
+Chaque ligne correspond à l'évaluation d'un stimulus par un répondant. Les variables de **Sensory Attributes** doivent être des facteurs, car le module en modifie le niveau de référence avec **Coding of the JAR level**.
+
+Avant de lancer l'analyse dans jamovi, vérifiez dans l'onglet **Données** que :
+
+-   **Stimulus Effect** est catégorielle ;
+-   **Subject Effect** est catégorielle ;
+-   **Liking Variable** est numérique ;
+-   toutes les variables de **Sensory Attributes** sont catégorielles ;
+-   le niveau JAR utilisé dans vos données correspond exactement à la valeur saisie dans **Coding of the JAR level**.
+
+
+
+## Guide de l'interface
+
+L'analyse apparaît dans **SEDA \> Fixed List of Attributes \> Analysis of JAR Data**, avec le sous-titre **SensoMineR::JAR**. L'interface comporte quatre zones de dépôt de variables, la case **Read me before running** et le champ texte **Coding of the JAR level**.
+
+### Variables à renseigner
+
+#### Stimulus Effect
+
+**Rôle :** identifie les stimuli à analyser. **Impact sur le calcul :** cette variable définit les groupes pour lesquels les fréquences de défauts sont calculées et pour lesquels les graphiques de pénalités sont générés. **Conseil pratique :** l'ordre des niveaux de cette variable détermine l'ordre d'affichage des graphiques de pénalités. Modifiez cet ordre dans l'onglet **Données** si vous souhaitez voir un stimulus particulier en premier.
+
+#### Subject Effect
+
+**Rôle :** identifie les répondants ou consommateurs. **Impact sur le calcul :** cette variable est transmise au calcul des pénalités et sert à structurer les observations par panéliste. **Conseil pratique :** vérifiez qu'un même répondant conserve exactement le même identifiant dans tout le fichier.
+
+#### Liking Variable
+
+**Rôle :** contient la note d'appréciation globale utilisée pour calculer les pénalités. **Impact sur le calcul :** c'est la variable numérique sur laquelle le module estime l'effet des défauts. La pénalité mesure la perte sur cette note. **Conseil pratique :** assurez-vous que l'échelle d'appréciation est cohérente pour tous les stimuli et tous les répondants.
+
+#### Sensory Attributes
+
+**Rôle :** regroupe les variables JAR, une par attribut sensoriel. **Impact sur le calcul :** chaque variable est recodée autour du niveau défini dans **Coding of the JAR level** ; toutes les autres modalités deviennent des défauts. **Conseil pratique :** vérifiez que chaque variable contient bien le niveau JAR avec le libellé exact attendu.
+
+
+
+### Option générale
+
+#### Read me before running
+
+**Rôle :** affiche une aide intégrée dans les résultats. **Impact sur le calcul :** aucun effet statistique. **Conseil pratique :** laissez cette option cochée lors des premières utilisations. Elle est **activée par défaut**.
+
+
+
+### Codage du niveau JAR
+
+#### Coding of the JAR level
+
+**Rôle :** indique le libellé exact de la modalité considérée comme le niveau JAR de référence. **Impact sur le calcul :** ce paramètre détermine la modalité retirée du tableau des défauts et utilisée comme référence dans le recodage. Si la valeur ne correspond pas aux données, l'analyse peut échouer ou produire des résultats incohérents. **Conseil pratique :** la valeur par défaut est `jar`. Adaptez-la exactement au libellé utilisé dans votre fichier, en respectant la casse.
+
+
+## Procédure pas à pas
+
+1.  Ouvrez votre jeu de données dans jamovi.
+2.  Dans l'onglet **Données**, vérifiez que la variable stimulus est catégorielle, la variable panéliste est catégorielle, la variable d'appréciation est numérique, et les variables JAR sont toutes catégorielles.
+3.  Notez le libellé exact du niveau "juste comme il faut" utilisé dans vos variables JAR.
+4.  Ouvrez **SEDA \> Fixed List of Attributes \> Analysis of JAR Data**.
+5.  Placez la variable stimulus dans **Stimulus Effect**.
+6.  Placez la variable panéliste dans **Subject Effect**.
+7.  Placez la variable d'appréciation dans **Liking Variable**.
+8.  Placez toutes les variables JAR dans **Sensory Attributes**.
+9.  Renseignez dans **Coding of the JAR level** le libellé exact du niveau JAR ; laissez `jar` si c'est bien celui utilisé dans vos données.
+10. Lisez d'abord le tableau de fréquences des défauts pour vérifier la structure des données.
+11. Consultez ensuite la description des stimuli selon les défauts.
+12. Examinez la carte **Representation of the Products According to Defects** pour une vue d'ensemble.
+13. Lisez le tableau des pénalités, puis les graphiques **Penalties for Product ...** pour repérer les défauts prioritaires.
+
+
+
+## Interprétation des résultats
+
+### Frequency Table — tableau de fréquences des défauts
+
+Ce tableau croise les stimuli en lignes et les niveaux non-JAR en colonnes. Chaque cellule indique le nombre de fois où un défaut a été observé pour un stimulus donné. C'est la base de toutes les sorties suivantes.
+
+| Situation observée | Lecture possible |
+|------------------------------------|------------------------------------|
+| Valeur élevée dans une cellule | Le défaut est fréquent pour ce stimulus |
+| Ligne avec plusieurs valeurs élevées | Le stimulus cumule plusieurs défauts fréquents |
+| Colonne élevée pour plusieurs stimuli | Défaut fréquent, mais pas forcément spécifique |
+
+> **Point de vigilance :** un défaut très rare contribuera peu à l'interprétation. Une colonne avec des fréquences très faibles signale généralement un défaut peu discriminant.
+
+### Description of the Stimuli According to Defects
+
+Cette table décrit, stimulus par stimulus, les défauts significativement associés.
+
+| Colonne         | Signification                                |
+|-----------------|----------------------------------------------|
+| **product**     | Stimulus concerné                            |
+| **defect**      | Défaut caractéristique                       |
+| **internper**   | Pourcentage du défaut pour ce stimulus       |
+| **globper**     | Pourcentage global du défaut                 |
+| **internfreq**  | Fréquence absolue du défaut pour ce stimulus |
+| **globfreq**    | Fréquence absolue totale du défaut           |
+| **pvaluedfres** | P-value du test                              |
+| **vtest**       | Intensité standardisée de l'association      |
+
+-   Un **vtest positif** indique que le défaut est sur-représenté pour ce stimulus.
+-   Un **vtest négatif** indique qu'il est sous-représenté — ce qui est aussi informatif.
+-   Une **p-value** faible indique une association plus nette.
+
+> Un stimulus absent de ce tableau ne présente aucun défaut significativement associé au seuil utilisé : son profil de défauts est proche de la moyenne de l'ensemble des stimuli.
+
+### Representation of the Products According to Defects — graphique
+
+Ce graphique est issu de l'analyse des correspondances sur le tableau des défauts. Il représente simultanément les stimuli et les défauts dans un même espace factoriel. Deux stimuli proches ont des profils de défauts proches ; un défaut proche d'un stimulus lui est davantage associé. Le pourcentage affiché sur chaque axe indique la part d'information capturée par cette dimension.
+
+Cette carte donne une vue d'ensemble, à compléter par la lecture du tableau de description pour le détail statistique.
+
+### Penalty Table — tableau des pénalités
+
+Cette table présente, pour chaque défaut, l'effet estimé sur la note d'appréciation.
+
+| Colonne              | Signification                                      |
+|----------------------|----------------------------------------------------|
+| *(première colonne)* | Défaut concerné                                    |
+| **Penalty**          | Perte en appréciation estimée associée à ce défaut |
+| **Std. Error**       | Erreur standard de l'estimation                    |
+| **Pr(\>\|t\|)**      | P-value du test                                    |
+
+-   Plus la valeur absolue de **Penalty** est grande, plus l'effet estimé est marqué.
+-   Une **p-value** faible suggère un effet plus nettement mis en évidence par les données.
+-   Une pénalité peu significative n'implique pas nécessairement l'absence d'effet : le défaut peut simplement être trop rare pour être estimé avec précision.
+
+### Penalties for Product ... — graphiques par stimulus
+
+Le module génère un graphique de pénalités pour chaque stimulus. L'axe des x correspond à la fréquence du défaut pour ce stimulus ; l'axe des y à la pénalité calculée sur l'ensemble des stimuli. Des barres d'erreur sont tracées autour des points, les défauts avec p \< 0.05 sont distingués visuellement, et les étiquettes apparaissent pour les défauts avec p \< 0.20.
+
+| Zone du graphique | Lecture possible |
+|------------------------------------|------------------------------------|
+| Fréquence élevée + pénalité marquée | Défaut prioritaire : fréquent et fortement pénalisant |
+| Fréquence élevée + pénalité faible | Défaut fréquent mais moins pénalisant |
+| Fréquence faible + pénalité marquée | Défaut rare mais potentiellement problématique |
+| Fréquence faible + pénalité faible | Défaut secondaire |
+
+> **Point de vigilance :** le graphique croise une information **locale** (la fréquence du défaut pour le stimulus affiché) et une information **globale** (la pénalité calculée sur l'ensemble des stimuli). Ce point est essentiel pour ne pas surinterpréter un point isolé sur le graphique.
+
+
+
+## Exemple concret
+  
+Pour illustrer cette analyse, on peut utiliser le jeu de résultats joint, qui porte sur **trois produits** (`284`, `859`, `972`) évalués à l’aide de plusieurs attributs **JAR** liés notamment à l’odeur, à la texture, à la fluidité, à la douceur et à l’acidité. Dans ce module, tous les niveaux différents du niveau JAR de référence sont traités comme des **défauts**, puis mis en relation avec la note d’appréciation globale. 
+
+### Réglages utilisés
+
+  | Option                      | Valeur                                  |
+  | --------------------------- | --------------------------------------- |
+  | **Stimulus Effect**         | variable identifiant les trois produits |
+  | **Subject Effect**          | variable identifiant les répondants     |
+  | **Liking Variable**         | note d’appréciation globale             |
+  | **Sensory Attributes**      | toutes les variables JAR                |
+  | **Coding of the JAR level** | `jar`                                   |
+  
+### Lecture du Frequency Table (Stimuli × Defects)
+
+Le tableau de fréquences montre que les trois produits ont des profils de défauts très différents. Les données réelles du PDF permettent de lire les fréquences exactes pour chaque produit :
+
+- **Produit 859** : fortement marqué par *Not_enough_texture* (80.85 %) et *Too_fluid* (70.21 %) — ce sont les deux défauts les plus fréquents de tout l'ensemble.
+- **Produit 972** : se distingue par *Not_enough_odor_int* (53.19 %), *Not_enough_odor_fruit* (46.81 %), *Not_enough_odor_van* (44.68 %) et *Too_much_sweetness* (42.55 %).
+- **Produit 284** : présente plusieurs défauts fréquents mais moins extrêmes — *Not_enough_texture* (57.45 %), *Not_enough_odor_int* (48.94 %), *Too_fluid* (46.81 %) et *Not_enough_odor_van* (44.68 %).
+
+### Lecture de la Description of the Products According to Defects
+
+La table identifie les défauts significativement sur- ou sous-représentés pour chaque produit par rapport à la moyenne globale.
+
+**Produit 859** est celui dont le profil ressort le plus nettement : davantage associé à *Not_enough_texture* (p = 0.055, Vtest = 1.92) et *Too_fluid* (p = 0.080, Vtest = 1.75), il est significativement **moins** associé à *A_little_plain* (p = 0.040, Vtest = -2.05) et *Not_enough_odor_van* (p = 0.049, Vtest = -1.97). Ces deux dernières associations négatives confirment que 859 se distingue par sa texture et sa fluidité, pas par ses caractéristiques olfactives vanillées.
+
+**Produit 972** est davantage associé à *Too_much_sweetness* (p = 0.087, Vtest = 1.71), mais les associations restent modestes au seuil de 5 %. Il est sous-représenté par *Not_enough_texture* (p = 0.072, Vtest = -1.80), *Not_enough_sweetness* (p = 0.099, Vtest = -1.65) et *Too_fluid* (p = 0.218) — profil à l'opposé de 859 sur ces dimensions.
+
+**Produit 284** apparaît proche du profil moyen de l'ensemble : aucun défaut ne ressort au seuil de 5 %, ce qui suggère un produit dont les défauts ne s'écartent pas significativement de la répartition globale.
+
+### Lecture du graphique Representation of the Products According to Defects
+
+La première dimension explique **74.78 %** de l'inertie et oppose nettement **859** (côté *Too_fluid*, *Not_enough_texture*, *Not_enough_sweetness*) à **972** (côté *Too_much_sweetness*, *Too_much_odor_van*, *Not_enough_odor_fruit*). **284** occupe une position intermédiaire, légèrement du côté des défauts *A_little_plain* et de certains manques d'odeur fruitée ou vanillée. La seconde dimension (25.22 %) affine ces oppositions autour de *Too_much_texture* et *Too_much_acidity*, qui se situent en haut du plan.
+
+### Lecture du tableau Penalties Obtained from All Defects
+
+Le seul défaut dont la pénalité est significative au seuil de 5 % est **Too_much_odor_fruit** (pénalité = -2.67, p = 0.018). Plusieurs autres défauts présentent des pénalités importantes mais non significatives à ce seuil : *Too_much_acidity* (-4.03, p = 0.082), *Too_much_texture* (-1.78, p = 0.089), *Not_enough_acidity* (-1.03, p = 0.087). Ces défauts méritent attention malgré leur non-significativité, car leur pénalité estimée est notable et leurs intervalles de confiance larges reflètent surtout leur faible fréquence.
+
+> **Point de vigilance :** les pénalités sont calculées sur l'ensemble des trois produits simultanément. Elles mesurent une information **globale** (quel défaut coûte le plus en appréciation, tous produits confondus), et non **locale** (à quelle fréquence ce défaut apparaît pour un produit donné). C'est la combinaison des deux lectures qui est utile.
+
+### Lecture des graphiques Penalties for Product 284, 859 et 972
+
+Ces trois graphiques croisent la **fréquence locale** du défaut pour ce produit (axe horizontal) et la **pénalité globale** (axe vertical). Les points en rouge sont ceux dont la pénalité est significative.
+
+Pour le **produit 284**, *Too_much_odor_fruit* apparaît en rouge avec une fréquence locale très faible (6.38 %) — défaut pénalisant mais rare pour ce produit. *Not_enough_odor_van* (44.68 %) et *Not_enough_odor_int* (48.94 %) ont des fréquences bien plus élevées mais des pénalités non significatives, ce qui suggère que ces défauts sont tolérés par les consommateurs.
+
+Pour le **produit 859**, le tableau de fréquences montre que *Too_fluid* (70.21 %) et *Not_enough_texture* (80.85 %) sont les défauts les plus fréquents de loin, mais leurs pénalités globales sont modestes et non significatives (-0.46 et -0.43). Ces défauts sont donc **très fréquents mais peu pénalisants** au niveau global — ce qui peut paraître contre-intuitif, mais s'explique par le fait que les consommateurs ayant jugé ce produit "trop fluide" n'ont pas nécessairement moins apprécié le produit pour autant.
+
+Pour le **produit 972**, aucun défaut n'apparaît en rouge, et les fréquences sont dans l'ensemble plus modérées que pour 859. *Too_much_sweetness* (42.55 %) est le défaut le plus fréquent, mais sa pénalité globale est positive (0.43), ce qui suggère que ce défaut n'est pas perçu négativement en termes d'appréciation.
+
+### Interprétation synthétique
+
+Cet exemple illustre bien l'intérêt du module JAR et la logique de lecture en deux étapes :
+
+- Le **tableau de fréquences** et la **description des produits** permettent de repérer les défauts les plus présents et les plus structurants pour chaque produit.
+- La **carte produits × défauts** donne une vue globale des oppositions — ici, une opposition nette entre 859 (texture/fluidité) et 972 (sucrosité/odeur).
+- Les **pénalités** permettent d'identifier les défauts dont l'impact sur l'appréciation est le plus fort, indépendamment de leur fréquence.
+- Les **graphiques par produit** sont le lieu où ces deux lectures se croisent : un défaut fréquent ET pénalisant est prioritaire ; un défaut pénalisant mais rare est à surveiller ; un défaut fréquent mais non pénalisant peut être moins urgent.
+
+Dans ce cas précis, *Too_much_odor_fruit* est le seul défaut significativement pénalisant, mais sa faible fréquence (4 à 6 % selon les produits) invite à le relativiser. *Too_fluid* et *Not_enough_texture*, très fréquents pour **859**, méritent une attention formulation sans que leur pénalité statistique soit pour autant très marquée.
+
+## Conseils pratiques
+
+-   Vérifiez toujours que **Coding of the JAR level** correspond exactement au libellé utilisé dans vos données, y compris la casse.
+-   Assurez-vous que toutes les variables JAR sont bien catégorielles dans jamovi avant de lancer l'analyse.
+-   Lisez toujours le tableau de fréquences avant d'interpréter les pénalités : une pénalité élevée sur un défaut très rare est difficile à exploiter en optimisation produit.
+-   Concentrez-vous en priorité sur les défauts à la fois fréquents et associés à une pénalité marquée et significative.
+-   Ne surinterpretez pas une pénalité peu significative comme une absence totale d'effet.
+-   Gardez à l'esprit que la pénalité est calculée globalement sur l'ensemble des stimuli, alors que la fréquence affichée dans le graphique est locale au stimulus affiché.
+-   Utilisez la carte **Representation of the Products According to Defects** pour la vue d'ensemble, et les tables pour le détail.
+-   Si vous voulez afficher un autre stimulus en premier dans les graphiques de pénalités, modifiez l'ordre des niveaux de **Stimulus Effect** dans l'onglet **Données**.
+
+
+## En résumé
+
+Cette analyse transforme des réponses JAR en une lecture structurée des défauts perçus et de leur lien avec l'appréciation. Elle combine un **tableau de fréquences des défauts**, une **description des stimuli selon les défauts**, une **représentation factorielle des produits et défauts**, puis une **estimation des pénalités** associées à chaque défaut. Son intérêt principal est de relier, dans un même cadre, la fréquence des écarts au niveau idéal et leur coût potentiel en appréciation, afin de guider l'optimisation produit de façon à la fois descriptive et quantitative.
