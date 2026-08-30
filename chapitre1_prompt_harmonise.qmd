@@ -56,7 +56,7 @@ Avant de lancer l'analyse dans jamovi, vérifiez dans l'onglet **Données** que 
 
 ## Guide de l'interface
 
-L'analyse apparaît dans le menu **SEDA \> Fixed List of Attributes \> Characterization of the Stimulus Space**. L'interface comprend trois zones de dépôt de variables, une case à cocher **Read me before running**, puis un champ numérique **Significance threshold (%)**.
+L'analyse apparaît dans le menu **SEDA \> Fixed List of Attributes \> Characterization of the Stimulus Space**. L'interface comprend trois zones de dépôt de variables, un bloc **Instructions and R Code** contenant les cases **Read me before running** et **R code**, puis un champ numérique **Significance threshold (%)**.
 
 ### Variables à renseigner
 
@@ -76,6 +76,10 @@ L'analyse apparaît dans le menu **SEDA \> Fixed List of Attributes \> Character
 ### Read me before running
 
 **Rôle :** affiche une aide intégrée dans les résultats. **Impact sur le calcul :** aucun. **Conseil pratique :** laissez-la cochée lors des premières utilisations. Elle est **activée par défaut**.
+
+### R code
+
+**Rôle :** affiche le script R correspondant à l'analyse dans une sortie **R Code**. **Impact sur le calcul :** aucun. **Conseil pratique :** activez cette option si vous souhaitez reproduire l'analyse dans le **Rj Editor** de jamovi ou poursuivre ensuite le travail dans R. Elle est **désactivée par défaut**.
 
 ### Seuil de significativité : Significance threshold (%)
 
@@ -110,8 +114,6 @@ Les premières lignes du tableau correspondent aux attributs les plus structuran
 
 > **Point de vigilance :** un attribut absent de ce tableau n'est pas suffisamment discriminant au seuil choisi. Si aucun attribut n'est retenu, la fonction affiche un message d'erreur et ne produit pas de résultat interprétable.
 
-> **Point de vigilance :** si une seule variable est placée dans **Sensory Attributes**, ce qui n'arrivera **jamais** en pratique, elle sera renommée par le chiffre **1** dans le tableau. La logique d'interprétation reste identique : lecture de la discrimination globale, puis de la caractérisation stimulus par stimulus.
-
 ### Sensory Description of the Stimuli
 
 Ce second tableau décrit chaque stimulus par les attributs qui le caractérisent significativement. Les lignes sont regroupées par stimulus, et les attributs les plus saillants apparaissent en premier au sein de chaque groupe.
@@ -135,7 +137,7 @@ Dans la configuration actuelle de la fonction, aucune sortie graphique n’est p
 
 ## Exemple : le jeu de données **sensochoc**
 
-Le jeu de données **sensochoc** décrit 6 chocolats évalués par 29 sujets sur 14 attributs sensoriels. Il sert à illustrer les sorties de la fonction. Les valeurs numériques et les graphiques commentés ci-dessous proviennent directement des résultats de l’analyse. Pour charger ce jeu de données, ouvrez jamovi, cliquez sur l'icône en haut à gauche (trois traits superposés), puis sur **Open** → **Data Library** → **SEDA**.
+Le jeu de données **sensochoc** décrit 6 chocolats évalués par 29 sujets sur 14 attributs sensoriels. Il sert à illustrer les sorties de la fonction. Les valeurs numériques commentées ci-dessous proviennent directement des résultats de l’analyse. Pour charger ce jeu de données, ouvrez jamovi, cliquez sur l'icône en haut à gauche (trois traits superposés), puis sur **Open** → **Data Library** → **SEDA**.
 
 ### Paramètres de l’exemple
 
@@ -158,7 +160,7 @@ La seconde table permet de lire le profil de chaque chocolat par rapport à la m
 
 **choc1** est caractérisé par un profil très contrasté. Pour ce chocolat, côté positif, *Bitterness* ressort avec la V-test la plus élevée (9.95, coefficient +2.46) et une moyenne ajustée de 7.07, nettement au-dessus de la moyenne de l'ensemble. *CocoaF* (V-test = 8.48), *Astringency* (7.08) et *Acidity* (6.14) complètent ce profil. Côté négatif, *Sweetness* (V-test = -8.29, coefficient -1.95, moyenne ajustée 3.14) et *MilkF* (V-test = -8.70) désignent un chocolat très peu sucré et très peu lacté.
 
-**choc3** présente le profil opposé. Il est fortement caractérisé par *MilkF* (V-test = 16.52, la plus élevée du tableau), *Caramel* (11.52), *Sweetness* (10.39) et *Melting* (9.19). À l'inverse, il est négativement caractérisé par *Bitterness* (-12.42), *Crunchy* (-12.49) et *CocoaF* (-13.33). C'est le chocolat le plus lacté, sucré et fondant, et le moins amer et cacaoté. Au vu du nombre d'attributs sensoriels significatifs, **choc3** est certainement le chocolat dont le profil va s'écarter le plus nettement de la moyenne.
+**choc3** présente le profil opposé. Il est fortement caractérisé par *MilkF* (V-test = 16.52, la plus élevée du tableau), *Caramel* (11.52), *Sweetness* (10.39) et *Melting* (9.19). À l'inverse, il est négativement caractérisé par *Bitterness* (-12.42), *Crunchy* (-12.49) et *CocoaF* (-13.33). C'est le chocolat le plus lacté, sucré et fondant, et le moins amer et cacaoté. Au vu du nombre d'attributs sensoriels significatifs, **choc3** semble être le chocolat dont le profil va s'écarter le plus nettement de la moyenne.
 
 **choc2** se distingue surtout par *Crunchy* (V-test = 6.92) et une moindre perception de *MilkF* (-5.16). **choc6** est également *Crunchy* (5.35) et légèrement plus *Sweetness* (2.41), mais moins *Melting* (-3.08).
 
@@ -171,6 +173,17 @@ La seconde table permet de lire le profil de chaque chocolat par rapport à la m
 Cet exemple montre que les six chocolats couvrent un espace sensoriel large, avec à un extrême un chocolat très amer et intense (**choc1**) et, à l’autre, un chocolat lacté, sucré et fondant (**choc3**). Entre ces deux pôles, les autres chocolats occupent des positions plus intermédiaires. La première table permet d’identifier les attributs qui structurent globalement l’espace sensoriel, tandis que la seconde précise le profil propre à chaque stimulus. La lecture conjointe de ces deux sorties constitue l’apport principal de la fonction.
 
 > **Ce qu'on retient de cet exemple :** l’analyse combine une lecture globale des attributs discriminants et une lecture locale des profils de stimuli, ce qui permet de caractériser finement l’espace sensoriel.
+
+## De jamovi au Rj Editor
+
+Avant la première utilisation du **Rj Editor**, ouvrez ses paramètres avec la roue dentée et remplacez la version de R utilisée par défaut (**jamovi R**) par **System R**. Le R système doit disposer des packages nécessaires à l'analyse — ici `SensoMineR` — ainsi que du package `jmvconnect`, qui permet au Rj Editor d'accéder au jeu de données ouvert dans jamovi sous le nom `data`.
+
+En cochant **R code**, SEDA affiche ensuite une sortie **R Code** conçue pour être copiée directement dans le **Rj Editor** de jamovi.
+
+Pour cette analyse, le script charge `SensoMineR`, prépare les variables sélectionnées puis appelle `decat()` avec un modèle comprenant l'effet stimulus et l'effet sujet. La valeur de **Significance threshold (%)** est transmise à l'argument `proba` : 5 % dans l'interface correspond à `0.05` en R. Les objets `res_QDA$resF` et `res_QDA$resT` correspondent respectivement aux deux tables commentées dans ce chapitre.
+
+Cette sortie permet de vérifier et de reproduire le calcul, puis de poursuivre l'analyse dans R si nécessaire. Elle n'est pas indispensable pour utiliser SEDA.
+
 
 ## Conseils pratiques
 
