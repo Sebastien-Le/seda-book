@@ -1,1 +1,7 @@
 /.quarto/
+/.Rproj.user/
+/_book/
+.DS_Store
+/.RData
+/.Rhistory
+~$*
