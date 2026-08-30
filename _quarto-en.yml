@@ -1,0 +1,29 @@
+project:
+  output-dir: _render/en
+
+book:
+  title: "Help Me Do It on My Own: Sensory Data Analysis with jamovi and the SEDA Module"
+  date: "May 2026"
+  chapters:
+    - index.qmd
+    - intro_ppt_GB.qmd
+    - chapitre1_prompt_GBH.qmd
+    - chapitre2_prompt_GBH.qmd
+    - chapitre3_prompt_GBH.qmd
+    - chapitre4_prompt_GBH.qmd
+    - chapitre5_prompt_GBH.qmd
+    - chapitre6_prompt_GBH.qmd
+    - chapitre7_prompt_GBH.qmd
+
+lang: en-GB
+
+format:
+  html:
+    toc-title: "Table of contents"
+
+  pdf:
+    header-includes:
+      - \usepackage{fontawesome5}
+      - \newcommand{\ok}{\faCheck}
+      - \newcommand{\ko}{\faTimes}
+      - \newcommand{\warn}{\faExclamationTriangle}

@@ -1,0 +1,36 @@
+project:
+  output-dir: _render/fr
+
+book:
+  title: "Apprends moi à faire seul : analyse de données sensorielles avec jamovi et le module SEDA"
+  date: "Mai 2026"
+  chapters:
+    - index.qmd
+    - intro_ppt.qmd
+    - chapitre1_prompt_harmonise.qmd
+    - chapitre2_prompt_harmonise.qmd
+    - chapitre3_prompt_harmonise.qmd
+    - chapitre4_prompt_harmonise.qmd
+    - chapitre5_prompt_harmonise.qmd
+    - chapitre6_prompt_harmonise.qmd
+    - chapitre7_prompt_harmonise.qmd
+
+lang: fr-FR
+
+format:
+  html:
+    toc-title: "Table des matières"
+
+  pdf:
+    header-includes:
+      - \usepackage{fontawesome5}
+      - \newcommand{\ok}{\faCheck}
+      - \newcommand{\ko}{\faTimes}
+      - \newcommand{\warn}{\faExclamationTriangle}
+      - \usepackage[headsepline]{scrlayer-scrpage}
+      - \clearpairofpagestyles
+      - \ihead{\textit{Cahier N°8 (2026)}}
+      - \ohead{\textit{Analyse de données sensorielles avec jamovi}}
+      - \cfoot{\pagemark}
+      - \pagestyle{scrheadings}
+      - \renewcommand*{\chapterpagestyle}{scrheadings}
