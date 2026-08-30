@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Cette analyse est conçue pour les données **JAR** (*Just About Right*), dans lesquelles les sujets évaluent un attribut sensoriel selon une échelle du type *too little / just about right / too much*. Dans cette fonction, l’analyse se concentre sur les **défauts**, c’est-à-dire sur toutes les modalités différentes du niveau JAR de référence, et sur leur lien avec la note d’appréciation. Elle permet de décrire les stimuli selon leurs défauts, de représenter les stimuli et les défauts dans un même espace, puis d’estimer des **pénalités** d’appréciation associées à ces défauts.
+Cette analyse est conçue pour les données **JAR** (*Just About Right*), dans lesquelles les sujets évaluent un attribut sensoriel selon une échelle du type *too little / just about right / too much*. Dans cette fonction, l’analyse se concentre sur les **défauts**, c’est-à-dire sur toutes les modalités différentes du niveau JAR de référence, et sur leur lien avec la note d’appréciation. Elle permet de décrire les stimuli selon leurs défauts, de représenter les stimuli et les défauts dans un même espace, puis d’estimer des **pénalités** d’appréciation associées à ces défauts. Cette approche s'inscrit ainsi dans la continuité des travaux et recommandations du cahier n°6 de la SFAS.
 
 **Pourquoi ne pas utiliser une alternative standard ?**
 
