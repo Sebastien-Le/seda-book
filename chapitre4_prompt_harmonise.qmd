@@ -2,263 +2,411 @@
 
 ## Introduction
 
-Cette analyse est conçue pour les données **JAR** (*Just About Right*), dans lesquelles les sujets évaluent un attribut sensoriel selon une échelle du type *too little / just about right / too much*. Dans cette fonction, l’analyse se concentre sur les **défauts**, c’est-à-dire sur toutes les modalités différentes du niveau JAR de référence, et sur leur lien avec la note d’appréciation. Elle permet de décrire les stimuli selon leurs défauts, de représenter les stimuli et les défauts dans un même espace, puis d’estimer des **pénalités** d’appréciation associées à ces défauts. Cette approche s'inscrit ainsi dans la continuité des travaux et recommandations du cahier n°6 de la SFAS.
+Cette analyse est conçue pour les données **JAR** (*Just About Right*), dans lesquelles les sujets évaluent un attribut sensoriel par rapport à un niveau jugé idéal : par exemple *pas assez / juste comme il faut / trop*. Elle permet d'identifier les écarts au niveau JAR, d'estimer leur fréquence et d'étudier leur lien avec l'appréciation.
 
-**Pourquoi ne pas utiliser une alternative standard ?**
+SEDA 1.4.2 fournit désormais **deux lectures complémentaires des pénalités**. La première est une lecture **globale**, issue de `SensoMineR::JAR`, qui estime l'importance des défauts dans l'ensemble de l'espace produit. La seconde est une analyse **classique spécifique à chaque produit**, qui compare, pour un produit donné, le liking des consommateurs situés au niveau JAR à celui des consommateurs situés en dessous ou au-dessus du JAR. Cette évolution rapproche l'analyse de l'usage classique des penalty analyses tout en conservant la lecture multidimensionnelle déjà présente dans SEDA. L'approche reste dans la continuité des travaux et recommandations du cahier n°6 de la SFAS.
 
-Une moyenne de la note d’appréciation par stimulus ne dit pas quels défauts expliquent une baisse d’appréciation. Une simple lecture des réponses JAR ne distingue pas non plus clairement ce qui relève d’un manque ou d’un excès par rapport au niveau idéal. Ici, la fonction recode chaque attribut autour du niveau défini dans le champ **Coding of the JAR level**, construit un tableau de contingence stimuli × défauts, puis calcule des pénalités d’appréciation relativement à l’ensemble des stimuli.
+**Pourquoi ne pas utiliser une simple moyenne de liking ?**
+
+Une moyenne d'appréciation par produit ne dit pas quels écarts sensoriels sont associés à une baisse de liking. De même, la seule fréquence des réponses JAR ne permet pas de savoir si un défaut fréquent est réellement pénalisant. L'intérêt de l'analyse est donc de croiser trois informations différentes : **la fréquence du défaut**, **la taille de la perte de liking** et **l'incertitude statistique autour de cette perte**.
 
 ## Comprendre ce qui se passe "sous le capot"
 
-### Recodage du niveau JAR
+### 1. Vérification et regroupement du codage JAR
 
-La fonction commence par utiliser la valeur renseignée dans **Coding of the JAR level** pour redéfinir, dans chaque variable de **Sensory Attributes**, la modalité de référence. La valeur par défaut est `"jar"`. Toutes les autres modalités sont alors traitées comme des **défauts**, c’est-à-dire comme des écarts au niveau jugé "juste comme il faut".
+La valeur saisie dans **Coding of the JAR level** doit correspondre exactement à la modalité qui représente le niveau idéal dans chaque attribut JAR. La valeur par défaut est `jar`.
 
-### Construction du tableau de fréquences des défauts
+Pour l'analyse classique spécifique à chaque produit, SEDA regroupe ensuite les autres modalités en deux directions :
 
-Après ce recodage, la fonction retire la modalité de référence et compte, pour chaque stimulus, combien de fois chaque défaut a été observé. Le résultat intermédiaire est une matrice **défauts × stimuli**, ensuite transposée pour afficher dans jamovi un tableau **stimuli × défauts**. Ce tableau de fréquences constitue la base de la description des stimuli et de la représentation factorielle.
+- **Below JAR** : niveau inférieur au niveau idéal ;
+- **Above JAR** : niveau supérieur au niveau idéal.
 
-### Description des stimuli par les défauts
+Ce regroupement repose sur les expressions définies dans **Below-JAR keywords** et **Above-JAR keywords**. La première sortie à consulter est donc **JAR Coding Used for the Classical Penalty Analysis**. Une modalité indiquée comme **Unclassified** doit être corrigée avant d'interpréter l'analyse classique ; l'attribut concerné est sinon exclu de cette partie de l'analyse.
 
-À partir de ce tableau, la fonction applique une procédure de description des fréquences. Pour chaque stimulus, elle identifie les défauts qui sont significativement plus ou moins associés que dans l’ensemble du tableau. La logique est proche de celle utilisée pour les données CATA : on compare la fréquence d’un défaut pour un stimulus à sa fréquence globale, et les associations significatives sont rapportées avec leurs fréquences, p-values et V-tests.
+### 2. Distribution des réponses JAR
 
-### Représentation des produits selon les défauts
+SEDA calcule, pour chaque produit et chaque attribut, les pourcentages de consommateurs **Below JAR**, **JAR** et **Above JAR**. Cette sortie décrit la fréquence des écarts mais ne dit pas encore s'ils réduisent le liking.
 
-La fonction réalise ensuite une **analyse des correspondances** sur le tableau des défauts et produit le graphique intitulé **Representation of the Products According to Defects**. Cette carte représente simultanément les stimuli et les défauts dans un même espace factoriel, afin de visualiser les proximités entre profils de défauts.
+### 3. Pénalités multidimensionnelles globales
 
-### Calcul des pénalités
+`SensoMineR::JAR` estime les pénalités à partir de l'ensemble des produits simultanément. Dans SEDA, elles sont présentées sous forme de **Mean drop** : une valeur positive signifie que le défaut est associé à une perte de liking dans l'espace produit global.
 
-La fonction calcule les pénalités à partir de **Stimulus Effect**, **Subject Effect**, **Liking Variable** et **Sensory Attributes**. La pénalité mesure la perte en appréciation associée à un défaut : c’est la différence entre la note d’appréciation moyenne des sujets ayant coché le niveau JAR et celle des sujets ayant coché le niveau défaut. Cette différence est calculée sur l’ensemble des stimuli simultanément, ce qui lui donne une interprétation globale, et non spécifique à un stimulus.
+Ces coefficients sont **globaux**. Ils ne constituent pas une estimation spécifique à chacun des produits. SEDA les combine ensuite avec la fréquence de chaque défaut dans chaque produit dans **Global Defects Applied to Each Product**.
 
-> La pénalité est une valeur négative ou nulle : elle représente une perte en appréciation. Plus la valeur absolue est grande, plus le défaut est pénalisant.
+Une ligne reçoit **Priority = Yes** lorsque trois conditions sont réunies :
 
-### Un graphique de pénalités par stimulus
+- le pourcentage de consommateurs concernés atteint **Consumer threshold (%)** ;
+- le **Global mean drop** atteint **Mean-drop threshold** ;
+- la p-value de la pénalité globale est inférieure à 0.05.
 
-La fonction produit un graphique de pénalités pour **chaque** stimulus. L’ordre d’affichage dépend de l’ordre des niveaux de **Stimulus Effect** dans jamovi. Il est donc possible de mettre un autre stimulus en premier en modifiant l’ordre des niveaux dans l’onglet **Données**.
+Les deux seuils définis dans l'interface sont donc des **aides à la décision pratique**. Ils ne remplacent pas la p-value.
+
+### 4. Pénalité classique spécifique à chaque produit
+
+SEDA calcule également, séparément pour chaque produit, chaque attribut et chaque direction (**Below JAR** ou **Above JAR**), la différence :
+
+**Mean drop = Mean liking JAR − Mean liking non-JAR**
+
+Une valeur positive indique donc que les consommateurs qui perçoivent le défaut donnent en moyenne une note de liking plus faible que ceux qui jugent l'attribut JAR.
+
+Pour chaque comparaison, SEDA fournit :
+
+- le pourcentage de consommateurs concernés ;
+- la moyenne de liking du groupe JAR ;
+- la moyenne de liking du groupe non-JAR ;
+- le **Mean drop** ;
+- son intervalle de confiance à 95 % ;
+- la p-value.
+
+Cette analyse est réellement **spécifique au produit** et complète la pénalité globale.
+
+### 5. Synthèse multivariée des défauts
+
+Enfin, SEDA construit un tableau de fréquences **produits × modalités non-JAR**, le décrit avec `descfreq()` puis réalise une **analyse des correspondances**.
+
+La description des produits utilise ici volontairement un seuil exploratoire permissif (`proba = 0.5`). Elle sert à faire émerger les modalités qui structurent l'espace et **ne doit pas être interprétée comme une sélection conventionnelle à 5 %**.
+
+La carte d'analyse des correspondances constitue une synthèse de la structure produit × défaut. Comme dans le chapitre CATA, les produits et les défauts doivent être interprétés relativement aux axes factoriels ; une distance directe entre une ligne et une colonne ne se lit pas comme une distance euclidienne ordinaire. La proximité sur cette carte n'est pas, à elle seule, une preuve de pénalité sur le liking.
 
 ## Structure des données attendues
 
 Les données doivent contenir :
 
--   une colonne catégorielle pour **Stimulus Effect** ;
--   une colonne catégorielle pour **Subject Effect** ;
--   une colonne numérique pour **Liking Variable** ;
--   une ou plusieurs colonnes catégorielles pour **Sensory Attributes**.
+- une colonne catégorielle pour **Stimulus Effect** ;
+- une colonne catégorielle pour **Subject Effect** ;
+- une colonne numérique pour **Liking Variable** ;
+- une ou plusieurs colonnes **nominales** pour **Sensory Attributes**.
 
-Chaque ligne correspond à l’évaluation d’un stimulus par un sujet. Les variables de **Sensory Attributes** doivent être des facteurs, car la fonction en modifie le niveau de référence avec **Coding of the JAR level**.
+Chaque ligne correspond à l'évaluation d'un stimulus par un sujet.
 
-Avant de lancer l’analyse dans jamovi, vérifiez dans l’onglet **Données** que :
+Avant de lancer l'analyse, vérifiez que :
 
--   **Stimulus Effect** est catégorielle ;
--   **Subject Effect** est catégorielle ;
--   **Liking Variable** est numérique ;
--   toutes les variables de **Sensory Attributes** sont catégorielles ;
--   le niveau JAR utilisé dans vos données correspond exactement à la valeur saisie dans **Coding of the JAR level**.
+- **Stimulus Effect** contient au moins deux produits observés ;
+- **Subject Effect** contient au moins deux sujets observés ;
+- **Liking Variable** est numérique et contient suffisamment de valeurs finies ;
+- les variables JAR sont définies comme **Nominal** dans jamovi ;
+- chaque attribut JAR contient bien la modalité indiquée dans **Coding of the JAR level** ;
+- chaque attribut JAR possède au moins deux modalités effectivement observées ;
+- les variables utilisées pour Stimulus, Subject, Liking et les attributs JAR sont distinctes.
 
 ## Guide de l’interface
 
-L’analyse apparaît dans **SEDA \> Fixed List of Attributes \> Analysis of JAR Data**. L’interface comporte quatre zones de dépôt de variables, la case **Read me before running** et le champ texte **Coding of the JAR level**.
+L'analyse apparaît dans **SEDA \> Fixed List of Attributes \> Analysis of JAR Data**. L'interface comporte quatre zones de dépôt de variables, un bloc **Instructions and R Code**, le champ **Coding of the JAR level**, puis un bloc **Classical Penalty Analysis**.
 
 ### Variables à renseigner
 
 #### Stimulus Effect
 
-**Rôle :** identifie les stimuli à analyser. **Impact sur le calcul :** cette variable définit les groupes pour lesquels les fréquences de défauts sont calculées et pour lesquels les graphiques de pénalités sont générés. **Conseil pratique :** l’ordre des niveaux de cette variable détermine l’ordre d’affichage des graphiques de pénalités. Modifiez cet ordre dans l’onglet **Données** si vous souhaitez voir un stimulus particulier en premier.
+**Rôle :** identifie les produits à analyser. **Impact sur le calcul :** cette variable définit les produits utilisés dans les analyses globales et spécifiques. **Conseil pratique :** utilisez des libellés courts et explicites.
 
 #### Subject Effect
 
-**Rôle :** identifie les sujets. **Impact sur le calcul :** cette variable est transmise au calcul des pénalités et sert à structurer les observations par sujet. **Conseil pratique :** vérifiez qu’un même sujet conserve exactement le même identifiant dans tout le fichier.
+**Rôle :** identifie les sujets. **Impact sur le calcul :** cette variable est utilisée par l'analyse JAR globale et structure les observations individuelles. **Conseil pratique :** vérifiez qu'un même sujet conserve le même identifiant dans tout le fichier.
 
 #### Liking Variable
 
-**Rôle :** contient la note d’appréciation globale utilisée pour calculer les pénalités. **Impact sur le calcul :** c’est la variable numérique sur laquelle la fonction estime l’effet des défauts. La pénalité mesure la perte sur cette note. **Conseil pratique :** assurez-vous que l’échelle d’appréciation est cohérente pour tous les stimuli et tous les sujets.
+**Rôle :** contient la note d'appréciation utilisée pour calculer les pénalités. **Impact sur le calcul :** toutes les pertes de liking sont exprimées dans l'unité de cette variable. **Conseil pratique :** utilisez la même échelle de liking pour tous les produits.
 
 #### Sensory Attributes
 
-**Rôle :** regroupe les variables JAR, une par attribut sensoriel. **Impact sur le calcul :** chaque variable est recodée autour du niveau défini dans **Coding of the JAR level** ; toutes les autres modalités deviennent des défauts. **Conseil pratique :** vérifiez que chaque variable contient bien le niveau JAR avec le libellé exact attendu.
-
+**Rôle :** regroupe les variables JAR. **Impact sur le calcul :** chaque variable est utilisée dans les analyses globale, spécifique au produit et multivariée. **Conseil pratique :** les variables doivent être **nominales**, même si les modalités traduisent un ordre conceptuel *pas assez / JAR / trop*.
 
 ### Read me before running
 
-**Rôle :** affiche une aide intégrée dans les résultats. **Impact sur le calcul :** aucun. **Conseil pratique :** laissez-la cochée lors des premières utilisations. Elle est **activée par défaut**.
+**Rôle :** affiche l'aide intégrée. **Impact sur le calcul :** aucun. Elle est **activée par défaut**.
 
-### Codage du niveau JAR : Coding of the JAR level
+### R code
 
-**Rôle :** indique le libellé exact de la modalité considérée comme le niveau JAR de référence. **Impact sur le calcul :** ce paramètre détermine la modalité retirée du tableau des défauts et utilisée comme référence dans le recodage. Si la valeur ne correspond pas aux données, l’analyse peut échouer ou produire des résultats incohérents. **Conseil pratique :** la valeur par défaut est `jar`. Adaptez-la exactement au libellé utilisé dans votre fichier, en respectant la casse.
+**Rôle :** affiche le script R reproduisant l'analyse. **Impact sur le calcul :** aucun. Activez cette option pour poursuivre l'analyse dans le **Rj Editor**. Elle est **désactivée par défaut**.
+
+### Coding of the JAR level
+
+**Rôle :** indique le libellé exact de la modalité JAR. **Impact sur le calcul :** cette modalité sert de référence dans toutes les analyses. **Conseil pratique :** la valeur par défaut est `jar`; respectez exactement le libellé présent dans les données.
+
+### Classical Penalty Analysis
+
+#### Consumer threshold (%)
+
+**Rôle :** définit le pourcentage de consommateurs à partir duquel un défaut est considéré comme suffisamment fréquent pour une lecture opérationnelle. **Valeur par défaut :** 20 %. **Point important :** ce seuil est une aide à la décision, pas un seuil de significativité.
+
+#### Mean-drop threshold
+
+**Rôle :** définit la perte de liking à partir de laquelle un effet est considéré comme suffisamment important pour une lecture opérationnelle. **Valeur par défaut :** 1. **Point important :** ce seuil porte sur la taille de l'effet, pas sur son incertitude statistique.
+
+#### Below-JAR keywords
+
+**Rôle :** définit les mots ou expressions utilisés pour reconnaître les modalités situées sous le niveau JAR. La valeur par défaut est `too low|not enough|too weak|plain|low`.
+
+#### Above-JAR keywords
+
+**Rôle :** définit les mots ou expressions utilisés pour reconnaître les modalités situées au-dessus du niveau JAR. La valeur par défaut est `too high|too much|too strong|vivid|high`.
+
+**Conseil pratique :** commencez toujours par vérifier la table **JAR Coding Used for the Classical Penalty Analysis**. Si une modalité est **Unclassified**, adaptez les mots-clés avant d'interpréter les résultats spécifiques aux produits.
 
 ## Procédure pas à pas
 
-1.  Ouvrez votre jeu de données dans jamovi.
-2.  Dans l’onglet **Données**, vérifiez que la variable stimulus est catégorielle, la variable sujet est catégorielle, la variable d’appréciation est numérique, et les variables JAR sont toutes catégorielles.
-3.  Notez le libellé exact du niveau "juste comme il faut" utilisé dans vos variables JAR.
-4.  Ouvrez **SEDA \> Fixed List of Attributes \> Analysis of JAR Data**.
-5.  Placez la variable stimulus dans **Stimulus Effect**.
-6.  Placez la variable sujet dans **Subject Effect**.
-7.  Placez la variable d’appréciation dans **Liking Variable**.
-8.  Placez toutes les variables JAR dans **Sensory Attributes**.
-9.  Renseignez dans **Coding of the JAR level** le libellé exact du niveau JAR ; laissez `jar` si c’est bien celui utilisé dans vos données.
-10. Lisez d’abord le tableau de fréquences des défauts pour vérifier la structure des données.
-11. Consultez ensuite la description des stimuli selon les défauts.
-12. Examinez la carte **Representation of the Products According to Defects** pour une vue d’ensemble.
-13. Lisez le tableau des pénalités, puis les graphiques **Penalties for Product ...** pour repérer les défauts prioritaires.
+1. Ouvrez le jeu de données dans jamovi.
+2. Vérifiez que **Stimulus Effect** et **Subject Effect** sont catégorielles, **Liking Variable** numérique et les attributs JAR **nominaux**.
+3. Ouvrez **SEDA \> Fixed List of Attributes \> Analysis of JAR Data**.
+4. Renseignez **Stimulus Effect**, **Subject Effect**, **Liking Variable** et **Sensory Attributes**.
+5. Vérifiez **Coding of the JAR level**.
+6. Laissez **Consumer threshold (%) = 20** et **Mean-drop threshold = 1** pour une première lecture.
+7. Vérifiez les expressions **Below-JAR keywords** et **Above-JAR keywords**.
+8. Lisez **JAR Coding Used for the Classical Penalty Analysis** et corrigez toute modalité **Unclassified**.
+9. Lisez **Distribution of JAR Responses by Product and Attribute**.
+10. Examinez **Global Multidimensional Penalties (All Products)** puis **Global Defects Applied to Each Product**.
+11. Utilisez **Global Penalty Context for Each Product** pour visualiser l'exposition de chaque produit aux défauts globalement importants.
+12. Passez ensuite à **Product-Specific Classical Penalty Analysis** et aux **Product-Specific Penalty Plots**.
+13. Terminez par **Description of the Products According to Defects**, **Representation of the Products and the Defects** et **Frequency Table Used for the Correspondence Analysis**.
+14. Croisez fréquence, taille du mean drop et incertitude statistique avant de retenir un levier d'optimisation.
 
 ## Interprétation des résultats
 
-### Frequency Table — tableau de fréquences des défauts
+### JAR Coding Used for the Classical Penalty Analysis
 
-Ce tableau croise les stimuli en lignes et les niveaux non-JAR en colonnes. Chaque cellule indique le nombre de fois où un défaut a été observé pour un stimulus donné. C’est la base de toutes les sorties suivantes.
+Cette table est le contrôle préalable indispensable. Elle indique, pour chaque attribut et chaque modalité originale, si SEDA l'utilise comme **Below JAR**, **JAR**, **Above JAR** ou **Unclassified**.
 
-| Élément | Signification |
-|------------------------------------|------------------------------------|
-| Valeur élevée dans une cellule | Le défaut est fréquent pour ce stimulus |
-| Ligne avec plusieurs valeurs élevées | Le stimulus cumule plusieurs défauts fréquents |
-| Colonne élevée pour plusieurs stimuli | Défaut fréquent, mais pas forcément spécifique |
+Une modalité **Unclassified** ne doit pas être ignorée : l'attribut correspondant n'entre pas dans l'analyse classique spécifique au produit tant que son codage n'est pas résolu.
 
-> **Point de vigilance :** un défaut très rare contribuera peu à l’interprétation. Une colonne avec des fréquences très faibles signale généralement un défaut peu discriminant.
+### Distribution of JAR Responses by Product and Attribute
 
-### Description of the Stimuli According to Defects
+Cette table donne, pour chaque produit et attribut :
 
-Cette table décrit, stimulus par stimulus, les défauts significativement associés.
+- **Below JAR (%)** ;
+- **JAR (%)** ;
+- **Above JAR (%)** ;
+- **N**.
 
-| Élément         | Signification                                |
-|-----------------|----------------------------------------------|
-|*(première colonne)*| Stimulus concerné                            |
-| **Defect**      | Défaut caractéristique                       |
-| **Intern %r**   | Pourcentage du défaut pour ce stimulus       |
-| **Global %**     | Pourcentage global du défaut                 |
-| **Intern frequency**  | Fréquence absolue du défaut pour ce stimulus |
-| **Global frequency**    | Fréquence absolue totale du défaut           |
-| **p** | P-value du test                              |
-| **Vtest**       | Intensité standardisée de l’association      |
+Elle répond à la question : **combien de consommateurs perçoivent réellement le défaut ?** Elle ne mesure pas son impact sur le liking.
 
--   Une **V-test** positive indique que le défaut est sur-représenté pour ce stimulus.
--   Une **V-test** négative indique qu’il est sous-représenté — ce qui est aussi informatif.
--   Une **p-value** faible indique une association plus nette.
+### Global Multidimensional Penalties (All Products)
 
-> Un stimulus absent de ce tableau ne présente aucun défaut significativement associé au seuil utilisé : son profil de défauts est proche de la moyenne de l’ensemble des stimuli.
+Cette table contient les coefficients issus de `SensoMineR::JAR` :
 
-### Representation of the Products According to Defects — graphique
+| Colonne | Interprétation |
+|---|---|
+| **Defect** | Modalité non-JAR concernée |
+| **Mean drop** | Perte globale de liking associée au défaut |
+| **Std. Error** | Incertitude de l'estimation |
+| **p** | Évidence statistique associée |
 
-Ce graphique est issu de l’analyse des correspondances sur le tableau des défauts. Il représente simultanément les stimuli et les défauts dans un même espace factoriel. Deux stimuli proches ont des profils de défauts proches ; un défaut proche d’un stimulus lui est davantage associé. Le pourcentage affiché sur chaque axe indique la part d’information capturée par cette dimension.
+Le **Mean drop** est présenté de sorte qu'une valeur positive corresponde à une perte de liking.
 
-Cette carte donne une vue d’ensemble, à compléter par la lecture du tableau de description pour le détail statistique.
+> **Point de vigilance :** ces coefficients sont estimés sur l'ensemble des produits. Ils ne doivent pas être décrits comme des pénalités propres à un produit.
 
-### Penalty Table — tableau des pénalités
+### Global Defects Applied to Each Product
 
-Cette table présente, pour chaque défaut, l’effet estimé sur la note d’appréciation.
+Cette table met en regard, pour chaque produit, la fréquence locale d'un défaut et son **Global mean drop**.
 
-| Élément              | Signification                                      |
-|----------------------|--------------------------------------------------|
-| **Defect** | Défaut concerné                                    |
-| **Penalty**          | Perte en appréciation estimée associée à ce défaut |
-| **Std. Error**       | Erreur standard de l’estimation                    |
-| **p**        | P-value du test                                                   |
+| Colonne | Interprétation |
+|---|---|
+| **Consumers (%)** | Fréquence du défaut dans le produit |
+| **Global mean drop** | Mean drop estimé globalement |
+| **p** | P-value de la pénalité globale |
+| **Priority** | `Yes` si fréquence, mean drop et p-value satisfont les critères |
 
--   Plus la valeur absolue de **Penalty** est grande, plus l’effet estimé est marqué.
--   Une **p-value** faible suggère un effet plus nettement mis en évidence par les données.
--   Une pénalité peu significative n’implique pas nécessairement l’absence d’effet : le défaut peut simplement être trop rare pour être estimé avec précision.
+Avec les réglages par défaut, **Priority = Yes** signifie donc : au moins 20 % de consommateurs concernés, un mean drop d'au moins 1 et p < .05.
 
-### Penalties for Product ... — graphiques par stimulus
+### Global Penalty Context for Each Product
 
-La fonction génère un graphique de pénalités pour chaque stimulus. L’axe des x correspond à la fréquence du défaut pour ce stimulus ; l’axe des y à la pénalité calculée sur l’ensemble des stimuli. Des barres d’erreur sont tracées autour des points, les défauts avec p \< 0.05 sont distingués visuellement, et les étiquettes apparaissent pour les défauts avec p \< 0.20.
+Ces graphiques constituent la visualisation SensoMineR de la pénalité **globale** replacée dans le contexte de chacun des produits. Ils sont utiles pour voir quels produits sont exposés aux défauts globalement importants, mais l'ordonnée ne devient pas pour autant une pénalité spécifique au produit.
 
-| Élément | Signification |
-|------------------------------------|------------------------------------|
-| Fréquence élevée + pénalité marquée | Défaut prioritaire : fréquent et fortement pénalisant |
-| Fréquence élevée + pénalité faible | Défaut fréquent mais moins pénalisant |
-| Fréquence faible + pénalité marquée | Défaut rare mais potentiellement problématique |
-| Fréquence faible + pénalité faible | Défaut secondaire |
+### Product-Specific Classical Penalty Analysis
 
-> **Point de vigilance :** le graphique croise une information **locale** (la fréquence du défaut pour le stimulus affiché) et une information **globale** (la pénalité calculée sur l’ensemble des stimuli). Ce point est essentiel pour ne pas surinterpréter un point isolé sur le graphique.
+Cette table répond à une autre question : **pour ce produit précis, les consommateurs qui perçoivent l'attribut comme non-JAR aiment-ils moins le produit que ceux qui le jugent JAR ?**
+
+| Colonne | Interprétation |
+|---|---|
+| **Product** | Produit concerné |
+| **Attribute** | Attribut JAR |
+| **Direction** | Below JAR ou Above JAR |
+| **Consumers (%)** | Part de consommateurs dans cette direction |
+| **Mean liking JAR** | Liking moyen du groupe JAR |
+| **Mean liking non-JAR** | Liking moyen du groupe concerné |
+| **Mean drop** | Mean liking JAR − Mean liking non-JAR |
+| **CI 95% low / high** | Intervalle de confiance du mean drop |
+| **p** | P-value du test |
+
+Une valeur positive de **Mean drop** indique une perte de liking associée au défaut pour ce produit.
+
+### Product-Specific Penalty Plots
+
+Pour chaque produit :
+
+- l'axe des x représente **Consumers concerned (%)** ;
+- l'axe des y représente le **Mean drop in liking** ;
+- la ligne verticale correspond au **Consumer threshold** ;
+- la ligne horizontale correspond au **Mean-drop threshold** ;
+- les symboles distinguent **Below JAR** et **Above JAR** ;
+- `*` indique p < .05 ;
+- les segments verticaux représentent l'intervalle de confiance à 95 %.
+
+Un défaut situé dans la zone fréquence élevée / mean drop élevé peut constituer un levier opérationnel, mais l'intervalle de confiance et la p-value doivent rester visibles dans la décision.
+
+### Description of the Products According to Defects
+
+Cette table décrit les modalités non-JAR qui structurent le profil de chaque produit. Elle utilise volontairement un seuil exploratoire très permissif dans cette synthèse multivariée. Une modalité affichée avec p > .05 n'est donc pas « significative à 5 % » ; elle est retenue pour aider à lire la structure de l'espace.
+
+### Representation of the Products and the Defects
+
+Cette carte provient de l'analyse des correspondances du tableau produits × défauts. Deux produits proches ont des profils de défauts voisins. Pour les relations entre produits et défauts, interprétez surtout les directions et les axes factoriels plutôt qu'une distance directe ligne-colonne.
+
+Cette carte décrit la structure des défauts ; elle ne constitue pas un test de pénalité sur le liking.
+
+### Frequency Table Used for the Correspondence Analysis
+
+Cette table contient les fréquences produits × modalités non-JAR utilisées pour `descfreq()` et l'analyse des correspondances. Elle constitue une sortie d'audit utile pour comprendre exactement les données agrégées qui alimentent la synthèse multivariée.
 
 ## Exemple : le jeu de données **milkshake**
 
-Le jeu de données **milkshake** porte sur trois milkshakes évalués à l’aide de plusieurs attributs JAR liés notamment à l’odeur, à la texture, à la fluidité, à la douceur et à l’acidité. Il sert à illustrer les sorties de la fonction. Les valeurs numériques et les graphiques commentés ci-dessous proviennent directement des résultats de l’analyse. Pour charger ce jeu de données, ouvrez jamovi, cliquez sur l'icône en haut à gauche (trois traits superposés), puis sur **Open** → **Data Library** → **SEDA**.
+Le jeu de données **milkshake** porte sur trois milkshakes, **284**, **859** et **972**, évalués par 47 consommateurs à l'aide de plusieurs attributs JAR liés notamment à la couleur, à la fluidité, aux odeurs, à la sucrosité, à l'acidité, à la texture et au goût. Pour charger ce jeu de données, ouvrez jamovi, cliquez sur l'icône en haut à gauche, puis sur **Open** → **Data Library** → **SEDA**.
 
-### Paramètres de l’exemple
+Cet exemple est particulièrement utile avec SEDA 1.4.2 parce qu'il montre que les lectures **globale** et **spécifique au produit** peuvent conduire à des diagnostics complémentaires.
 
-Pour reproduire cet exemple, voici les valeurs à utiliser.
+### Paramètres de l'exemple
 
-| Option                      | Valeur                                  |
-|-----------------------------|-----------------------------------------|
-| **Stimulus Effect**         | Product |
-| **Subject Effect**          | Panelist |
-| **Liking Variable**         | Liking |
-| **Sensory Attributes**      | toutes les variables JAR de Color à Taste_Van |
+| Option | Valeur |
+|---|---|
+| **Stimulus Effect** | Product |
+| **Subject Effect** | Panelist |
+| **Liking Variable** | Liking |
+| **Sensory Attributes** | toutes les variables JAR de Color à Taste_Van |
 | **Coding of the JAR level** | `jar` |
+| **Consumer threshold (%)** | 20 |
+| **Mean-drop threshold** | 1 |
+| **Below-JAR keywords** | `too low|not enough|too weak|plain|low` |
+| **Above-JAR keywords** | `too high|too much|too strong|vivid|high|too_fluid` |
 
-### Analyse du tableau *Frequency Table (Stimuli × Defects)*
+Le dernier terme ajouté à **Above-JAR keywords** permet de classer correctement la modalité `Too_fluid` comme **Above JAR**. SEDA accepte aussi la forme `too fluid` : les libellés originaux et leur forme normalisée sont désormais tous deux reconnus.
 
-Le tableau de fréquences montre que les trois produits ont des profils de défauts très différents.
+### Vérifier d'abord le codage JAR
 
-Le milkshake **859** est fortement marqué par *Not_enough_texture*, mentionné par 38 sujets sur 47 (soit 80.85 %), et *Too_fluid* (70.21 %) ; ce sont les deux défauts les plus fréquents de l’ensemble.
+La table **JAR Coding Used for the Classical Penalty Analysis** confirme que toutes les modalités utilisées dans cet exemple sont classées en **Below JAR**, **JAR** ou **Above JAR**. Pour *Fluidity*, `Not_enough_fluid` est classé **Below JAR** et `Too_fluid` **Above JAR**.
 
-Le milkshake **972** se distingue surtout par *Not_enough_odor_int* (53.19 %), *Not_enough_odor_fruit* (46.81 %), *Not_enough_odor_van* (44.68 %) et *Too_much_sweetness* (42.55 %).
+Cette vérification est importante : l'analyse classique spécifique aux produits n'est interprétable que lorsque les modalités non-JAR de l'attribut sont correctement regroupées.
 
-Le milkshake **284** présente plusieurs défauts fréquents mais moins extrêmes : *Not_enough_texture* (57.45 %), *Not_enough_odor_int* (48.94 %), *Too_fluid* (46.81 %) et *Not_enough_odor_van* (44.68 %).
+### Distribution des réponses JAR
 
-Cette première lecture est importante : elle permet de repérer quels défauts dominent sensoriellement pour chaque produit, avant même de savoir s’ils sont réellement associés à une baisse d’appréciation.
+La table **Distribution of JAR Responses by Product and Attribute** permet de repérer les écarts les plus fréquents.
 
-### Analyse du tableau *Description of the Products According to Defects*
+Pour **284**, les réponses **Below JAR** sont particulièrement fréquentes pour *Odor_Van* (59.57 %), *Texture* (57.45 %) et *Odor_Int* (53.19 %), tandis que 46.81 % des consommateurs jugent *Fluidity* **Above JAR**.
 
-Ce tableau identifie les défauts significativement sur- ou sous-représentés pour chaque produit par rapport au *produit moyen*.
+Pour **859**, deux écarts dominent : 80.85 % des consommateurs sont **Below JAR** pour *Texture* et 70.21 % sont **Above JAR** pour *Fluidity*.
 
-Le milkshake **859** est celui dont le profil ressort le plus nettement. Il est davantage associé à *Not_enough_texture* (p = 0.055, V-test = 1.92) et *Too_fluid* (p = 0.080, V-test = 1.75). À l’inverse, il est significativement moins associé à *A_little_plain* (p = 0.040, V-test = -2.05) et *Not_enough_odor_van* (p = 0.049, V-test = -1.97). Son profil sensoriel est donc surtout porté par des défauts de texture et de fluidité, plutôt que par un manque d’odeur vanillée.
+Pour **972**, 55.32 % sont **Below JAR** pour *Odor_Int*, 42.55 % sont **Above JAR** pour *Sweetness* et 38.30 % sont **Above JAR** pour *Fluidity*.
 
-Le milkshake **972** est davantage associé à *Too_much_sweetness* (p = 0.087, V-test = 1.71), les autres associations positives étant loin d’être significatives au seuil de 5 %. Il est en revanche moins associé à *Not_enough_texture* (p = 0.072, V-test = -1.80) et *Not_enough_sweetness* (p = 0.099, V-test = -1.65), ce qui le place en opposition partielle avec le milkshake **859** sur ces dimensions.
+Ces fréquences décrivent la prévalence des écarts. Elles ne suffisent pas à conclure qu'ils font baisser le liking.
 
-Le milkshake **284** apparaît beaucoup plus proche du profil moyen. Aucun défaut ne ressort nettement au seuil de 5 %, ce qui suggère un produit moins singulier que les deux autres du point de vue de ses défauts.
+### Pénalités multidimensionnelles globales
 
-### Analyse du graphique *Representation of the Products According to Defects*
+Dans **Global Multidimensional Penalties (All Products)**, un seul défaut est significatif au seuil de 5 % : *Too_much_odor_fruit*, avec un **Mean drop = 2.68** et **p = 0.018**.
 
-La première dimension explique 74.78 % de l’inertie et oppose nettement le milkshake **859** au milkshake **972**. Du côté du milkshake **859**, on retrouve surtout les défauts *Too_fluid*, *Not_enough_texture* et *Not_enough_sweetness*. Du côté du milkshake **972**, on retrouve plutôt les défauts *Too_much_sweetness*, *Too_much_odor_van* et *Not_enough_odor_fruit*.
+Plusieurs autres effets présentent un mean drop notable sans franchir le seuil de 5 %, par exemple *Too_much_acidity* (4.02, p = 0.082), *Too_much_texture* (1.78, p = 0.089) et *Not_enough_acidity* (1.03, p = 0.087).
 
-La seconde dimension (25.22 %) est peut-être plus spécifique au milkshake **284** qui est associé à des défauts liés aux odeurs fruitées ou vanillées.
+Dans SEDA 1.4.2, un **Mean drop positif** représente une perte de liking.
 
-> Outil complémentaire indispensable aux tableaux, ce graphique, issu d'une analyse des correspondances, représente les associations entre produits et défauts, rendant immédiatement visibles les proximités et les oppositions entre les produits.
+### Global Defects Applied to Each Product
 
-### Analyse du tableau *Penalties Obtained from All Defects*
+Avec **Consumer threshold = 20 %** et **Mean-drop threshold = 1**, aucune ligne n'obtient **Priority = Yes**.
 
-Le tableau des pénalités fournit une lecture **globale** de l’impact des défauts sur l’appréciation, tous produits confondus. Il ne dit pas à quelle fréquence un défaut apparaît pour un produit donné ; il indique combien ce défaut est associé à une perte moyenne de liking lorsqu’il est observé.
+*Too_much_odor_fruit* est bien le seul défaut globalement significatif, mais il ne concerne que 6.38 % des consommateurs pour **284**, 4.26 % pour **859** et 4.26 % pour **972**. Il est donc statistiquement associé à une perte de liking dans l'espace produit global, mais trop rare dans chacun des trois produits pour franchir le seuil pratique de 20 %.
 
-Dans cet exemple, un seul défaut est significatif au seuil de 5 % : *Too_much_odor_fruit* avec une pénalité de -2.67 et une p-value de 0.018. C’est donc le seul défaut dont l’effet négatif sur l’appréciation est clairement mis en évidence par les données. Plusieurs autres défauts présentent des pénalités notables sans atteindre ce seuil de significativité, par exemple *Too_much_acidity* (-4.03, p = 0.082), *Too_much_texture* (-1.78, p = 0.089) et *Not_enough_acidity* (-1.03, p = 0.087). Ils ne peuvent pas être considérés comme statistiquement significatifs ici, mais ils constituent des signaux faibles à surveiller.
+À l'inverse, *Too_fluid* est très fréquent — 46.81 % pour **284**, 70.21 % pour **859** et 38.30 % pour **972** — mais son **Global mean drop = 0.45** avec p = 0.275. Fréquence élevée et pénalité globale ne vont donc pas nécessairement de pair.
 
-> **Point de vigilance :** les pénalités sont calculées sur l’ensemble des produits simultanément. Elles mesurent une information **globale** — quel défaut pénalise le plus le liking, tous produits confondus — et non une information **locale** — comme par exemple, à quelle fréquence ce défaut apparaît pour un produit donné. C’est justement la combinaison des deux informations qui va nous être utile.
+### Pénalités classiques spécifiques au produit
 
-### Analyse des graphiques *Representation of the Penalties for Each Product*
+La table **Product-Specific Classical Penalty Analysis** apporte une lecture directement locale.
 
-Ces trois graphiques croisent deux informations essentielles pour l’optimisation produit :
+Pour **284**, plusieurs écarts sont associés à une perte de liking significative :
 
-- en **abscisse**, la **fréquence** du défaut pour le produit affiché (issue de la table *Frequencies of Defects by Product and Sensory Attribute*) ;
-- en **ordonnée**, la **pénalité** associée à ce défaut, calculée sur l’ensemble du panel et des produits (issue de la table *Penalties Obtained from All Defects*).
+- *Odor_Fruit — Below JAR* : 46.81 % des consommateurs, Mean drop = 1.00, IC95 % [0.04 ; 1.96], p = 0.042 ;
+- *Odor_Fruit — Above JAR* : 6.38 %, Mean drop = 2.27, IC95 % [0.47 ; 4.08], p = 0.016 ;
+- *Sweetness — Below JAR* : 21.28 %, Mean drop = 1.22, IC95 % [0.04 ; 2.40], p = 0.044 ;
+- *Texture — Below JAR* : 57.45 %, Mean drop = 1.06, IC95 % [0.10 ; 2.02], p = 0.032.
 
-Par construction, un défaut conserve donc la même ordonnée d’un graphique à l’autre ; seule son abscisse varie selon sa prévalence dans le produit considéré. Les points rouges signalent les défauts dont la pénalité est statistiquement significative (au seuil de 5 %). Dans notre exemple, seul *Too_much_odor_fruit* se distingue par une pénalité significative.
+Pour *Fluidity — Above JAR*, 46.81 % des consommateurs sont concernés, mais le Mean drop n'est que de 0.69 avec p = 0.182. Le défaut est donc fréquent sans être clairement pénalisant pour **284**.
 
-Pour être opérationnel, il est indispensable de coupler cette lecture avec la table *Description of the Products According to Defects*, qui identifie la **spécificité** de chaque défaut (sur- ou sous-représentation). Un défaut fréquent n’est pas forcément spécifique, et inversement, une forte spécificité n'entraîne pas systématiquement une forte pénalité sur le liking. C’est la prise en compte de ces trois informations (fréquence locale, pénalité globale, spécificité) qui permet de hiérarchiser les leviers d’amélioration.
+Pour **859**, *Fluidity — Above JAR* fournit un résultat particulièrement instructif : **70.21 %** des consommateurs sont concernés, mais le Mean drop vaut seulement **0.87** et p = **0.298**. De même, *Texture — Below JAR* concerne **80.85 %** des consommateurs mais présente un Mean drop = **0.98**, p = **0.272**. Ces deux défauts sont extrêmement fréquents, sans que leur impact hédonique soit clairement établi dans l'analyse spécifique au produit.
 
-Pour le milkshake **284**, aucun défaut ne ressort significativement dans la table descriptive (profil proche de la moyenne). Le graphique montre que le défaut critique *Too_much_odor_fruit* y est très rare (6.38 %). Quant à *Too_much_acidity*, bien que fortement pénalisant (-4.03), son absence totale pour ce produit (0.00 %) le disqualifie comme piste d'amélioration. Les manques d’odeur vanillée ou fruitée sont fréquents, mais sans être spécifiques du produit ni pénalisants. Le milkshake **284** ne présente donc aucun levier d’optimisation prioritaire.
+Les deux effets significatifs pour **859** concernent au contraire de très petits groupes :
 
-L’analyse du milkshake **859** permet d'observer une convergence nette entre tendance à la sur-représentation (V-test > 1.7, sans significativité au seuil de 5 %) et forte prévalence pour les défauts de texture (*Too_fluid* à 70.21 % et *Not_enough_texture* à 80.85 %). Bien que leur coût hédonique global soit modéré, ils constituent les traits négatifs les plus clairs de ce produit. Par ailleurs, le défaut critique *Too_much_odor_fruit* reste marginal (4.26 %). L’enjeu principal pour le **859** réside donc dans la correction de sa **fluidité** et de sa **texture**, plutôt que dans un ajustement de son arôme.
+- *Odor_Fruit — Above JAR* : 4.26 %, Mean drop = 3.55, p = 0.013 ;
+- *Taste_Fruit — Above JAR* : 6.38 %, Mean drop = 2.83, p = 0.019.
 
-Le milkshake **972** présente une configuration différente. Son défaut le plus sur-représenté est **Too_much_sweetness** (V-test = 1.71, p = 0.087), lequel est relativement fréquent (42.55 %). Cependant, sa pénalité globale étant faible, il ne représente pas un levier d'optimisation majeur. Comme pour les autres produits, le défaut critique *Too_much_odor_fruit* est quasi absent (4.26 %). Les autres manques aromatiques sont fréquents mais peu impactants. Le milkshake **972** n’affiche donc pas de défaut cumulant forte fréquence, spécificité et pénalité marquée.
+Ils sont forts mais rares, ce qui limite leur priorité opérationnelle.
+
+Pour **972**, *Fluidity — Above JAR* concerne 38.30 % des consommateurs avec un Mean drop = 1.06 et p = 0.080 : le signal est compatible avec une perte de liking mais reste insuffisant pour conclure au seuil de 5 %.
+
+Deux autres effets sont significatifs :
+
+- *Color — Above JAR* : 6.38 %, Mean drop = 2.74, p = 0.009 ;
+- *Taste_Van — Above JAR* : 21.28 %, Mean drop = 1.57, IC95 % [0.19 ; 2.95], p = 0.028.
+
+Le second est particulièrement intéressant, car il combine une fréquence supérieure à 20 %, un mean drop supérieur à 1 et une p-value inférieure à 0.05. *Taste_Van — Above JAR* constitue ainsi le levier le plus net pour **972**.
+
+### Ce que montrent les graphiques spécifiques aux produits
+
+Les **Product-Specific Penalty Plots** rendent cette logique immédiatement visible : la ligne verticale marque 20 % de consommateurs et la ligne horizontale un mean drop de 1.
+
+Pour **284**, plusieurs points significatifs se situent dans ou à proximité de la zone supérieure droite, notamment les manques de texture, de sucrosité et d'odeur fruitée.
+
+Pour **859**, *Fluidity — Above JAR* et *Texture — Below JAR* sont très à droite du graphique, donc très fréquents, mais restent sous ou autour du seuil de mean drop et ne sont pas significatifs. Les deux effets significatifs ont au contraire de grands mean drops mais se situent très à gauche, car ils concernent peu de consommateurs.
+
+Pour **972**, *Taste_Van — Above JAR* combine fréquence, taille d'effet et évidence statistique, tandis que *Fluidity — Above JAR* constitue un signal plus incertain.
+
+Ces graphiques montrent pourquoi fréquence, taille d'effet et incertitude doivent être considérées simultanément.
+
+### Synthèse multivariée des défauts
+
+La table **Description of the Products According to Defects** utilise le seuil exploratoire `proba = 0.5`. Les lignes affichées ne doivent donc pas toutes être qualifiées de « significatives à 5 % ».
+
+Le produit **859** est surtout orienté vers *Texture = Not_enough_texture* (V-test = 1.92, p = 0.055) et *Fluidity = Too_fluid* (1.75, p = 0.080), tandis que *Color = A_little_plain* (-2.05, p = 0.040) et *Odor_Van = Not_enough_odor_van* (-1.97, p = 0.049) sont sous-représentés.
+
+Le produit **972** est notamment orienté vers *Sweetness = Too_much_sweetness* (V-test = 1.71, p = 0.087), alors que *Texture = Not_enough_texture* est sous-représenté (V-test = -1.80, p = 0.072).
+
+Le produit **284** présente une structure moins marquée ; sa modalité positive la plus nette est *Color = A_little_plain* (V-test = 1.32, p = 0.187).
+
+### Representation of the Products and the Defects
+
+L'analyse des correspondances est entièrement résumée par les deux dimensions disponibles : **Dim. 1 = 74.78 %** et **Dim. 2 = 25.22 %**.
+
+La Dim. 1 oppose principalement **859** et **972**, tandis que **284** occupe une position plus intermédiaire. Cette carte synthétise la structure des profils non-JAR, mais les associations produit–défaut doivent être interprétées relativement aux axes et non à partir d'une simple proximité géométrique ligne-colonne.
 
 ### Interprétation synthétique
 
-En synthèse, ces graphiques montrent bien que la **pénalité** renseigne sur le **coût hédonique** d’un défaut, tandis que sa **fréquence** indique son poids réel pour un produit donné. Pour transformer cette lecture en piste d’optimisation, il faut toutefois la croiser avec la **spécificité** du défaut, telle qu’elle apparaît dans *Description of the Products According to Defects*. Cette triple lecture conduit ici à trois diagnostics distincts : le milkshake **284** apparaît proche du profil moyen, sans levier prioritaire clairement identifié ; le milkshake **859** se distingue surtout par des défauts de **texture** et de **fluidité**, à la fois spécifiques et très fréquents ; le milkshake **972** présente un excès de **sucrosité** plus spécifique que réellement pénalisant.
+Cet exemple montre surtout que les différentes informations de l'analyse JAR ne sont pas redondantes.
 
-> **Ce qu’on retient de cet exemple :** l’analyse JAR ne sert pas seulement à repérer les défauts les plus fréquents, mais à distinguer ceux qui sont **fréquents**, ceux qui sont **spécifiques au produit**, ceux qui sont **pénalisants**, et surtout ceux qui combinent plusieurs de ces dimensions. C’est ce croisement qui permet de hiérarchiser les priorités d’optimisation produit.
+La vue **globale** identifie *Too_much_odor_fruit* comme le seul défaut clairement associé à une perte de liking dans l'ensemble de l'espace produit, mais ce défaut est trop rare dans chacun des produits pour devenir une priorité avec le seuil de 20 %.
+
+La vue **spécifique au produit** montre au contraire que des défauts extrêmement fréquents peuvent être peu ou non pénalisants : c'est le cas de *Too_fluid* et de *Not_enough_texture* pour **859**. Elle fait aussi apparaître des leviers locaux, notamment plusieurs défauts pour **284** et surtout *Taste_Van — Above JAR* pour **972**.
+
+> **Ce qu'on retient de cet exemple :** une analyse JAR utile ne consiste pas à chercher « le défaut le plus pénalisant ». Elle distingue ce qui est **fréquent**, ce qui est **globalement pénalisant**, ce qui est **spécifiquement pénalisant pour un produit**, et ce qui combine suffisamment fréquence, taille d'effet et évidence statistique pour devenir une **priorité d'optimisation**.
+
+## De jamovi au Rj Editor
+
+Une fois le **Rj Editor** configuré avec **System R** comme indiqué au chapitre 1, cochez **R code**. Le script généré charge `SensoMineR` et `FactoMineR`, et utilise le jeu de données actuellement ouvert dans jamovi sous le nom `data`.
+
+Le code reproduit successivement la pénalité multidimensionnelle globale avec `JAR()`, le diagnostic classique spécifique à chaque produit, puis la synthèse produits × défauts avec `descfreq()` et `CA()`. Il reprend également les seuils et les mots-clés définis dans l'interface.
+
+Les appels graphiques sont écrits de manière à produire des sorties séparées dans le Rj Editor pour chaque produit. Aucun réglage supplémentaire n'est nécessaire.
 
 ## Conseils pratiques
 
--   Vérifiez toujours que **Coding of the JAR level** correspond exactement au libellé utilisé dans vos données, y compris la casse.
--   Assurez-vous que toutes les variables JAR sont bien catégorielles dans jamovi avant de lancer l’analyse.
--   Lisez toujours le tableau de fréquences avant d’interpréter les pénalités : une pénalité élevée sur un défaut très rare est difficile à exploiter en optimisation produit.
--   Concentrez-vous en priorité sur les défauts à la fois fréquents et associés à une pénalité marquée et significative.
--   Ne surinterpretez pas une pénalité peu significative comme une absence totale d’effet.
--   Gardez à l’esprit que la pénalité est calculée globalement sur l’ensemble des stimuli, alors que la fréquence affichée dans le graphique est propre au stimulus affiché.
--   Utilisez la carte **Representation of the Products According to Defects** pour la vue d’ensemble, et les tables pour le détail.
--   Si vous voulez afficher un autre stimulus en premier dans les graphiques de pénalités, modifiez l’ordre des niveaux de **Stimulus Effect** dans l’onglet **Données**.
+- Vérifiez toujours **JAR Coding Used for the Classical Penalty Analysis** avant d'interpréter les pénalités spécifiques aux produits.
+- Les variables JAR doivent être définies comme **Nominal** dans jamovi et contenir exactement le niveau indiqué dans **Coding of the JAR level**.
+- Une modalité **Unclassified** signale un problème de regroupement Below/Above JAR : adaptez les mots-clés avant de poursuivre l'interprétation classique.
+- Ne confondez pas les deux lectures : **Global Multidimensional Penalties** décrit l'espace produit dans son ensemble ; **Product-Specific Classical Penalty Analysis** répond séparément pour chaque produit.
+- Un **Mean drop positif** indique une perte de liking. Interprétez sa taille avec le pourcentage de consommateurs concernés, l'intervalle de confiance et la p-value.
+- **Consumer threshold (%)** et **Mean-drop threshold** sont des seuils pratiques de décision, pas des seuils de significativité.
+- Un défaut fréquent n'est pas nécessairement pénalisant ; un défaut fortement pénalisant mais très rare n'est pas nécessairement prioritaire.
+- Utilisez la carte d'analyse des correspondances pour comprendre la structure des profils de défauts, pas pour conclure à un effet sur le liking.
 
 ## En résumé
 
-Cette analyse transforme des réponses JAR en une lecture structurée des défauts perçus et de leur lien avec l’appréciation. Elle combine un **tableau de fréquences des défauts**, une **description des stimuli selon les défauts**, une **représentation factorielle des produits et défauts**, puis une **estimation des pénalités** associées à chaque défaut. Son intérêt principal est de relier, dans un même cadre, la fréquence des écarts au niveau idéal (jar) et leur impact sur le liking, afin de guider l’optimisation produit.
+Utilisez cette analyse lorsque vous disposez de réponses JAR associées à une mesure de liking et que vous souhaitez identifier les écarts au niveau idéal susceptibles de guider l'optimisation produit.
+
+SEDA commence par vérifier le **codage JAR**, décrit ensuite la **fréquence des réponses Below/JAR/Above**, puis fournit deux lectures complémentaires : une **pénalité globale** sur l'ensemble de l'espace produit et une **pénalité classique spécifique à chaque produit**. La synthèse multivariée par analyse des correspondances complète ces diagnostics en montrant comment les produits se structurent selon leurs modalités non-JAR.
+
+Lisez donc d'abord le codage et les distributions, puis les pénalités globales, ensuite les pénalités spécifiques aux produits, et terminez par la synthèse factorielle.
+
+Retenez surtout qu'une priorité d'optimisation ne repose pas sur un seul seuil : elle doit combiner **fréquence du défaut**, **taille du mean drop** et **incertitude statistique**.
