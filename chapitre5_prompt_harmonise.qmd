@@ -6,50 +6,51 @@ Cette analyse est conçue pour les données de **Napping** (*projective mapping*
 
 **Pourquoi ne pas utiliser une alternative standard ?**
 
-Une ACP appliquée directement à toutes les colonnes de coordonnées traiterait chaque variable comme indépendante, alors qu'en Napping les données sont naturellement organisées par **paires X/Y** fournies par chaque sujet. Ici, chaque paire est traitée comme un **groupe** dans l'AFM, ce qui permet de construire un compromis plus adapté entre les différentes cartes individuelles. De plus, cette AFM est réalisée **sans standardiser les données** : en positionnant les stimuli sur un rectangle de dimensions fixées, chaque sujet exprime implicitement que sa première dimension de variabilité est plus importante que la seconde. Standardiser les données effacerait cette information fondamentale.
+Une ACP appliquée directement à toutes les colonnes de coordonnées tiendrait compte de leurs relations, mais ignorerait leur **structure en groupes par sujet**. Or, en Napping, les données sont naturellement organisées par **paires X/Y** fournies par chaque sujet. Ici, chaque paire est traitée comme un **groupe** dans l'AFM, ce qui permet de construire un compromis plus adapté entre les différentes cartes individuelles. Cette AFM utilise `type = "c"` dans FactoMineR : les coordonnées sont **centrées mais non standardisées**, afin de préserver la géométrie et l'échelle relative de chaque nappe plutôt que de forcer X et Y à avoir la même variance.
 
 ## Comprendre ce qui se passe "sous le capot"
 
 ### Les données sont lues par paires de coordonnées
 
-La fonction attend dans **(X,Y) Coordinates** un ensemble de colonnes numériques organisées par paires : X puis Y pour un premier sujet, X puis Y pour un second, etc. Le même principe vaut pour **Supplementary (X,Y) Coordinates**. Si le nombre de colonnes est impair dans l'un des deux blocs, l'analyse est rejetée. En pratique, le bloc principal doit contenir au moins **4 colonnes**, soit **2 paires**.
+La fonction attend dans **Active (X,Y) Coordinate Pairs** un ensemble de colonnes numériques organisées par paires consécutives : X puis Y pour un premier sujet, X puis Y pour un second, etc. Le même principe vaut pour **Supplementary (X,Y) Coordinate Pairs**. Si le nombre de colonnes est impair dans l'un des deux blocs, l'analyse est rejetée. Le bloc actif doit contenir au moins **4 colonnes**, soit **2 paires**. Une même coordonnée ne peut pas être utilisée à la fois comme active et supplémentaire.
 
 ### Une AFM sur des groupes de taille 2, sans standardisation
 
-Le cœur de l'analyse est une **AFM**. Chaque paire X/Y de **(X,Y) Coordinates** est traitée comme un groupe de deux variables quantitatives. L'AFM construit un espace commun qui résume l'information portée par l'ensemble des sujets, en **équilibrant la contribution de chaque groupe** : un sujet qui a peu différencié les stimuli n'aura pas plus d'influence qu'un sujet qui les a très bien discriminés. Les données ne sont pas standardisées, ce qui préserve l'importance relative des deux axes du rectangle.
+Le cœur de l'analyse est une **AFM**. Chaque paire X/Y de **Active (X,Y) Coordinate Pairs** est traitée comme un groupe de deux variables quantitatives. L'AFM construit un espace commun qui résume l'information portée par l'ensemble des sujets en **équilibrant la contribution des groupes**. Avec `type = "c"`, les coordonnées sont centrées mais non standardisées : l'analyse conserve ainsi l'échelle relative des deux coordonnées de chaque configuration individuelle.
 
 ### Le rôle des coordonnées supplémentaires
 
-Si vous fournissez des variables dans **Supplementary (X,Y) Coordinates**, elles sont projetées comme **groupes supplémentaires** dans l'AFM. Elles ne participent pas à la construction des axes, mais permettent de situer d'autres sujets dans le même espace.
+Si vous fournissez des variables dans **Supplementary (X,Y) Coordinate Pairs**, elles sont projetées comme **groupes supplémentaires** dans l'AFM. Elles ne participent pas à la construction des axes, mais permettent de situer d'autres sujets dans le même espace.
 
 ### Description automatique des dimensions
 
 Une fois l'AFM calculée, la fonction produit une **description automatique des dimensions** filtrée par **Significance threshold (%)** et **Number of dimensions**. Cette sortie aide à comprendre quelles variables sont les plus liées aux premiers axes.
 
-### Sauvegarde des composantes et clustering
+### Sauvegarde des dimensions et clustering
 
-Le champ **Number of components** détermine le nombre de composantes calculées et sauvegardées dans **Coordinates**. Si vous activez **Representation of the clusters**, la fonction lance une **CAH** sur le résultat de l'AFM. Par défaut, le clustering repose sur les **5 premières composantes**, et **Number of clusters = -1** signifie que le nombre de clusters est choisi automatiquement.
+Le champ **Number of dimensions to save/use for clustering** détermine combien de premières dimensions sont sauvegardées dans **Coordinates** et utilisées pour la classification. Si le nombre demandé dépasse le nombre de dimensions disponibles, SEDA utilise celles qui peuvent effectivement être calculées. Si vous activez **Representation of the clusters** ou demandez **Cluster variable**, la fonction lance une **HCPC** sur ces dimensions retenues. Par défaut, le clustering utilise les **5 premières dimensions**, et **Number of clusters = -1** laisse FactoMineR choisir automatiquement le nombre de clusters.
 
 ## Structure des données attendues
 
 Les données doivent contenir :
 
 -   une colonne facultative mais fortement recommandée pour **Stimuli Labels** ;
--   au moins **deux paires** de colonnes numériques dans **(X,Y) Coordinates** ;
--   éventuellement des paires numériques dans **Supplementary (X,Y) Coordinates**.
+-   au moins **deux paires** de colonnes numériques dans **Active (X,Y) Coordinate Pairs** ;
+-   éventuellement des paires numériques dans **Supplementary (X,Y) Coordinate Pairs**.
 
-Chaque ligne correspond à un **stimulus**. Cela distingue cette analyse d'autres analyses où chaque ligne correspond à une réponse individuelle. Si **Stimuli Labels** n'est pas renseigné, la fonction utilise les numéros de ligne comme noms de stimuli.
+Chaque ligne correspond à un **stimulus**. Cela distingue cette analyse d'autres analyses où chaque ligne correspond à une réponse individuelle. SEDA exige au moins **trois stimuli**. Si **Stimuli Labels** n'est pas renseigné, la fonction utilise les numéros de ligne comme noms de stimuli.
 
 Avant de lancer l'analyse dans jamovi, vérifiez dans l'onglet **Données** que :
 
--   **Stimuli Labels** est catégorielle si vous l'utilisez ;
--   toutes les colonnes de **(X,Y) Coordinates** sont numériques ;
--   toutes les colonnes de **Supplementary (X,Y) Coordinates** sont numériques ;
--   le nombre de colonnes dans chacun des deux blocs de coordonnées est **pair**.
+-   **Stimuli Labels** est catégorielle si vous l'utilisez, sans valeur manquante ou vide et avec un libellé unique par stimulus ;
+-   toutes les coordonnées actives et supplémentaires sont numériques, complètes et finies ;
+-   le nombre de colonnes dans chacun des deux blocs de coordonnées est **pair** ;
+-   aucune coordonnée n'est sélectionnée à la fois comme active et supplémentaire ;
+-   chaque paire X/Y présente de la variabilité sur au moins une de ses deux coordonnées.
 
 ## Guide de l'interface
 
-L'analyse apparaît dans **SEDA \> Analysis of Napping Data**. L'interface comprend trois zones de dépôt de variables, puis les sections **Graphic Options**, **Numerical Indicators** et **Clustering**.
+L'analyse apparaît dans **SEDA \> Free Perception \> Analysis of Napping Data**. L'interface comprend trois zones de dépôt de variables, une section **Instructions and R Code**, puis les menus **Graphic Options**, **Numerical Indicators** et **Clustering**.
 
 ### Variables à renseigner
 
@@ -57,17 +58,21 @@ L'analyse apparaît dans **SEDA \> Analysis of Napping Data**. L'interface compr
 
 **Rôle :** fournit les noms des stimuli dans les sorties. **Impact sur le calcul :** cette variable ne modifie pas l'AFM elle-même, mais détermine les étiquettes affichées dans les graphiques et les noms associés aux coordonnées sauvegardées. **Conseil pratique :** utilisez des libellés courts et uniques ; sinon, la lecture des cartes devient vite difficile.
 
-#### (X,Y) Coordinates
+#### Active (X,Y) Coordinate Pairs
 
-**Rôle :** regroupe les coordonnées actives utilisées pour construire la représentation consensuelle. **Impact sur le calcul :** chaque paire X/Y devient un groupe dans l'AFM. Le nombre de colonnes doit être pair, et la fonction exige en pratique au moins **4 colonnes**. **Conseil pratique&nbsp;:** respectez strictement l'ordre X, Y, X, Y… pour éviter une carte incohérente.
+**Rôle :** regroupe les coordonnées actives utilisées pour construire la représentation consensuelle. **Impact sur le calcul :** chaque paire X/Y devient un groupe dans l'AFM. Le nombre de colonnes doit être pair, et la fonction exige au moins **4 colonnes**. **Conseil pratique&nbsp;:** respectez strictement l'ordre X, Y, X, Y… pour éviter une organisation incorrecte des groupes.
 
-#### Supplementary (X,Y) Coordinates
+#### Supplementary (X,Y) Coordinate Pairs
 
-**Rôle :** ajoute des paires de coordonnées projetées comme groupes supplémentaires. **Impact sur le calcul :** ces coordonnées n'influencent pas la construction des axes, mais sont projetées dans l'espace AFM. **Conseil pratique :** utilisez ce bloc pour projeter un second panel ou des informations additionnelles, sans modifier le compromis principal.
+**Rôle :** ajoute des paires de coordonnées projetées comme groupes supplémentaires. **Impact sur le calcul :** ces coordonnées n'influencent pas la construction des axes, mais sont projetées dans l'espace AFM. **Conseil pratique :** utilisez ce bloc pour projeter un second panel sans modifier le compromis principal.
 
 ### Read me before running
 
 **Rôle :** affiche une aide intégrée dans les résultats. **Impact sur le calcul :** aucun. **Conseil pratique :** laissez-la cochée lors des premières utilisations. Elle est **activée par défaut**.
+
+### R code
+
+**Rôle :** affiche le script R correspondant à l'analyse dans une sortie **R Code**. **Impact sur le calcul :** aucun. **Conseil pratique :** activez cette option pour reproduire l'analyse dans le **Rj Editor**. Elle est **désactivée par défaut**.
 
 ### Graphic Options
 
@@ -87,11 +92,11 @@ L'analyse apparaît dans **SEDA \> Analysis of Napping Data**. L'interface compr
 
 #### Number of dimensions
 
-**Rôle :** détermine le nombre d'axes décrits automatiquement. **Impact sur le calcul :** pilote la sortie de description des dimensions et influence aussi le nombre minimal de composantes calculées. **Conseil pratique :** laissez 2 pour une première lecture.
+**Rôle :** détermine le nombre d'axes décrits automatiquement. **Impact sur le calcul :** pilote la sortie de description des dimensions et contribue aussi à déterminer le nombre de dimensions de l'AFM calculées en interne. **Conseil pratique :** laissez 2 pour une première lecture.
 
-#### Number of components
+#### Number of dimensions to save/use for clustering
 
-**Rôle :** définit le nombre de composantes calculées et sauvegardées. **Impact sur le calcul&nbsp;:** influence directement les coordonnées enregistrées dans **Coordinates** et sert de base au clustering. **Conseil pratique :** la valeur par défaut 5 est cohérente avec le clustering proposé par la fonction.
+**Rôle :** définit le nombre de premières dimensions à sauvegarder et à utiliser pour la classification. **Impact sur le calcul&nbsp;:** détermine les colonnes enregistrées dans **Coordinates** et les dimensions transmises à HCPC ; si moins de dimensions sont disponibles, SEDA utilise le maximum calculable. **Conseil pratique :** la valeur par défaut 5 constitue un bon point de départ.
 
 #### Coordinates
 
@@ -105,7 +110,7 @@ L'analyse apparaît dans **SEDA \> Analysis of Napping Data**. L'interface compr
 
 #### Number of clusters
 
-**Rôle :** fixe le nombre de clusters à extraire. **Impact sur le calcul :** avec -1, le nombre de clusters est déterminé automatiquement ; toute valeur positive impose ce nombre. **Conseil pratique :** commencez avec -1, puis fixez un nombre seulement si vous avez une justification analytique claire.
+**Rôle :** fixe le nombre de clusters à extraire. **Impact sur le calcul :** avec -1, le nombre de clusters est déterminé automatiquement ; sinon, vous pouvez imposer un entier compris entre 2 et le nombre de stimuli moins 1. **Conseil pratique :** commencez avec -1, puis fixez un nombre seulement si vous avez une justification analytique claire.
 
 #### Cluster variable
 
@@ -116,17 +121,17 @@ L'analyse apparaît dans **SEDA \> Analysis of Napping Data**. L'interface compr
 1.  Ouvrez votre jeu de données dans jamovi.
 2.  Dans l'onglet **Données**, vérifiez que les colonnes de coordonnées sont numériques et organisées par paires X/Y.
 3.  Si vous avez une colonne d'identifiants de stimuli, vérifiez qu'elle est catégorielle.
-4.  Ouvrez **SEDA \> Analysis of Napping Data**.
+4.  Ouvrez **SEDA \> Free Perception \> Analysis of Napping Data**.
 5.  Placez la colonne des noms de stimuli dans **Stimuli Labels**.
-6.  Placez toutes les paires actives dans **(X,Y) Coordinates**.
-7.  Placez, si besoin, les paires supplémentaires dans **Supplementary (X,Y) Coordinates**.
-8.  Vérifiez que le nombre de colonnes dans chacun des blocs de coordonnées est pair.
+6.  Placez toutes les paires actives dans **Active (X,Y) Coordinate Pairs**.
+7.  Placez, si besoin, les paires supplémentaires dans **Supplementary (X,Y) Coordinate Pairs**.
+8.  Vérifiez que les coordonnées sont complètes et que chaque bloc contient un nombre pair de colonnes.
 9.  Laissez **X-axis = 1** et **Y-axis = 2**.
-10. Laissez **Significance threshold (%) = 5**, **Number of dimensions = 2** et **Number of components = 5**.
-11. Lisez d'abord **Representation of the Stimuli**, puis **Representation of the Subjects**, puis le tableau des valeurs propres.
+10. Laissez **Significance threshold (%) = 5**, **Number of dimensions = 2** et **Number of dimensions to save/use for clustering = 5**.
+11. Commencez par **Eigenvalue Decomposition**, puis lisez **Representation of the Stimuli** et **Representation of the Subjects**.
 12. Consultez ensuite **Automatic Description of the Dimensions**.
-13. Activez **Representation of the clusters** si vous souhaitez visualiser les résultats de la classification dans **Representation of the Stimuli According to Clusters**.
-14. Enregistrez éventuellement **Coordinates** et **Cluster variable** si vous souhaitez réutiliser les résultats.
+13. Activez **Representation of the clusters** si vous souhaitez visualiser **Representation of the Stimuli According to Clusters**.
+14. Cochez **R code** pour obtenir le script reproductible et enregistrez éventuellement **Coordinates** et **Cluster variable**.
 
 ## Interprétation des résultats
 
@@ -144,13 +149,13 @@ C'est le résultat important de la fonction. Elle représente les stimuli dans l
 
 ### Representation of the Subjects
 
-Cette carte représente les groupes de coordonnées X/Y — donc les sujets ou cartes individuelles — dans l'espace factoriel. Elle aide à évaluer le niveau de consensus entre sujets.
+Cette carte représente les groupes de coordonnées X/Y — donc les configurations individuelles des sujets — dans l'espace factoriel. Elle montre comment chaque nappe est reliée aux dimensions du compromis.
 
 | Élément | Signification |
 |------------------------------------|------------------------------------|
-| Sujets proches | Cartes individuelles globalement cohérentes |
-| Sujets dispersés | Consensus plus faible |
-| Sujet proche de l'origine | Perception moins alignée avec les axes dominants |
+| Groupes occupant des positions proches | Configurations liées de façon similaire aux dimensions communes |
+| Groupe éloigné de l'origine sur un axe | Configuration fortement liée à cette dimension |
+| Groupe proche de l'origine | Configuration peu liée aux dimensions affichées |
 
 ### Eigenvalue Decomposition — tableau des valeurs propres
 
@@ -165,11 +170,11 @@ Si les deux premières dimensions expliquent une part importante de la variance,
 
 ### Automatic Description of the Dimensions
 
-Cette sortie décrit automatiquement les dimensions retenues selon **Significance threshold (%)** et **Number of dimensions**. Elle aide à repérer quelles variables sont les plus liées aux axes et devient particulièrement utile quand des **Supplementary (X,Y) Coordinates** ont été ajoutées.
+Cette sortie décrit automatiquement les dimensions retenues selon **Significance threshold (%)** et **Number of dimensions**. Elle aide à repérer quelles variables sont les plus liées aux axes et devient particulièrement utile quand des **Supplementary (X,Y) Coordinate Pairs** ont été ajoutées.
 
-### Representation of the Stimuli According to Clusters *(disponible si "Representation of the clusters" est activé ou si "Cluster variable" est demandée)*
+### Representation of the Stimuli According to Clusters *(disponible si "Representation of the clusters" est activé)*
 
-Ce graphique montre les stimuli dans l'espace factoriel, regroupés selon les clusters issus de la CAH.
+Ce graphique montre les stimuli dans l'espace factoriel, regroupés selon les clusters issus de la classification HCPC.
 
 | Élément                      | Signification                          |
 |------------------------------|----------------------------------------|
@@ -178,7 +183,7 @@ Ce graphique montre les stimuli dans l'espace factoriel, regroupés selon les cl
 
 ### Coordinates *(sortie de données)*
 
-Cette sortie enregistre les coordonnées factorielles des stimuli sur les premières dimensions calculées. Chaque colonne correspond à une dimension (`Dim. 1`, `Dim. 2`, etc.).
+Cette sortie enregistre les coordonnées factorielles des stimuli sur les premières dimensions retenues par **Number of dimensions to save/use for clustering**. Chaque colonne correspond à une dimension (`Dim. 1`, `Dim. 2`, etc.).
 
 ### Cluster variable *(sortie de données)*
 
@@ -195,14 +200,15 @@ Pour reproduire cet exemple, voici les valeurs à utiliser.
 | Option | Valeur |
 |--------------------------------|---------------------------------------|
 | **Stimuli Labels** | variable `Ident` |
-| **(X,Y) Coordinates** | les 60 premières colonnes de coordonnées (30 paires) |
-| **Supplementary (X,Y) Coordinates** | les 60 colonnes de coordonnées suivantes (30 paires) |
+| **Active (X,Y) Coordinate Pairs** | les 60 premières colonnes de coordonnées (30 paires) |
+| **Supplementary (X,Y) Coordinate Pairs** | les 60 colonnes de coordonnées suivantes (30 paires) |
 | **X-axis / Y-axis** | 1 / 2 |
 | **Significance threshold (%)** | 5 |
 | **Number of dimensions** | 2 |
-| **Number of components** | 5 |
-| **Representation of the clusters** | coché pour examiner la classification |
+| **Number of dimensions to save/use for clustering** | 5 |
+| **Representation of the clusters** | coché |
 | **Number of clusters** | -1 |
+| **R code** | coché |
 
 ### Analyse du graphique *Representation of the Stimuli*
 
@@ -210,41 +216,51 @@ La carte fait apparaître une structure perceptive assez nette sur le plan Dim. 
 
 ### Analyse du graphique *Representation of the Subjects*
 
-La carte des sujets représente chaque sujet (S1 à S60) par sa coordonnée sur les deux dimensions. Les sujets dont les coordonnées sur Dim. 1 sont élevées (**S1**, **S20**, **S16**, **S57**, **S60**) ont fortement structuré leur rectangle autour de l'opposition principale — celle qui sépare Aromatics Elixir / Shalimar du groupe de gauche. À l'inverse, des sujets comme **S4**, **S2**, **S34** ou **S33** ont des coordonnées plus élevées sur Dim. 2, contribuant davantage à la structure verticale qui isole Angel et Lolita Lempicka. Les sujets proches de l'origine (nombreux au centre de la carte) contribuent de façon plus modérée à l'une ou l'autre des dimensions.
+La carte des sujets représente les 60 groupes de coordonnées, S1 à S60. Les groupes situés loin de l'origine sur Dim. 1, comme **S1** ou **S20**, sont fortement liés à la première dimension commune. Des groupes comme **S4** ou **S30**, situés plus haut sur Dim. 2, sont davantage liés à la seconde. Les nombreux groupes proches de l'origine sont moins fortement associés aux deux dimensions affichées. Cette carte renseigne donc sur la relation entre les configurations individuelles et le compromis ; elle ne constitue pas, à elle seule, un indice numérique de consensus.
 
 ### Analyse du tableau *Eigenvalue Decomposition*
 
-Les deux premières dimensions expliquent 43.09 % de la variance totale (Dim. 1 : 25.07 %, Dim. 2 : 18.03 %). En Napping, les rectangles individuels étant très différents d'un sujet à l'autre, cette concentration de l'information est plutôt bonne pour deux dimensions. Les dimensions suivantes apportent des contributions décroissantes mais non négligeables (Dim. 3&nbsp;: 12.31 %, Dim. 4 : 9.58 %, Dim. 5 : 7.96 %) — ce qui signifie que d'autres plans factoriels pourraient révéler des oppositions supplémentaires non visibles ici.
+Les deux premières dimensions expliquent 43.09 % de la variance totale (Dim. 1 : 25.07 %, Dim. 2 : 18.03 %). Le plan 1/2 fournit donc une première synthèse utile, mais plus de la moitié de la variabilité se trouve au-delà de ce plan. Les dimensions suivantes restent non négligeables (Dim. 3 : 12.31 %, Dim. 4 : 9.58 %, Dim. 5 : 7.96 %), ce qui justifie d'examiner d'autres plans si l'objectif l'exige.
 
 ### Analyse du tableau *Automatic Description of the Dimensions*
 
-La sortie **Automatic Description of the Dimensions** identifie les coordonnées individuelles (X et Y de chaque sujet) les plus corrélées à chaque axe. Pour **Dim. 1**, les corrélations positives les plus fortes sont **X20** (r = 0.9254), **X1** (r = 0.9187) et **Y21** (r = 0.9003) : ces sujets ont positionné les parfums de droite à l'extrémité droite de leur rectangle. Les corrélations négatives les plus fortes sont **Y48** (r = -0.9126) et **X42** (r = -0.8539) : ces sujets ont au contraire placé les parfums de gauche à l'extrémité droite de leur propre rectangle. Cette cohérence entre sujets très différents confirme que Dim. 1 capture une opposition perceptive forte et partagée, même si tous les sujets ne l'expriment pas avec la même intensité.
+La sortie **Automatic Description of the Dimensions** identifie les coordonnées X/Y les plus corrélées à chaque axe. Pour **Dim. 1**, les corrélations positives les plus fortes sont **X20** (r = 0.93), **X1** (r = 0.92) et **Y21** (r = 0.90). À l'opposé, **Y48** (r = -0.91) et **X42** (r = -0.85) présentent les corrélations négatives les plus fortes. Ces résultats indiquent quelles directions des configurations individuelles sont les plus alignées, ou opposées, à la première dimension du compromis. Ils n'attribuent pas à eux seuls une signification sensorielle à l'axe.
 
 ### Analyse du graphique *Representation of the Stimuli According to Clusters*
 
 Avec **Number of clusters = -1**, la classification automatique retient **trois clusters** :
 
--   **Cluster 1** (noir) : **Coco Mademoiselle**, **J'adore EP**, **J'adore ET**, **Cinéma**, **Pleasures** et **Pure Poison** — parfums situés à gauche du plan, généralement perçus comme plus légers ou floraux ;
--   **Cluster 2** (rouge) : **Angel**, **Lolita Lempicka** et **L'instant** — parfums situés en haut du plan, perçus comme formant une famille distincte sur la seconde dimension ;
--   **Cluster 3** (vert) : **Shalimar**, **Aromatics Elixir** et **Chanel N5** — parfums situés à droite et en bas, perçus comme plus forts ou intenses.
+-   **Cluster 1** (noir) : **Coco Mademoiselle**, **J'adore EP**, **J'adore ET**, **Cinéma**, **Pleasures** et **Pure Poison** ;
+-   **Cluster 2** (rouge) : **Angel**, **Lolita Lempicka** et **L'instant** ;
+-   **Cluster 3** (vert) : **Shalimar**, **Aromatics Elixir** et **Chanel N5**.
+
+Sur le plan 1/2, le premier groupe se situe principalement à gauche, le deuxième en haut et le troisième à droite et en bas. La classification est toutefois calculée sur les **cinq premières dimensions** retenues, et non uniquement sur ce plan. Sans information sensorielle externe ou verbalisation, il faut éviter d'attribuer automatiquement des qualités telles que « floral », « léger » ou « intense » à ces clusters.
 
 ### Interprétation synthétique
 
-Cet exemple montre bien l'intérêt de la fonction. On n'obtient pas seulement une carte moyenne des parfums : on voit aussi comment les parfums se répartissent dans un **espace consensuel**, dans quelle mesure les **sujets convergent** sur cette structure, et quels **groupes de parfums** émergent de la classification. La structure globale oppose clairement trois familles perceptives, même si les deux premières dimensions ne captent que 43 % de la variabilité totale.
+Cet exemple montre bien l'intérêt de la fonction. On n'obtient pas seulement une carte moyenne des parfums : on construit un **espace consensuel**, on voit comment les configurations individuelles sont reliées à ses dimensions et quels **groupes de parfums** émergent de la classification. Les trois clusters sont nets dans cet exemple, mais leur interprétation sensorielle demanderait une information supplémentaire.
 
-> **Ce qu’on retient de cet exemple :** l’analyse Napping permet de transformer un ensemble de cartes individuelles en une représentation consensuelle lisible, tout en montrant le niveau de convergence entre sujets et les grands groupes de stimuli.
+> **Ce qu’on retient de cet exemple :** l’analyse Napping transforme un ensemble de cartes individuelles en une représentation consensuelle, puis permet d'examiner les relations entre configurations individuelles et dimensions communes ainsi que les groupes de stimuli.
+
+## De jamovi au Rj Editor
+
+Une fois le **Rj Editor** configuré avec **System R** comme indiqué au chapitre 1, cochez **R code** pour afficher le script correspondant à l'analyse. Le jeu de données ouvert dans jamovi est disponible sous le nom `data`.
+
+Pour le Napping, le script charge `FactoMineR`, construit une paire X/Y par sujet et exécute `MFA()` avec `type = "c"`. Les paires supplémentaires sont indiquées avec `num.group.sup`. Le script reproduit ensuite les valeurs propres, les cartes des stimuli et des sujets avec `plot.MFA()`, puis la description automatique avec `dimdesc()`.
+
+Si une classification est demandée, le code conserve exactement les premières dimensions définies par **Number of dimensions to save/use for clustering**, exécute `HCPC()` sur cet espace retenu et affiche la carte avec `plot.HCPC()`. Le code généré dans cet exemple utilise 30 sujets actifs, 30 sujets supplémentaires et 5 dimensions pour la classification.
 
 ## Conseils pratiques
 
--   Vérifiez toujours que les colonnes de **(X,Y) Coordinates** sont bien fournies par paires X/Y et que leur nombre total est pair.
--   Utilisez **Stimuli Labels** presque systématiquement pour éviter une lecture avec de simples numéros de ligne.
+-   Vérifiez toujours que les colonnes de **Active (X,Y) Coordinate Pairs** sont complètes et fournies par paires X/Y.
+-   Utilisez **Stimuli Labels** presque systématiquement et vérifiez que les libellés sont uniques.
 -   Commencez avec **X-axis = 1** et **Y-axis = 2** ; si les deux premières dimensions résument peu de variance, explorez d'autres plans factoriels.
--   Gardez **Number of components = 5** pour un premier essai, surtout si vous envisagez le clustering.
+-   Gardez **Number of dimensions to save/use for clustering = 5** pour un premier essai, surtout si vous envisagez le clustering.
 -   Laissez **Number of clusters = -1** au départ pour laisser la fonction choisir automatiquement.
--   Ne lisez pas la carte des stimuli sans regarder aussi **Representation of the Subjects** : elle aide à évaluer le consensus entre sujets.
--   La carte des stimuli ne parle pas seule : utilisez **Supplementary (X,Y) Coordinates** ou des données de verbalisation pour donner un sens sensoriel aux axes.
+-   Lisez **Representation of the Subjects** comme la relation des configurations individuelles aux dimensions communes, et non comme un indice direct de consensus.
+-   N'attribuez pas de signification sensorielle aux axes ou aux clusters sans verbalisation ou information externe permettant de les caractériser.
 -   Activez **Coordinates** et **Cluster variable** si vous souhaitez réutiliser les résultats dans d'autres analyses jamovi.
 
 ## En résumé
 
-Cette analyse construit une **carte consensuelle des stimuli** à partir de données de Napping, en combinant les cartes individuelles par **AFM** non standardisée qui équilibre la contribution de chaque sujet. Elle représente simultanément la structure des stimuli et le niveau de consensus entre sujets, et peut être complétée par un **clustering automatique** des stimuli. Son intérêt principal est de transformer un ensemble de cartes individuelles en une représentation commune et directement interprétable des proximités perceptives, sans nécessiter de liste d'attributs prédéfinie.
+Cette analyse construit une **carte consensuelle des stimuli** à partir de données de Napping, en combinant les cartes individuelles par une **AFM centrée mais non standardisée** qui équilibre la contribution des groupes. Elle représente la structure des stimuli et la relation des configurations individuelles aux dimensions communes, et peut être complétée par une **classification HCPC** des stimuli sur les dimensions retenues. Son intérêt principal est de transformer un ensemble de cartes individuelles en une représentation commune des proximités perceptives, sans nécessiter de liste d'attributs prédéfinie.
