@@ -12,7 +12,7 @@ Une moyenne d'appréciation par produit ne dit pas quels écarts sensoriels sont
 
 ## Comprendre ce qui se passe "sous le capot"
 
-### 1. Vérification et regroupement du codage JAR
+### Vérification et regroupement du codage JAR
 
 La valeur saisie dans **Coding of the JAR level** doit correspondre exactement à la modalité qui représente le niveau idéal dans chaque attribut JAR. La valeur par défaut est `jar`.
 
@@ -23,11 +23,11 @@ Pour l'analyse classique spécifique à chaque produit, SEDA regroupe ensuite le
 
 Ce regroupement repose sur les expressions définies dans **Below-JAR keywords** et **Above-JAR keywords**. La première sortie à consulter est donc **JAR Coding Used for the Classical Penalty Analysis**. Une modalité indiquée comme **Unclassified** doit être corrigée avant d'interpréter l'analyse classique ; l'attribut concerné est sinon exclu de cette partie de l'analyse.
 
-### 2. Distribution des réponses JAR
+### Distribution des réponses JAR
 
 SEDA calcule, pour chaque produit et chaque attribut, les pourcentages de consommateurs **Below JAR**, **JAR** et **Above JAR**. Cette sortie décrit la fréquence des écarts mais ne dit pas encore s'ils réduisent le liking.
 
-### 3. Pénalités multidimensionnelles globales
+### Pénalités multidimensionnelles globales
 
 `SensoMineR::JAR` estime les pénalités à partir de l'ensemble des produits simultanément. Dans SEDA, elles sont présentées sous forme de **Mean drop** : une valeur positive signifie que le défaut est associé à une perte de liking dans l'espace produit global.
 
@@ -41,7 +41,7 @@ Une ligne reçoit **Priority = Yes** lorsque trois conditions sont réunies :
 
 Les deux seuils définis dans l'interface sont donc des **aides à la décision pratique**. Ils ne remplacent pas la p-value.
 
-### 4. Pénalité classique spécifique à chaque produit
+### Pénalité classique spécifique à chaque produit
 
 SEDA calcule également, séparément pour chaque produit, chaque attribut et chaque direction (**Below JAR** ou **Above JAR**), la différence :
 
@@ -60,7 +60,7 @@ Pour chaque comparaison, SEDA fournit :
 
 Cette analyse est réellement **spécifique au produit** et complète la pénalité globale.
 
-### 5. Synthèse multivariée des défauts
+### Synthèse multivariée des défauts
 
 Enfin, SEDA construit un tableau de fréquences **produits × modalités non-JAR**, le décrit avec `descfreq()` puis réalise une **analyse des correspondances**.
 

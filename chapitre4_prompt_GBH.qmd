@@ -12,7 +12,7 @@ A mean liking score by product does not show which sensory deviations are associ
 
 ## Understanding what happens under the hood
 
-### 1. Checking and grouping the JAR coding
+### Checking and grouping the JAR coding
 
 The value entered in **Coding of the JAR level** must exactly match the category representing the ideal level in every selected JAR attribute. The default value is `jar`.
 
@@ -23,11 +23,11 @@ For the classical product-specific analysis, SEDA then groups the other categori
 
 This grouping uses the expressions defined in **Below-JAR keywords** and **Above-JAR keywords**. The first output to inspect is therefore **JAR Coding Used for the Classical Penalty Analysis**. A level shown as **Unclassified** should be resolved before interpreting the classical analysis; otherwise, the corresponding attribute is excluded from that part of the analysis.
 
-### 2. Distribution of JAR responses
+### Distribution of JAR responses
 
 SEDA calculates, for each product and attribute, the percentages of consumers **Below JAR**, **JAR**, and **Above JAR**. This output describes how frequent the deviations are, but does not yet indicate whether they reduce liking.
 
-### 3. Global multidimensional penalties
+### Global multidimensional penalties
 
 `SensoMineR::JAR` estimates penalties using all products simultaneously. In SEDA, they are presented as **Mean drop** values: a positive value means that the defect is associated with a loss of liking across the global product space.
 
@@ -41,7 +41,7 @@ A row receives **Priority = Yes** when three conditions are met:
 
 The two interface thresholds are therefore **practical decision aids**, not substitutes for the p-value.
 
-### 4. Classical product-specific penalty analysis
+### Classical product-specific penalty analysis
 
 SEDA also calculates, separately for each product, attribute, and direction (**Below JAR** or **Above JAR**):
 
@@ -60,7 +60,7 @@ For each comparison, SEDA reports:
 
 This analysis is genuinely **product-specific** and complements the global penalty view.
 
-### 5. Multivariate synthesis of defects
+### Multivariate synthesis of defects
 
 Finally, SEDA constructs a **products × non-JAR categories** frequency table, describes it with `descfreq()`, and performs a **correspondence analysis**.
 
