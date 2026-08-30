@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This analysis is designed for **CATA** (*Check-All-That-Apply*) data, that is, when subjects check, from a predefined list, all the terms they consider appropriate to describe a stimulus. It answers two complementary questions: **which terms characterize each stimulus** and **how the stimuli are globally organized according to their CATA profiles**. The function produces a contingency table, a description of the stimuli according to the CATA terms, as well as a **correspondence analysis** followed by an **automatic classification** of the stimuli.
+This analysis is designed for **CATA** (*Check-All-That-Apply*) data, that is, when subjects check, from a predefined list, all the terms they consider appropriate to describe a stimulus. It answers two complementary questions: **which terms characterize each stimulus** and **how the stimuli are globally organized according to their CATA profiles**. The function produces a contingency table, a description of the stimuli according to the CATA terms, as well as a **correspondence analysis** followed by a **classification of the stimuli**, automatic by default.
 
 **Why not use a standard alternative?**
 
@@ -26,64 +26,92 @@ From this contingency table, the function applies a frequency description proced
 
 If at least **three** variables are placed in the **CATA** field, the function performs a **correspondence analysis** on the contingency table. This method simultaneously represents the stimuli and the terms in the same factor space. Two stimuli that are close on the map tend to share similar CATA profiles; two terms that are close tend to be checked for similar stimuli. The axes summarize the main profile oppositions between stimuli and terms.
 
-### Automatic classification of stimuli
+### Classification of stimuli
 
-Once the correspondence analysis has been computed, the function then runs a **hierarchical clustering on principal components** with an automatically determined number of groups. It produces a map of the stimuli according to their clusters, then a description of the clusters using the same significance threshold as for the description of stimuli.
+Once the correspondence analysis has been computed, the function runs a **hierarchical clustering on principal components (HCPC)**. By default, **Number of clusters = -1** lets FactoMineR determine the number of groups automatically, but the user can also impose a number of clusters. The clustering uses the first CA dimensions defined by **Number of dimensions for clustering**; this setting is distinct from the factor plane displayed with **X-axis** and **Y-axis**.
 
-### What happens if the number of terms is insufficient
+The function then produces a map of the stimuli according to their clusters and a description of the clusters using the same significance threshold as for the description of stimuli.
 
-The function requires at least **two** variables in the **CATA** field to start the analysis. Below that, it stops with a message indicating that the number of factors is too small. With exactly **two** terms, the tables can be produced, but the representation graphs and classification are not computed: they require at least **three** CATA variables.
+### Minimum conditions for running the analysis
+
+SEDA 1.4.2 requires at least **three CATA variables**. With fewer than three attributes, the analysis stops. To construct a two-dimensional correspondence-analysis map, the aggregated table must also contain at least **three stimuli** and **three informative CATA attributes**.
+
+CATA variables must be complete **0/1** indicators: `0` means that the term was not checked and `1` that it was checked. Missing values are not interpreted as unchecked responses and must be resolved before the analysis.
 
 ## Expected data structure
 
 The data must contain:
 
 -   one categorical column identifying the **stimuli**;
--   several numeric columns corresponding to the **CATA terms**. In practice, these columns are most often coded as **0/1**, since the function sums them by stimulus to construct the contingency table.
+-   at least **three CATA columns** coded as **0/1**.
 
 Each row corresponds to the evaluation of one stimulus by one subject. If 40 subjects evaluate 6 stimuli, the file generally contains one row per subject and per stimulus, with one column per *CATA* term.
 
 Before running the analysis in jamovi, check in the **Data** tab that:
 
 -   the variable intended for **Stimulus Effect** is categorical;
--   the variables intended for **CATA** are numeric and contain coherent values, most often 0s and 1s;
--   you have selected at least **two** variables (items) in the **CATA** field, and ideally **three or more** if you want to obtain the graphs and the classification.
+-   the variables intended for **CATA** are numeric and contain only `0` and `1`;
+-   no CATA response is missing: a missing value is not treated as `0`;
+-   at least **three** CATA terms are selected;
+-   at least **three stimuli** are actually observed to obtain the two-dimensional factor map.
 
 ## Interface guide
 
-The analysis appears in the menu **SEDA \> Fixed List of Attributes \> Analysis of CATA Data**. The interface includes two variable drop zones, a **Read me before running** checkbox, and a numeric field, **Significance threshold (%)**.
+The analysis appears in the menu **SEDA \> Fixed List of Attributes \> Analysis of CATA Data**. The interface includes two variable drop zones, an **Instructions and R Code** section, the **Significance threshold (%)** field, and two collapsible menus: **Graphic Options** and **Clustering**.
 
 ### Variables to complete
 
 #### Stimulus Effect
 
-**Role:** identifies the stimuli to compare. **Impact on the computation:** this variable defines the rows of the contingency table and organizes all descriptive and graphical outputs. **Practical tip:** use clear labels, because they will appear in the tables and in the graphs.
+**Role:** identifies the stimuli to compare. **Impact on the computation:** this variable defines the rows of the contingency table and organizes all descriptive and graphical outputs. **Practical tip:** use clear labels, because they will appear in the tables and graphs.
 
 #### CATA
 
-**Role:** groups together the terms from the CATA list. **Impact on the computation:** these variables define the columns of the contingency table; they are then used for the description of stimuli, correspondence analysis, and, when possible, classification. Only numeric variables are accepted. **Practical tip:** select all relevant CATA columns. At least **two** variables are required to run the analysis, and at least **three** are required to obtain the graphs and the classification.
+**Role:** groups together the terms from the CATA list. **Impact on the computation:** these variables define the columns of the contingency table; they are then used for stimulus description, correspondence analysis, and clustering. **Practical tip:** select at least **three** complete CATA variables coded as 0/1.
 
 ### Read me before running
 
 **Role:** displays integrated help in the results. **Impact on the computation:** none. **Practical tip:** leave it checked during the first uses. It is **enabled by default**.
 
-### Significance threshold: Significance threshold (%)
+### R code
 
-**Role:** defines the p-value threshold used to select the terms characteristic of stimuli and clusters. **Impact on the computation:** a low threshold produces more conservative results; a higher threshold retains more terms in the descriptive tables. The same threshold applies to the description of individual stimuli and to the description of clusters. **Practical tip:** the default value is 5%, a good starting point for a first trial. If the tables are too sparse, try 10%, then possibly 20% for exploratory work.
+**Role:** displays the R script corresponding to the analysis in an **R Code** output. **Impact on the computation:** none. **Practical tip:** enable this option to reproduce the analysis in the **Rj Editor** or continue working in R. It is **disabled by default**.
+
+### Significance threshold (%)
+
+**Role:** defines the p-value threshold used to select terms characterizing stimuli and clusters. **Impact on the computation:** this threshold affects the `descfreq` description tables but does not change the construction of the correspondence analysis or the clustering. **Practical tip:** the default value is 5%.
+
+### Graphic Options
+
+#### X-axis and Y-axis
+
+**Role:** choose the two correspondence-analysis dimensions displayed on the maps. **Impact on the computation:** they change the displayed plane, not the CA structure itself. **Practical tip:** start with X-axis = 1 and Y-axis = 2, the default values.
+
+### Clustering
+
+#### Number of dimensions for clustering
+
+**Role:** sets the number of first CA dimensions used by HCPC. **Impact on the computation:** clustering may therefore use more information than the displayed plane alone. The default value is 5; if fewer than five dimensions are available, SEDA uses all available dimensions. **Practical tip:** the axes chosen for the graph must be included among the dimensions used for clustering.
+
+#### Number of clusters
+
+**Role:** sets the number of stimulus groups. **Impact on the computation:** with the default value `-1`, FactoMineR determines the number of clusters automatically; an integer value of at least 2 imposes that number of groups. The requested number must remain lower than the number of stimuli. **Practical tip:** start with `-1`, and impose a number of groups only when there is an analytical reason to do so.
 
 ## Step-by-step procedure
 
 1.  Open your dataset in jamovi.
-2.  In the **Data** tab, check that the stimulus variable is categorical and that the CATA variables are numeric.
+2.  In the **Data** tab, check that the stimulus variable is categorical and that the CATA variables are complete and coded 0/1.
 3.  Open **SEDA \> Fixed List of Attributes \> Analysis of CATA Data**.
 4.  Place the stimulus variable in **Stimulus Effect**.
-5.  Place the CATA terms in the **CATA** field.
-6.  Check that you have selected at least **two** terms, and preferably **three or more** if you want the graphs.
-7.  Leave **Significance threshold (%)** at 5% for a first trial.
-8.  Start by reading the contingency table to check that the frequencies make sense.
-9.  Then read the description of stimuli to identify the most characteristic terms.
-10. If at least three terms have been provided, consult the **Representation of the Stimuli and the CATA** map, then **Representation of the Stimuli According to Clusters**, and finally the description of clusters.
-11. If the description tables are too empty, slightly increase **Significance threshold (%)**.
+5.  Place at least three terms in **CATA**.
+6.  Leave **Significance threshold (%)** at 5% for a first trial.
+7.  Keep X-axis = 1 and Y-axis = 2.
+8.  Leave **Number of dimensions for clustering = 5** and **Number of clusters = -1** for an initial analysis.
+9.  Start by reading **Description of the Stimuli According to CATA**.
+10. Then consult **Representation of the Stimuli and the CATA**, interpreting stimuli and terms relative to the axes.
+11. Read **Representation of the Stimuli According to Clusters** and then **Description of the Clusters**.
+12. Finally check **Aggregated CATA Table — Stimuli × CATA Frequency Table**, which contains the frequencies actually used in the computations.
+13. If necessary, change the factor plane or clustering settings, then check that your conclusions remain coherent.
 
 ## Interpretation of results
 
@@ -112,7 +140,7 @@ This table describes each stimulus through the terms that are significantly asso
 | **Intern frequency** | Absolute frequency of the term for this stimulus |
 | **Global frequency** | Total absolute frequency of the term             |
 | **p**                | P-value of the test                              |
-| **Vtest**            | Standardized intensity of the association        |
+| **V-test**            | Standardized intensity of the association        |
 
 -   A positive **V-test** indicates that the term is checked more frequently for this stimulus than overall.
 -   A negative **V-test** indicates that it is checked less frequently — and is just as informative.
@@ -125,14 +153,14 @@ This table describes each stimulus through the terms that are significantly asso
 This graph is produced only if at least **three** terms are placed in **CATA**. It simultaneously represents the stimuli and the terms in the factor space derived from the correspondence analysis.
 
 -   Two close stimuli have similar CATA profiles.
--   A term close to a stimulus on the map is more strongly associated with that stimulus.
+-   Stimuli and terms should be interpreted relative to the **factor dimensions** and the oppositions they structure; a direct distance between a stimulus and a term should not be read as an ordinary Euclidean distance.
 -   The percentage displayed on each axis indicates the share of total information captured by that dimension.
 
 This map gives an overview, but it does not replace the descriptive table. The two should be read together.
 
 ### Representation of the Stimuli According to Clusters *(available with ≥ 3 terms)*
 
-This graph appears only if the classification could be computed. It represents the stimuli on the same factor map, with a color code indicating which cluster each stimulus belongs to.
+This graph represents the stimuli according to the HCPC partition. With **Number of clusters = -1**, the partition is selected automatically; if a number of clusters is imposed, the map reflects that partition. Clustering uses the first dimensions defined by **Number of dimensions for clustering**, while **X-axis** and **Y-axis** determine the displayed plane.
 
 -   Stimuli in the same cluster have similar CATA profiles.
 -   Distant clusters correspond to more contrasted families of stimuli.
@@ -151,7 +179,7 @@ When the classification is available, the function also produces a table describ
 | **Intern frequency** | Absolute frequency of the term within the cluster |
 | **Global frequency** | Total absolute frequency of the term              |
 | **p**                | P-value                                           |
-| **Vtest**            | Standardized intensity of the association         |
+| **V-test**            | Standardized intensity of the association         |
 
 This table is particularly useful for summarizing the main families of stimuli, beyond the stimulus-by-stimulus details.
 
@@ -168,6 +196,9 @@ To reproduce this example, use the following values.
 | **Stimulus Effect**            | Product                                |
 | **CATA**                       | all CATA items from ThirstQ to Concert |
 | **Significance threshold (%)** | 5                                      |
+| **X-axis / Y-axis**            | 1 / 2                                  |
+| **Number of dimensions for clustering** | 5                             |
+| **Number of clusters**         | -1 (automatic)                         |
 
 ### Analysis of the *Description of the Stimuli According to CATA* table
 
@@ -181,7 +212,7 @@ The table allows a stimulus-by-stimulus reading with test values and actual freq
 
 **SC** is more strongly linked to *Rugby* (2.82) and *ThirstQ* (2.69), and is under-represented by *PubHouse* (-2.67), *Treat* (-2.58), and *Gift* (-2.55).
 
-**HPW** and **PKB** have less contrasted profiles, both being more associated with *Treat* and *Gift*, and under-represented by *Rugby*.
+**HPW** is more strongly associated with *Treat* (V-test = 2.41) and *Gift* (2.21), and is under-represented by *Rugby* (-3.29). **PKB** is more strongly associated with *Gift* (2.60) and *Treat* (2.10); no negative term reaches the 5% threshold for this stimulus.
 
 **MBB** mainly stands out through *PubHouse* (2.62) and is negatively distinguished by *ThirstQ* (-2.35) and *Rugby* (-2.19).
 
@@ -197,11 +228,11 @@ On the map, *SSA* is located very clearly on the right, isolated near *Gift*, *F
 
 The automatic classification retains **three clusters**:
 
--   **Cluster 1** (black): *LR*, *GMA*, and *SC* — positively characterized by *Rugby* (V-test = 5.22, p \< .001; 10.32% versus 7.08% overall) and *CampingFishing* (2.99), and under-represented by *Guests* (-3.71), *FineDinning* (-3.45), *Gift* (-3.43), and *Treat* (-3.17). This is the cluster of beverages associated with sports and outdoor contexts.
+-   **Cluster 1** (black): *LR*, *GMA*, and *SC* — positively characterized by *Rugby* (V-test = 9.12, p \< .001), *CampingFishing* (4.86), *ThirstQ* (3.81), and *TV* (3.01), and under-represented notably by *Gift* (-6.97), *Treat* (-6.81), *FineDinning* (-6.21), and *Guests* (-4.67). This cluster corresponds to the pole most strongly associated with sports and outdoor contexts.
 
--   **Cluster 2** (red): *MBB*, *HPW*, *PKB*, *MHR*, and *STG* — positively characterized by *Gift* (V-test = 4.06), *Guests* (2.96), *FineDinning* (2.83), and *Treat* (2.06), and under-represented by *Rugby* (-3.32) and *CampingFishing* (-2.59). This cluster groups beverages perceived as more sophisticated or associated with formal social occasions.
+-   **Cluster 2** (red): *MBB*, *HPW*, *PKB*, *MHR*, and *STG* — positively characterized by *Treat* (V-test = 3.52), *Guests* (2.86), *Gift* (2.18), *PubHouse* (2.15), and *Achievement* (2.05), and under-represented by *Rugby* (-7.07), *CampingFishing* (-3.34), and *ThirstQ* (-2.02). This cluster groups beverages more associated with social or treat-related contexts and less with sports and outdoor contexts.
 
--   **Cluster 3** (green): *SSA* alone — characterized only by *Rugby* on the negative side (-2.75). This stimulus is so singular that the classification places it alone in a separate cluster.
+-   **Cluster 3** (green): *SSA* alone — positively characterized by *Gift* (V-test = 6.43), *FineDinning* (6.09), *Treat* (4.53), *Achievement* (3.71), and *Guests* (2.72), and negatively by *Rugby* (-4.29), *ThirstQ* (-3.63), *Work* (-3.01), *CampingFishing* (-2.88), *TV* (-2.80), and *Party* (-2.39). The profile of *SSA* is singular enough to form a cluster on its own.
 
 ### Synthetic interpretation
 
@@ -209,17 +240,25 @@ This example clearly shows the value of the function. It does not merely show th
 
 > **What we take away from this example:** CATA analysis makes it possible to move from simple checking frequencies to a structured reading of the oppositions between stimuli and the main profiles that emerge from them.
 
+## From jamovi to the Rj Editor
+
+Once the **Rj Editor** has been configured to use **System R** as described in Chapter 1, check **R code** to display the script corresponding to the analysis. The dataset currently open in jamovi is available as `data`.
+
+For CATA, the script loads `FactoMineR`, aggregates the 0/1 indicators by stimulus, then uses `descfreq()` for characterization, `CA()` for correspondence analysis, and `HCPC()` for clustering. The **X-axis / Y-axis**, **Number of dimensions for clustering**, and **Number of clusters** settings are carried into the generated code.
+
+The script also uses graphics options suited to the Rj Editor so that no external graphics device is opened. No additional setting is required.
+
 ## Practical tips
 
 -   Start with **Significance threshold (%) = 5%**; increase to 10% if the description tables are too empty.
 -   Always check the contingency table before interpreting the graphs.
--   At least **three terms** are required in the **CATA** field to obtain the factor map and the classification.
+-   At least **three CATA terms and three observed stimuli** are required to construct the two-dimensional factor map.
 -   A negative **V-test** is just as informative as a positive **V-test**: it indicates that a term is checked significantly less often for a stimulus than for the others.
 -   Do not overinterpret the absence of a stimulus from the descriptive table: it may simply have a profile close to the mean profile.
--   The classification is automatic — assess its relevance by cross-reading the graph and the cluster description.
+-   Classification is **automatic by default** (`Number of clusters = -1`), but you can impose a number of groups; always assess its relevance by cross-reading the map and the cluster description.
 -   Read the correspondence map together with the description table: the map gives an overview, while the table provides the details.
--   Make sure that the CATA columns are coherent and, most often, coded as 0/1.
+-   CATA columns must contain only `0` and `1` and must not contain missing values; a missing value is not treated as an unchecked response.
 
 ## In summary
 
-This analysis transforms CATA responses into a structured reading of the sensory profiles of stimuli. It combines a **contingency table**, a **statistical description of stimuli**, then, if the number of terms is sufficient, a **correspondence analysis** and an **automatic classification**. Its main value is to move from a simple accumulation of checkmarks to a view of the stimuli that is simultaneously **descriptive**, **factorial**, and **typological**.
+This analysis transforms CATA responses into a structured reading of the CATA profiles of stimuli. It combines a **contingency table**, a **statistical description of stimuli**, a **correspondence analysis**, and a **classification**, automatic by default. Its main value is to move from a simple accumulation of checkmarks to a view of the stimuli that is simultaneously **descriptive**, **factorial**, and **typological**.
