@@ -6,21 +6,21 @@ This analysis is designed for **free sorting** (*sorting task*) data, in which e
 
 **Why not use a standard alternative?**
 
-A classical approach consists of transforming the sorting data into a similarity matrix between stimuli, then applying a projection method such as MDS. This strategy is useful, but it removes part of the individual information carried by each subject. Here, the function directly analyzes the columns in **Subjects** as qualitative variables and applies a **Multiple Correspondence Analysis (MCA)**, which preserves more of the structure of individual responses and makes it possible to represent stimuli and categories simultaneously in the same space.
+A classical approach consists of transforming the sorting data into a similarity matrix between stimuli, then applying a projection method such as MDS. This strategy is useful, but it removes part of the individual information carried by each subject. Here, the function directly analyzes the columns in **Active Subjects** as qualitative variables and applies a **Multiple Correspondence Analysis (MCA)**, which preserves more of the structure of individual responses and makes it possible to represent stimuli and categories simultaneously in the same space.
 
 ## Understanding what happens under the hood
 
 ### The stimuli are the individuals in the analysis
 
-The function reads the columns placed in **Subjects** as categorical variables. Each row corresponds to a **stimulus**, and each column indicates in which group a subject placed this stimulus. If **Stimuli Labels** is completed, this variable is used to name the stimuli in the outputs; otherwise, the function uses row numbers.
+The function reads the columns placed in **Active Subjects** as categorical variables. Each row corresponds to a **stimulus**, and each column indicates in which group a subject placed this stimulus. If **Stimuli Labels** is completed, this variable is used to name the stimuli in the outputs; otherwise, the function uses row numbers.
 
 ### An MCA on the categorizations provided by the subjects
 
-The core of the function is an **MCA** applied to the columns in **Subjects**. In this framework, two stimuli are close if they have often been grouped in a similar way by the subjects. The columns placed in **Supplementary Subjects**, if any, are projected as supplementary qualitative variables: they appear in the factor space, but do not participate in the construction of the axes.
+The core of the function is an **MCA** applied to the columns in **Active Subjects**. In this framework, two stimuli are close when their sorting profiles are similar across the active subjects. The columns placed in **Supplementary Subjects**, if any, are projected as supplementary qualitative variables: they appear in the factor space, but do not participate in the construction of the axes.
 
 ### The role of Ventilation level (%)
 
-The **Ventilation level (%)** parameter reduces the effect of very infrequent categories in the factorial results. In free sorting, some subjects may isolate a stimulus in a single-item group, creating a very rare category that would otherwise have a disproportionate influence on the MCA. This threshold limits this leverage effect. The default value is 5%.
+The **Ventilation level (%)** parameter is passed to FactoMineR's MCA. Categories whose frequency falls below the threshold are ventilated before the MCA: the affected stimuli are randomly reassigned to other observed categories of the same variable. This limits the influence of extremely rare categories but can introduce slight variation between runs. The default value is 5%; a value of 0% disables ventilation.
 
 ### Textual description of the stimuli
 
@@ -28,14 +28,14 @@ The function constructs a stimuli × words correspondence table from the group l
 
 ### Automatic description of the dimensions and clustering
 
-Once the MCA has been computed, the function produces an **automatic description of the dimensions** according to **Significance threshold (%)** and **Number of dimensions**. If you activate **Representation of the clusters**, the function applies an **HCA** to the MCA components. By default, clustering is based on the **first 5 components**, and **Number of clusters = -1** lets the function choose the number of groups automatically.
+Once the MCA has been computed, the function produces an **automatic description of the dimensions** according to **Significance threshold (%)** and **Number of dimensions**. If you activate **Representation of the clusters**, the function applies **HCPC** to the stimulus coordinates on the retained components. By default, clustering is based on the **first 5 components**, and **Number of clusters = -1** lets HCPC choose the number of groups automatically. The percentages displayed on the HCPC map refer to this retained space and may therefore differ from those on the full MCA map.
 
 ## Expected data structure
 
 The data must contain:
 
 -   one optional column for **Stimuli Labels**;
--   at least **two** categorical columns in **Subjects**;
+-   at least **two** categorical columns in **Active Subjects**;
 -   optionally, categorical columns in **Supplementary Subjects**.
 
 Each row corresponds to a **stimulus**. This point is important: unlike in other analyses, here a row does not correspond to an individual response, but to a stimulus described by the categorizations provided by several subjects.
@@ -43,13 +43,13 @@ Each row corresponds to a **stimulus**. This point is important: unlike in other
 Before running the analysis in jamovi, check in the **Data** tab that:
 
 -   **Stimuli Labels** is categorical if you use it;
--   all columns in **Subjects** are categorical (factors);
+-   all columns in **Active Subjects** are categorical (factors);
 -   all columns in **Supplementary Subjects** are categorical;
--   you have placed at least **two** variables in **Subjects**.
+-   you have placed at least **two** variables in **Active Subjects**.
 
 ## Interface guide
 
-The analysis appears in **SEDA \> Analysis of Sorting Data**. The interface includes three variable drop zones, a **Read me before running** checkbox, and then the **Random Assignment for Rare Categories**, **Graphic Options**, **Numerical Indicators**, and **Clustering** sections.
+The analysis appears in **SEDA \> Free Perception \> Analysis of Sorting Data**. The interface includes three variable drop zones, the **Instructions and R Code** section, and then the **Random Assignment for Rare Categories**, **Graphic Options**, **Numerical Indicators**, and **Clustering** sections.
 
 ### Variables to complete
 
@@ -57,9 +57,9 @@ The analysis appears in **SEDA \> Analysis of Sorting Data**. The interface incl
 
 **Role:** provides the names of the stimuli in the outputs. **Impact on the computation:** it does not modify the MCA, but determines the labels displayed in the graphs and the names associated with the saved coordinates. **Practical tip:** use short and unique labels; otherwise, the maps become difficult to read.
 
-#### Subjects
+#### Active Subjects
 
-**Role:** groups together the sorting variables, one per subject. **Impact on the computation:** these are the active variables of the MCA. They are also used for the textual description and clustering. At least **two** variables are required. **Practical tip:** check that each column is categorical in jamovi.
+**Role:** groups together the sorting variables that construct the factor space, one per subject. **Impact on the computation:** these are the active variables of the MCA. Clustering then uses the stimulus coordinates produced by this MCA. At least **two** variables are required. **Practical tip:** check that each column is categorical in jamovi.
 
 #### Supplementary Subjects
 
@@ -69,9 +69,13 @@ The analysis appears in **SEDA \> Analysis of Sorting Data**. The interface incl
 
 **Role:** displays integrated help in the results. **Impact on the computation:** none. **Practical tip:** leave it checked during the first uses. It is **enabled by default**.
 
+### R code
+
+**Role:** displays the R script corresponding to the current analysis. **Impact on the computation:** none. **Practical tip:** check this option if you want to reproduce the analysis in the **Rj Editor**; it is disabled by default.
+
 ### Random Assignment for Rare Categories: Ventilation level (%)
 
-**Role:** sets the threshold below which a category is considered rare and treated in a way that reduces its influence. **Impact on the computation:** categories whose relative frequency is below this threshold have a reduced weight in the MCA. The default value is 5%. **Practical tip:** leave 5% for a first trial. If some very rare categories seem to dominate the map, you can test a slightly higher threshold.
+**Role:** sets the threshold below which a category is ventilated before the MCA. **Impact on the computation:** stimuli belonging to a rare category are randomly reassigned to other observed categories of the same variable. The default value is 5%. **Practical tip:** leave 5% for a first trial; use 0% if you want to keep rare categories without ventilation.
 
 ### Graphic Options *(collapsed by default)*
 
@@ -101,25 +105,25 @@ The analysis appears in **SEDA \> Analysis of Sorting Data**. The interface incl
 
 **Role:** determines the number of axes described automatically. **Impact on the computation:** it controls the dimension description output. **Practical tip:** leave 2 for a first trial.
 
-#### Level description (%)
+#### Description of the Stimuli from Sorting Labels — Significance threshold (%)
 
 **Role:** sets the threshold used for the textual description of the stimuli. **Impact on the computation:** a stricter threshold produces a shorter description; a broader threshold retains more words. **Practical tip:** leave 5% at first. If the textual description is too sparse, test a slightly broader threshold.
 
-#### Long format dataset
+#### Long-format textual data
 
 **Role:** displays the intermediate textual dataset in long format. **Impact on the computation:** it does not add a new calculation; it makes it possible to check how the labels were reorganized before the textual analysis. **Practical tip:** activate this option if you want to inspect the transformation of the verbal data.
 
-#### Individual Table Options — Coordinates, Contributions, Cosine
+#### Stimulus Table Options — Coordinates, Contributions, Cosine
 
 **Role:** activate the display of the numerical tables of coordinates, contributions, and cosines for the stimuli. **Impact on the computation:** no effect on the MCA; they add numerical result tables. **Practical tip:** disabled by default. Activate them if you want precise values for complementary analyses.
 
-#### Variable Table Options — Coordinates, Contributions, Cosine
+#### Subject Table Options — Coordinates, Contributions, Cosine
 
-**Role:** same principle for the MCA categories. **Impact on the computation:** no effect on the MCA. **Practical tip:** useful if you want to relate the categories precisely to the factor map.
+**Role:** same principle for the MCA subjects. **Impact on the computation:** no effect on the MCA. **Practical tip:** useful if you want to examine their positions and quality of representation precisely.
 
 #### Number of components *(Save)*
 
-**Role:** defines the number of components calculated and saved in **Coordinates**, and used for the classification. **Impact on the computation:** clustering computes distances on these components. **Practical tip:** the default value of 5 is consistent with the clustering proposed by the function.
+**Role:** defines the number of components saved in **Coordinates** and used for classification. **Impact on the computation:** HCPC works on the stimulus coordinates in this retained space. **Practical tip:** the default value of 5 is a useful starting point.
 
 #### Coordinates *(Save)*
 
@@ -129,7 +133,7 @@ The analysis appears in **SEDA \> Analysis of Sorting Data**. The interface incl
 
 #### Representation of the clusters
 
-**Role:** activates the computation of the hierarchical classification and the display of the corresponding graph. **Impact on the computation:** triggers an HCA on the MCA components. It is unchecked by default. **Practical tip:** leave it unchecked for a first reading, then activate it to complement the factor map with a group-based reading.
+**Role:** activates HCPC classification and displays the corresponding graph. **Impact on the computation:** HCPC uses the first components defined by **Number of components**. It is unchecked by default. **Practical tip:** leave it unchecked for a first reading, then activate it to complement the factor map with a group-based reading.
 
 #### Number of clusters
 
@@ -142,21 +146,21 @@ The analysis appears in **SEDA \> Analysis of Sorting Data**. The interface incl
 ## Step-by-step procedure
 
 1.  Open your dataset in jamovi.
-2.  In the **Data** tab, check that all columns in **Subjects** are categorical and that you have at least two of them.
+2.  In the **Data** tab, check that all columns in **Active Subjects** are categorical and that you have at least two of them.
 3.  Check that **Stimuli Labels** is categorical if you use it.
-4.  Open **SEDA \> Analysis of Sorting Data**.
+4.  Open **SEDA \> Free Perception \> Analysis of Sorting Data**.
 5.  Place the stimulus name variable in **Stimuli Labels**.
-6.  Place the sorting variables in **Subjects**.
+6.  Place the sorting variables that construct the space in **Active Subjects**.
 7.  If needed, place other sorting variables in **Supplementary Subjects**.
-8.  Leave **Ventilation level (%) = 5**, **X-axis = 1**, **Y-axis = 2**, **Significance threshold (%) = 5**, **Level description (%) = 5**, **Number of dimensions = 2**, and **Number of components = 5** for a first trial.
-9.  If subjects verbalized their groups, first read **Description of the Stimuli**, then **Representation of the Individuals**, then **Representation of the Categories**.
-10. Consult **Automatic Description of the Dimensions** to interpret the axes.
-11. Read the eigenvalue table to assess whether the 1/2 plane summarizes the data well.
-12. Activate **Representation of the clusters** if you want an automatic classification.
+8.  Leave **Ventilation level (%) = 5**, **X-axis = 1**, **Y-axis = 2**, both **Significance threshold (%) = 5**, **Number of dimensions = 2**, and **Number of components = 5** for a first trial.
+9.  If subjects verbalized their groups, start with **Words Associated with the Stimuli**.
+10. Then read **Eigenvalue Decomposition**, **Representation of the Stimuli**, **Representation of the Subjects**, and **Representation of the Sorting Categories**.
+11. Consult **Automatic Description of the Dimensions** to identify the subjects and categories associated with the axes.
+12. Activate **Representation of the clusters** if you want an HCPC classification.
 
 ## Interpretation of results
 
-### Description of the Stimuli
+### Description of the Stimuli from Sorting Labels — Words Associated with the Stimuli
 
 This table describes each stimulus based on the words used in the group labels. It is truly informative only if the groups were named with interpretable words.
 
@@ -164,38 +168,38 @@ This table describes each stimulus based on the words used in the group labels. 
 |----------------------|-------------------------------------------|
 | *First column*       | Stimulus concerned                        |
 | **Word**             | Characteristic word                       |
-| **Inter %**          | Percentage of the word for this stimulus  |
+| **Internal %**       | Percentage of the word for this stimulus  |
 | **Global %**         | Global percentage of the word             |
-| **Intern frequency** | Frequency of the word for this stimulus   |
+| **Internal frequency** | Frequency of the word for this stimulus |
 | **Global frequency** | Global frequency of the word              |
 | **p**                | P-value of the test                       |
-| **Vtest**            | Standardized intensity of the association |
+| **V-test**           | Standardized intensity of the association |
 
--   A word with an **Intern %** clearly higher than **Global %r** characterizes this stimulus more strongly.
+-   A word with an **Internal %** clearly higher than **Global %** characterizes this stimulus more strongly.
 -   A low **p-value** indicates a clearer association.
 -   A positive **V-test** indicates over-representation of the word for this stimulus; a negative **V-test** indicates under-representation.
 
-### Representation of the Individuals — stimulus map
+### Representation of the Stimuli — stimulus map
 
-This is the important result of the function. It represents the stimuli in the MCA factor space.
+This is the central result of the function. It represents the stimuli in the MCA factor space.
 
 | Element                  | Meaning                                   |
 |--------------------------|-------------------------------------------|
-| Two close stimuli        | They were often placed in the same groups |
-| Two distant stimuli      | They were rarely grouped together         |
-| Compact group of stimuli | Family of stimuli often sorted together   |
+| Two close stimuli        | Their sorting profiles are similar across the active subjects |
+| Two distant stimuli      | Their sorting profiles are more different |
+| Compact group of stimuli | Family of stimuli with similar sorting profiles |
 
-The percentage displayed on each axis indicates the share of variance explained. Without verbalizations, this map remains more difficult to name: in that case, rely more on the category map and the automatic description of the dimensions.
+The percentage displayed on each axis indicates the share of MCA inertia explained by that dimension. Without verbalizations or external information, the axes describe **sorting contrasts** but do not automatically have a sensory meaning.
 
-### Representation of the Categories — category map
+### Representation of the Sorting Categories — category map
 
-This map represents the categories derived from the sorting variables. Categories close to stimuli are more strongly associated with them. The **Active categories**, **Supplementary categories**, and **Selection of categories** options control what is displayed.
+This map represents the categories specific to each subject. Their direction from the origin helps characterize the sides of the axes; the direct distance between a category and a stimulus should not be interpreted as an ordinary measure of similarity. The **Active categories**, **Supplementary categories**, and **Selection of categories** options control what is displayed.
 
 > **Point of vigilance:** with many subjects, this map can become very crowded. The default value **cos2 10** helps keep only a more readable subset of categories.
 
-### Representation of the Variables — variable map
+### Representation of the Subjects — subject map
 
-This map represents the qualitative variables of the MCA, that is, the subjects or sorting variables. It helps show to what extent the partitions of different subjects are aligned with the consensus axes. A subject with high coordinates on an axis has strongly structured their partition according to that axis.
+This map represents the subjects as the qualitative variables of the MCA. It shows which subjects are associated with the common dimensions. The **Subjects Associated with the Dimensions** table quantifies this association through R² and p-values; the map should not be read as a direct index of consensus between subjects.
 
 ### Eigenvalue Decomposition — eigenvalue table
 
@@ -210,20 +214,20 @@ If the first two dimensions explain a large share of the variance, the 1/2 plane
 
 ### Automatic Description of the Dimensions
 
-This textual output identifies the categories and variables most associated with each dimension, according to **Significance threshold (%)** and **Number of dimensions**. It is essential for giving sensory meaning to the axes, especially in the absence of verbalizations.
+This output contains the **Subjects Associated with the Dimensions** and **Sorting Categories Associated with the Dimensions** tables. It identifies the subjects and categories associated with each dimension according to **Significance threshold (%)** and **Number of dimensions**. It therefore describes sorting contrasts; a sensory meaning can be assigned to an axis only when group labels or other external information support that interpretation.
 
-### Representation of the Individuals According to Clusters *(available if "Representation of the clusters" is activated)*
+### Representation of the Stimuli According to Clusters *(available if "Representation of the clusters" is activated)*
 
-This graph represents the stimuli on the factor map, grouped according to the clusters derived from the HCA.
+This graph projects the groups obtained by **HCPC**. Classification uses the first components defined by **Number of components**, not only the two displayed axes. The percentages shown on the HCPC map are therefore computed relative to this retained space and may be higher than those on the full MCA map.
 
 | Element                     | Meaning                                 |
 |-----------------------------|-----------------------------------------|
-| Stimuli in the same cluster | Stimuli often perceived as close        |
+| Stimuli in the same cluster | Similar sorting profiles in the retained space |
 | Clearly separated clusters  | More differentiated families of stimuli |
 
 ### Numerical tables *(optional)*
 
-The coordinate, contribution, and cosine tables for stimuli and categories appear only if you check the corresponding options in **Numerical Indicators**. They provide precise values to complement the visual interpretation.
+The coordinate, contribution, and cosine tables for **stimuli** and **subjects** appear only if you check the corresponding options in **Numerical Indicators**. They provide precise values to complement the visual interpretation.
 
 ## Example: the **perfumes_sorting** dataset
 
@@ -235,14 +239,15 @@ To reproduce this example, use the following values.
 
 | Option | Value |
 |-----------------------------------|-------------------------------------|
-| **Stimuli Labels** | variable identifying the 12 perfumes |
-| **Subjects** | the first 50 sorting columns |
-| **Supplementary Subjects** | from column 51 to 58 |
+| **Stimuli Labels** | `Product` |
+| **Active Subjects** | S1 to S50 |
+| **Supplementary Subjects** | S51 to S58 |
+| **R code** | checked |
 | **Ventilation level (%)** | 5 |
 | **X-axis / Y-axis** | 1 / 2 |
-| **Significance threshold (%)** | 5 |
+| **Significance threshold (%)** *(dimension description)* | 5 |
 | **Number of dimensions** | 2 |
-| **Level description (%)** | 5 |
+| **Significance threshold (%)** *(sorting-label description)* | 5 |
 | **Number of components** | 5 |
 | **Representation of the clusters** | checked to visualize the classification |
 | **Number of clusters** | -1 |
@@ -263,7 +268,7 @@ The table shows that several perfumes have very marked lexical profiles. A few p
 
 **Angel** is associated with *vanilla* (2.23), *heady* (1.99), and *too* (1.99), but under-represented by *fresh* (-2.03) and *flower* (-2.19).
 
-### Analysis of the *Representation of the Individuals* graph
+### Analysis of the *Representation of the Stimuli* graph
 
 The map reveals a readable perceptual structure on the Dim. 1 (15.53%) / Dim. 2 (14.14%) plane. On the right side of the plane, *Shalimar*, *Aromatics Elixir*, and *Chanel N5* form a group — confirming their strong, spicy, and low-floral profile. On the lower left, *J'adore ET*, *J'adore EP*, and *Pleasures* group together around a floral and fresh profile. At the top, *Angel* and *Lolita Lempicka* occupy a clearly distinct position on the second dimension — a vanilla and sweet profile. *Cinéma*, *L'instant*, and *Coco Mademoiselle* form an intermediate central-left area, with profiles that are more difficult to name without the textual description.
 
@@ -277,9 +282,11 @@ On **Dim. 1**, the categories most strongly associated with the positive side (r
 
 On **Dim. 2**, the positive side is dominated by *vanilla;spicy;hot* (S16, 1.51), *woman;mature* (S7, 1.55), *sweet;too;strong* (S11, 1.43), *teenage;likeable* (S51, 1.54), and *vanilla;sweet* (S34, 1.05). The negative side includes *soap* (S12, -1.03) and *fresh* (S10, -0.50). Dim. 2 therefore opposes **vanilla, sweet, enveloping** perfumes to **fresher or soapy** profiles.
 
-### Analysis of the *Representation of the Individuals According to Clusters* graph
+### Analysis of the *Representation of the Stimuli According to Clusters* graph
 
-With **Number of clusters = -1**, the automatic classification retains **six clusters**:
+With **Number of components = 5**, HCPC works on the first five MCA dimensions, which together account for **59.59%** of the inertia. The classification map therefore displays **26.06%** on Dim. 1 and **23.73%** on Dim. 2 instead of **15.53%** and **14.14%** on the MCA map: the percentages are renormalized within the five-dimensional space actually used for clustering.
+
+With **Number of clusters = -1**, the automatic classification retains **six clusters**. The labels in parentheses below are supported by the textual and dimension descriptions, not by clustering alone:
 
 -   a cluster grouping **J'adore ET**, **J'adore EP**, and **Pleasures** (floral, fresh);
 -   a cluster grouping **Coco Mademoiselle**, **L'instant**, and **Cinéma** (intermediate profiles);
@@ -294,9 +301,18 @@ This example clearly shows the value of the function. It does not only provide a
 
 > **What we take away from this example:** free sorting analysis makes it possible to link the factorial structure of the categorizations, their verbal interpretation, and the formation of coherent families of stimuli.
 
+
+## From jamovi to the Rj Editor
+
+Once the **Rj Editor** has been configured with **System R** as described in Chapter 1, check **R code** to display the script corresponding to the analysis. The dataset open in jamovi is available as `data`.
+
+For free sorting, the script loads `FactoMineR`, builds the active and supplementary subject table, and runs `MCA()` with supplementary subjects in `quali.sup` and **Ventilation level (%)** in `level.ventil`. When verbal sorting labels are available, it also builds the textual data, uses `textual()` followed by `descfreq()`, and reproduces the eigenvalues, the maps with `plot.MCA()`, and the automatic description with `dimdesc()`.
+
+If clustering is requested, the script extracts exactly the first coordinates defined by **Number of components**, passes them to `HCPC()`, and displays the map with `plot.HCPC()`. The percentages on this map therefore describe the retained clustering space; in the example, five dimensions account for 59.59% of the inertia, leading to 26.06% and 23.73% on the HCPC map.
+
 ## Practical tips
 
--   Always check that all columns in **Subjects** are categorical before running the analysis.
+-   Always check that all columns in **Active Subjects** are categorical before running the analysis.
 -   Use **Stimuli Labels** almost systematically to obtain readable maps.
 -   Start with **Ventilation level (%) = 5**.
 -   If the category map is too crowded, keep **Selection of categories = cos2 10** and uncheck **Active categories** if necessary.

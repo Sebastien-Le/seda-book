@@ -6,21 +6,21 @@ Cette analyse est conçue pour les données de **tri libre** (*sorting task*), d
 
 **Pourquoi ne pas utiliser une alternative standard ?**
 
-Une approche classique consiste à transformer les tris en matrice de similarité entre stimuli, puis à appliquer une méthode de projection comme une MDS. Cette stratégie est utile, mais elle efface une partie de l'information individuelle portée par chaque sujet. Ici, la fonction analyse directement les colonnes de **Subjects** comme des variables qualitatives et applique une **Analyse des Correspondances Multiples (ACM)**, ce qui préserve davantage la structure des réponses individuelles et permet de représenter simultanément stimuli et catégories dans un même espace.
+Une approche classique consiste à transformer les tris en matrice de similarité entre stimuli, puis à appliquer une méthode de projection comme une MDS. Cette stratégie est utile, mais elle efface une partie de l'information individuelle portée par chaque sujet. Ici, la fonction analyse directement les colonnes de **Active Subjects** comme des variables qualitatives et applique une **Analyse des Correspondances Multiples (ACM)**, ce qui préserve davantage la structure des réponses individuelles et permet de représenter simultanément stimuli et catégories dans un même espace.
 
 ## Comprendre ce qui se passe "sous le capot"
 
 ### Les stimuli sont les individus de l'analyse
 
-La fonction lit les colonnes placées dans **Subjects** comme des variables catégorielles. Chaque ligne correspond à un **stimulus**, et chaque colonne indique dans quel groupe un sujet a placé ce stimulus. Si **Stimuli Labels** est renseigné, cette variable sert à nommer les stimuli dans les sorties ; sinon, la fonction utilise les numéros de ligne.
+La fonction lit les colonnes placées dans **Active Subjects** comme des variables catégorielles. Chaque ligne correspond à un **stimulus**, et chaque colonne indique dans quel groupe un sujet a placé ce stimulus. Si **Stimuli Labels** est renseigné, cette variable sert à nommer les stimuli dans les sorties ; sinon, la fonction utilise les numéros de ligne.
 
 ### Une ACM sur les catégorisations fournies par les sujets
 
-Le cœur de la fonction est une **ACM** appliquée aux colonnes de **Subjects**. Dans ce cadre, deux stimuli sont proches s'ils ont souvent été regroupés de manière similaire par les sujets. Les colonnes placées dans **Supplementary Subjects**, si elles existent, sont projetées comme variables qualitatives supplémentaires : elles apparaissent dans l'espace factoriel, mais ne participent pas à la construction des axes.
+Le cœur de la fonction est une **ACM** appliquée aux colonnes de **Active Subjects**. Dans ce cadre, deux stimuli sont proches lorsque leurs profils de tri sont similaires à travers les sujets actifs. Les colonnes placées dans **Supplementary Subjects**, si elles existent, sont projetées comme variables qualitatives supplémentaires : elles apparaissent dans l'espace factoriel, mais ne participent pas à la construction des axes.
 
 ### Le rôle de Ventilation level (%)
 
-Le paramètre **Ventilation level (%)** atténue l'effet des catégories très peu fréquentes dans les résultats factoriels. En tri libre, certains sujets peuvent isoler un stimulus dans un groupe d'un seul élément, créant une catégorie très rare qui aurait sinon une influence disproportionnée sur l'ACM. Ce seuil permet de limiter cet effet de levier. La valeur par défaut est 5 %.
+Le paramètre **Ventilation level (%)** est transmis à l'ACM de FactoMineR. Les catégories dont la fréquence est inférieure au seuil sont ventilées avant l'ACM : les stimuli concernés sont réaffectés aléatoirement à d'autres catégories observées de la même variable. Cela limite l'influence des catégories extrêmement rares, mais peut introduire une légère variabilité entre exécutions. La valeur par défaut est 5 % ; une valeur de 0 % désactive cette ventilation.
 
 ### Description textuelle des stimuli
 
@@ -28,7 +28,7 @@ La fonction construit un tableau de correspondance stimuli × mots à partir des
 
 ### Description automatique des dimensions et clustering
 
-Une fois l'ACM calculée, la fonction produit une **description automatique des dimensions** selon **Significance threshold (%)** et **Number of dimensions**. Si vous activez **Representation of the clusters**, la fonction applique une **CAH** sur les composantes de l'ACM. Par défaut, le clustering repose sur les **5 premières composantes**, et **Number of clusters = -1** laisse la fonction choisir automatiquement le nombre de groupes.
+Une fois l'ACM calculée, la fonction produit une **description automatique des dimensions** selon **Significance threshold (%)** et **Number of dimensions**. Si vous activez **Representation of the clusters**, la fonction applique **HCPC** aux coordonnées des stimuli sur les composantes retenues. Par défaut, la classification repose sur les **5 premières composantes**, et **Number of clusters = -1** laisse HCPC choisir automatiquement le nombre de groupes. Les pourcentages affichés sur la carte HCPC se rapportent à cet espace retenu et peuvent donc différer de ceux de la carte ACM complète.
 
 ## Structure des données attendues
 
@@ -43,13 +43,13 @@ Chaque ligne correspond à un **stimulus**. Ce point est important : contraireme
 Avant de lancer l'analyse dans jamovi, vérifiez dans l'onglet **Données** que :
 
 -   **Stimuli Labels** est catégorielle si vous l'utilisez ;
--   toutes les colonnes de **Subjects** sont catégorielles (facteurs) ;
+-   toutes les colonnes de **Active Subjects** sont catégorielles (facteurs) ;
 -   toutes les colonnes de **Supplementary Subjects** sont catégorielles ;
--   vous avez bien placé au moins **deux** variables dans **Subjects**.
+-   vous avez bien placé au moins **deux** variables dans **Active Subjects**.
 
 ## Guide de l'interface
 
-L'analyse apparaît dans **SEDA \> Analysis of Sorting Data**. L'interface comprend trois zones de dépôt de variables, une case **Read me before running**, puis les sections **Random Assignment for Rare Categories**, **Graphic Options**, **Numerical Indicators** et **Clustering**.
+L'analyse apparaît dans **SEDA \> Free Perception \> Analysis of Sorting Data**. L'interface comprend trois zones de dépôt de variables, la section **Instructions and R Code**, puis les sections **Random Assignment for Rare Categories**, **Graphic Options**, **Numerical Indicators** et **Clustering**.
 
 ### Variables à renseigner
 
@@ -57,9 +57,9 @@ L'analyse apparaît dans **SEDA \> Analysis of Sorting Data**. L'interface compr
 
 **Rôle :** fournit les noms des stimuli dans les sorties. **Impact sur le calcul :** ne modifie pas l'ACM, mais détermine les étiquettes affichées dans les graphiques et les noms associés aux coordonnées sauvegardées. **Conseil pratique :** utilisez des libellés courts et uniques ; sinon, la lecture des cartes devient difficile.
 
-#### Subjects
+#### Active Subjects
 
-**Rôle :** regroupe les variables de tri, une par sujet. **Impact sur le calcul :** ce sont les variables actives de l'ACM. Elles servent aussi à la description textuelle et au clustering. Au moins **deux** variables sont requises. **Conseil pratique :** vérifiez que chaque colonne est bien catégorielle dans jamovi.
+**Rôle :** regroupe les variables de tri qui construisent l'espace factoriel, une par sujet. **Impact sur le calcul :** ce sont les variables actives de l'ACM. La classification utilise ensuite les coordonnées des stimuli issues de cette ACM. Au moins **deux** variables sont requises. **Conseil pratique :** vérifiez que chaque colonne est bien catégorielle dans jamovi.
 
 #### Supplementary Subjects
 
@@ -70,9 +70,13 @@ L'analyse apparaît dans **SEDA \> Analysis of Sorting Data**. L'interface compr
 
 **Rôle :** affiche une aide intégrée dans les résultats. **Impact sur le calcul :** aucun. **Conseil pratique :** laissez-la cochée lors des premières utilisations. Elle est **activée par défaut**.
 
+### R code
+
+**Rôle :** affiche le script R correspondant à l'analyse courante. **Impact sur le calcul :** aucun. **Conseil pratique :** cochez cette option si vous souhaitez reproduire l'analyse dans le **Rj Editor** ; elle est désactivée par défaut.
+
 ### Random Assignment for Rare Categories : Ventilation level (%)
 
-**Rôle :** fixe le seuil en dessous duquel une catégorie est considérée comme rare et traitée de façon à atténuer son influence. **Impact sur le calcul :** les catégories dont la fréquence relative est inférieure à ce seuil ont un poids réduit dans l'ACM. La valeur par défaut est 5 %. **Conseil pratique :** laissez 5 % pour un premier essai. Si certaines catégories très rares semblent dominer la carte, vous pouvez tester un seuil un peu plus élevé.
+**Rôle :** fixe le seuil en dessous duquel une catégorie est ventilée avant l'ACM. **Impact sur le calcul :** les stimuli appartenant à une catégorie rare sont réaffectés aléatoirement à d'autres catégories observées de la même variable. La valeur par défaut est 5 %. **Conseil pratique :** laissez 5 % pour un premier essai ; utilisez 0 % si vous souhaitez conserver les catégories rares sans ventilation.
 
 ### Graphic Options *(menu replié par défaut)*
 
@@ -102,25 +106,25 @@ L'analyse apparaît dans **SEDA \> Analysis of Sorting Data**. L'interface compr
 
 **Rôle :** détermine le nombre d'axes décrits automatiquement. **Impact sur le calcul :** pilote la sortie de description des dimensions. **Conseil pratique :** laissez 2 pour un premier essai.
 
-#### Level description (%)
+#### Description of the Stimuli from Sorting Labels — Significance threshold (%)
 
 **Rôle :** fixe le seuil utilisé pour la description textuelle des stimuli. **Impact sur le calcul :** un seuil plus strict produit une description plus courte ; un seuil plus large retient davantage de mots. **Conseil pratique :** laissez 5 % au départ. Si la description textuelle est trop pauvre, testez un seuil un peu plus large.
 
-#### Long format dataset
+#### Long-format textual data
 
 **Rôle :** affiche le jeu de données textuel intermédiaire en format long. **Impact sur le calcul&nbsp;:** n'ajoute pas de nouveau calcul ; permet de vérifier comment les libellés ont été réorganisés avant l'analyse textuelle. **Conseil pratique :** activez cette option si vous souhaitez inspecter la transformation des données verbales.
 
-#### Individual Table Options — Coordinates, Contributions, Cosine
+#### Stimulus Table Options — Coordinates, Contributions, Cosine
 
 **Rôle :** activent l'affichage des tableaux numériques de coordonnées, contributions et cosinus des stimuli. **Impact sur le calcul :** aucun effet sur l'ACM ; ajoutent des tableaux de résultats numériques. **Conseil pratique :** désactivés par défaut. Activez-les si vous souhaitez des valeurs précises pour des analyses complémentaires.
 
-#### Variable Table Options — Coordinates, Contributions, Cosine
+#### Subject Table Options — Coordinates, Contributions, Cosine
 
-**Rôle :** idem pour les catégories de l'ACM. **Impact sur le calcul :** aucun effet sur l'ACM. **Conseil pratique :** utile si vous voulez relier précisément les catégories à la carte factorielle.
+**Rôle :** idem pour les sujets de l'ACM. **Impact sur le calcul :** aucun effet sur l'ACM. **Conseil pratique :** utile si vous voulez examiner précisément leur position et leur qualité de représentation.
 
 #### Number of components *(Save)*
 
-**Rôle :** définit le nombre de composantes calculées et sauvegardées dans **Coordinates**, et utilisées pour la classification. **Impact sur le calcul :** le clustering calcule les distances sur ces composantes. **Conseil pratique :** la valeur par défaut 5 est cohérente avec le clustering proposé par la fonction.
+**Rôle :** définit le nombre de composantes sauvegardées dans **Coordinates** et utilisées pour la classification. **Impact sur le calcul :** HCPC travaille sur les coordonnées des stimuli dans cet espace retenu. **Conseil pratique :** la valeur par défaut 5 constitue un bon point de départ.
 
 #### Coordinates *(Save)*
 
@@ -130,7 +134,7 @@ L'analyse apparaît dans **SEDA \> Analysis of Sorting Data**. L'interface compr
 
 #### Representation of the clusters
 
-**Rôle :** active le calcul de la classification hiérarchique et l'affichage du graphique correspondant. **Impact sur le calcul :** déclenche une CAH sur les composantes de l'ACM. Non coché par défaut. **Conseil pratique :** laissez décoché pour une première lecture, puis activez pour compléter la carte factorielle par une lecture en groupes.
+**Rôle :** active la classification HCPC et l'affichage du graphique correspondant. **Impact sur le calcul :** HCPC utilise les premières composantes définies par **Number of components**. Non coché par défaut. **Conseil pratique :** laissez décoché pour une première lecture, puis activez pour compléter la carte factorielle par une lecture en groupes.
 
 #### Number of clusters
 
@@ -143,21 +147,21 @@ L'analyse apparaît dans **SEDA \> Analysis of Sorting Data**. L'interface compr
 ## Procédure pas à pas
 
 1.  Ouvrez votre jeu de données dans jamovi.
-2.  Dans l'onglet **Données**, vérifiez que toutes les colonnes de **Subjects** sont bien catégorielles et que vous en avez au moins deux.
+2.  Dans l'onglet **Données**, vérifiez que toutes les colonnes de **Active Subjects** sont bien catégorielles et que vous en avez au moins deux.
 3.  Vérifiez que **Stimuli Labels** est catégorielle si vous l'utilisez.
-4.  Ouvrez **SEDA \> Analysis of Sorting Data**.
+4.  Ouvrez **SEDA \> Free Perception \> Analysis of Sorting Data**.
 5.  Placez la variable de noms des stimuli dans **Stimuli Labels**.
-6.  Placez les variables de tri dans **Subjects**.
+6.  Placez les variables de tri qui construisent l'espace dans **Active Subjects**.
 7.  Placez, si besoin, d'autres variables de tri dans **Supplementary Subjects**.
-8.  Laissez **Ventilation level (%) = 5**, **X-axis = 1**, **Y-axis = 2**, **Significance threshold (%) = 5**, **Level description (%) = 5**, **Number of dimensions = 2** et **Number of components = 5** pour un premier essai.
-9.  Si les sujets ont verbalisé leurs groupes, lisez d'abord **Description of the Stimuli**, puis **Representation of the Individuals**, puis **Representation of the Categories**.
-10. Consultez **Automatic Description of the Dimensions** pour interpréter les axes.
-11. Lisez le tableau des valeurs propres pour juger si le plan 1/2 résume bien les données.
-12. Activez **Representation of the clusters** si vous souhaitez une classification automatique.
+8.  Laissez **Ventilation level (%) = 5**, **X-axis = 1**, **Y-axis = 2**, les deux **Significance threshold (%) = 5**, **Number of dimensions = 2** et **Number of components = 5** pour un premier essai.
+9.  Si les sujets ont verbalisé leurs groupes, commencez par **Words Associated with the Stimuli**.
+10. Lisez ensuite **Eigenvalue Decomposition**, **Representation of the Stimuli**, **Representation of the Subjects** et **Representation of the Sorting Categories**.
+11. Consultez **Automatic Description of the Dimensions** pour identifier les sujets et catégories associés aux axes.
+12. Activez **Representation of the clusters** si vous souhaitez une classification HCPC.
 
 ## Interprétation des résultats
 
-### Description of the Stimuli
+### Description of the Stimuli from Sorting Labels — Words Associated with the Stimuli
 
 Cette table décrit chaque stimulus à partir des mots utilisés dans les libellés de groupes. Elle n'est vraiment informative que si les groupes ont été nommés avec des mots interprétables.
 
@@ -165,38 +169,38 @@ Cette table décrit chaque stimulus à partir des mots utilisés dans les libell
 |-----------------|-----------------------------------------|
 | *Première colonne*  | Stimulus concerné                       |
 | **Word**        | Mot caractéristique                     |
-| **Inter %**   | Pourcentage du mot pour ce stimulus     |
+| **Internal %**   | Pourcentage du mot pour ce stimulus     |
 | **Global %**     | Pourcentage global du mot               |
-| **Intern frequency**  | Fréquence du mot pour ce stimulus       |
+| **Internal frequency**  | Fréquence du mot pour ce stimulus       |
 | **Global frequency**    | Fréquence globale du mot                |
 | **p** | P-value du test                         |
-| **Vtest**       | Intensité standardisée de l'association |
+| **V-test**       | Intensité standardisée de l'association |
 
--   Un mot avec un **Intern %** nettement supérieur à **Global %r** caractérise davantage ce stimulus.
+-   Un mot avec un **Internal %** nettement supérieur à **Global %** caractérise davantage ce stimulus.
 -   Une **p-value** faible indique une association plus nette.
--   Une **V-test** positive indique une sur-représentation du mot pour ce stimulus ; une **V-test** négative une sous-représentation.
+-   Un **V-test** positif indique une sur-représentation du mot pour ce stimulus ; un **V-test** négatif une sous-représentation.
 
-### Representation of the Individuals — carte des stimuli
+### Representation of the Stimuli — carte des stimuli
 
-C'est le résultat important de la fonction. Elle représente les stimuli dans l'espace factoriel de l'ACM.
+C'est le résultat central de la fonction. Elle représente les stimuli dans l'espace factoriel de l'ACM.
 
 | Élément | Signification |
 |------------------------------------|------------------------------------|
-| Deux stimuli proches | Ils ont souvent été placés dans les mêmes groupes |
-| Deux stimuli éloignés | Ils ont rarement été regroupés ensemble |
-| Groupe compact de stimuli | Famille de stimuli souvent triés ensemble |
+| Deux stimuli proches | Leurs profils de tri sont similaires à travers les sujets actifs |
+| Deux stimuli éloignés | Leurs profils de tri sont plus différents |
+| Groupe compact de stimuli | Famille de stimuli présentant des profils de tri proches |
 
-Le pourcentage affiché sur chaque axe indique la part de variance expliquée. Sans verbalisations, cette carte reste plus difficile à nommer : appuyez-vous alors davantage sur la carte des catégories et la description automatique des dimensions.
+Le pourcentage affiché sur chaque axe indique la part d'inertie de l'ACM expliquée par cette dimension. Sans verbalisation ou information externe, les axes décrivent des **contrastes de tri** mais ne reçoivent pas automatiquement une signification sensorielle.
 
-### Representation of the Categories — carte des catégories
+### Representation of the Sorting Categories — carte des catégories
 
-Cette carte représente les catégories issues des variables de tri. Les catégories proches de stimuli y sont davantage associées. Les options **Active categories**, **Supplementary categories** et **Selection of categories** contrôlent ce qui est affiché.
+Cette carte représente les catégories propres à chaque sujet. Leur direction par rapport à l'origine aide à caractériser les côtés des axes ; la distance directe entre une catégorie et un stimulus ne doit pas être interprétée comme une mesure ordinaire de similarité. Les options **Active categories**, **Supplementary categories** et **Selection of categories** contrôlent ce qui est affiché.
 
 > **Point de vigilance :** avec de nombreux sujets, cette carte peut devenir très chargée. La valeur par défaut **cos2 10** aide justement à ne conserver qu'un sous-ensemble plus lisible des catégories.
 
-### Representation of the Variables — carte des variables
+### Representation of the Subjects — carte des sujets
 
-Cette carte représente les variables qualitatives de l'ACM, c'est-à-dire les sujets ou variables de tri. Elle aide à voir dans quelle mesure les partitions de différents sujets sont alignées avec les axes consensuels. Un sujet avec des coordonnées élevées sur un axe a fortement structuré sa partition selon cet axe.
+Cette carte représente les sujets comme variables qualitatives de l'ACM. Elle montre quels sujets sont associés aux dimensions communes. La table **Subjects Associated with the Dimensions** fournit cette association sous forme de R² et de p-values ; la carte ne doit pas être lue comme un indice direct de consensus entre sujets.
 
 ### Eigenvalue Decomposition — tableau des valeurs propres
 
@@ -211,20 +215,20 @@ Si les deux premières dimensions expliquent une part importante de la variance,
 
 ### Automatic Description of the Dimensions
 
-Cette sortie textuelle identifie les catégories et variables les plus associées à chaque dimension, selon **Significance threshold (%)** et **Number of dimensions**. Elle est essentielle pour donner un sens sensoriel aux axes, surtout en l'absence de verbalisations.
+Cette sortie comporte les tables **Subjects Associated with the Dimensions** et **Sorting Categories Associated with the Dimensions**. Elle identifie les sujets et catégories associés à chaque dimension selon **Significance threshold (%)** et **Number of dimensions**. Elle décrit donc les contrastes de tri ; une signification sensorielle ne peut être attribuée aux axes que si les libellés de groupes ou d'autres informations externes la soutiennent.
 
-### Representation of the Individuals According to Clusters *(disponible si "Representation of the clusters" est activé)*
+### Representation of the Stimuli According to Clusters *(disponible si "Representation of the clusters" est activé)*
 
-Ce graphique représente les stimuli sur la carte factorielle, regroupés selon les clusters issus de la CAH.
+Ce graphique projette les groupes obtenus par **HCPC**. La classification utilise les premières composantes définies par **Number of components**, et pas seulement les deux axes affichés. Les pourcentages portés par la carte HCPC sont donc calculés relativement à cet espace retenu et peuvent être plus élevés que ceux de la carte ACM complète.
 
 | Élément                      | Signification                            |
 |------------------------------|------------------------------------------|
-| Stimuli dans un même cluster | Stimuli souvent perçus de manière proche |
+| Stimuli dans un même cluster | Profils de tri proches dans l'espace retenu |
 | Clusters bien séparés        | Familles de stimuli plus différenciées   |
 
 ### Tableaux numériques *(optionnels)*
 
-Les tableaux de coordonnées, contributions et cosinus pour les stimuli et les catégories n'apparaissent que si vous cochez les options correspondantes dans **Numerical Indicators**. Ils fournissent les valeurs précises pour compléter l'interprétation visuelle.
+Les tableaux de coordonnées, contributions et cosinus pour les **stimuli** et les **sujets** n'apparaissent que si vous cochez les options correspondantes dans **Numerical Indicators**. Ils fournissent les valeurs précises pour compléter l'interprétation visuelle.
 
 ## Exemple : le jeu de données **perfumes_sorting**
 
@@ -236,14 +240,15 @@ Pour reproduire cet exemple, voici les valeurs à utiliser.
 
 | Option                             | Valeur                                |
 |-----------------------------------|-------------------------------------|
-| **Stimuli Labels**                 | variable identifiant les 12 parfums   |
-| **Subjects**                       | les 50 premières colonnes de tri |
-| **Supplementary Subjects**         | de la colonne 51 à 58                  |
+| **Stimuli Labels**                 | `Product`                              |
+| **Active Subjects**                | S1 à S50                              |
+| **Supplementary Subjects**         | S51 à S58                             |
+| **R code**                         | coché                                 |
 | **Ventilation level (%)**          | 5                                     |
 | **X-axis / Y-axis**                | 1 / 2                                 |
-| **Significance threshold (%)**     | 5                                     |
+| **Significance threshold (%)** *(description des dimensions)* | 5 |
 | **Number of dimensions**           | 2                                     |
-| **Level description (%)**          | 5                                     |
+| **Significance threshold (%)** *(description des libellés)* | 5 |
 | **Number of components**           | 5                                     |
 | **Representation of the clusters** | coché pour visualiser la classification |
 | **Number of clusters**             | -1                                    |
@@ -264,7 +269,7 @@ La table montre que plusieurs parfums possèdent des profils lexicaux très marq
 
 **Angel** est associé à *vanilla* (2.23), *heady* (1.99) et *too* (1.99), mais sous-représenté par *fresh* (-2.03) et *flower* (-2.19).
 
-### Analyse du graphique *Representation of the Individuals*
+### Analyse du graphique *Representation of the Stimuli*
 
 La carte fait apparaître une structure perceptive lisible sur le plan Dim. 1 (15.53 %) / Dim. 2 (14.14 %). À droite du plan, *Shalimar*, *Aromatics Elixir* et *Chanel N5* forment un groupe — confirmant leur profil fort, épicé et peu floral. À gauche et en bas, *J'adore ET*, *J'adore EP* et *Pleasures* se regroupent autour d'un profil floral et frais. En haut, *Angel* et *Lolita Lempicka* occupent une position nettement distincte sur la seconde dimension — profil vanillé et sucré. *Cinéma*, *L'instant* et *Coco Mademoiselle* forment une zone intermédiaire centrale-gauche, avec des profils plus difficiles à nommer sans la description textuelle.
 
@@ -278,9 +283,11 @@ Sur **Dim. 1**, les catégories les plus fortement associées au côté positif 
 
 Sur **Dim. 2**, le côté positif est dominé par *vanilla;spicy;hot* (S16, 1.51), *woman;mature* (S7, 1.55), *sweet;too;strong* (S11, 1.43), *teenage;likeable* (S51, 1.54) et *vanilla;sweet* (S34, 1.05). Le côté négatif inclut *soap* (S12, -1.03) et *fresh* (S10, -0.50). La Dim. 2 oppose donc des parfums **vanillés, sucrés, enveloppants** à des profils **plus frais ou savonneux**.
 
-### Analyse du graphique *Representation of the Individuals According to Clusters*
+### Analyse du graphique *Representation of the Stimuli According to Clusters*
 
-Avec **Number of clusters = -1**, la classification automatique retient **six clusters** :
+Avec **Number of components = 5**, HCPC travaille sur les cinq premières dimensions de l'ACM, qui cumulent **59.59 %** de l'inertie. La carte de classification affiche donc **26.06 %** sur Dim. 1 et **23.73 %** sur Dim. 2, au lieu de **15.53 %** et **14.14 %** sur la carte ACM : les pourcentages sont renormalisés dans l'espace à cinq dimensions effectivement utilisé pour la classification.
+
+Avec **Number of clusters = -1**, la classification automatique retient **six clusters**. Les qualificatifs entre parenthèses ci-dessous reposent sur la description textuelle et la description des dimensions, et non sur la classification seule :
 
 -   un cluster regroupant **J'adore ET**, **J'adore EP** et **Pleasures** (floral, frais) ;
 -   un cluster regroupant **Coco Mademoiselle**, **L'instant** et **Cinéma** (profils intermédiaires) ;
@@ -295,9 +302,18 @@ Cet exemple montre bien l'intérêt de la fonction. On n'obtient pas seulement u
 
 > **Ce qu’on retient de cet exemple :** l’analyse de tri libre permet de relier la structure factorielle des catégorisations, leur interprétation verbale et la formation de familles cohérentes de stimuli.
 
+
+## De jamovi au Rj Editor
+
+Une fois le **Rj Editor** configuré avec **System R** comme indiqué au chapitre 1, cochez **R code** pour afficher le script correspondant à l'analyse. Le jeu de données ouvert dans jamovi est disponible sous le nom `data`.
+
+Pour le tri libre, le script charge `FactoMineR`, construit le tableau des sujets actifs et supplémentaires, puis exécute `MCA()` avec les sujets supplémentaires dans `quali.sup` et le seuil **Ventilation level (%)** dans `level.ventil`. Lorsque les groupes comportent des libellés verbaux, il construit aussi les données textuelles, utilise `textual()` puis `descfreq()`, et reproduit les valeurs propres, les cartes avec `plot.MCA()` et la description automatique avec `dimdesc()`.
+
+Si une classification est demandée, le script extrait exactement les premières coordonnées définies par **Number of components**, les transmet à `HCPC()` puis affiche la carte avec `plot.HCPC()`. Les pourcentages de cette carte décrivent donc l'espace retenu pour la classification ; dans l'exemple, cinq dimensions cumulent 59.59 % de l'inertie, ce qui conduit à 26.06 % et 23.73 % sur la carte HCPC.
+
 ## Conseils pratiques
 
--   Vérifiez toujours que toutes les colonnes de **Subjects** sont bien catégorielles avant de lancer l'analyse.
+-   Vérifiez toujours que toutes les colonnes de **Active Subjects** sont bien catégorielles avant de lancer l'analyse.
 -   Utilisez **Stimuli Labels** presque systématiquement pour obtenir des cartes lisibles.
 -   Commencez avec **Ventilation level (%) = 5**.
 -   Si la carte des catégories est trop chargée, gardez **Selection of categories = cos2 10** et décochez **Active categories** si nécessaire.
