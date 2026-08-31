@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Cette analyse permet de construire une **carte de préférences** à partir de deux types d'informations : un **espace de représentation à deux dimensions** déjà calculé, et plusieurs **Liking Variables** correspondant à des notes d'appréciation. Elle sert à repérer quelles zones de cet espace sont associées à une préférence plus forte, et à visualiser **quelle proportion de sujets** serait théoriquement attirée par chaque région du plan. Dans SEDA, ce principe peut être utilisé aussi bien pour une **cartographie externe** des préférences (espace sensoriel) que pour une **cartographie interne** (espace hédonique), selon l'origine des deux axes utilisés.
+Cette analyse permet de construire une **carte de préférences** à partir de deux types d'informations : un **espace de représentation à deux dimensions** déjà calculé, et plusieurs **Liking Variables** correspondant à des notes d'appréciation. Elle sert à repérer quelles zones de cet espace sont associées à une préférence plus forte, et à visualiser **quelle proportion de sujets** serait théoriquement attirée par chaque région du plan. Dans SEDA, ce principe peut être utilisé aussi bien pour une **cartographie externe** des préférences (espace sensoriel) que pour une **cartographie interne** (espace hédonique), selon l'origine des deux axes utilisés. L'analyse peut également **classer les consommateurs** à partir de leurs profils hédoniques et produire une carte de préférence propre à chaque segment.
 
 **Pourquoi ne pas utiliser une alternative standard ?**
 
@@ -27,22 +27,34 @@ La fonction ne calcule pas les axes du plan : il attend que vous lui fournissiez
 
 ### Un modèle est ajusté pour chaque variable de liking
 
-La fonction rassemble d'abord les deux coordonnées du plan et toutes les colonnes placées dans **Liking Variables**. Ensuite, il ajuste un modèle séparé pour chaque variable de liking. Le type de modèle dépend de **Regression Model** :
+La fonction rassemble d'abord les deux coordonnées du plan et toutes les colonnes placées dans **Liking Variables**. Chaque colonne de liking représente ici un consommateur. Un modèle de préférence séparé est ajusté pour chacun d'eux. Le type de modèle dépend de **Regression model** :
 
--   **Quadratic** (défaut) : effets linéaires, termes quadratiques et interaction entre les deux axes. C'est le modèle le plus souple. Il nécessite un nombre suffisant de produits — au moins 7, idéalement 10 ou plus — pour être ajusté de façon fiable.
--   **Vector** : effets linéaires uniquement. Cherche une direction globale de préférence dans l'espace.
--   **Circular** : effets linéaires avec une structure quadratique radiale commune. Cherche un optimum plus centré.
--   **Elliptical** : effets linéaires et quadratiques séparés sur chaque axe, sans interaction. Autorise une zone optimale allongée dans certaines directions.
+-   **Quadratic** (défaut) : effets linéaires, termes quadratiques et interaction entre les deux axes. Il faut au moins **7 stimuli** pour un ajustement non saturé ; en pratique, davantage de produits est préférable.
+-   **Vector** : effets linéaires uniquement. Il faut au moins **4 stimuli**.
+-   **Circular** : effets linéaires avec une courbure quadratique radiale commune. Il faut au moins **5 stimuli**.
+-   **Elliptical** : effets linéaires et termes quadratiques séparés sur chaque axe, sans interaction. Il faut au moins **6 stimuli**.
 
-Une manière simple de les comprendre : **Vector** suppose une tendance monotone ; **Quadratic** autorise une zone optimale souple ; **Circular** et **Elliptical** supposent un optimum local plus ou moins concentré.
+Une manière simple de les comprendre : **Vector** décrit une direction de préférence ; **Quadratic** autorise la surface la plus souple ; **Circular** et **Elliptical** représentent des optima locaux avec des contraintes de forme différentes. Si la géométrie des deux coordonnées ne permet pas d'estimer le modèle choisi, SEDA demande d'utiliser un modèle plus simple ou un espace produit plus riche.
 
 ### Construction de la surface de préférence
 
-Une fois les modèles ajustés, la fonction construit une **grille régulière** sur le plan défini par **X-axis** et **Y-axis**. Pour chaque variable de liking, il calcule les valeurs prédites sur cette grille, centre ces prédictions, puis compte en chaque point combien de sujet dépassent un certain niveau de référence. Le résultat final est converti en **pourcentage** et affiché sur la carte comme **% of consumers**.
+Pour chaque consommateur, SEDA ajuste le modèle sur les produits observés puis prédit la préférence sur une grille régulière couvrant le plan **X-axis / Y-axis**. La surface prédite de chaque consommateur est ensuite standardisée : moyenne 0 et écart-type 1 sur la grille.
+
+À chaque point de la grille, SEDA compte ensuite combien de consommateurs ont une valeur prédite standardisée supérieure à **Preference threshold (SD)**. Ce nombre est converti en pourcentage et forme la surface **% of consumers**.
+
+### Preference threshold (SD)
+
+Le seuil est exprimé en écarts-types de la surface prédite propre à chaque consommateur. Avec la valeur par défaut **0**, une zone est considérée comme favorable pour un consommateur lorsque sa préférence prédite y est supérieure à son niveau prédit moyen sur la grille. Une valeur positive rend le critère plus sélectif ; une valeur négative l'élargit. Il s'agit d'un **critère de préférence**, pas d'un seuil de significativité statistique.
 
 ### Ce que représente vraiment la carte finale
 
-La carte finale ne montre pas directement les notes observées produit par produit. Elle montre une **surface modélisée**, construite à partir des modèles individuels ajustés sur le plan. Les zones colorées indiquent des régions de l'espace où une plus grande proportion de variables de liking est prédite au-dessus du niveau de référence. C'est cela qui explique l'intitulé de légende **% of consumers**.
+La carte finale ne montre pas directement les notes observées produit par produit. Elle montre une **surface modélisée** construite à partir des modèles individuels. Les zones indiquent la proportion de consommateurs pour lesquels chaque position du plan dépasse le seuil de préférence choisi. La légende **% of consumers** doit donc être lue comme un pourcentage de consommateurs dont la zone est prédite comme favorable, et non comme une note moyenne de liking.
+
+### Classification des consommateurs
+
+Si **Classification of consumers** est activé, la classification est calculée séparément de la cartographie. Pour chaque consommateur, SEDA centre son profil de liking sur l'ensemble des stimuli, puis calcule les distances entre consommateurs et applique une classification hiérarchique de Ward (`ward.D2`). Le centrage enlève le niveau moyen propre à chaque consommateur : les groupes reflètent donc surtout des **formes de préférence différentes entre produits**, plutôt qu'une simple opposition entre consommateurs généreux et sévères dans leur notation.
+
+Avec **Number of clusters = -1**, SEDA choisit automatiquement une coupure à partir du plus grand saut observé dans les niveaux supérieurs de la hiérarchie. Il est aussi possible d'imposer un nombre de groupes. Les cartes par cluster sont ensuite recalculées avec les consommateurs du groupe, tout en conservant exactement le même espace produit, le même modèle de régression et le même seuil de préférence que pour la carte globale.
 
 ## Structure des données attendues
 
@@ -51,105 +63,150 @@ Les données doivent contenir :
 -   une colonne facultative pour **Stimuli Labels** ;
 -   une colonne numérique pour **X-axis** ;
 -   une colonne numérique pour **Y-axis** ;
--   au moins **deux** colonnes numériques dans **Liking Variables**.
+-   au moins **deux** colonnes numériques dans **Liking Variables**, une par consommateur.
 
-Chaque ligne correspond à un **stimulus**. Les deux coordonnées représentent sa position dans l'espace 2D, et les colonnes de **Liking Variables** contiennent les notes associées à ce même stimulus. La fonction exige au moins **2** variables de liking ; sinon, il rejette l'analyse.
+Chaque ligne correspond à un **stimulus**. Les deux coordonnées représentent sa position dans l'espace 2D, et les colonnes de **Liking Variables** contiennent les notes des consommateurs pour ce même stimulus.
 
 Avant de lancer l'analyse dans jamovi, vérifiez dans l'onglet **Données** que :
 
--   **Stimuli Labels** est catégorielle si vous l'utilisez ;
--   **X-axis** et **Y-axis** sont numériques ;
--   toutes les colonnes de **Liking Variables** sont numériques ;
--   vous avez bien sélectionné au moins **deux** variables dans **Liking Variables**.
+-   **X-axis** et **Y-axis** sont deux variables numériques différentes et varient effectivement entre les stimuli ;
+-   toutes les colonnes de **Liking Variables** sont numériques et différentes des deux coordonnées ;
+-   vous avez sélectionné au moins **deux** variables de liking ;
+-   si vous utilisez **Stimuli Labels**, les libellés sont non manquants et uniques.
+
+SEDA exige au minimum **4 stimuli**, mais le minimum dépend ensuite du modèle choisi : 4 pour **Vector**, 5 pour **Circular**, 6 pour **Elliptical** et 7 pour **Quadratic**. La classification nécessite au moins **3 consommateurs**. Des valeurs de liking manquantes isolées peuvent être imputées par SEDA à partir des effets produit et consommateur ; en revanche, un consommateur entièrement manquant, un stimulus sans aucun score hédonique ou un consommateur sans variation de liking est rejeté.
 
 ## Guide de l'interface
 
-L'analyse apparaît dans **SEDA \> Hedonic Data \> Preference Mapping**. L'interface comprend quatre zones de dépôt de variables, la case **Read me before running**, le menu **Regression Model**, puis deux menus de couleur dans **Graphic Options**.
+L'analyse apparaît dans **SEDA \> Hedonic Data \> Preference Mapping**. L'interface comprend quatre zones de dépôt de variables, la section **Instructions and R Code**, les **Preference Mapping Options**, une section repliable **Consumer Classification**, puis **Graphic Options**.
 
 ### Variables à renseigner
 
 #### Stimuli Labels
 
-**Rôle :** fournit les noms affichés pour les stimuli sur la carte. **Impact sur le calcul :** ne change pas le calcul de la surface, mais détermine les étiquettes tracées à côté des points. La fonction remplace automatiquement les libellés manquants par des identifiants numériques. **Conseil pratique :** utilisez des libellés courts et distincts, sinon la carte devient vite difficile à lire.
+**Rôle :** fournit les noms affichés pour les stimuli sur les cartes. **Impact sur le calcul :** ne change pas les modèles. **Conseil pratique :** utilisez des libellés courts, complets et uniques. Si aucune variable n'est fournie, SEDA utilise les numéros de ligne.
 
 #### X-axis
 
-**Rôle :** fournit la coordonnée horizontale des stimuli dans l'espace de représentation. **Impact sur le calcul :** entre directement dans les modèles de régression et définit le premier axe de la surface. **Conseil pratique :** utilisez une dimension déjà sauvegardée, typiquement la première composante issue d'une ACP réalisée auparavant dans le module MEDA.
+**Rôle :** fournit la coordonnée horizontale des stimuli dans l'espace de représentation. **Impact sur le calcul :** entre directement dans les modèles de préférence. **Conseil pratique :** utilisez typiquement la première composante sauvegardée depuis une ACP réalisée dans MEDA.
 
 #### Y-axis
 
-**Rôle :** fournit la coordonnée verticale des stimuli dans l'espace de représentation. **Impact sur le calcul :** entre dans les modèles de régression et définit le second axe de la surface. **Conseil pratique :** utilisez la seconde composante du même espace que celui choisi pour **X-axis**.
+**Rôle :** fournit la coordonnée verticale des stimuli. **Impact sur le calcul :** entre directement dans les modèles et doit provenir du même espace que **X-axis**. **Conseil pratique :** utilisez typiquement la seconde composante du même calcul.
 
 #### Liking Variables
 
-**Rôle :** regroupe les notes d'appréciation utilisées pour construire la carte. **Impact sur le calcul :** la fonction ajuste un modèle séparé pour chaque variable, puis agrège les résultats dans la surface finale. Plus vous avez de variables, plus la surface représente fidèlement un pourcentage de sujets. **Conseil pratique :** utilisez les notes individuelles disponibles, pas seulement des moyennes. Il faut au moins **2 variables**.
+**Rôle :** regroupe les notes d'appréciation individuelles, une colonne par consommateur. **Impact sur le calcul :** un modèle est ajusté pour chaque colonne ; si la classification est activée, ces mêmes profils servent aussi à former les segments. **Conseil pratique :** utilisez les notes individuelles plutôt que des moyennes.
 
-### Read me before running
+### Instructions and R Code
 
-**Rôle :** affiche une aide intégrée dans les résultats. **Impact sur le calcul :** aucun. **Conseil pratique :** laissez-la cochée lors des premières utilisations. Elle est **activée par défaut**.
+#### Read me before running
 
-### Regression Model
+**Rôle :** affiche l'aide intégrée dans les résultats. **Impact sur le calcul :** aucun. **Conseil pratique :** laissez cette option cochée lors des premières utilisations.
 
-**Rôle :** choisit la forme du modèle ajusté pour chaque variable de liking. **Impact sur le calcul&nbsp;:** cette option modifie directement la forme de la surface de préférence.
+#### R code
 
-| Modèle | Description | Usage recommandé |
-|------------------------|------------------------|------------------------|
-| **Quadratic** (défaut) | Effets linéaires, quadratiques et interaction | Cas général ; idéalement ≥ 10 produits |
-| **Vector** | Effets linéaires uniquement | Peu de produits ou préférence monotone |
-| **Circular** | Structure quadratique radiale commune | Optimum supposé centré |
-| **Elliptical** | Quadratiques séparés par axe, sans interaction | Optimum supposé allongé |
+**Rôle :** affiche le script R correspondant aux réglages courants. **Impact sur le calcul :** aucun. **Conseil pratique :** cochez cette option pour reproduire l'analyse dans le **Rj Editor**.
 
-**Conseil pratique :** commencez avec **Quadratic** (valeur par défaut). Si vous avez moins de 10 produits, préférez **Vector** ou **Circular**.
+### Preference Mapping Options
 
-### Graphic Options
+#### Regression model
+
+**Rôle :** choisit la forme de la surface ajustée pour chaque consommateur.
+
+| Modèle | Structure | Minimum de stimuli |
+|---|---|---:|
+| **Quadratic** (défaut) | Linéaire + quadratique + interaction | 7 |
+| **Vector** | Linéaire | 4 |
+| **Circular** | Linéaire + courbure radiale commune | 5 |
+| **Elliptical** | Linéaire + quadratiques séparés, sans interaction | 6 |
+
+**Conseil pratique :** commencez avec **Quadratic** lorsque le nombre et la géométrie des produits le permettent. Avec peu de produits, un modèle plus simple est souvent plus défendable.
+
+#### Preference threshold (SD)
+
+**Rôle :** fixe le niveau standardisé qu'une préférence prédite doit dépasser pour qu'une position soit comptée comme favorable pour un consommateur. **Impact sur le calcul :** modifie directement le pourcentage affiché sur la carte. **Conseil pratique :** commencez avec **0**. Une valeur positive sélectionne des zones de préférence plus fortes ; une valeur négative élargit les zones favorables.
+
+### Consumer Classification *(menu replié par défaut)*
+
+#### Classification of consumers
+
+**Rôle :** active la segmentation des consommateurs à partir de leurs profils hédoniques centrés. **Impact sur le calcul :** ajoute les tables de groupes, le dendrogramme et, si demandé, les cartes par segment. Désactivé par défaut.
+
+#### Number of clusters
+
+**Rôle :** fixe le nombre de groupes. **Impact sur le calcul :** **-1** laisse SEDA choisir automatiquement la coupure ; une valeur entière d'au moins 2 impose le nombre de segments, qui doit rester inférieur au nombre de consommateurs.
+
+#### Cluster dendrogram
+
+**Rôle :** affiche le dendrogramme de la classification de Ward. **Impact sur le calcul :** aucun ; il visualise la hiérarchie utilisée pour former les groupes. Activé par défaut lorsque la classification est utilisée.
+
+#### Preference maps by cluster
+
+**Rôle :** produit une carte de préférence séparée pour chaque groupe de consommateurs. **Impact sur le calcul :** chaque carte est recalculée avec les consommateurs du groupe, mais conserve les mêmes coordonnées, le même modèle et le même seuil que la carte globale. Activé par défaut lorsque la classification est utilisée.
+
+### Graphic Options *(menu replié par défaut)*
 
 #### Color for low preference areas
 
-**Rôle :** définit la couleur des zones de faible préférence. **Impact sur le calcul :** aucun effet sur les modèles ; change uniquement la palette graphique. **Conseil pratique :** la valeur par défaut est **Blue**. La palette utilisée est un dégradé de cette couleur vers le blanc, puis vers la couleur haute.
+**Rôle :** définit la couleur des zones de faible préférence. **Impact sur le calcul :** aucun. La valeur par défaut est **Blue**.
 
 #### Color for high preference areas
 
-**Rôle :** définit la couleur des zones de forte préférence. **Impact sur le calcul :** aucun effet sur les modèles ; change uniquement la palette. **Conseil pratique :** la valeur par défaut est **Red**. Garder **Blue** pour les zones faibles et **Red** pour les zones fortes est généralement la combinaison la plus lisible.
+**Rôle :** définit la couleur des zones de forte préférence. **Impact sur le calcul :** aucun. La valeur par défaut est **Red**.
 
 ## Procédure pas à pas
 
 1.  Ouvrez votre fichier dans jamovi.
-2.  Si vous ne disposez pas encore des coordonnées de l'espace 2D, construisez-les d'abord dans le module **MEDA** : lancez une **PCA**, activez **Coordinates** dans la sous-section **Save** des **Numerical Indicators**, et indiquez **2** dans **Number of components**. Deux nouvelles colonnes (**Dim. 1** et **Dim. 2**) apparaissent automatiquement dans votre feuille de données.
-3.  Dans l'onglet **Données**, vérifiez que les deux axes et les variables de liking sont numériques.
+2.  Si vous ne disposez pas encore des coordonnées de l'espace 2D, construisez-les dans **MEDA** avec une **PCA**, puis sauvegardez au moins deux **Coordinates**.
+3.  Vérifiez que **X-axis**, **Y-axis** et les **Liking Variables** sont numériques.
 4.  Ouvrez **SEDA \> Hedonic Data \> Preference Mapping**.
-5.  Placez la variable de noms des stimuli dans **Stimuli Labels**.
-6.  Placez la première composante sauvegardée dans **X-axis**.
-7.  Placez la seconde composante sauvegardée dans **Y-axis**.
-8.  Placez toutes les colonnes de notes dans **Liking Variables** (au moins **2**).
-9.  Laissez **Regression Model = Quadratic** pour un premier essai.
-10. Laissez les couleurs par défaut (**Blue** / **Red**) si vous ne souhaitez pas personnaliser la palette.
-11. Lisez la carte en repérant les zones les plus favorables et les positions des stimuli.
-12. Testez éventuellement un autre **Regression Model** pour voir si l'interprétation reste stable.
+5.  Placez la variable de noms des stimuli dans **Stimuli Labels** si vous en disposez.
+6.  Placez deux coordonnées issues du même espace dans **X-axis** et **Y-axis**.
+7.  Placez les notes individuelles des consommateurs dans **Liking Variables**.
+8.  Commencez avec **Regression model = Quadratic** si vous avez au moins 7 produits et une géométrie suffisante ; sinon, choisissez un modèle plus simple.
+9.  Laissez **Preference threshold (SD) = 0** pour une première lecture.
+10. Lisez d'abord **Overall Preference Map**.
+11. Si vous souhaitez étudier l'hétérogénéité des préférences, activez **Classification of consumers** et commencez avec **Number of clusters = -1**.
+12. Lisez **Consumer Cluster Sizes** et **Consumer Cluster Membership**, puis le dendrogramme et les **Preference Maps by Consumer Cluster**.
+13. Cochez **R code** si vous souhaitez reproduire exactement ces réglages dans le Rj Editor.
 
 ## Interprétation des résultats
 
-### Preference Mapping — graphique principal
+### Overall Preference Map — graphique principal
 
-La fonction produit une seule sortie : la carte de préférence. Elle représente l'espace factoriel fourni comme fond, sur lequel est superposée une surface de densité modélisée.
+La carte représente l'espace fourni par **X-axis** et **Y-axis**, sur lequel est superposée la surface **% of consumers**.
 
 | Élément | Signification |
-|------------------------------------|------------------------------------|
-| Zones vers **Color for high preference areas** (défaut : rouge) | Régions où un pourcentage élevé de sujets aurait une appréciation estimée favorable |
-| Zones vers **Color for low preference areas** (défaut : bleu) | Régions peu appréciées |
-| Zones blanches | Régions intermédiaires |
-| Courbes de niveau | Indiquent le pourcentage exact de consommateurs (0 à 100) |
-| Courbes serrées | Changement rapide du pourcentage dans cette zone |
-| Carrés avec étiquettes | Position des stimuli testés dans l'espace factoriel |
+|---|---|
+| Zones vers **Color for high preference areas** | Régions favorables pour une forte proportion de consommateurs selon le seuil choisi |
+| Zones vers **Color for low preference areas** | Régions favorables pour une faible proportion de consommateurs |
+| Zones intermédiaires | Niveaux intermédiaires de consommateurs favorables |
+| Courbes de niveau | Repèrent certains pourcentages de consommateurs, de 20 % jusqu'à 95 % |
+| Carrés avec étiquettes | Position des stimuli testés dans l'espace choisi |
+| Sous-titre | Rappelle la valeur de **Preference threshold (SD)** utilisée |
 
-La zone la plus proche de la couleur haute correspond à la région du plan où la proportion estimée de sujets "favorables" est la plus grande. Cela peut être interprété comme une **zone optimale de préférence** dans l'espace choisi.
+Avec le seuil par défaut **0**, une zone élevée signifie qu'une grande proportion de consommateurs y a une préférence prédite supérieure à son propre niveau prédit moyen. La carte ne représente donc ni une moyenne brute de liking ni une probabilité au sens statistique.
 
-> **Point de vigilance :** la carte repose sur une modélisation. Elle ne montre pas seulement les produits observés, mais une interpolation sur tout le plan. Il faut rester prudent lorsqu'on interprète des zones éloignées des stimuli réellement présents : l'extrapolation y est moins fiable.
+> **Point de vigilance :** la surface est modélisée sur une grille qui couvre le plan. Les zones éloignées des stimuli observés relèvent davantage de l'extrapolation et doivent être interprétées avec prudence.
 
-> **Point de vigilance :** la surface dépend à la fois du nombre de stimuli disponibles pour ajuster les modèles et du nombre de variables de liking utilisées pour construire le pourcentage. Une carte visuellement lisse ne garantit pas à elle seule une forte robustesse.
+> **Point de vigilance :** une surface lisse ne garantit pas une forte robustesse. Le nombre de stimuli, le modèle choisi et la diversité des consommateurs déterminent la quantité d'information disponible.
 
-### Absence de tableaux numériques
+### Consumer Cluster Sizes *(si Classification of consumers est activé)*
 
-Dans la configuration actuelle du module, aucune table numérique de résultats n'est produite. L'interprétation repose donc entièrement sur le graphique **Preference Mapping**.
+Cette table donne, pour chaque cluster, le **nombre** de consommateurs et leur **pourcentage** dans l'échantillon. Elle permet de repérer immédiatement les segments dominants et les groupes très petits, qui doivent être interprétés avec davantage de prudence.
+
+### Consumer Cluster Membership *(si Classification of consumers est activé)*
+
+Cette table indique le cluster attribué à chaque consommateur. Elle permet de relier les segments aux colonnes de liking d'origine ou de poursuivre leur caractérisation dans une analyse complémentaire.
+
+### Consumer Cluster Dendrogram *(optionnel)*
+
+Le dendrogramme représente la classification hiérarchique de Ward calculée sur les profils de liking centrés. Deux consommateurs proches dans cette hiérarchie ont des structures de préférence semblables entre les produits, indépendamment en grande partie de leur niveau moyen de notation.
+
+### Preference Maps by Consumer Cluster *(optionnel)*
+
+Une carte est recalculée pour chaque cluster avec **le même espace produit, le même Regression model et le même Preference threshold (SD)** que la carte globale. Les différences entre cartes peuvent donc être lues comme une hétérogénéité des structures de préférence entre segments, et non comme un changement de repère factoriel.
 
 ## Exemple : le jeu de données **senso_hedo_cocktail**
 
@@ -157,15 +214,21 @@ Le jeu de données **senso_hedo_cocktail** contient les évaluations sensorielle
 
 ### Paramètres de l’exemple
 
-Pour reproduire cet exemple, voici les valeurs à utiliser.
+Pour reproduire l'exemple principal et afficher également la segmentation des consommateurs, utilisez les valeurs suivantes.
 
 | Option | Valeur |
 |----|----|
 | **Stimuli Labels** | variable identifiant les cocktails |
 | **X-axis** | Dim. 1 (sauvegardée depuis l'ACP) |
 | **Y-axis** | Dim. 2 (sauvegardée depuis l'ACP) |
-| **Liking Variables** | toutes les colonnes de hédoniques (O à DJ) |
-| **Regression Model** | Quadratic |
+| **Liking Variables** | toutes les colonnes hédoniques (O à DJ) |
+| **R code** | coché |
+| **Regression model** | Quadratic |
+| **Preference threshold (SD)** | 0 |
+| **Classification of consumers** | coché |
+| **Number of clusters** | -1 |
+| **Cluster dendrogram** | coché |
+| **Preference maps by cluster** | coché |
 | **Color for low preference areas** | Blue |
 | **Color for high preference areas** | Red |
 
@@ -189,21 +252,13 @@ La description automatique des dimensions confirme l'interprétation des axes :
 
 Sur la carte des individus, les cocktails se distribuent largement dans le plan. **386** se situe en haut à droite (fort sur Dim. 2), **131** en bas au centre, **447** et **312** à gauche (sucrés, épais), **194**, **233** et **245** à droite (acides, intenses). Une fois l'ACP lancée, les colonnes **Dim. 1** et **Dim. 2** apparaissent automatiquement dans la feuille de données jamovi.
 
-### Étape 2 — Construire la carte de préférences dans SEDA
+### Étape 2 — Construire la carte de préférence dans SEDA
 
-Revenez dans **SEDA \> Hedonic Data \> Preference Mapping** et utilisez les réglages suivants :
+Revenez dans **SEDA \> Hedonic Data \> Preference Mapping** et utilisez les coordonnées sauvegardées comme **X-axis** et **Y-axis**. Sélectionnez les colonnes hédoniques dans **Liking Variables**, gardez **Regression model = Quadratic** et **Preference threshold (SD) = 0**.
 
-| Option | Valeur |
-|----|----|
-| Stimuli Labels | variable identifiant les cocktails |
-| X-axis | Dim. 1 (sauvegardée depuis l'ACP) |
-| Y-axis | Dim. 2 (sauvegardée depuis l'ACP) |
-| Liking Variables | toutes les colonnes de notes hédoniques (O à DJ) |
-| Regression Model | Quadratic |
-| Color for low preference areas | Blue |
-| Color for high preference areas | Red |
+Pour reproduire également la lecture par segments, activez **Classification of consumers**, laissez **Number of clusters = -1**, et gardez **Cluster dendrogram** et **Preference maps by cluster** cochés. La carte globale ne change pas lorsque la classification est activée ; celle-ci ajoute des résultats complémentaires sur l'hétérogénéité des consommateurs.
 
-### Analyse du graphique *Representation of the products*
+### Analyse du graphique *Overall Preference Map*
 
 La carte résultante superpose la surface de densité à la position des 13 cocktails dans l'espace sensoriel. La zone rouge foncée — correspondant à plus de 80–90 % de consommateurs favorables — se situe **à gauche du plan**, dans la région des coordonnées négatives sur Dim. 1, là où se trouvent les cocktails **182**, **444**, **343** et **447**. Ces cocktails, caractérisés par des profils plus sucrés, épais et bananés, correspondent à la zone optimale de préférence.
 
@@ -211,23 +266,37 @@ La carte résultante superpose la surface de densité à la position des 13 cock
 
 Les cocktails **131** (en bas au centre) et **386** (en haut à droite) se situent dans des zones intermédiaires à faible préférence (bleu clair, 10–25 %).
 
+### Lecture de la classification des consommateurs
+
+Lorsque **Classification of consumers** est activé, commencez par **Consumer Cluster Sizes** pour voir le nombre et le poids relatif des segments, puis utilisez **Consumer Cluster Membership** pour identifier les consommateurs qui les composent. Le **Consumer Cluster Dendrogram** montre la hiérarchie à l'origine de cette partition.
+
+Les **Preference Maps by Consumer Cluster** sont ensuite les sorties les plus importantes pour l'interprétation : elles permettent de vérifier si la zone globale de forte préférence est partagée par tous les consommateurs ou si elle résulte de la superposition de groupes aux optima différents. Comme les cartes utilisent exactement le même espace sensoriel et le même seuil, leurs différences sont directement comparables. Les petits clusters doivent néanmoins être interprétés avec prudence.
+
 ### Interprétation synthétique
 
 L'espace sensoriel structuré par l'ACP, fondé sur l'opposition acide-intense vs sucré-épais, s'avère directement lisible sur la carte de préférences. L'optimum se situe du côté sucré-épais, tandis que les profils acides et intenses sont moins appréciés. Aucun cocktail ne se trouve exactement dans la zone de préférence maximale, ce qui suggère davantage une **direction d'amélioration formulation** qu'un produit déjà optimal.
 
 > **Ce qu’on retient de cet exemple :** la cartographie des préférences relie directement l’espace sensoriel et les préférences hédoniques, ce qui permet d’identifier une zone optimale même lorsqu’aucun produit existant ne l’occupe exactement.
 
+## De jamovi au Rj Editor
+
+Une fois le **Rj Editor** configuré avec **System R** comme indiqué au chapitre 1, cochez **R code** pour afficher le script correspondant à l'analyse. Le jeu de données ouvert dans jamovi est disponible sous le nom `data`.
+
+Le code généré reconstruit les deux coordonnées et les colonnes de liking, ajuste une surface de réponse séparée pour chaque consommateur, standardise les prédictions sur la grille et applique **Preference threshold (SD)** avant de calculer le **% of consumers**. Il reproduit ainsi explicitement la logique de la carte plutôt que de traiter celle-ci comme une simple moyenne de liking.
+
+Si **Classification of consumers** est activé, le script centre également les profils hédoniques, calcule les distances entre consommateurs, exécute la classification de Ward avec `hclust(..., method = "ward.D2")`, utilise `cutree()` pour former les groupes, puis recalcule une carte avec les consommateurs de chaque cluster. Le code généré permet donc de retrouver à la fois la carte globale et toute la segmentation dans le Rj Editor.
+
 ## Conseils pratiques
 
--   Réalisez toujours une ACP préalable dans le module MEDA et sauvegardez les composantes avant d'utiliser ce module.
--   Vérifiez que **X-axis** et **Y-axis** proviennent bien du même espace de représentation.
--   Utilisez des notes individuelles dans **Liking Variables**, pas seulement des moyennes.
--   Il faut au moins **deux** variables dans **Liking Variables** pour produire la carte.
--   Commencez avec **Regression Model = Quadratic** ; si vous avez moins de 10 produits, testez **Vector** ou **Circular**.
--   N'interprétez pas trop loin des produits réellement présents sur le plan.
--   Une zone optimale en dehors des produits existants indique surtout une direction de formulation ou de développement.
--   Gardez une palette contrastée pour distinguer clairement les zones faibles et les zones fortes.
+-   Vérifiez toujours que **X-axis** et **Y-axis** proviennent du même espace de représentation et correspondent aux mêmes stimuli que les notes hédoniques.
+-   Utilisez les **notes individuelles** dans **Liking Variables**, une colonne par consommateur.
+-   Commencez avec **Preference threshold (SD) = 0** ; modifiez-le ensuite pour tester si les zones de préférence forte restent stables.
+-   Adaptez la complexité du **Regression model** au nombre de produits : les minima sont 4, 5, 6 et 7 produits pour Vector, Circular, Elliptical et Quadratic respectivement.
+-   Pour une cartographie externe, interprétez d'abord les axes sensoriels avant de traduire une zone favorable en direction de formulation.
+-   Si vous activez **Classification of consumers**, examinez d'abord la taille des groupes et soyez prudent avec les segments très petits.
+-   Comparez les cartes par cluster dans le même repère : leurs différences traduisent des préférences différentes, pas des espaces factoriels différents.
+-   Cochez **R code** lorsque vous souhaitez conserver une trace reproductible des réglages et des calculs.
 
 ## En résumé
 
-Cette analyse construit une **carte de préférences** à partir d'un espace 2D déjà disponible et de plusieurs variables hédoniques. Elle ajuste un modèle de préférence pour chaque variable de **Liking Variables**, puis combine ces modèles en une surface exprimée en **% of consumers**. Son intérêt principal est de relier, dans un même cadre, un espace de représentation et des préférences individuelles, afin d'identifier les zones du plan les plus favorables pour le plus grand nombre — et de guider ainsi le développement produit vers les caractéristiques les plus appréciées.
+La cartographie des préférences relie un **espace bidimensionnel de stimuli** à des **notes hédoniques individuelles**. SEDA ajuste une surface de préférence pour chaque consommateur, standardise les prédictions et représente la proportion de consommateurs qui dépassent le **Preference threshold (SD)** dans chaque région du plan. La carte globale peut être complétée par une **classification de Ward des profils hédoniques centrés** et par des cartes propres à chaque segment. L'analyse permet ainsi de distinguer une zone de préférence partagée d'une préférence globale qui masque plusieurs groupes de consommateurs, tout en conservant le même espace produit pour toutes les comparaisons.

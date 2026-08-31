@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This analysis makes it possible to construct a **preference map** from two types of information: an already computed **two-dimensional representation space**, and several **Liking Variables** corresponding to liking scores. It is used to identify which areas of this space are associated with stronger preference, and to visualize **what proportion of subjects** would theoretically be attracted to each region of the plane. In SEDA, this principle can be used both for **external preference mapping** (sensory space) and for **internal preference mapping** (hedonic space), depending on the origin of the two axes used.
+This analysis makes it possible to construct a **preference map** from two types of information: an already computed **two-dimensional representation space**, and several **Liking Variables** corresponding to liking scores. It is used to identify which areas of this space are associated with stronger preference, and to visualize **what proportion of subjects** would theoretically be attracted to each region of the plane. In SEDA, this principle can be used both for **external preference mapping** (sensory space) and for **internal preference mapping** (hedonic space), depending on the origin of the two axes used. The analysis can also **classify consumers** from their liking profiles and produce a preference map for each segment.
 
 **Why not use a standard alternative?**
 
@@ -27,22 +27,34 @@ The function does not calculate the axes of the plane: it expects you to provide
 
 ### A model is fitted for each liking variable
 
-The function first gathers the two coordinates of the plane and all the columns placed in **Liking Variables**. It then fits a separate model for each liking variable. The type of model depends on **Regression Model**:
+The function first gathers the two coordinates of the plane and all columns placed in **Liking Variables**. Each liking column represents one consumer. A separate preference model is fitted for each consumer. The model depends on **Regression model**:
 
--   **Quadratic** (default): linear effects, quadratic terms, and interaction between the two axes. This is the most flexible model. It requires a sufficient number of products — at least 7, ideally 10 or more — to be fitted reliably.
--   **Vector**: linear effects only. It looks for a global direction of preference in the space.
--   **Circular**: linear effects with a common radial quadratic structure. It looks for a more centered optimum.
--   **Elliptical**: separate quadratic effects on each axis, without interaction. It allows an optimal area elongated in certain directions.
+-   **Quadratic** (default): linear effects, quadratic terms, and interaction between the two axes. At least **7 stimuli** are required for a non-saturated fit; in practice, more products are preferable.
+-   **Vector**: linear effects only. At least **4 stimuli** are required.
+-   **Circular**: linear effects with a common radial quadratic curvature. At least **5 stimuli** are required.
+-   **Elliptical**: linear effects and separate quadratic terms on each axis, without interaction. At least **6 stimuli** are required.
 
-A simple way to understand them is as follows: **Vector** assumes a monotonic trend; **Quadratic** allows a flexible optimal area; **Circular** and **Elliptical** assume a more or less concentrated local optimum.
+A simple interpretation is that **Vector** describes a preference direction; **Quadratic** allows the most flexible surface; **Circular** and **Elliptical** describe local optima under different shape constraints. If the geometry of the two coordinates cannot support the selected model, SEDA asks for a simpler model or a richer product space.
 
 ### Construction of the preference surface
 
-Once the models have been fitted, the function constructs a **regular grid** on the plane defined by **X-axis** and **Y-axis**. For each liking variable, it calculates the predicted values on this grid, centers these predictions, then counts at each point how many subjects exceed a certain reference level. The final result is converted into a **percentage** and displayed on the map as **% of consumers**.
+For each consumer, SEDA fits the selected model to the observed products and predicts liking over a regular grid covering the **X-axis / Y-axis** plane. Each consumer's predicted surface is then standardized to mean 0 and standard deviation 1 over the grid.
+
+At each grid location, SEDA counts how many consumers have a standardized predicted value above **Preference threshold (SD)**. This count is converted to a percentage and forms the **% of consumers** surface.
+
+### Preference threshold (SD)
+
+The threshold is expressed in standard deviations of each consumer's own predicted surface. With the default value **0**, a location is considered favorable for a consumer when predicted liking is above that consumer's average predicted level over the grid. A positive value makes the criterion more selective; a negative value broadens the favorable region. This is a **preference criterion**, not a statistical significance threshold.
 
 ### What the final map really represents
 
-The final map does not directly show the observed scores product by product. It shows a **modeled surface**, constructed from the individual models fitted on the plane. The colored areas indicate regions of the space where a larger proportion of liking variables is predicted above the reference level. This explains the legend label **% of consumers**.
+The final map does not directly display the observed product-by-product scores. It shows a **modeled surface** constructed from the individual consumer models. The regions indicate the proportion of consumers for whom each location in the plane exceeds the selected preference threshold. The **% of consumers** legend should therefore be read as the percentage of consumers for whom a location is predicted to be favorable, not as a mean liking score.
+
+### Consumer classification
+
+If **Classification of consumers** is enabled, classification is computed separately from the preference map. SEDA centers each consumer's liking profile across stimuli, computes distances between consumers, and applies Ward hierarchical clustering (`ward.D2`). Centering removes each consumer's average rating level, so the groups mainly reflect **different patterns of preference across products**, rather than a simple distinction between consumers who rate high or low overall.
+
+With **Number of clusters = -1**, SEDA automatically selects a cut from the largest upper-level jump in the hierarchy. A fixed number of groups can also be imposed. Cluster-specific preference maps are then recomputed using the consumers in each group while keeping exactly the same product space, regression model, and preference threshold as the overall map.
 
 ## Expected data structure
 
@@ -51,105 +63,150 @@ The data must contain:
 -   one optional column for **Stimuli Labels**;
 -   one numeric column for **X-axis**;
 -   one numeric column for **Y-axis**;
--   at least **two** numeric columns in **Liking Variables**.
+-   at least **two** numeric columns in **Liking Variables**, one per consumer.
 
-Each row corresponds to a **stimulus**. The two coordinates represent its position in the 2D space, and the columns in **Liking Variables** contain the scores associated with that same stimulus. The function requires at least **2** liking variables; otherwise, it rejects the analysis.
+Each row corresponds to a **stimulus**. The two coordinates describe its position in the 2D space, and the **Liking Variables** contain the consumers' scores for that same stimulus.
 
 Before running the analysis in jamovi, check in the **Data** tab that:
 
--   **Stimuli Labels** is categorical if you use it;
--   **X-axis** and **Y-axis** are numeric;
--   all columns in **Liking Variables** are numeric;
--   you have selected at least **two** variables in **Liking Variables**.
+-   **X-axis** and **Y-axis** are two different numeric variables and both vary across stimuli;
+-   all **Liking Variables** are numeric and are different from the coordinate variables;
+-   at least **two** liking variables are selected;
+-   if **Stimuli Labels** is used, labels are non-missing and unique.
+
+SEDA requires at least **4 stimuli**, but the minimum then depends on the selected model: 4 for **Vector**, 5 for **Circular**, 6 for **Elliptical**, and 7 for **Quadratic**. Consumer classification requires at least **3 consumers**. Isolated missing liking values can be imputed internally from product and consumer effects; however, an entirely missing consumer, a stimulus with no liking scores, or a consumer with no liking variation is rejected.
 
 ## Interface guide
 
-The analysis appears in **SEDA \> Hedonic Data \> Preference Mapping**. The interface includes four variable drop zones, the **Read me before running** checkbox, the **Regression Model** menu, and then two color menus in **Graphic Options**.
+The analysis appears in **SEDA \> Hedonic Data \> Preference Mapping**. The interface contains four variable drop zones, the **Instructions and R Code** section, **Preference Mapping Options**, a collapsible **Consumer Classification** section, and **Graphic Options**.
 
 ### Variables to complete
 
 #### Stimuli Labels
 
-**Role:** provides the names displayed for the stimuli on the map. **Impact on the computation:** it does not change the calculation of the surface, but determines the labels plotted next to the points. The function automatically replaces missing labels with numeric identifiers. **Practical tip:** use short and distinct labels; otherwise, the map quickly becomes difficult to read.
+**Role:** provides the names displayed for stimuli on the maps. **Impact on the computation:** none on the fitted models. **Practical tip:** use short, complete, and unique labels. If no label variable is supplied, SEDA uses row numbers.
 
 #### X-axis
 
-**Role:** provides the horizontal coordinate of the stimuli in the representation space. **Impact on the computation:** it directly enters the regression models and defines the first axis of the surface. **Practical tip:** use an already saved dimension, typically the first component from a PCA previously performed in the MEDA module.
+**Role:** provides the horizontal coordinate of the stimuli in the representation space. **Impact on the computation:** directly enters the preference models. **Practical tip:** typically use the first component saved from a PCA performed in MEDA.
 
 #### Y-axis
 
-**Role:** provides the vertical coordinate of the stimuli in the representation space. **Impact on the computation:** it enters the regression models and defines the second axis of the surface. **Practical tip:** use the second component from the same space as the one chosen for **X-axis**.
+**Role:** provides the vertical coordinate of the stimuli. **Impact on the computation:** directly enters the models and must come from the same space as **X-axis**. **Practical tip:** typically use the second component from the same analysis.
 
 #### Liking Variables
 
-**Role:** groups together the liking scores used to construct the map. **Impact on the computation:** the function fits a separate model for each variable, then aggregates the results into the final surface. The more variables you have, the more faithfully the surface represents a percentage of subjects. **Practical tip:** use the available individual scores, not only means. At least **2 variables** are required.
+**Role:** contains individual liking scores, one column per consumer. **Impact on the computation:** one model is fitted to each column; if classification is enabled, the same profiles are also used to form consumer segments. **Practical tip:** use individual scores rather than product means.
 
-### Read me before running
+### Instructions and R Code
 
-**Role:** displays integrated help in the results. **Impact on the computation:** none. **Practical tip:** leave it checked during the first uses. It is **enabled by default**.
+#### Read me before running
 
-### Regression Model
+**Role:** displays integrated help in the results. **Impact on the computation:** none. **Practical tip:** keep it checked during the first uses.
 
-**Role:** chooses the form of the model fitted for each liking variable. **Impact on the computation:** this option directly modifies the shape of the preference surface.
+#### R code
 
-| Model | Description | Recommended use |
-|------------------------|------------------------|------------------------|
-| **Quadratic** (default) | Linear and quadratic effects, plus interaction | General case; ideally ≥ 10 products |
-| **Vector** | Linear effects only | Few products or monotonic preference |
-| **Circular** | Common radial quadratic structure | Assumed centered optimum |
-| **Elliptical** | Separate quadratic effects by axis, without interaction | Assumed elongated optimum |
+**Role:** displays the R script corresponding to the current settings. **Impact on the computation:** none. **Practical tip:** check it when you want to reproduce the analysis in the **Rj Editor**.
 
-**Practical tip:** start with **Quadratic** (default value). If you have fewer than 10 products, prefer **Vector** or **Circular**.
+### Preference Mapping Options
 
-### Graphic Options
+#### Regression model
+
+**Role:** selects the response-surface form fitted for each consumer.
+
+| Model | Structure | Minimum stimuli |
+|---|---|---:|
+| **Quadratic** (default) | Linear + quadratic + interaction | 7 |
+| **Vector** | Linear | 4 |
+| **Circular** | Linear + common radial curvature | 5 |
+| **Elliptical** | Linear + separate quadratic terms, no interaction | 6 |
+
+**Practical tip:** start with **Quadratic** when the number and geometry of products support it. With a small product set, a simpler model is often easier to defend.
+
+#### Preference threshold (SD)
+
+**Role:** sets the standardized level that predicted preference must exceed for a location to be counted as favorable for one consumer. **Impact on the computation:** directly changes the percentage displayed on the map. **Practical tip:** start with **0**. Positive values identify more selective high-preference regions; negative values broaden favorable regions.
+
+### Consumer Classification *(collapsed by default)*
+
+#### Classification of consumers
+
+**Role:** enables segmentation of consumers from their centered liking profiles. **Impact on the computation:** adds cluster tables, the dendrogram, and, when requested, segment-specific preference maps. Disabled by default.
+
+#### Number of clusters
+
+**Role:** sets the number of groups. **Impact on the computation:** **-1** lets SEDA choose the cut automatically; an integer of at least 2 imposes the number of segments and must remain below the number of consumers.
+
+#### Cluster dendrogram
+
+**Role:** displays the Ward clustering dendrogram. **Impact on the computation:** none; it visualizes the hierarchy used to form the groups. Enabled by default when classification is used.
+
+#### Preference maps by cluster
+
+**Role:** produces a separate preference map for each consumer cluster. **Impact on the computation:** each map is recomputed using only the consumers in that group while keeping the same coordinates, model, and threshold as the overall map. Enabled by default when classification is used.
+
+### Graphic Options *(collapsed by default)*
 
 #### Color for low preference areas
 
-**Role:** defines the color of low-preference areas. **Impact on the computation:** no effect on the models; it only changes the graphical palette. **Practical tip:** the default value is **Blue**. The palette used is a gradient from this color to white, then to the high-preference color.
+**Role:** sets the color of low-preference regions. **Impact on the computation:** none. The default is **Blue**.
 
 #### Color for high preference areas
 
-**Role:** defines the color of high-preference areas. **Impact on the computation:** no effect on the models; it only changes the palette. **Practical tip:** the default value is **Red**. Keeping **Blue** for low areas and **Red** for high areas is generally the most readable combination.
+**Role:** sets the color of high-preference regions. **Impact on the computation:** none. The default is **Red**.
 
 ## Step-by-step procedure
 
-1.  Open your file in jamovi.
-2.  If you do not yet have the coordinates of the 2D space, first construct them in the **MEDA** module: run a **PCA**, activate **Coordinates** in the **Save** subsection of **Numerical Indicators**, and enter **2** in **Number of components**. Two new columns (**Dim. 1** and **Dim. 2**) automatically appear in your data sheet.
-3.  In the **Data** tab, check that the two axes and the liking variables are numeric.
+1.  Open your dataset in jamovi.
+2.  If you do not yet have coordinates for the 2D space, construct them in **MEDA** with a **PCA**, then save at least two **Coordinates**.
+3.  Check that **X-axis**, **Y-axis**, and all **Liking Variables** are numeric.
 4.  Open **SEDA \> Hedonic Data \> Preference Mapping**.
-5.  Place the stimulus name variable in **Stimuli Labels**.
-6.  Place the first saved component in **X-axis**.
-7.  Place the second saved component in **Y-axis**.
-8.  Place all score columns in **Liking Variables** (at least **2**).
-9.  Leave **Regression Model = Quadratic** for a first trial.
-10. Leave the default colors (**Blue** / **Red**) if you do not want to customize the palette.
-11. Read the map by identifying the most favorable areas and the positions of the stimuli.
-12. Optionally test another **Regression Model** to see whether the interpretation remains stable.
+5.  Place the stimulus-name variable in **Stimuli Labels** if available.
+6.  Place two coordinates from the same representation space in **X-axis** and **Y-axis**.
+7.  Place the individual consumer scores in **Liking Variables**.
+8.  Start with **Regression model = Quadratic** if you have at least 7 products and sufficient product-space geometry; otherwise use a simpler model.
+9.  Leave **Preference threshold (SD) = 0** for a first reading.
+10. Read **Overall Preference Map** first.
+11. To investigate preference heterogeneity, enable **Classification of consumers** and start with **Number of clusters = -1**.
+12. Read **Consumer Cluster Sizes** and **Consumer Cluster Membership**, followed by the dendrogram and **Preference Maps by Consumer Cluster**.
+13. Check **R code** if you want to reproduce the exact settings in the Rj Editor.
 
 ## Interpretation of results
 
-### Preference Mapping — main graph
+### Overall Preference Map — main graph
 
-The function produces a single output: the preference map. It represents the provided factor space as a background, over which a modeled density surface is superimposed.
+The map shows the space supplied by **X-axis** and **Y-axis**, overlaid with the **% of consumers** surface.
 
 | Element | Meaning |
-|------------------------------------|------------------------------------|
-| Areas toward **Color for high preference areas** (default: red) | Regions where a high percentage of subjects would have an estimated favorable liking |
-| Areas toward **Color for low preference areas** (default: blue) | Regions with low liking |
-| White areas | Intermediate regions |
-| Contour lines | Indicate the exact percentage of consumers (0 to 100) |
-| Tight contour lines | Rapid change in the percentage in this area |
-| Squares with labels | Position of the tested stimuli in the factor space |
+|---|---|
+| Areas toward **Color for high preference areas** | Regions favorable for a high proportion of consumers according to the selected threshold |
+| Areas toward **Color for low preference areas** | Regions favorable for a low proportion of consumers |
+| Intermediate areas | Intermediate proportions of favorable consumers |
+| Contour lines | Mark selected consumer percentages from 20% up to 95% |
+| Squares with labels | Positions of the tested stimuli in the selected space |
+| Subtitle | Reports the **Preference threshold (SD)** used |
 
-The area closest to the high-preference color corresponds to the region of the plane where the estimated proportion of “favorable” subjects is highest. It can be interpreted as an **optimal preference area** in the chosen space.
+With the default threshold **0**, a high region means that a large proportion of consumers have predicted preference above their own average predicted level there. The map therefore represents neither raw mean liking nor a probability in the statistical sense.
 
-> **Point of vigilance:** the map is based on modeling. It does not only show the observed products, but an interpolation over the whole plane. Be cautious when interpreting areas far from the stimuli actually present: extrapolation is less reliable there.
+> **Point of vigilance:** the surface is modeled over a grid covering the plane. Regions far from observed stimuli involve more extrapolation and should be interpreted cautiously.
 
-> **Point of vigilance:** the surface depends both on the number of stimuli available to fit the models and on the number of liking variables used to construct the percentage. A visually smooth map does not in itself guarantee high robustness.
+> **Point of vigilance:** a visually smooth surface does not guarantee robustness. The number of stimuli, the selected model, and consumer diversity determine how much information is available.
 
-### Absence of numerical tables
+### Consumer Cluster Sizes *(if Classification of consumers is enabled)*
 
-In the current configuration of the module, no numerical results table is produced. Interpretation is therefore based entirely on the **Preference Mapping** graph.
+This table gives the **number** and **percentage** of consumers in each cluster. It immediately identifies dominant segments and very small groups, which require more cautious interpretation.
+
+### Consumer Cluster Membership *(if Classification of consumers is enabled)*
+
+This table gives the cluster assigned to every consumer. It can be used to reconnect segments with the original liking columns or to characterize the groups in a complementary analysis.
+
+### Consumer Cluster Dendrogram *(optional)*
+
+The dendrogram displays the Ward hierarchical clustering computed from centered liking profiles. Consumers that are close in this hierarchy have similar patterns of preference across products, largely independently of their average rating level.
+
+### Preference Maps by Consumer Cluster *(optional)*
+
+A preference map is recomputed for every cluster using **the same product space, Regression model, and Preference threshold (SD)** as the overall map. Differences between maps can therefore be interpreted as heterogeneity in preference structure between segments, rather than as changes in the factorial reference space.
 
 ## Example: the **senso_hedo_cocktail** dataset
 
@@ -157,7 +214,7 @@ The **senso_hedo_cocktail** dataset contains the sensory evaluations of 13 cockt
 
 ### Example settings
 
-To reproduce this example, use the following values.
+To reproduce the main example and also display consumer segmentation, use the following settings.
 
 | Option | Value |
 |----|----|
@@ -165,7 +222,13 @@ To reproduce this example, use the following values.
 | **X-axis** | Dim. 1 (saved from the PCA) |
 | **Y-axis** | Dim. 2 (saved from the PCA) |
 | **Liking Variables** | all hedonic columns (O to DJ) |
-| **Regression Model** | Quadratic |
+| **R code** | checked |
+| **Regression model** | Quadratic |
+| **Preference threshold (SD)** | 0 |
+| **Classification of consumers** | checked |
+| **Number of clusters** | -1 |
+| **Cluster dendrogram** | checked |
+| **Preference maps by cluster** | checked |
 | **Color for low preference areas** | Blue |
 | **Color for high preference areas** | Red |
 
@@ -191,19 +254,11 @@ On the individual map, the cocktails are widely distributed across the plane. **
 
 ### Step 2 — Construct the preference map in SEDA
 
-Return to **SEDA \> Hedonic Data \> Preference Mapping** and use the following settings:
+Return to **SEDA \> Hedonic Data \> Preference Mapping** and use the saved coordinates as **X-axis** and **Y-axis**. Select the hedonic columns in **Liking Variables**, keep **Regression model = Quadratic**, and use **Preference threshold (SD) = 0**.
 
-| Option | Value |
-|----|----|
-| Stimuli Labels | variable identifying the cocktails |
-| X-axis | Dim. 1 (saved from the PCA) |
-| Y-axis | Dim. 2 (saved from the PCA) |
-| Liking Variables | all hedonic score columns (O to DJ) |
-| Regression Model | Quadratic |
-| Color for low preference areas | Blue |
-| Color for high preference areas | Red |
+To reproduce the segment-based reading as well, enable **Classification of consumers**, leave **Number of clusters = -1**, and keep **Cluster dendrogram** and **Preference maps by cluster** checked. Enabling classification does not change the overall map; it adds complementary results about consumer heterogeneity.
 
-### Analysis of the *Representation of the products* graph
+### Analysis of the *Overall Preference Map* graph
 
 The resulting map superimposes the density surface onto the position of the 13 cocktails in the sensory space. The dark red area — corresponding to more than 80–90% favorable consumers — is located **on the left of the plane**, in the region with negative coordinates on Dim. 1, where the cocktails **182**, **444**, **343**, and **447** are located. These cocktails, characterized by sweeter, thicker, banana-like profiles, correspond to the optimal preference area.
 
@@ -211,23 +266,37 @@ Conversely, the blue area — corresponding to fewer than 20% favorable consumer
 
 The cocktails **131** (bottom center) and **386** (upper right) are located in intermediate to low-preference areas (light blue, 10–25%).
 
+### Reading the consumer classification
+
+When **Classification of consumers** is enabled, start with **Consumer Cluster Sizes** to assess the size and relative weight of the segments, then use **Consumer Cluster Membership** to identify which consumers compose them. The **Consumer Cluster Dendrogram** shows the hierarchy underlying the partition.
+
+The **Preference Maps by Consumer Cluster** are then the most important outputs for interpretation: they show whether the overall high-preference region is shared by most consumers or results from superimposing groups with different optima. Because the maps use exactly the same sensory space and threshold, their differences can be compared directly. Very small clusters should nevertheless be interpreted cautiously.
+
 ### Synthetic interpretation
 
 The sensory space structured by the PCA, based on the acidic-intense vs sweet-thick opposition, is directly readable on the preference map. The optimum is located on the sweet-thick side, whereas acidic and intense profiles are less appreciated. No cocktail is located exactly in the maximum preference area, which suggests more of a **formulation improvement direction** than an already optimal product.
 
 > **What we take away from this example:** preference mapping directly links the sensory space and hedonic preferences, making it possible to identify an optimal area even when no existing product occupies it exactly.
 
+## From jamovi to the Rj Editor
+
+Once the **Rj Editor** has been configured with **System R** as described in Chapter 1, check **R code** to display the script corresponding to the analysis. The dataset open in jamovi is available as `data`.
+
+The generated code reconstructs the two coordinates and liking columns, fits a separate response surface for each consumer, standardizes predictions over the grid, and applies **Preference threshold (SD)** before computing the **% of consumers**. It therefore reproduces the logic of the map explicitly rather than treating the result as a simple mean liking score.
+
+If **Classification of consumers** is enabled, the script also centers the liking profiles, computes distances between consumers, performs Ward clustering with `hclust(..., method = "ward.D2")`, uses `cutree()` to form the groups, and then recomputes a map for the consumers in each cluster. The generated code therefore reproduces both the overall map and the full segmentation in the Rj Editor.
+
 ## Practical tips
 
--   Always perform a preliminary PCA in the MEDA module and save the components before using this module.
--   Check that **X-axis** and **Y-axis** come from the same representation space.
--   Use individual scores in **Liking Variables**, not only means.
--   At least **two** variables are required in **Liking Variables** to produce the map.
--   Start with **Regression Model = Quadratic**; if you have fewer than 10 products, test **Vector** or **Circular**.
--   Do not interpret too far from the products actually present on the plane.
--   An optimal area outside the existing products mainly indicates a direction for formulation or development.
--   Keep a contrasted palette to clearly distinguish low and high areas.
+-   Always check that **X-axis** and **Y-axis** come from the same representation space and refer to the same stimuli as the liking scores.
+-   Use **individual scores** in **Liking Variables**, one column per consumer.
+-   Start with **Preference threshold (SD) = 0**; then vary it to assess whether high-preference regions remain stable.
+-   Match **Regression model** complexity to the number of products: the minima are 4, 5, 6, and 7 products for Vector, Circular, Elliptical, and Quadratic respectively.
+-   For external preference mapping, interpret the sensory axes before translating a favorable region into a formulation direction.
+-   If you enable **Classification of consumers**, inspect cluster sizes first and be cautious with very small segments.
+-   Compare cluster maps in the same reference space: differences reflect different preference structures, not different factorial spaces.
+-   Check **R code** when you want a reproducible record of the settings and calculations.
 
 ## In summary
 
-This analysis constructs a **preference map** from an already available 2D space and several hedonic variables. It fits a preference model for each variable in **Liking Variables**, then combines these models into a surface expressed as **% of consumers**. Its main value is to link, within the same framework, a representation space and individual preferences, in order to identify the areas of the plane that are most favorable for the greatest number — and thus guide product development toward the most appreciated characteristics.
+Preference mapping links a **two-dimensional stimulus space** to **individual liking scores**. SEDA fits a preference surface for each consumer, standardizes the predictions, and represents the proportion of consumers exceeding **Preference threshold (SD)** in each region of the plane. The overall map can be complemented by **Ward clustering of centered liking profiles** and by cluster-specific preference maps. The analysis can therefore distinguish a broadly shared preference region from an overall pattern that hides several consumer segments, while keeping the same product space for all comparisons.
