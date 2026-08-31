@@ -120,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chapitre1_prompt_GBH.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">QDA Data — Characterization of the Sensory Space</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">QDA Data — Characterisation of the Sensory Space</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -150,7 +150,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chapitre6_prompt_GBH.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sorting Data — Analysis of Categorization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sorting Data — Analysis of Categorisation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -166,7 +166,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table des matières</h2>
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">8.1</span> Introduction</a></li>
@@ -175,32 +175,40 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#the-function-does-not-construct-the-representation-space-itself" id="toc-the-function-does-not-construct-the-representation-space-itself" class="nav-link" data-scroll-target="#the-function-does-not-construct-the-representation-space-itself"><span class="header-section-number">8.2.1</span> The function does not construct the representation space itself</a></li>
   <li><a href="#a-model-is-fitted-for-each-liking-variable" id="toc-a-model-is-fitted-for-each-liking-variable" class="nav-link" data-scroll-target="#a-model-is-fitted-for-each-liking-variable"><span class="header-section-number">8.2.2</span> A model is fitted for each liking variable</a></li>
   <li><a href="#construction-of-the-preference-surface" id="toc-construction-of-the-preference-surface" class="nav-link" data-scroll-target="#construction-of-the-preference-surface"><span class="header-section-number">8.2.3</span> Construction of the preference surface</a></li>
-  <li><a href="#what-the-final-map-really-represents" id="toc-what-the-final-map-really-represents" class="nav-link" data-scroll-target="#what-the-final-map-really-represents"><span class="header-section-number">8.2.4</span> What the final map really represents</a></li>
+  <li><a href="#preference-threshold-sd" id="toc-preference-threshold-sd" class="nav-link" data-scroll-target="#preference-threshold-sd"><span class="header-section-number">8.2.4</span> Preference threshold (SD)</a></li>
+  <li><a href="#what-the-final-map-really-represents" id="toc-what-the-final-map-really-represents" class="nav-link" data-scroll-target="#what-the-final-map-really-represents"><span class="header-section-number">8.2.5</span> What the final map really represents</a></li>
+  <li><a href="#consumer-classification" id="toc-consumer-classification" class="nav-link" data-scroll-target="#consumer-classification"><span class="header-section-number">8.2.6</span> Consumer classification</a></li>
   </ul></li>
   <li><a href="#expected-data-structure" id="toc-expected-data-structure" class="nav-link" data-scroll-target="#expected-data-structure"><span class="header-section-number">8.3</span> Expected data structure</a></li>
   <li><a href="#interface-guide" id="toc-interface-guide" class="nav-link" data-scroll-target="#interface-guide"><span class="header-section-number">8.4</span> Interface guide</a>
   <ul class="collapse">
   <li><a href="#variables-to-complete" id="toc-variables-to-complete" class="nav-link" data-scroll-target="#variables-to-complete"><span class="header-section-number">8.4.1</span> Variables to complete</a></li>
-  <li><a href="#read-me-before-running" id="toc-read-me-before-running" class="nav-link" data-scroll-target="#read-me-before-running"><span class="header-section-number">8.4.2</span> Read me before running</a></li>
-  <li><a href="#regression-model" id="toc-regression-model" class="nav-link" data-scroll-target="#regression-model"><span class="header-section-number">8.4.3</span> Regression Model</a></li>
-  <li><a href="#graphic-options" id="toc-graphic-options" class="nav-link" data-scroll-target="#graphic-options"><span class="header-section-number">8.4.4</span> Graphic Options</a></li>
+  <li><a href="#instructions-and-r-code" id="toc-instructions-and-r-code" class="nav-link" data-scroll-target="#instructions-and-r-code"><span class="header-section-number">8.4.2</span> Instructions and R Code</a></li>
+  <li><a href="#preference-mapping-options" id="toc-preference-mapping-options" class="nav-link" data-scroll-target="#preference-mapping-options"><span class="header-section-number">8.4.3</span> Preference Mapping Options</a></li>
+  <li><a href="#consumer-classification-collapsed-by-default" id="toc-consumer-classification-collapsed-by-default" class="nav-link" data-scroll-target="#consumer-classification-collapsed-by-default"><span class="header-section-number">8.4.4</span> Consumer Classification <em>(collapsed by default)</em></a></li>
+  <li><a href="#graphic-options-collapsed-by-default" id="toc-graphic-options-collapsed-by-default" class="nav-link" data-scroll-target="#graphic-options-collapsed-by-default"><span class="header-section-number">8.4.5</span> Graphic Options <em>(collapsed by default)</em></a></li>
   </ul></li>
   <li><a href="#step-by-step-procedure" id="toc-step-by-step-procedure" class="nav-link" data-scroll-target="#step-by-step-procedure"><span class="header-section-number">8.5</span> Step-by-step procedure</a></li>
   <li><a href="#interpretation-of-results" id="toc-interpretation-of-results" class="nav-link" data-scroll-target="#interpretation-of-results"><span class="header-section-number">8.6</span> Interpretation of results</a>
   <ul class="collapse">
-  <li><a href="#preference-mapping-main-graph" id="toc-preference-mapping-main-graph" class="nav-link" data-scroll-target="#preference-mapping-main-graph"><span class="header-section-number">8.6.1</span> Preference Mapping — main graph</a></li>
-  <li><a href="#absence-of-numerical-tables" id="toc-absence-of-numerical-tables" class="nav-link" data-scroll-target="#absence-of-numerical-tables"><span class="header-section-number">8.6.2</span> Absence of numerical tables</a></li>
+  <li><a href="#overall-preference-map-main-graph" id="toc-overall-preference-map-main-graph" class="nav-link" data-scroll-target="#overall-preference-map-main-graph"><span class="header-section-number">8.6.1</span> Overall Preference Map — main graph</a></li>
+  <li><a href="#consumer-cluster-sizes-if-classification-of-consumers-is-enabled" id="toc-consumer-cluster-sizes-if-classification-of-consumers-is-enabled" class="nav-link" data-scroll-target="#consumer-cluster-sizes-if-classification-of-consumers-is-enabled"><span class="header-section-number">8.6.2</span> Consumer Cluster Sizes <em>(if Classification of consumers is enabled)</em></a></li>
+  <li><a href="#consumer-cluster-membership-if-classification-of-consumers-is-enabled" id="toc-consumer-cluster-membership-if-classification-of-consumers-is-enabled" class="nav-link" data-scroll-target="#consumer-cluster-membership-if-classification-of-consumers-is-enabled"><span class="header-section-number">8.6.3</span> Consumer Cluster Membership <em>(if Classification of consumers is enabled)</em></a></li>
+  <li><a href="#consumer-cluster-dendrogram-optional" id="toc-consumer-cluster-dendrogram-optional" class="nav-link" data-scroll-target="#consumer-cluster-dendrogram-optional"><span class="header-section-number">8.6.4</span> Consumer Cluster Dendrogram <em>(optional)</em></a></li>
+  <li><a href="#preference-maps-by-consumer-cluster-optional" id="toc-preference-maps-by-consumer-cluster-optional" class="nav-link" data-scroll-target="#preference-maps-by-consumer-cluster-optional"><span class="header-section-number">8.6.5</span> Preference Maps by Consumer Cluster <em>(optional)</em></a></li>
   </ul></li>
   <li><a href="#example-the-senso_hedo_cocktail-dataset" id="toc-example-the-senso_hedo_cocktail-dataset" class="nav-link" data-scroll-target="#example-the-senso_hedo_cocktail-dataset"><span class="header-section-number">8.7</span> Example: the <strong>senso_hedo_cocktail</strong> dataset</a>
   <ul class="collapse">
   <li><a href="#example-settings" id="toc-example-settings" class="nav-link" data-scroll-target="#example-settings"><span class="header-section-number">8.7.1</span> Example settings</a></li>
   <li><a href="#step-1-construct-the-sensory-space-in-meda-pca" id="toc-step-1-construct-the-sensory-space-in-meda-pca" class="nav-link" data-scroll-target="#step-1-construct-the-sensory-space-in-meda-pca"><span class="header-section-number">8.7.2</span> Step 1 — Construct the sensory space in MEDA (PCA)</a></li>
   <li><a href="#step-2-construct-the-preference-map-in-seda" id="toc-step-2-construct-the-preference-map-in-seda" class="nav-link" data-scroll-target="#step-2-construct-the-preference-map-in-seda"><span class="header-section-number">8.7.3</span> Step 2 — Construct the preference map in SEDA</a></li>
-  <li><a href="#analysis-of-the-representation-of-the-products-graph" id="toc-analysis-of-the-representation-of-the-products-graph" class="nav-link" data-scroll-target="#analysis-of-the-representation-of-the-products-graph"><span class="header-section-number">8.7.4</span> Analysis of the <em>Representation of the products</em> graph</a></li>
-  <li><a href="#synthetic-interpretation" id="toc-synthetic-interpretation" class="nav-link" data-scroll-target="#synthetic-interpretation"><span class="header-section-number">8.7.5</span> Synthetic interpretation</a></li>
+  <li><a href="#analysis-of-the-overall-preference-map-graph" id="toc-analysis-of-the-overall-preference-map-graph" class="nav-link" data-scroll-target="#analysis-of-the-overall-preference-map-graph"><span class="header-section-number">8.7.4</span> Analysis of the <em>Overall Preference Map</em> graph</a></li>
+  <li><a href="#reading-the-consumer-classification" id="toc-reading-the-consumer-classification" class="nav-link" data-scroll-target="#reading-the-consumer-classification"><span class="header-section-number">8.7.5</span> Reading the consumer classification</a></li>
+  <li><a href="#synthetic-interpretation" id="toc-synthetic-interpretation" class="nav-link" data-scroll-target="#synthetic-interpretation"><span class="header-section-number">8.7.6</span> Synthetic interpretation</a></li>
   </ul></li>
-  <li><a href="#practical-tips" id="toc-practical-tips" class="nav-link" data-scroll-target="#practical-tips"><span class="header-section-number">8.8</span> Practical tips</a></li>
-  <li><a href="#in-summary" id="toc-in-summary" class="nav-link" data-scroll-target="#in-summary"><span class="header-section-number">8.9</span> In summary</a></li>
+  <li><a href="#from-jamovi-to-the-rj-editor" id="toc-from-jamovi-to-the-rj-editor" class="nav-link" data-scroll-target="#from-jamovi-to-the-rj-editor"><span class="header-section-number">8.8</span> From jamovi to the Rj Editor</a></li>
+  <li><a href="#practical-tips" id="toc-practical-tips" class="nav-link" data-scroll-target="#practical-tips"><span class="header-section-number">8.9</span> Practical tips</a></li>
+  <li><a href="#in-summary" id="toc-in-summary" class="nav-link" data-scroll-target="#in-summary"><span class="header-section-number">8.10</span> In summary</a></li>
   </ul>
 </nav>
     </div>
@@ -228,7 +236,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">8.1</span> Introduction</h2>
-<p>This analysis makes it possible to construct a <strong>preference map</strong> from two types of information: an already computed <strong>two-dimensional representation space</strong>, and several <strong>Liking Variables</strong> corresponding to liking scores. It is used to identify which areas of this space are associated with stronger preference, and to visualize <strong>what proportion of subjects</strong> would theoretically be attracted to each region of the plane. In SEDA, this principle can be used both for <strong>external preference mapping</strong> (sensory space) and for <strong>internal preference mapping</strong> (hedonic space), depending on the origin of the two axes used.</p>
+<p>This analysis makes it possible to construct a <strong>preference map</strong> from two types of information: an already computed <strong>two-dimensional representation space</strong>, and several <strong>Liking Variables</strong> corresponding to liking scores. It is used to identify which areas of this space are associated with stronger preference, and to represent <strong>the proportion of consumers for whom each region of the plane is predicted to be favourable under the selected threshold</strong>. In SEDA, this principle can be used both for <strong>external preference mapping</strong> (sensory space) and for <strong>internal preference mapping</strong> (hedonic space), depending on the origin of the two axes used. The analysis can also <strong>classify consumers</strong> from their liking profiles and produce a preference map for each segment.</p>
 <p><strong>Why not use a standard alternative?</strong></p>
 <p>A mean liking score by product makes it possible to compare products with one another, but it does not make it possible to relate preferences to an already constructed representation space. Here, the function fits a preference model <strong>for each liking variable</strong>, then combines these models into a <strong>surface</strong> indicating the <strong>% of consumers</strong> associated with each area of the plane. This provides a spatial reading of preferences, which is more informative than a simple table of means.</p>
 </section>
@@ -252,22 +260,32 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="a-model-is-fitted-for-each-liking-variable" class="level3" data-number="8.2.2">
 <h3 data-number="8.2.2" class="anchored" data-anchor-id="a-model-is-fitted-for-each-liking-variable"><span class="header-section-number">8.2.2</span> A model is fitted for each liking variable</h3>
-<p>The function first gathers the two coordinates of the plane and all the columns placed in <strong>Liking Variables</strong>. It then fits a separate model for each liking variable. The type of model depends on <strong>Regression Model</strong>:</p>
+<p>The function first gathers the two coordinates of the plane and all columns placed in <strong>Liking Variables</strong>. Each liking column represents one consumer. A separate preference model is fitted for each consumer. The model depends on <strong>Regression model</strong>:</p>
 <ul>
-<li><strong>Quadratic</strong> (default): linear effects, quadratic terms, and interaction between the two axes. This is the most flexible model. It requires a sufficient number of products — at least 7, ideally 10 or more — to be fitted reliably.</li>
-<li><strong>Vector</strong>: linear effects only. It looks for a global direction of preference in the space.</li>
-<li><strong>Circular</strong>: linear effects with a common radial quadratic structure. It looks for a more centered optimum.</li>
-<li><strong>Elliptical</strong>: separate quadratic effects on each axis, without interaction. It allows an optimal area elongated in certain directions.</li>
+<li><strong>Quadratic</strong> (default): linear effects, quadratic terms, and interaction between the two axes. At least <strong>7 stimuli</strong> are required for a non-saturated fit; in practice, more products are preferable.</li>
+<li><strong>Vector</strong>: linear effects only. At least <strong>4 stimuli</strong> are required.</li>
+<li><strong>Circular</strong>: linear effects with a common radial quadratic curvature. At least <strong>5 stimuli</strong> are required.</li>
+<li><strong>Elliptical</strong>: linear effects and separate quadratic terms on each axis, without interaction. At least <strong>6 stimuli</strong> are required.</li>
 </ul>
-<p>A simple way to understand them is as follows: <strong>Vector</strong> assumes a monotonic trend; <strong>Quadratic</strong> allows a flexible optimal area; <strong>Circular</strong> and <strong>Elliptical</strong> assume a more or less concentrated local optimum.</p>
+<p>A simple interpretation is that <strong>Vector</strong> describes a preference direction; <strong>Quadratic</strong> allows the most flexible surface; <strong>Circular</strong> and <strong>Elliptical</strong> describe local optima under different shape constraints. If the geometry of the two coordinates cannot support the selected model, SEDA asks for a simpler model or a richer product space.</p>
 </section>
 <section id="construction-of-the-preference-surface" class="level3" data-number="8.2.3">
 <h3 data-number="8.2.3" class="anchored" data-anchor-id="construction-of-the-preference-surface"><span class="header-section-number">8.2.3</span> Construction of the preference surface</h3>
-<p>Once the models have been fitted, the function constructs a <strong>regular grid</strong> on the plane defined by <strong>X-axis</strong> and <strong>Y-axis</strong>. For each liking variable, it calculates the predicted values on this grid, centers these predictions, then counts at each point how many subjects exceed a certain reference level. The final result is converted into a <strong>percentage</strong> and displayed on the map as <strong>% of consumers</strong>.</p>
+<p>For each consumer, SEDA fits the selected model to the observed products and predicts liking over a regular grid covering the <strong>X-axis / Y-axis</strong> plane. Each consumer’s predicted surface is then standardised to mean 0 and standard deviation 1 over the grid.</p>
+<p>At each grid location, SEDA counts how many consumers have a standardised predicted value above <strong>Preference threshold (SD)</strong>. This count is converted to a percentage and forms the <strong>% of consumers</strong> surface.</p>
 </section>
-<section id="what-the-final-map-really-represents" class="level3" data-number="8.2.4">
-<h3 data-number="8.2.4" class="anchored" data-anchor-id="what-the-final-map-really-represents"><span class="header-section-number">8.2.4</span> What the final map really represents</h3>
-<p>The final map does not directly show the observed scores product by product. It shows a <strong>modeled surface</strong>, constructed from the individual models fitted on the plane. The colored areas indicate regions of the space where a larger proportion of liking variables is predicted above the reference level. This explains the legend label <strong>% of consumers</strong>.</p>
+<section id="preference-threshold-sd" class="level3" data-number="8.2.4">
+<h3 data-number="8.2.4" class="anchored" data-anchor-id="preference-threshold-sd"><span class="header-section-number">8.2.4</span> Preference threshold (SD)</h3>
+<p>The threshold is expressed in standard deviations of each consumer’s own predicted surface. With the default value <strong>0</strong>, a location is considered favourable for a consumer when predicted liking is above that consumer’s average predicted level over the grid. A positive value makes the criterion more selective; a negative value broadens the favourable region. This is a <strong>preference criterion</strong>, not a statistical significance threshold.</p>
+</section>
+<section id="what-the-final-map-really-represents" class="level3" data-number="8.2.5">
+<h3 data-number="8.2.5" class="anchored" data-anchor-id="what-the-final-map-really-represents"><span class="header-section-number">8.2.5</span> What the final map really represents</h3>
+<p>The final map does not directly display the observed product-by-product scores. It shows a <strong>modelled surface</strong> constructed from the individual consumer models. The regions indicate the proportion of consumers for whom each location in the plane exceeds the selected preference threshold. The <strong>% of consumers</strong> legend should therefore be read as the percentage of consumers for whom a location is predicted to be favourable, not as a mean liking score.</p>
+</section>
+<section id="consumer-classification" class="level3" data-number="8.2.6">
+<h3 data-number="8.2.6" class="anchored" data-anchor-id="consumer-classification"><span class="header-section-number">8.2.6</span> Consumer classification</h3>
+<p>If <strong>Classification of consumers</strong> is enabled, classification is computed separately from the preference map. SEDA centres each consumer’s liking profile across stimuli, computes distances between consumers, and applies Ward hierarchical clustering (<code>ward.D2</code>). Centring removes each consumer’s average rating level, so the groups mainly reflect <strong>different patterns of preference across products</strong>, rather than a simple distinction between consumers who rate high or low overall.</p>
+<p>With <strong>Number of clusters = -1</strong>, SEDA automatically selects a cut from the largest upper-level jump in the hierarchy. A fixed number of groups can also be imposed. Cluster-specific preference maps are then recomputed using the consumers in each group while keeping exactly the same product space, regression model, and preference threshold as the overall map.</p>
 </section>
 </section>
 <section id="expected-data-structure" class="level2" data-number="8.3">
@@ -277,118 +295,153 @@ ul.task-list li input[type="checkbox"] {
 <li>one optional column for <strong>Stimuli Labels</strong>;</li>
 <li>one numeric column for <strong>X-axis</strong>;</li>
 <li>one numeric column for <strong>Y-axis</strong>;</li>
-<li>at least <strong>two</strong> numeric columns in <strong>Liking Variables</strong>.</li>
+<li>at least <strong>two</strong> numeric columns in <strong>Liking Variables</strong>, one per consumer.</li>
 </ul>
-<p>Each row corresponds to a <strong>stimulus</strong>. The two coordinates represent its position in the 2D space, and the columns in <strong>Liking Variables</strong> contain the scores associated with that same stimulus. The function requires at least <strong>2</strong> liking variables; otherwise, it rejects the analysis.</p>
+<p>Each row corresponds to a <strong>stimulus</strong>. The two coordinates describe its position in the 2D space, and the <strong>Liking Variables</strong> contain the consumers’ scores for that same stimulus.</p>
 <p>Before running the analysis in jamovi, check in the <strong>Data</strong> tab that:</p>
 <ul>
-<li><strong>Stimuli Labels</strong> is categorical if you use it;</li>
-<li><strong>X-axis</strong> and <strong>Y-axis</strong> are numeric;</li>
-<li>all columns in <strong>Liking Variables</strong> are numeric;</li>
-<li>you have selected at least <strong>two</strong> variables in <strong>Liking Variables</strong>.</li>
+<li><strong>X-axis</strong> and <strong>Y-axis</strong> are two different numeric variables and both vary across stimuli;</li>
+<li>all <strong>Liking Variables</strong> are numeric and are different from the coordinate variables;</li>
+<li>at least <strong>two</strong> liking variables are selected;</li>
+<li>if <strong>Stimuli Labels</strong> is used, labels are non-missing and unique.</li>
 </ul>
+<p>SEDA requires at least <strong>4 stimuli</strong>, but the minimum then depends on the selected model: 4 for <strong>Vector</strong>, 5 for <strong>Circular</strong>, 6 for <strong>Elliptical</strong>, and 7 for <strong>Quadratic</strong>. Consumer classification requires at least <strong>3 consumers</strong>. Isolated missing liking values can be imputed internally from product and consumer effects; however, an entirely missing consumer, a stimulus with no liking scores, or a consumer with no liking variation is rejected.</p>
 </section>
 <section id="interface-guide" class="level2" data-number="8.4">
 <h2 data-number="8.4" class="anchored" data-anchor-id="interface-guide"><span class="header-section-number">8.4</span> Interface guide</h2>
-<p>The analysis appears in <strong>SEDA &gt; Hedonic Data &gt; Preference Mapping</strong>. The interface includes four variable drop zones, the <strong>Read me before running</strong> checkbox, the <strong>Regression Model</strong> menu, and then two color menus in <strong>Graphic Options</strong>.</p>
+<p>The analysis appears in <strong>SEDA &gt; Hedonic Data &gt; Preference Mapping</strong>. The interface contains four variable drop zones, the <strong>Instructions and R Code</strong> section, <strong>Preference Mapping Options</strong>, a collapsible <strong>Consumer Classification</strong> section, and <strong>Graphic Options</strong>.</p>
 <section id="variables-to-complete" class="level3" data-number="8.4.1">
 <h3 data-number="8.4.1" class="anchored" data-anchor-id="variables-to-complete"><span class="header-section-number">8.4.1</span> Variables to complete</h3>
 <section id="stimuli-labels" class="level4" data-number="8.4.1.1">
 <h4 data-number="8.4.1.1" class="anchored" data-anchor-id="stimuli-labels"><span class="header-section-number">8.4.1.1</span> Stimuli Labels</h4>
-<p><strong>Role:</strong> provides the names displayed for the stimuli on the map. <strong>Impact on the computation:</strong> it does not change the calculation of the surface, but determines the labels plotted next to the points. The function automatically replaces missing labels with numeric identifiers. <strong>Practical tip:</strong> use short and distinct labels; otherwise, the map quickly becomes difficult to read.</p>
+<p><strong>Role:</strong> provides the names displayed for stimuli on the maps. <strong>Impact on the computation:</strong> none on the fitted models. <strong>Practical tip:</strong> use short, complete, and unique labels. If no label variable is supplied, SEDA uses row numbers.</p>
 </section>
 <section id="x-axis" class="level4" data-number="8.4.1.2">
 <h4 data-number="8.4.1.2" class="anchored" data-anchor-id="x-axis"><span class="header-section-number">8.4.1.2</span> X-axis</h4>
-<p><strong>Role:</strong> provides the horizontal coordinate of the stimuli in the representation space. <strong>Impact on the computation:</strong> it directly enters the regression models and defines the first axis of the surface. <strong>Practical tip:</strong> use an already saved dimension, typically the first component from a PCA previously performed in the MEDA module.</p>
+<p><strong>Role:</strong> provides the horizontal coordinate of the stimuli in the representation space. <strong>Impact on the computation:</strong> directly enters the preference models. <strong>Practical tip:</strong> typically use the first component saved from a PCA performed in MEDA.</p>
 </section>
 <section id="y-axis" class="level4" data-number="8.4.1.3">
 <h4 data-number="8.4.1.3" class="anchored" data-anchor-id="y-axis"><span class="header-section-number">8.4.1.3</span> Y-axis</h4>
-<p><strong>Role:</strong> provides the vertical coordinate of the stimuli in the representation space. <strong>Impact on the computation:</strong> it enters the regression models and defines the second axis of the surface. <strong>Practical tip:</strong> use the second component from the same space as the one chosen for <strong>X-axis</strong>.</p>
+<p><strong>Role:</strong> provides the vertical coordinate of the stimuli. <strong>Impact on the computation:</strong> directly enters the models and must come from the same space as <strong>X-axis</strong>. <strong>Practical tip:</strong> typically use the second component from the same analysis.</p>
 </section>
 <section id="liking-variables" class="level4" data-number="8.4.1.4">
 <h4 data-number="8.4.1.4" class="anchored" data-anchor-id="liking-variables"><span class="header-section-number">8.4.1.4</span> Liking Variables</h4>
-<p><strong>Role:</strong> groups together the liking scores used to construct the map. <strong>Impact on the computation:</strong> the function fits a separate model for each variable, then aggregates the results into the final surface. The more variables you have, the more faithfully the surface represents a percentage of subjects. <strong>Practical tip:</strong> use the available individual scores, not only means. At least <strong>2 variables</strong> are required.</p>
+<p><strong>Role:</strong> contains individual liking scores, one column per consumer. <strong>Impact on the computation:</strong> one model is fitted to each column; if classification is enabled, the same profiles are also used to form consumer segments. <strong>Practical tip:</strong> use individual scores rather than product means.</p>
 </section>
 </section>
-<section id="read-me-before-running" class="level3" data-number="8.4.2">
-<h3 data-number="8.4.2" class="anchored" data-anchor-id="read-me-before-running"><span class="header-section-number">8.4.2</span> Read me before running</h3>
-<p><strong>Role:</strong> displays integrated help in the results. <strong>Impact on the computation:</strong> none. <strong>Practical tip:</strong> leave it checked during the first uses. It is <strong>enabled by default</strong>.</p>
+<section id="instructions-and-r-code" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="instructions-and-r-code"><span class="header-section-number">8.4.2</span> Instructions and R Code</h3>
+<section id="read-me-before-running" class="level4" data-number="8.4.2.1">
+<h4 data-number="8.4.2.1" class="anchored" data-anchor-id="read-me-before-running"><span class="header-section-number">8.4.2.1</span> Read me before running</h4>
+<p><strong>Role:</strong> displays integrated help in the results. <strong>Impact on the computation:</strong> none. <strong>Practical tip:</strong> keep it checked during the first uses.</p>
 </section>
-<section id="regression-model" class="level3" data-number="8.4.3">
-<h3 data-number="8.4.3" class="anchored" data-anchor-id="regression-model"><span class="header-section-number">8.4.3</span> Regression Model</h3>
-<p><strong>Role:</strong> chooses the form of the model fitted for each liking variable. <strong>Impact on the computation:</strong> this option directly modifies the shape of the preference surface.</p>
+<section id="r-code" class="level4" data-number="8.4.2.2">
+<h4 data-number="8.4.2.2" class="anchored" data-anchor-id="r-code"><span class="header-section-number">8.4.2.2</span> R code</h4>
+<p><strong>Role:</strong> displays the R script corresponding to the current settings. <strong>Impact on the computation:</strong> none. <strong>Practical tip:</strong> check it when you want to reproduce the analysis in the <strong>Rj Editor</strong>.</p>
+</section>
+</section>
+<section id="preference-mapping-options" class="level3" data-number="8.4.3">
+<h3 data-number="8.4.3" class="anchored" data-anchor-id="preference-mapping-options"><span class="header-section-number">8.4.3</span> Preference Mapping Options</h3>
+<section id="regression-model" class="level4" data-number="8.4.3.1">
+<h4 data-number="8.4.3.1" class="anchored" data-anchor-id="regression-model"><span class="header-section-number">8.4.3.1</span> Regression model</h4>
+<p><strong>Role:</strong> selects the response-surface form fitted for each consumer.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 30%">
+<col style="width: 30%">
+<col style="width: 40%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Model</th>
-<th>Description</th>
-<th>Recommended use</th>
+<th>Structure</th>
+<th style="text-align: right;">Minimum stimuli</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><strong>Quadratic</strong> (default)</td>
-<td>Linear and quadratic effects, plus interaction</td>
-<td>General case; ideally ≥ 10 products</td>
+<td>Linear + quadratic + interaction</td>
+<td style="text-align: right;">7</td>
 </tr>
 <tr class="even">
 <td><strong>Vector</strong></td>
-<td>Linear effects only</td>
-<td>Few products or monotonic preference</td>
+<td>Linear</td>
+<td style="text-align: right;">4</td>
 </tr>
 <tr class="odd">
 <td><strong>Circular</strong></td>
-<td>Common radial quadratic structure</td>
-<td>Assumed centered optimum</td>
+<td>Linear + common radial curvature</td>
+<td style="text-align: right;">5</td>
 </tr>
 <tr class="even">
 <td><strong>Elliptical</strong></td>
-<td>Separate quadratic effects by axis, without interaction</td>
-<td>Assumed elongated optimum</td>
+<td>Linear + separate quadratic terms, no interaction</td>
+<td style="text-align: right;">6</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Practical tip:</strong> start with <strong>Quadratic</strong> (default value). If you have fewer than 10 products, prefer <strong>Vector</strong> or <strong>Circular</strong>.</p>
+<p><strong>Practical tip:</strong> start with <strong>Quadratic</strong> when the number and geometry of products support it. With a small product set, a simpler model is often easier to defend.</p>
 </section>
-<section id="graphic-options" class="level3" data-number="8.4.4">
-<h3 data-number="8.4.4" class="anchored" data-anchor-id="graphic-options"><span class="header-section-number">8.4.4</span> Graphic Options</h3>
-<section id="color-for-low-preference-areas" class="level4" data-number="8.4.4.1">
-<h4 data-number="8.4.4.1" class="anchored" data-anchor-id="color-for-low-preference-areas"><span class="header-section-number">8.4.4.1</span> Color for low preference areas</h4>
-<p><strong>Role:</strong> defines the color of low-preference areas. <strong>Impact on the computation:</strong> no effect on the models; it only changes the graphical palette. <strong>Practical tip:</strong> the default value is <strong>Blue</strong>. The palette used is a gradient from this color to white, then to the high-preference color.</p>
+<section id="preference-threshold-sd-1" class="level4" data-number="8.4.3.2">
+<h4 data-number="8.4.3.2" class="anchored" data-anchor-id="preference-threshold-sd-1"><span class="header-section-number">8.4.3.2</span> Preference threshold (SD)</h4>
+<p><strong>Role:</strong> sets the standardised level that predicted preference must exceed for a location to be counted as favourable for one consumer. <strong>Impact on the computation:</strong> directly changes the percentage displayed on the map. <strong>Practical tip:</strong> start with <strong>0</strong>. Positive values identify more selective high-preference regions; negative values broaden favourable regions.</p>
 </section>
-<section id="color-for-high-preference-areas" class="level4" data-number="8.4.4.2">
-<h4 data-number="8.4.4.2" class="anchored" data-anchor-id="color-for-high-preference-areas"><span class="header-section-number">8.4.4.2</span> Color for high preference areas</h4>
-<p><strong>Role:</strong> defines the color of high-preference areas. <strong>Impact on the computation:</strong> no effect on the models; it only changes the palette. <strong>Practical tip:</strong> the default value is <strong>Red</strong>. Keeping <strong>Blue</strong> for low areas and <strong>Red</strong> for high areas is generally the most readable combination.</p>
+</section>
+<section id="consumer-classification-collapsed-by-default" class="level3" data-number="8.4.4">
+<h3 data-number="8.4.4" class="anchored" data-anchor-id="consumer-classification-collapsed-by-default"><span class="header-section-number">8.4.4</span> Consumer Classification <em>(collapsed by default)</em></h3>
+<section id="classification-of-consumers" class="level4" data-number="8.4.4.1">
+<h4 data-number="8.4.4.1" class="anchored" data-anchor-id="classification-of-consumers"><span class="header-section-number">8.4.4.1</span> Classification of consumers</h4>
+<p><strong>Role:</strong> enables segmentation of consumers from their centred liking profiles. <strong>Impact on the computation:</strong> adds cluster tables, the dendrogram, and, when requested, segment-specific preference maps. Disabled by default.</p>
+</section>
+<section id="number-of-clusters" class="level4" data-number="8.4.4.2">
+<h4 data-number="8.4.4.2" class="anchored" data-anchor-id="number-of-clusters"><span class="header-section-number">8.4.4.2</span> Number of clusters</h4>
+<p><strong>Role:</strong> sets the number of groups. <strong>Impact on the computation:</strong> <strong>-1</strong> lets SEDA choose the cut automatically; an integer of at least 2 imposes the number of segments and must remain below the number of consumers.</p>
+</section>
+<section id="cluster-dendrogram" class="level4" data-number="8.4.4.3">
+<h4 data-number="8.4.4.3" class="anchored" data-anchor-id="cluster-dendrogram"><span class="header-section-number">8.4.4.3</span> Cluster dendrogram</h4>
+<p><strong>Role:</strong> displays the Ward clustering dendrogram. <strong>Impact on the computation:</strong> none; it visualises the hierarchy used to form the groups. Enabled by default when classification is used.</p>
+</section>
+<section id="preference-maps-by-cluster" class="level4" data-number="8.4.4.4">
+<h4 data-number="8.4.4.4" class="anchored" data-anchor-id="preference-maps-by-cluster"><span class="header-section-number">8.4.4.4</span> Preference maps by cluster</h4>
+<p><strong>Role:</strong> produces a separate preference map for each consumer cluster. <strong>Impact on the computation:</strong> each map is recomputed using only the consumers in that group while keeping the same coordinates, model, and threshold as the overall map. Enabled by default when classification is used.</p>
+</section>
+</section>
+<section id="graphic-options-collapsed-by-default" class="level3" data-number="8.4.5">
+<h3 data-number="8.4.5" class="anchored" data-anchor-id="graphic-options-collapsed-by-default"><span class="header-section-number">8.4.5</span> Graphic Options <em>(collapsed by default)</em></h3>
+<section id="color-for-low-preference-areas" class="level4" data-number="8.4.5.1">
+<h4 data-number="8.4.5.1" class="anchored" data-anchor-id="color-for-low-preference-areas"><span class="header-section-number">8.4.5.1</span> Color for low preference areas</h4>
+<p><strong>Role:</strong> sets the color of low-preference regions. <strong>Impact on the computation:</strong> none. The default is <strong>Blue</strong>.</p>
+</section>
+<section id="color-for-high-preference-areas" class="level4" data-number="8.4.5.2">
+<h4 data-number="8.4.5.2" class="anchored" data-anchor-id="color-for-high-preference-areas"><span class="header-section-number">8.4.5.2</span> Color for high preference areas</h4>
+<p><strong>Role:</strong> sets the color of high-preference regions. <strong>Impact on the computation:</strong> none. The default is <strong>Red</strong>.</p>
 </section>
 </section>
 </section>
 <section id="step-by-step-procedure" class="level2" data-number="8.5">
 <h2 data-number="8.5" class="anchored" data-anchor-id="step-by-step-procedure"><span class="header-section-number">8.5</span> Step-by-step procedure</h2>
 <ol type="1">
-<li>Open your file in jamovi.</li>
-<li>If you do not yet have the coordinates of the 2D space, first construct them in the <strong>MEDA</strong> module: run a <strong>PCA</strong>, activate <strong>Coordinates</strong> in the <strong>Save</strong> subsection of <strong>Numerical Indicators</strong>, and enter <strong>2</strong> in <strong>Number of components</strong>. Two new columns (<strong>Dim. 1</strong> and <strong>Dim. 2</strong>) automatically appear in your data sheet.</li>
-<li>In the <strong>Data</strong> tab, check that the two axes and the liking variables are numeric.</li>
+<li>Open your dataset in jamovi.</li>
+<li>If you do not yet have coordinates for the 2D space, construct them in <strong>MEDA</strong> with a <strong>PCA</strong>, then save at least two <strong>Coordinates</strong>.</li>
+<li>Check that <strong>X-axis</strong>, <strong>Y-axis</strong>, and all <strong>Liking Variables</strong> are numeric.</li>
 <li>Open <strong>SEDA &gt; Hedonic Data &gt; Preference Mapping</strong>.</li>
-<li>Place the stimulus name variable in <strong>Stimuli Labels</strong>.</li>
-<li>Place the first saved component in <strong>X-axis</strong>.</li>
-<li>Place the second saved component in <strong>Y-axis</strong>.</li>
-<li>Place all score columns in <strong>Liking Variables</strong> (at least <strong>2</strong>).</li>
-<li>Leave <strong>Regression Model = Quadratic</strong> for a first trial.</li>
-<li>Leave the default colors (<strong>Blue</strong> / <strong>Red</strong>) if you do not want to customize the palette.</li>
-<li>Read the map by identifying the most favorable areas and the positions of the stimuli.</li>
-<li>Optionally test another <strong>Regression Model</strong> to see whether the interpretation remains stable.</li>
+<li>Place the stimulus-name variable in <strong>Stimuli Labels</strong> if available.</li>
+<li>Place two coordinates from the same representation space in <strong>X-axis</strong> and <strong>Y-axis</strong>.</li>
+<li>Place the individual consumer scores in <strong>Liking Variables</strong>.</li>
+<li>Start with <strong>Regression model = Quadratic</strong> if you have at least 7 products and sufficient product-space geometry; otherwise use a simpler model.</li>
+<li>Leave <strong>Preference threshold (SD) = 0</strong> for a first reading.</li>
+<li>Read <strong>Overall Preference Map</strong> first.</li>
+<li>To investigate preference heterogeneity, enable <strong>Classification of consumers</strong> and start with <strong>Number of clusters = -1</strong>.</li>
+<li>Read <strong>Consumer Cluster Sizes</strong> and <strong>Consumer Cluster Membership</strong>, followed by the dendrogram and <strong>Preference Maps by Consumer Cluster</strong>.</li>
+<li>Check <strong>R code</strong> if you want to reproduce the exact settings in the Rj Editor.</li>
 </ol>
 </section>
 <section id="interpretation-of-results" class="level2" data-number="8.6">
 <h2 data-number="8.6" class="anchored" data-anchor-id="interpretation-of-results"><span class="header-section-number">8.6</span> Interpretation of results</h2>
-<section id="preference-mapping-main-graph" class="level3" data-number="8.6.1">
-<h3 data-number="8.6.1" class="anchored" data-anchor-id="preference-mapping-main-graph"><span class="header-section-number">8.6.1</span> Preference Mapping — main graph</h3>
-<p>The function produces a single output: the preference map. It represents the provided factor space as a background, over which a modeled density surface is superimposed.</p>
+<section id="overall-preference-map-main-graph" class="level3" data-number="8.6.1">
+<h3 data-number="8.6.1" class="anchored" data-anchor-id="overall-preference-map-main-graph"><span class="header-section-number">8.6.1</span> Overall Preference Map — main graph</h3>
+<p>The map shows the space supplied by <strong>X-axis</strong> and <strong>Y-axis</strong>, overlaid with the <strong>% of consumers</strong> surface.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -402,50 +455,62 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>Areas toward <strong>Color for high preference areas</strong> (default: red)</td>
-<td>Regions where a high percentage of subjects would have an estimated favorable liking</td>
+<td>Areas toward <strong>Color for high preference areas</strong></td>
+<td>Regions favourable for a high proportion of consumers according to the selected threshold</td>
 </tr>
 <tr class="even">
-<td>Areas toward <strong>Color for low preference areas</strong> (default: blue)</td>
-<td>Regions with low liking</td>
+<td>Areas toward <strong>Color for low preference areas</strong></td>
+<td>Regions favourable for a low proportion of consumers</td>
 </tr>
 <tr class="odd">
-<td>White areas</td>
-<td>Intermediate regions</td>
+<td>Intermediate areas</td>
+<td>Intermediate proportions of favourable consumers</td>
 </tr>
 <tr class="even">
 <td>Contour lines</td>
-<td>Indicate the exact percentage of consumers (0 to 100)</td>
+<td>Mark selected consumer percentages from 20% up to 95%</td>
 </tr>
 <tr class="odd">
-<td>Tight contour lines</td>
-<td>Rapid change in the percentage in this area</td>
+<td>Squares with labels</td>
+<td>Positions of the tested stimuli in the selected space</td>
 </tr>
 <tr class="even">
-<td>Squares with labels</td>
-<td>Position of the tested stimuli in the factor space</td>
+<td>Subtitle</td>
+<td>Reports the <strong>Preference threshold (SD)</strong> used</td>
 </tr>
 </tbody>
 </table>
-<p>The area closest to the high-preference color corresponds to the region of the plane where the estimated proportion of “favorable” subjects is highest. It can be interpreted as an <strong>optimal preference area</strong> in the chosen space.</p>
+<p>With the default threshold <strong>0</strong>, a high region means that a large proportion of consumers have predicted preference above their own average predicted level there. The map therefore represents neither raw mean liking nor a probability in the statistical sense.</p>
 <blockquote class="blockquote">
-<p><strong>Point of vigilance:</strong> the map is based on modeling. It does not only show the observed products, but an interpolation over the whole plane. Be cautious when interpreting areas far from the stimuli actually present: extrapolation is less reliable there.</p>
+<p><strong>Point of vigilance:</strong> the surface is modelled over a grid covering the plane. Regions far from observed stimuli involve more extrapolation and should be interpreted cautiously.</p>
 </blockquote>
 <blockquote class="blockquote">
-<p><strong>Point of vigilance:</strong> the surface depends both on the number of stimuli available to fit the models and on the number of liking variables used to construct the percentage. A visually smooth map does not in itself guarantee high robustness.</p>
+<p><strong>Point of vigilance:</strong> a visually smooth surface does not guarantee robustness. The number of stimuli, the selected model, and consumer diversity determine how much information is available.</p>
 </blockquote>
 </section>
-<section id="absence-of-numerical-tables" class="level3" data-number="8.6.2">
-<h3 data-number="8.6.2" class="anchored" data-anchor-id="absence-of-numerical-tables"><span class="header-section-number">8.6.2</span> Absence of numerical tables</h3>
-<p>In the current configuration of the module, no numerical results table is produced. Interpretation is therefore based entirely on the <strong>Preference Mapping</strong> graph.</p>
+<section id="consumer-cluster-sizes-if-classification-of-consumers-is-enabled" class="level3" data-number="8.6.2">
+<h3 data-number="8.6.2" class="anchored" data-anchor-id="consumer-cluster-sizes-if-classification-of-consumers-is-enabled"><span class="header-section-number">8.6.2</span> Consumer Cluster Sizes <em>(if Classification of consumers is enabled)</em></h3>
+<p>This table gives the <strong>number</strong> and <strong>percentage</strong> of consumers in each cluster. It immediately identifies dominant segments and very small groups, which require more cautious interpretation.</p>
+</section>
+<section id="consumer-cluster-membership-if-classification-of-consumers-is-enabled" class="level3" data-number="8.6.3">
+<h3 data-number="8.6.3" class="anchored" data-anchor-id="consumer-cluster-membership-if-classification-of-consumers-is-enabled"><span class="header-section-number">8.6.3</span> Consumer Cluster Membership <em>(if Classification of consumers is enabled)</em></h3>
+<p>This table gives the cluster assigned to every consumer. It can be used to reconnect segments with the original liking columns or to characterise the groups in a complementary analysis.</p>
+</section>
+<section id="consumer-cluster-dendrogram-optional" class="level3" data-number="8.6.4">
+<h3 data-number="8.6.4" class="anchored" data-anchor-id="consumer-cluster-dendrogram-optional"><span class="header-section-number">8.6.4</span> Consumer Cluster Dendrogram <em>(optional)</em></h3>
+<p>The dendrogram displays the Ward hierarchical clustering computed from centred liking profiles. Consumers that are close in this hierarchy have similar patterns of preference across products, largely independently of their average rating level.</p>
+</section>
+<section id="preference-maps-by-consumer-cluster-optional" class="level3" data-number="8.6.5">
+<h3 data-number="8.6.5" class="anchored" data-anchor-id="preference-maps-by-consumer-cluster-optional"><span class="header-section-number">8.6.5</span> Preference Maps by Consumer Cluster <em>(optional)</em></h3>
+<p>A preference map is recomputed for every cluster using <strong>the same product space, Regression model, and Preference threshold (SD)</strong> as the overall map. Differences between maps can therefore be interpreted as heterogeneity in preference structure between segments, rather than as changes in the factorial reference space. On a cluster-specific map, the <strong>% of consumers</strong> is calculated within that cluster: 100% means all consumers in that segment, not all consumers in the full panel.</p>
 </section>
 </section>
 <section id="example-the-senso_hedo_cocktail-dataset" class="level2" data-number="8.7">
 <h2 data-number="8.7" class="anchored" data-anchor-id="example-the-senso_hedo_cocktail-dataset"><span class="header-section-number">8.7</span> Example: the <strong>senso_hedo_cocktail</strong> dataset</h2>
-<p>The <strong>senso_hedo_cocktail</strong> dataset contains the sensory evaluations of 13 cocktails described by 13 attributes, as well as hedonic judgments from a panel of 47 subjects. It is used to illustrate the construction of a <strong>preference map</strong>: the sensory space is first constructed by PCA in MEDA, then the hedonic scores are projected into it through this function. The numerical values and graphics discussed below come directly from the analysis results. To load this dataset, open jamovi, click the icon in the top left corner, the three stacked lines, then <strong>Open</strong> → <strong>Data Library</strong> → <strong>SEDA</strong>.</p>
+<p>The <strong>senso_hedo_cocktail</strong> dataset contains the sensory evaluations of 16 cocktails described by 13 attributes, as well as individual liking scores from <strong>100 consumers</strong>. It is used to illustrate the construction of a <strong>preference map</strong>: the sensory space is first constructed by PCA in MEDA, then the hedonic scores are projected into it through this function. The numerical values and graphics discussed below come directly from the analysis results. To load this dataset, open jamovi, click the icon in the top left corner, the three stacked lines, then <strong>Open</strong> → <strong>Data Library</strong> → <strong>SEDA</strong>.</p>
 <section id="example-settings" class="level3" data-number="8.7.1">
 <h3 data-number="8.7.1" class="anchored" data-anchor-id="example-settings"><span class="header-section-number">8.7.1</span> Example settings</h3>
-<p>To reproduce this example, use the following values.</p>
+<p>To reproduce the main example and also display consumer segmentation, use the following settings.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -471,8 +536,32 @@ ul.task-list li input[type="checkbox"] {
 <td>all hedonic columns (O to DJ)</td>
 </tr>
 <tr class="odd">
-<td><strong>Regression Model</strong></td>
+<td><strong>R code</strong></td>
+<td>checked</td>
+</tr>
+<tr class="even">
+<td><strong>Regression model</strong></td>
 <td>Quadratic</td>
+</tr>
+<tr class="odd">
+<td><strong>Preference threshold (SD)</strong></td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td><strong>Classification of consumers</strong></td>
+<td>checked</td>
+</tr>
+<tr class="odd">
+<td><strong>Number of clusters</strong></td>
+<td>-1</td>
+</tr>
+<tr class="even">
+<td><strong>Cluster dendrogram</strong></td>
+<td>checked</td>
+</tr>
+<tr class="odd">
+<td><strong>Preference maps by cluster</strong></td>
+<td>checked</td>
 </tr>
 <tr class="even">
 <td><strong>Color for low preference areas</strong></td>
@@ -514,86 +603,67 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<p>The PCA produces a two-dimensional space: <strong>Dim. 1 explains 53.25%</strong> of the variance and <strong>Dim. 2 explains 24.13%</strong>, that is, <strong>77.37% cumulative</strong>. The 1/2 plane therefore summarizes the sensory profiles of the cocktails well.</p>
+<p>The PCA produces a two-dimensional space: <strong>Dim. 1 explains 53.25%</strong> of the variance and <strong>Dim. 2 explains 24.13%</strong>, that is, <strong>77.37% cumulative</strong>. The 1/2 plane therefore summarises the sensory profiles of the cocktails well.</p>
 <p>The automatic description of the dimensions confirms the interpretation of the axes:</p>
 <ul>
 <li><strong>Dim. 1</strong> opposes <em>acidity</em> (correlation 0.93), <em>bitterness</em> (0.88), <em>odor.orange</em> (0.75), and <em>intensity</em> (0.73) on one side, to <em>odor.banana</em> (-0.93), <em>sweet</em> (-0.93), <em>thickness</em> (-0.88), and <em>pulp</em> (-0.70) on the other. This is a clear opposition between acidic and intense cocktails vs sweet, thick, banana-like cocktails.</li>
 <li><strong>Dim. 2</strong> is more strongly structured by <em>odor.lemon</em> (0.77), <em>odor.mango</em> (0.69), <em>persistence</em> (0.66), and <em>color.intensity</em> (0.58), with <em>odor.orange</em> (-0.61) on the negative side.</li>
 </ul>
-<p>On the individual map, the cocktails are widely distributed across the plane. <strong>386</strong> is located in the upper right (high on Dim. 2), <strong>131</strong> at the bottom center, <strong>447</strong> and <strong>312</strong> on the left (sweet, thick), and <strong>194</strong>, <strong>233</strong>, and <strong>245</strong> on the right (acidic, intense). Once the PCA has been run, the <strong>Dim. 1</strong> and <strong>Dim. 2</strong> columns automatically appear in the jamovi data sheet.</p>
+<p>On the individual map, the cocktails are widely distributed across the plane. <strong>386</strong> is located in the upper right (high on Dim. 2), <strong>131</strong> at the bottom centre, <strong>447</strong> and <strong>312</strong> on the left (sweet, thick), and <strong>194</strong>, <strong>233</strong>, and <strong>245</strong> on the right (acidic, intense). Once the PCA has been run, the <strong>Dim. 1</strong> and <strong>Dim. 2</strong> columns automatically appear in the jamovi data sheet.</p>
 </section>
 <section id="step-2-construct-the-preference-map-in-seda" class="level3" data-number="8.7.3">
 <h3 data-number="8.7.3" class="anchored" data-anchor-id="step-2-construct-the-preference-map-in-seda"><span class="header-section-number">8.7.3</span> Step 2 — Construct the preference map in SEDA</h3>
-<p>Return to <strong>SEDA &gt; Hedonic Data &gt; Preference Mapping</strong> and use the following settings:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Option</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Stimuli Labels</td>
-<td>variable identifying the cocktails</td>
-</tr>
-<tr class="even">
-<td>X-axis</td>
-<td>Dim. 1 (saved from the PCA)</td>
-</tr>
-<tr class="odd">
-<td>Y-axis</td>
-<td>Dim. 2 (saved from the PCA)</td>
-</tr>
-<tr class="even">
-<td>Liking Variables</td>
-<td>all hedonic score columns (O to DJ)</td>
-</tr>
-<tr class="odd">
-<td>Regression Model</td>
-<td>Quadratic</td>
-</tr>
-<tr class="even">
-<td>Color for low preference areas</td>
-<td>Blue</td>
-</tr>
-<tr class="odd">
-<td>Color for high preference areas</td>
-<td>Red</td>
-</tr>
-</tbody>
-</table>
+<p>Return to <strong>SEDA &gt; Hedonic Data &gt; Preference Mapping</strong> and use the saved coordinates as <strong>X-axis</strong> and <strong>Y-axis</strong>. Select the hedonic columns in <strong>Liking Variables</strong>, keep <strong>Regression model = Quadratic</strong>, and use <strong>Preference threshold (SD) = 0</strong>.</p>
+<p>To reproduce the segment-based reading as well, enable <strong>Classification of consumers</strong>, leave <strong>Number of clusters = -1</strong>, and keep <strong>Cluster dendrogram</strong> and <strong>Preference maps by cluster</strong> checked. Enabling classification does not change the overall map; it adds complementary results about consumer heterogeneity.</p>
 </section>
-<section id="analysis-of-the-representation-of-the-products-graph" class="level3" data-number="8.7.4">
-<h3 data-number="8.7.4" class="anchored" data-anchor-id="analysis-of-the-representation-of-the-products-graph"><span class="header-section-number">8.7.4</span> Analysis of the <em>Representation of the products</em> graph</h3>
-<p>The resulting map superimposes the density surface onto the position of the 13 cocktails in the sensory space. The dark red area — corresponding to more than 80–90% favorable consumers — is located <strong>on the left of the plane</strong>, in the region with negative coordinates on Dim. 1, where the cocktails <strong>182</strong>, <strong>444</strong>, <strong>343</strong>, and <strong>447</strong> are located. These cocktails, characterized by sweeter, thicker, banana-like profiles, correspond to the optimal preference area.</p>
-<p>Conversely, the blue area — corresponding to fewer than 20% favorable consumers — is located <strong>on the right of the plane</strong>, where the cocktails <strong>194</strong>, <strong>233</strong>, and <strong>245</strong> are located, characterized by acidic and intense profiles.</p>
-<p>The cocktails <strong>131</strong> (bottom center) and <strong>386</strong> (upper right) are located in intermediate to low-preference areas (light blue, 10–25%).</p>
+<section id="analysis-of-the-overall-preference-map-graph" class="level3" data-number="8.7.4">
+<h3 data-number="8.7.4" class="anchored" data-anchor-id="analysis-of-the-overall-preference-map-graph"><span class="header-section-number">8.7.4</span> Analysis of the <em>Overall Preference Map</em> graph</h3>
+<p>The resulting map superimposes the preference surface onto the position of the 16 cocktails in the sensory space. The dark red area — corresponding to more than 80–90% favourable consumers — is located <strong>on the left of the plane</strong>, in the region with negative coordinates on Dim. 1, where the cocktails <strong>182</strong>, <strong>444</strong>, <strong>343</strong>, and <strong>447</strong> are located. These cocktails, characterised by sweeter, thicker, banana-like profiles, lie in a high-preference region.</p>
+<p>Conversely, the blue area — corresponding to fewer than 20% favourable consumers — is located <strong>on the right of the plane</strong>, where the cocktails <strong>194</strong>, <strong>233</strong>, and <strong>245</strong> are located, characterised by acidic and intense profiles.</p>
+<p>The cocktails <strong>131</strong> (bottom centre) and <strong>386</strong> (upper right) are located in intermediate to low-preference areas (light blue, 10–25%).</p>
 </section>
-<section id="synthetic-interpretation" class="level3" data-number="8.7.5">
-<h3 data-number="8.7.5" class="anchored" data-anchor-id="synthetic-interpretation"><span class="header-section-number">8.7.5</span> Synthetic interpretation</h3>
-<p>The sensory space structured by the PCA, based on the acidic-intense vs sweet-thick opposition, is directly readable on the preference map. The optimum is located on the sweet-thick side, whereas acidic and intense profiles are less appreciated. No cocktail is located exactly in the maximum preference area, which suggests more of a <strong>formulation improvement direction</strong> than an already optimal product.</p>
+<section id="reading-the-consumer-classification" class="level3" data-number="8.7.5">
+<h3 data-number="8.7.5" class="anchored" data-anchor-id="reading-the-consumer-classification"><span class="header-section-number">8.7.5</span> Reading the consumer classification</h3>
+<p>With <strong>Number of clusters = -1</strong>, the Ward classification applied to the centred liking profiles retains <strong>2 consumer clusters</strong> in this example:</p>
+<ul>
+<li><strong>Cluster 1</strong>: <strong>62 consumers</strong> (62.0%). The products with the highest relative liking in the centred cluster profile are <strong>182</strong>, <strong>447</strong>, <strong>472</strong>.</li>
+<li><strong>Cluster 2</strong>: <strong>38 consumers</strong> (38.0%). The products with the highest relative liking in the centred cluster profile are <strong>343</strong>, <strong>312</strong>, <strong>182</strong>.</li>
+</ul>
+<p>Product <strong>182</strong> appears among the highest relative liking values in both clusters, whereas <strong>447/472</strong> distinguish Cluster 1 and <strong>343/312</strong> distinguish Cluster 2 among the observed cocktails. This gives a concrete first indication of both shared and segment-specific preference patterns.</p>
+<p>These short descriptions are based on the <strong>mean centred liking profile within each cluster</strong>. They identify which tested products most distinguish the relative preferences of a segment; they do not, by themselves, assign a sensory meaning to that segment.</p>
+<p>Use <strong>Consumer Cluster Sizes</strong> to assess the weight of each segment and <strong>Consumer Cluster Membership</strong> to identify the consumers composing it. The <strong>Consumer Cluster Dendrogram</strong> shows the hierarchy underlying the partition.</p>
+<p>The <strong>Preference Maps by Consumer Cluster</strong> should then be compared in the common sensory space. Because every cluster map uses exactly the same product coordinates, regression model, and preference threshold as the overall map, differences between maps reflect heterogeneity in predicted preference patterns rather than a change of reference space. Very small clusters should nevertheless be interpreted cautiously.</p>
+</section>
+<section id="synthetic-interpretation" class="level3" data-number="8.7.6">
+<h3 data-number="8.7.6" class="anchored" data-anchor-id="synthetic-interpretation"><span class="header-section-number">8.7.6</span> Synthetic interpretation</h3>
+<p>The sensory space structured by the PCA, based on the acidic-intense vs sweet-thick opposition, is directly readable on the preference map. The highest-preference region lies on the sweet-thick side, whereas acidic and intense profiles are less appreciated. No cocktail appears to occupy the centre of this highest-preference region, which suggests a <strong>direction for formulation improvement</strong> rather than an already optimal product.</p>
 <blockquote class="blockquote">
-<p><strong>What we take away from this example:</strong> preference mapping directly links the sensory space and hedonic preferences, making it possible to identify an optimal area even when no existing product occupies it exactly.</p>
+<p><strong>What we take away from this example:</strong> preference mapping directly links the sensory space and hedonic preferences, making it possible to identify a favourable region of the product space even when no existing product occupies its centre.</p>
 </blockquote>
 </section>
 </section>
-<section id="practical-tips" class="level2" data-number="8.8">
-<h2 data-number="8.8" class="anchored" data-anchor-id="practical-tips"><span class="header-section-number">8.8</span> Practical tips</h2>
+<section id="from-jamovi-to-the-rj-editor" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="from-jamovi-to-the-rj-editor"><span class="header-section-number">8.8</span> From jamovi to the Rj Editor</h2>
+<p>Once the <strong>Rj Editor</strong> has been configured with <strong>System R</strong> as described in Chapter 1, check <strong>R code</strong> to display the script corresponding to the analysis. The dataset open in jamovi is available as <code>data</code>.</p>
+<p>The generated code reconstructs the two coordinates and liking columns, fits a separate response surface for each consumer, standardises predictions over the grid, and applies <strong>Preference threshold (SD)</strong> before computing the <strong>% of consumers</strong>. It therefore reproduces the logic of the map explicitly rather than treating the result as a simple mean liking score.</p>
+<p>If <strong>Classification of consumers</strong> is enabled, the script also centres the liking profiles, computes distances between consumers, performs Ward clustering with <code>hclust(..., method = "ward.D2")</code>, uses <code>cutree()</code> to form the groups, and then recomputes a map for the consumers in each cluster. The generated code therefore reproduces both the overall map and the full segmentation in the Rj Editor.</p>
+</section>
+<section id="practical-tips" class="level2" data-number="8.9">
+<h2 data-number="8.9" class="anchored" data-anchor-id="practical-tips"><span class="header-section-number">8.9</span> Practical tips</h2>
 <ul>
-<li>Always perform a preliminary PCA in the MEDA module and save the components before using this module.</li>
-<li>Check that <strong>X-axis</strong> and <strong>Y-axis</strong> come from the same representation space.</li>
-<li>Use individual scores in <strong>Liking Variables</strong>, not only means.</li>
-<li>At least <strong>two</strong> variables are required in <strong>Liking Variables</strong> to produce the map.</li>
-<li>Start with <strong>Regression Model = Quadratic</strong>; if you have fewer than 10 products, test <strong>Vector</strong> or <strong>Circular</strong>.</li>
-<li>Do not interpret too far from the products actually present on the plane.</li>
-<li>An optimal area outside the existing products mainly indicates a direction for formulation or development.</li>
-<li>Keep a contrasted palette to clearly distinguish low and high areas.</li>
+<li>Always check that <strong>X-axis</strong> and <strong>Y-axis</strong> come from the same representation space and refer to the same stimuli as the liking scores.</li>
+<li>Use <strong>individual scores</strong> in <strong>Liking Variables</strong>, one column per consumer.</li>
+<li>Start with <strong>Preference threshold (SD) = 0</strong>; then vary it to assess whether high-preference regions remain stable.</li>
+<li>Match <strong>Regression model</strong> complexity to the number of products: the minima are 4, 5, 6, and 7 products for Vector, Circular, Elliptical, and Quadratic respectively.</li>
+<li>For external preference mapping, interpret the sensory axes before translating a favourable region into a formulation direction.</li>
+<li>If you enable <strong>Classification of consumers</strong>, inspect cluster sizes first and be cautious with very small segments.</li>
+<li>Compare cluster maps in the same reference space: differences reflect different preference structures, not different factorial spaces.</li>
+<li>Check <strong>R code</strong> when you want a reproducible record of the settings and calculations.</li>
 </ul>
 </section>
-<section id="in-summary" class="level2" data-number="8.9">
-<h2 data-number="8.9" class="anchored" data-anchor-id="in-summary"><span class="header-section-number">8.9</span> In summary</h2>
-<p>This analysis constructs a <strong>preference map</strong> from an already available 2D space and several hedonic variables. It fits a preference model for each variable in <strong>Liking Variables</strong>, then combines these models into a surface expressed as <strong>% of consumers</strong>. Its main value is to link, within the same framework, a representation space and individual preferences, in order to identify the areas of the plane that are most favorable for the greatest number — and thus guide product development toward the most appreciated characteristics.</p>
+<section id="in-summary" class="level2" data-number="8.10">
+<h2 data-number="8.10" class="anchored" data-anchor-id="in-summary"><span class="header-section-number">8.10</span> In summary</h2>
+<p>Preference mapping links a <strong>two-dimensional stimulus space</strong> to <strong>individual liking scores</strong>. SEDA fits a preference surface for each consumer, standardises the predictions, and represents the proportion of consumers exceeding <strong>Preference threshold (SD)</strong> in each region of the plane. The overall map can be complemented by <strong>Ward clustering of centred liking profiles</strong> and by cluster-specific preference maps. The analysis can therefore distinguish a broadly shared preference region from an overall pattern that hides several consumer segments, while keeping the same product space for all comparisons.</p>
 
 
 </section>
@@ -1018,8 +1088,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./chapitre6_prompt_GBH.html" class="pagination-link" aria-label="Sorting Data — Analysis of Categorization">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sorting Data — Analysis of Categorization</span></span>
+      <a href="./chapitre6_prompt_GBH.html" class="pagination-link" aria-label="Sorting Data — Analysis of Categorisation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sorting Data — Analysis of Categorisation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

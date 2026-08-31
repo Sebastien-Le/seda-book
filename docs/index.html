@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Sébastien Lê">
-<meta name="dcterms.date" content="2026-05-01">
+<meta name="dcterms.date" content="2026-08-31">
 
 <title>Help Me Do It on My Own: Sensory Data Analysis with jamovi and the SEDA Module</title>
 <style>
@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">{{&lt; meta preface-title &gt;}}</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -122,7 +122,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chapitre1_prompt_GBH.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">QDA Data — Characterization of the Sensory Space</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">QDA Data — Characterisation of the Sensory Space</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -152,7 +152,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chapitre6_prompt_GBH.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sorting Data — Analysis of Categorization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sorting Data — Analysis of Categorisation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -168,10 +168,10 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table des matières</h2>
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section">Preface</a></li>
   </ul>
 </nav>
     </div>
@@ -197,7 +197,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">1 May 2026</p>
+      <p class="date">31 August 2026</p>
     </div>
   </div>
   
@@ -209,7 +209,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
+<section id="section" class="level1 unnumbered">
 <h1 class="unnumbered">Preface</h1>
 <p>This booklet was born from a simple conviction: we learn better to do things on our own when someone has taken the time to explain not only <strong>how</strong>, but also <strong>why</strong>.</p>
 <p>The statistical analysis of sensory data has long been learned in R, through books, scripts, and tutorials that assumed a certain familiarity with programming, packages, and sometimes even a degree of resilience in the face of error messages. These tools have their strengths, their elegance, and remain indispensable. But they can also be a barrier for many practitioners who nevertheless work regularly with sensory data, without coming from the world of statistics or coding.</p>
@@ -217,7 +217,7 @@ ul.task-list li input[type="checkbox"] {
 <p>This is precisely the space this booklet seeks to occupy.</p>
 <p>It replaces neither a full statistics course nor in-depth training in R. Its ambition is more focused: to give you, for each analysis, <strong>enough understanding to work with discernment</strong>. Enough to know what a confidence ellipse really represents. Enough to understand why a product may be absent from a descriptive table without thereby being “without a profile”. Enough not to read a preference map as an absolute truth far from the products actually tested. Enough, above all, no longer to be entirely dependent on an interface that one uses without understanding.</p>
 <p>The guiding thread of this book is therefore <strong>autonomy</strong>. Not the immediate autonomy of someone who already knows everything, but the gradual autonomy of someone who can move forward with reliable points of reference, connect the visible options in jamovi to their statistical logic, and interpret the outputs more accurately. In that sense, this booklet deliberately sits between two worlds: that of concrete practice in jamovi, and that of methodological understanding, which gives meaning to the results.</p>
-<p>This booklet covers the <strong>seven analyses</strong> of the <strong>SEDA</strong> module, in the following order: <strong>univariate characterisation of the product space</strong>, <strong>multivariate representation with confidence ellipses</strong>, <strong>CATA</strong> data analysis, <strong>JAR</strong> data analysis, <strong>Napping</strong>, <strong>free sorting</strong>, and finally <strong>preference mapping</strong>. Together, they form a coherent progression: from fixed-list attribute methods to more holistic approaches, and then to hedonic analyses. Each method corresponds to a particular way of producing data, asking a question, and interpreting a result.</p>
+<p>This booklet covers the <strong>seven analyses</strong> of the <strong>SEDA</strong> module, in the following order: <strong>univariate characterisation of the product space</strong>, <strong>multivariate representation with confidence ellipses</strong>, <strong>CATA</strong> data analysis, <strong>JAR</strong> data analysis, <strong>Napping</strong>, <strong>free sorting</strong>, and finally <strong>preference mapping</strong>. Together, they form a coherent progression: from fixed-list attribute methods to more holistic approaches, and then to hedonic analyses. Each method corresponds to a particular way of producing data, asking a question, and interpreting a result. You can easily try these methods using the datasets distributed with the <strong>SEDA</strong> module, making it easier to become familiar with the graphs and outputs generated by each analysis.</p>
 <p>To maintain overall coherence, each chapter follows the same structure: an introduction that sets out the statistical problem, a section explaining what is really happening behind the interface, a detailed presentation of the options, a step-by-step procedure, and then keys for interpreting the tables and graphs. This choice is not merely editorial; it is pedagogical. It is intended to ensure that, from one chapter to the next, the reader finds stable reference points and can more easily transfer what has been learned.</p>
 <p>This booklet is intended for sensory evaluation practitioners, engineers, students, teachers, researchers discovering jamovi, and more broadly for anyone who needs support between a course and a real field analysis.</p>
 <p>Each chapter can be read independently. You can enter this booklet through the method that corresponds to the data you currently have. But the whole has also been conceived as a journey: the further one goes, the more one understands that sensory analysis is not a stack of separate techniques, but a family of complementary approaches, articulated through common logics of representation, description, and interpretation.</p>

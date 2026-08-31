@@ -121,7 +121,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chapitre1_prompt_GBH.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">QDA Data — Characterization of the Sensory Space</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">QDA Data — Characterisation of the Sensory Space</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -151,7 +151,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chapitre6_prompt_GBH.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sorting Data — Analysis of Categorization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sorting Data — Analysis of Categorisation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -167,7 +167,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table des matières</h2>
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
   <li><a href="#presenting-jamovi" id="toc-presenting-jamovi" class="nav-link active" data-scroll-target="#presenting-jamovi"><span class="header-section-number">1.1</span> Presenting jamovi</a>
@@ -177,7 +177,8 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#modules-in-jamovi" id="toc-modules-in-jamovi" class="nav-link" data-scroll-target="#modules-in-jamovi"><span class="header-section-number">1.2</span> Modules in jamovi</a></li>
   <li><a href="#the-seda-module" id="toc-the-seda-module" class="nav-link" data-scroll-target="#the-seda-module"><span class="header-section-number">1.3</span> The SEDA module</a></li>
-  <li><a href="#some-useful-references" id="toc-some-useful-references" class="nav-link" data-scroll-target="#some-useful-references"><span class="header-section-number">1.4</span> Some useful references</a></li>
+  <li><a href="#from-jamovi-to-r-the-rj-editor" id="toc-from-jamovi-to-r-the-rj-editor" class="nav-link" data-scroll-target="#from-jamovi-to-r-the-rj-editor"><span class="header-section-number">1.4</span> From jamovi to R: the Rj Editor</a></li>
+  <li><a href="#some-useful-references" id="toc-some-useful-references" class="nav-link" data-scroll-target="#some-useful-references"><span class="header-section-number">1.5</span> Some useful references</a></li>
   </ul>
 </nav>
     </div>
@@ -227,28 +228,28 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>Data entry</td>
-<td></td>
-<td></td>
+<td>Yes</td>
+<td>Yes</td>
 </tr>
 <tr class="even">
 <td>Statistical analyses</td>
-<td>(requires external tools)</td>
-<td>(built in natively)</td>
+<td>No (requires external tools)</td>
+<td>Yes (built in natively)</td>
 </tr>
 <tr class="odd">
 <td>Reproducibility</td>
-<td>difficult to track</td>
-<td>via the <code>.omv</code> format</td>
+<td>Difficult to track</td>
+<td>Yes, via the <code>.omv</code> format</td>
 </tr>
 <tr class="even">
 <td>Advanced modules</td>
-<td></td>
-<td>via extensions</td>
+<td>No</td>
+<td>Yes, via extensions</td>
 </tr>
 <tr class="odd">
 <td>Open source</td>
-<td></td>
-<td></td>
+<td>No</td>
+<td>Yes</td>
 </tr>
 </tbody>
 </table>
@@ -310,11 +311,17 @@ ul.task-list li input[type="checkbox"] {
 <p>Its menu is organised into three sections corresponding to three broad ways of producing sensory data.</p>
 <p>The first section, <strong>Fixed List of Attributes</strong>, brings together methods in which subjects evaluate stimuli using a list of attributes defined in advance. This is the classic case of QDA (<em>Quantitative Descriptive Analysis</em>) data, where a trained panel scores the intensity of each attribute for each product. Here, SEDA offers two complementary analyses: one to <strong>characterise the stimuli attribute by attribute</strong> (by identifying which attributes differentiate them and which characterise each stimulus in particular), and another to <strong>represent the sensory space in a multivariate way</strong> (by producing a map of the stimuli enriched with confidence ellipses reflecting the stability of the positions according to panel composition). This section also includes the analysis of <strong>CATA</strong> (<em>Check-All-That-Apply</em>) data, in which respondents tick from a list the terms they feel are present in a stimulus, and the analysis of <strong>JAR</strong> (<em>Just About Right</em>) data, in which respondents indicate whether each attribute is too strong, too weak, or just about right — making it possible to estimate the <em>penalties</em> these deviations impose on liking.</p>
 <p>The second section brings together <strong>holistic approaches</strong>, in which subjects evaluate the stimuli globally, without any predefined list of attributes. Two methods are covered: <strong>Napping</strong> (<em>projective mapping</em>), in which each subject positions the stimuli on a rectangle according to their perceived similarities, and <strong>free sorting</strong> (<em>sorting task</em>), in which each subject freely groups the stimuli into categories. In both cases, SEDA produces a consensual representation of the stimuli by combining the individual maps — by Multiple Factor Analysis for Napping, and by Multiple Correspondence Analysis for free sorting — and may complement this representation with an automatic classification of the stimuli.</p>
-<p>The third section, <strong>Hedonic Data</strong>, is dedicated to <strong>liking data</strong>. It contains <strong>preference mapping</strong>, which combines an already constructed representation space (for example, from a PCA) with individual liking scores in order to produce a response surface indicating, for each area of the space, the proportion of consumers who would theoretically respond favourably to it. This analysis is the natural extension of the previous analyses: once the sensory space has been constructed and interpreted, the preference map makes it possible to locate the product optimum within that space.</p>
+<p>The third section, <strong>Hedonic Data</strong>, is dedicated to <strong>liking data</strong>. It contains <strong>preference mapping</strong>, which combines an already constructed representation space (for example, from a PCA) with individual liking scores in order to identify favourable regions of that space. SEDA can also classify consumers from their centred liking profiles and produce preference maps for the resulting segments. This analysis is the natural extension of the previous analyses: once the sensory space has been constructed and interpreted, preference mapping helps identify which regions are favourable and whether the same preference structure is shared across consumer segments.</p>
 <p>This booklet covers all seven of these analyses, in the order of the SEDA menu. Throughout the rest of this booklet, the terms <em>product</em> and <em>stimulus</em> mean the same thing and are used interchangeably.</p>
 </section>
-<section id="some-useful-references" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="some-useful-references"><span class="header-section-number">1.4</span> Some useful references</h2>
+<section id="from-jamovi-to-r-the-rj-editor" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="from-jamovi-to-r-the-rj-editor"><span class="header-section-number">1.4</span> From jamovi to R: the Rj Editor</h2>
+<p>SEDA can display the R script corresponding to the options selected in the interface. Throughout this booklet, these scripts provide a bridge from a point-and-click analysis to a reproducible R workflow.</p>
+<p>Before using the <strong>Rj Editor</strong> for the first time, open its settings with the gear icon and select <strong>System R</strong> rather than <strong>jamovi R</strong>. Your system R installation must contain the packages required by the analysis — mainly <code>SensoMineR</code> and <code>FactoMineR</code> in this booklet — as well as <code>jmvconnect</code>, which gives the Rj Editor access to the dataset currently open in jamovi under the name <code>data</code>.</p>
+<p>When an analysis offers the <strong>R code</strong> option, check it to display a script that can be copied into the Rj Editor. The chapters below explain the main functions and arguments used by each generated script.</p>
+</section>
+<section id="some-useful-references" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="some-useful-references"><span class="header-section-number">1.5</span> Some useful references</h2>
 <ul>
 <li>Official website: <a href="https://www.jamovi.org" target="_blank">jamovi.org</a></li>
 <li><a href="https://docs.jamovi.org/index.html" target="_blank">Online documentation</a></li>
@@ -754,13 +761,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Preface">
+      <a href="./index.html" class="pagination-link" aria-label="{{< meta preface-title >}}">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chapitre1_prompt_GBH.html" class="pagination-link" aria-label="QDA Data — Characterization of the Sensory Space">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">QDA Data — Characterization of the Sensory Space</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./chapitre1_prompt_GBH.html" class="pagination-link" aria-label="QDA Data — Characterisation of the Sensory Space">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">QDA Data — Characterisation of the Sensory Space</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

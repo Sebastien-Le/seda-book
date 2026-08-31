@@ -121,7 +121,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chapitre1_prompt_GBH.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">QDA Data — Characterization of the Sensory Space</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">QDA Data — Characterisation of the Sensory Space</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -151,7 +151,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chapitre6_prompt_GBH.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sorting Data — Analysis of Categorization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sorting Data — Analysis of Categorisation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -167,7 +167,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table des matières</h2>
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">3.1</span> Introduction</a></li>
@@ -184,9 +184,9 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#interface-guide" id="toc-interface-guide" class="nav-link" data-scroll-target="#interface-guide"><span class="header-section-number">3.4</span> Interface guide</a>
   <ul class="collapse">
   <li><a href="#variables-to-complete" id="toc-variables-to-complete" class="nav-link" data-scroll-target="#variables-to-complete"><span class="header-section-number">3.4.1</span> Variables to complete</a></li>
-  <li><a href="#read-me-before-running" id="toc-read-me-before-running" class="nav-link" data-scroll-target="#read-me-before-running"><span class="header-section-number">3.4.2</span> Read me before running</a></li>
+  <li><a href="#instructions-and-r-code" id="toc-instructions-and-r-code" class="nav-link" data-scroll-target="#instructions-and-r-code"><span class="header-section-number">3.4.2</span> Instructions and R Code</a></li>
   <li><a href="#standardization-of-the-sensory-attributes-scale-to-unit-variance" id="toc-standardization-of-the-sensory-attributes-scale-to-unit-variance" class="nav-link" data-scroll-target="#standardization-of-the-sensory-attributes-scale-to-unit-variance"><span class="header-section-number">3.4.3</span> Standardization of the Sensory Attributes: Scale to unit variance</a></li>
-  <li><a href="#selection-of-the-sensory-attributes-p-value-of-the-stimulus-effect" id="toc-selection-of-the-sensory-attributes-p-value-of-the-stimulus-effect" class="nav-link" data-scroll-target="#selection-of-the-sensory-attributes-p-value-of-the-stimulus-effect"><span class="header-section-number">3.4.4</span> Selection of the Sensory Attributes: p-value of the Stimulus effect (%)</a></li>
+  <li><a href="#selection-of-the-sensory-attributes-descriptor-selection-threshold" id="toc-selection-of-the-sensory-attributes-descriptor-selection-threshold" class="nav-link" data-scroll-target="#selection-of-the-sensory-attributes-descriptor-selection-threshold"><span class="header-section-number">3.4.4</span> Selection of the Sensory Attributes: Descriptor selection threshold (%)</a></li>
   <li><a href="#graphic-options" id="toc-graphic-options" class="nav-link" data-scroll-target="#graphic-options"><span class="header-section-number">3.4.5</span> Graphic Options</a></li>
   <li><a href="#resampling-options" id="toc-resampling-options" class="nav-link" data-scroll-target="#resampling-options"><span class="header-section-number">3.4.6</span> Resampling Options</a></li>
   <li><a href="#numerical-indicators" id="toc-numerical-indicators" class="nav-link" data-scroll-target="#numerical-indicators"><span class="header-section-number">3.4.7</span> Numerical Indicators</a></li>
@@ -194,26 +194,27 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#step-by-step-procedure" id="toc-step-by-step-procedure" class="nav-link" data-scroll-target="#step-by-step-procedure"><span class="header-section-number">3.5</span> Step-by-step procedure</a></li>
   <li><a href="#interpretation-of-results" id="toc-interpretation-of-results" class="nav-link" data-scroll-target="#interpretation-of-results"><span class="header-section-number">3.6</span> Interpretation of results</a>
   <ul class="collapse">
-  <li><a href="#representation-of-the-stimuli-with-ellipses" id="toc-representation-of-the-stimuli-with-ellipses" class="nav-link" data-scroll-target="#representation-of-the-stimuli-with-ellipses"><span class="header-section-number">3.6.1</span> Representation of the Stimuli with Ellipses</a></li>
+  <li><a href="#representation-of-the-stimuli-with-confidence-ellipses" id="toc-representation-of-the-stimuli-with-confidence-ellipses" class="nav-link" data-scroll-target="#representation-of-the-stimuli-with-confidence-ellipses"><span class="header-section-number">3.6.1</span> Representation of the Stimuli with Confidence Ellipses</a></li>
   <li><a href="#representation-of-the-stimuli" id="toc-representation-of-the-stimuli" class="nav-link" data-scroll-target="#representation-of-the-stimuli"><span class="header-section-number">3.6.2</span> Representation of the Stimuli</a></li>
   <li><a href="#representation-of-the-sensory-attributes" id="toc-representation-of-the-sensory-attributes" class="nav-link" data-scroll-target="#representation-of-the-sensory-attributes"><span class="header-section-number">3.6.3</span> Representation of the Sensory Attributes</a></li>
   <li><a href="#individual-variability-around-stimuli-available-only-if-the-option-is-activated" id="toc-individual-variability-around-stimuli-available-only-if-the-option-is-activated" class="nav-link" data-scroll-target="#individual-variability-around-stimuli-available-only-if-the-option-is-activated"><span class="header-section-number">3.6.4</span> Individual variability around stimuli <em>(available only if the option is activated)</em></a></li>
-  <li><a href="#variability-around-sensory-attributes-available-only-if-the-option-is-activated" id="toc-variability-around-sensory-attributes-available-only-if-the-option-is-activated" class="nav-link" data-scroll-target="#variability-around-sensory-attributes-available-only-if-the-option-is-activated"><span class="header-section-number">3.6.5</span> Variability around sensory attributes <em>(available only if the option is activated)</em></a></li>
+  <li><a href="#variability-of-the-sensory-attributes-available-only-if-the-option-is-activated" id="toc-variability-of-the-sensory-attributes-available-only-if-the-option-is-activated" class="nav-link" data-scroll-target="#variability-of-the-sensory-attributes-available-only-if-the-option-is-activated"><span class="header-section-number">3.6.5</span> Variability of the Sensory Attributes <em>(available only if the option is activated)</em></a></li>
   <li><a href="#eigenvalue-decomposition" id="toc-eigenvalue-decomposition" class="nav-link" data-scroll-target="#eigenvalue-decomposition"><span class="header-section-number">3.6.6</span> Eigenvalue Decomposition</a></li>
   <li><a href="#automatic-description-of-the-dimensions-1" id="toc-automatic-description-of-the-dimensions-1" class="nav-link" data-scroll-target="#automatic-description-of-the-dimensions-1"><span class="header-section-number">3.6.7</span> Automatic Description of the Dimensions</a></li>
-  <li><a href="#product-by-product-comparison-table-available-only-if-number-of-subjects-1" id="toc-product-by-product-comparison-table-available-only-if-number-of-subjects-1" class="nav-link" data-scroll-target="#product-by-product-comparison-table-available-only-if-number-of-subjects-1"><span class="header-section-number">3.6.8</span> Product-by-product comparison table <em>(available only if Number of subjects &gt; 1)</em></a></li>
+  <li><a href="#hotelling-test" id="toc-hotelling-test" class="nav-link" data-scroll-target="#hotelling-test"><span class="header-section-number">3.6.8</span> Hotelling Test</a></li>
   </ul></li>
   <li><a href="#example-the-sensochoc-dataset" id="toc-example-the-sensochoc-dataset" class="nav-link" data-scroll-target="#example-the-sensochoc-dataset"><span class="header-section-number">3.7</span> Example: the <strong>sensochoc</strong> dataset</a>
   <ul class="collapse">
   <li><a href="#example-settings" id="toc-example-settings" class="nav-link" data-scroll-target="#example-settings"><span class="header-section-number">3.7.1</span> Example settings</a></li>
-  <li><a href="#analysis-of-the-representation-of-the-stimuli-with-ellipses-graph" id="toc-analysis-of-the-representation-of-the-stimuli-with-ellipses-graph" class="nav-link" data-scroll-target="#analysis-of-the-representation-of-the-stimuli-with-ellipses-graph"><span class="header-section-number">3.7.2</span> Analysis of the <em>Representation of the Stimuli with Ellipses</em> graph</a></li>
+  <li><a href="#analysis-of-the-representation-of-the-stimuli-with-confidence-ellipses-graph" id="toc-analysis-of-the-representation-of-the-stimuli-with-confidence-ellipses-graph" class="nav-link" data-scroll-target="#analysis-of-the-representation-of-the-stimuli-with-confidence-ellipses-graph"><span class="header-section-number">3.7.2</span> Analysis of the <em>Representation of the Stimuli with Confidence Ellipses</em> graph</a></li>
   <li><a href="#analysis-of-the-hotelling-test-table" id="toc-analysis-of-the-hotelling-test-table" class="nav-link" data-scroll-target="#analysis-of-the-hotelling-test-table"><span class="header-section-number">3.7.3</span> Analysis of the <em>Hotelling Test</em> table</a></li>
   <li><a href="#analysis-of-the-representation-of-the-sensory-attributes-graph" id="toc-analysis-of-the-representation-of-the-sensory-attributes-graph" class="nav-link" data-scroll-target="#analysis-of-the-representation-of-the-sensory-attributes-graph"><span class="header-section-number">3.7.4</span> Analysis of the <em>Representation of the Sensory Attributes</em> graph</a></li>
   <li><a href="#analysis-of-the-automatic-description-of-the-dimensions-table" id="toc-analysis-of-the-automatic-description-of-the-dimensions-table" class="nav-link" data-scroll-target="#analysis-of-the-automatic-description-of-the-dimensions-table"><span class="header-section-number">3.7.5</span> Analysis of the <em>Automatic Description of the Dimensions</em> table</a></li>
   <li><a href="#synthetic-interpretation" id="toc-synthetic-interpretation" class="nav-link" data-scroll-target="#synthetic-interpretation"><span class="header-section-number">3.7.6</span> Synthetic interpretation</a></li>
   </ul></li>
-  <li><a href="#practical-tips" id="toc-practical-tips" class="nav-link" data-scroll-target="#practical-tips"><span class="header-section-number">3.8</span> Practical tips</a></li>
-  <li><a href="#in-summary" id="toc-in-summary" class="nav-link" data-scroll-target="#in-summary"><span class="header-section-number">3.9</span> In summary</a></li>
+  <li><a href="#from-jamovi-to-the-rj-editor" id="toc-from-jamovi-to-the-rj-editor" class="nav-link" data-scroll-target="#from-jamovi-to-the-rj-editor"><span class="header-section-number">3.8</span> From jamovi to the Rj Editor</a></li>
+  <li><a href="#practical-tips" id="toc-practical-tips" class="nav-link" data-scroll-target="#practical-tips"><span class="header-section-number">3.9</span> Practical tips</a></li>
+  <li><a href="#in-summary" id="toc-in-summary" class="nav-link" data-scroll-target="#in-summary"><span class="header-section-number">3.10</span> In summary</a></li>
   </ul>
 </nav>
     </div>
@@ -241,7 +242,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">3.1</span> Introduction</h2>
-<p>This analysis is designed for <strong>Quantitative Descriptive Analysis (QDA)</strong> data, that is, when several subjects evaluate several stimuli using a fixed list of sensory attributes. It extends the univariate characterization of the sensory space by providing a multivariate representation of the stimuli and their variability. It answers two complementary questions: <strong>which stimuli are sensorially similar</strong> and <strong>is this proximity stable despite variability between subjects</strong>? Its central output is a map of the stimuli enriched with <strong>ellipses</strong>, which visualize not only the position of the stimuli, but also the robustness of this position under panel resampling.</p>
+<p>This analysis is designed for <strong>Quantitative Descriptive Analysis (QDA)</strong> data, that is, when several subjects evaluate several stimuli using a fixed list of sensory attributes. It extends the univariate characterisation of the sensory space by providing a multivariate representation of the stimuli and their variability. It answers two complementary questions: <strong>which stimuli are sensorially similar</strong> and <strong>is this proximity stable despite variability between subjects</strong>? Its central output is a map of the stimuli enriched with <strong>ellipses</strong>, which visualise not only the position of the stimuli, but also the robustness of this position under panel resampling.</p>
 <p><strong>Why not use a standard alternative?</strong></p>
 <p>A PCA applied directly to the raw data may mix two sources of variation: the <strong>stimulus</strong> effect and the <strong>subject</strong> effect. In sensory analysis, some subjects systematically rate higher or lower than others, or use the scale more or less broadly. This analysis takes this subject/stimulus structure into account to produce a representation better suited to QDA data.</p>
 </section>
@@ -249,7 +250,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="3.2" class="anchored" data-anchor-id="understanding-what-happens-under-the-hood"><span class="header-section-number">3.2</span> Understanding what happens under the hood</h2>
 <section id="selection-of-sensory-attributes" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="selection-of-sensory-attributes"><span class="header-section-number">3.2.1</span> Selection of sensory attributes</h3>
-<p>Before constructing the map, the function identifies the attributes that discriminate the stimuli sufficiently. This selection depends on the value of <strong>p-value of the Stimulus effect (%)</strong>. The stricter the threshold, the more streamlined the map will be; the broader it is, the more exhaustive the representation will be, although sometimes more crowded. The default value is 20%, which makes it a good starting point for exploration.</p>
+<p>Before constructing the map, the function identifies the attributes that discriminate the stimuli sufficiently. This selection depends on the value of <strong>Descriptor selection threshold (%)</strong>. The stricter the threshold, the more streamlined the map will be; the broader it is, the more exhaustive the representation will be, although sometimes more crowded. The default value is 20%, which makes it a good starting point for exploration.</p>
 </section>
 <section id="correction-of-the-subject-effect" class="level3" data-number="3.2.2">
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="correction-of-the-subject-effect"><span class="header-section-number">3.2.2</span> Correction of the subject effect</h3>
@@ -267,7 +268,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="virtual-panels-and-supplementary-individuals" class="level3" data-number="3.2.4">
 <h3 data-number="3.2.4" class="anchored" data-anchor-id="virtual-panels-and-supplementary-individuals"><span class="header-section-number">3.2.4</span> Virtual panels and supplementary individuals</h3>
 <p>The key point of the function is the use of <strong>resampling</strong>. In PCA, it is possible to distinguish between <strong>active individuals</strong> — those used to construct the axes — and <strong>supplementary individuals</strong> — those projected afterwards, without modifying the axes. This is precisely the mechanism that makes it possible to construct the ellipses.</p>
-<p>At each simulation, a subset of subjects is drawn with replacement from the original panel, new mean stimulus profiles are recalculated, and then projected into the factor space as supplementary individuals. The dispersion of these projections around each stimulus is then summarized by an ellipse.</p>
+<p>At each simulation, a subset of subjects is drawn with replacement from the original panel, new mean stimulus profiles are recalculated, and then projected into the factor space as supplementary individuals. The dispersion of these projections around each stimulus is then summarised by an ellipse.</p>
 <p>These ellipses therefore describe the variability of the <strong>mean position of the stimuli when the composition of the panel changes</strong>, not the simple raw dispersion of individual ratings.</p>
 <blockquote class="blockquote">
 <p><strong>Note:</strong> the computation may take a few seconds, because it relies on a large number of virtual panels. During this computation, it is better to avoid changing other options so as not to restart the procedure unnecessarily.</p>
@@ -275,7 +276,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="comparison-between-stimuli" class="level3" data-number="3.2.5">
 <h3 data-number="3.2.5" class="anchored" data-anchor-id="comparison-between-stimuli"><span class="header-section-number">3.2.5</span> Comparison between stimuli</h3>
-<p>The function also computes a comparison between pairs of stimuli, presented as a matrix of <strong>p-values</strong>. This output complements the visual reading of the ellipses by adding a numerical measure of the difference between stimuli.</p>
+<p>The function also computes a comparison between pairs of stimuli, presented as a matrix of <strong>p-values</strong>. The Hotelling test is performed on the <strong>selected factor plane</strong> defined by <strong>X-axis</strong> and <strong>Y-axis</strong>. This output complements the visual reading of the ellipses; the pairwise comparisons are exploratory and are reported without multiplicity adjustment.</p>
 </section>
 <section id="automatic-description-of-the-dimensions" class="level3" data-number="3.2.6">
 <h3 data-number="3.2.6" class="anchored" data-anchor-id="automatic-description-of-the-dimensions"><span class="header-section-number">3.2.6</span> Automatic description of the dimensions</h3>
@@ -288,7 +289,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>one column identifying the <strong>stimuli</strong>;</li>
 <li>one column identifying the <strong>subjects</strong>;</li>
-<li>several numeric columns corresponding to the <strong>sensory attributes</strong>.</li>
+<li>at least two numeric columns corresponding to the <strong>sensory attributes</strong>.</li>
 </ul>
 <p>Each row corresponds to the evaluation of one stimulus by one subject. If a subject evaluates the same stimulus several times (repetitions or sessions), each evaluation must appear on a separate row.</p>
 <p>Before running the analysis in jamovi, check in the <strong>Data</strong> tab that:</p>
@@ -300,7 +301,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="interface-guide" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="interface-guide"><span class="header-section-number">3.4</span> Interface guide</h2>
-<p>The analysis appears in the menu <strong>SEDA &gt; Fixed List of Attributes &gt; Representation of the Stimulus Space</strong>. The interface includes three variable drop zones, integrated help, and then three collapsible menus: <strong>Graphic Options</strong>, <strong>Resampling Options</strong>, and <strong>Numerical Indicators</strong>.</p>
+<p>The analysis appears in the menu <strong>SEDA &gt; Fixed List of Attributes &gt; Representation of the Stimulus Space</strong>. The interface includes three variable drop zones, an <strong>Instructions and R Code</strong> section containing the <strong>Read me before running</strong> and <strong>R code</strong> checkboxes, and then three collapsible menus: <strong>Graphic Options</strong>, <strong>Resampling Options</strong>, and <strong>Numerical Indicators</strong>.</p>
 <section id="variables-to-complete" class="level3" data-number="3.4.1">
 <h3 data-number="3.4.1" class="anchored" data-anchor-id="variables-to-complete"><span class="header-section-number">3.4.1</span> Variables to complete</h3>
 <section id="stimulus-effect" class="level4" data-number="3.4.1.1">
@@ -313,19 +314,26 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="sensory-attributes" class="level4" data-number="3.4.1.3">
 <h4 data-number="3.4.1.3" class="anchored" data-anchor-id="sensory-attributes"><span class="header-section-number">3.4.1.3</span> Sensory Attributes</h4>
-<p><strong>Role:</strong> groups together the sensory attributes used to construct the factor space. <strong>Impact on the computation:</strong> only numeric attributes are accepted; the number of calculable dimensions depends on the number of retained attributes. <strong>Practical tip:</strong> start by including all relevant sensory attributes, then refine the selection with <strong>p-value of the Stimulus effect (%)</strong>.</p>
+<p><strong>Role:</strong> groups together the sensory attributes used to construct the factor space. <strong>Impact on the computation:</strong> only numeric attributes are accepted; the number of calculable dimensions depends on the number of retained attributes. <strong>Practical tip:</strong> start by including all relevant sensory attributes, then refine the selection with <strong>Descriptor selection threshold (%)</strong>.</p>
 </section>
 </section>
-<section id="read-me-before-running" class="level3" data-number="3.4.2">
-<h3 data-number="3.4.2" class="anchored" data-anchor-id="read-me-before-running"><span class="header-section-number">3.4.2</span> Read me before running</h3>
+<section id="instructions-and-r-code" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="instructions-and-r-code"><span class="header-section-number">3.4.2</span> Instructions and R Code</h3>
+<section id="read-me-before-running" class="level4" data-number="3.4.2.1">
+<h4 data-number="3.4.2.1" class="anchored" data-anchor-id="read-me-before-running"><span class="header-section-number">3.4.2.1</span> Read me before running</h4>
 <p><strong>Role:</strong> displays integrated help in the results. <strong>Impact on the computation:</strong> none. <strong>Practical tip:</strong> leave it checked during the first uses. It is <strong>enabled by default</strong>.</p>
+</section>
+<section id="r-code" class="level4" data-number="3.4.2.2">
+<h4 data-number="3.4.2.2" class="anchored" data-anchor-id="r-code"><span class="header-section-number">3.4.2.2</span> R code</h4>
+<p><strong>Role:</strong> displays the R script corresponding to the analysis in an <strong>R Code</strong> output. <strong>Impact on the computation:</strong> none. <strong>Practical tip:</strong> enable this option to reproduce the analysis in the <strong>Rj Editor</strong> or continue working in R. It is <strong>disabled by default</strong>.</p>
+</section>
 </section>
 <section id="standardization-of-the-sensory-attributes-scale-to-unit-variance" class="level3" data-number="3.4.3">
 <h3 data-number="3.4.3" class="anchored" data-anchor-id="standardization-of-the-sensory-attributes-scale-to-unit-variance"><span class="header-section-number">3.4.3</span> Standardization of the Sensory Attributes: Scale to unit variance</h3>
-<p><strong>Role:</strong> standardizes the sensory attributes when performing the PCA. <strong>Impact on the computation:</strong> when checked, each attribute contributes equally to the construction of the axes; when unchecked, the most dispersed attributes have a greater influence on the construction of the axes. <strong>Practical tip:</strong> leave this option checked in most analyses. It is <strong>enabled by default</strong>.</p>
+<p><strong>Role:</strong> standardises the sensory attributes when performing the PCA. <strong>Impact on the computation:</strong> when checked, each attribute contributes equally to the construction of the axes; when unchecked, the most dispersed attributes have a greater influence on the construction of the axes. <strong>Practical tip:</strong> leave this option checked in most analyses. It is <strong>enabled by default</strong>.</p>
 </section>
-<section id="selection-of-the-sensory-attributes-p-value-of-the-stimulus-effect" class="level3" data-number="3.4.4">
-<h3 data-number="3.4.4" class="anchored" data-anchor-id="selection-of-the-sensory-attributes-p-value-of-the-stimulus-effect"><span class="header-section-number">3.4.4</span> Selection of the Sensory Attributes: p-value of the Stimulus effect (%)</h3>
+<section id="selection-of-the-sensory-attributes-descriptor-selection-threshold" class="level3" data-number="3.4.4">
+<h3 data-number="3.4.4" class="anchored" data-anchor-id="selection-of-the-sensory-attributes-descriptor-selection-threshold"><span class="header-section-number">3.4.4</span> Selection of the Sensory Attributes: Descriptor selection threshold (%)</h3>
 <p><strong>Role:</strong> sets the threshold for selecting attributes according to their relationship with the stimulus effect. <strong>Impact on the computation:</strong> a low threshold retains few attributes and produces a more readable map; a higher threshold retains more attributes and gives a broader view. <strong>Practical tip:</strong> the default value is 20%, a good starting point for exploration. For a stricter version, start at 5%.</p>
 </section>
 <section id="graphic-options" class="level3" data-number="3.4.5">
@@ -345,25 +353,25 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="resampling-options" class="level3" data-number="3.4.6">
 <h3 data-number="3.4.6" class="anchored" data-anchor-id="resampling-options"><span class="header-section-number">3.4.6</span> Resampling Options</h3>
-<section id="number-of-subjects" class="level4" data-number="3.4.6.1">
-<h4 data-number="3.4.6.1" class="anchored" data-anchor-id="number-of-subjects"><span class="header-section-number">3.4.6.1</span> Number of subjects</h4>
+<section id="subjects-per-virtual-panel" class="level4" data-number="3.4.6.1">
+<h4 data-number="3.4.6.1" class="anchored" data-anchor-id="subjects-per-virtual-panel"><span class="header-section-number">3.4.6.1</span> Subjects per virtual panel</h4>
 <p><strong>Role:</strong> defines the number of subjects drawn in each virtual panel. <strong>Impact on the computation:</strong> the closer this value is to the actual panel size, the more similar the simulated panels will be to it. <strong>Practical tip:</strong> use the actual panel size as a starting point. The default value is 20.</p>
 </section>
-<section id="number-of-panels" class="level4" data-number="3.4.6.2">
-<h4 data-number="3.4.6.2" class="anchored" data-anchor-id="number-of-panels"><span class="header-section-number">3.4.6.2</span> Number of panels</h4>
+<section id="number-of-virtual-panels" class="level4" data-number="3.4.6.2">
+<h4 data-number="3.4.6.2" class="anchored" data-anchor-id="number-of-virtual-panels"><span class="header-section-number">3.4.6.2</span> Number of virtual panels</h4>
 <p><strong>Role:</strong> sets the total number of simulated virtual panels. <strong>Impact on the computation:</strong> the larger this number, the more stable the ellipses will be from one run to another, but computation time increases. <strong>Practical tip:</strong> 300 is a good compromise to start with; for a final rendering, it may be useful to increase this number to 500. The default value is 300.</p>
 </section>
-<section id="threshold" class="level4" data-number="3.4.6.3">
-<h4 data-number="3.4.6.3" class="anchored" data-anchor-id="threshold"><span class="header-section-number">3.4.6.3</span> Threshold (%)</h4>
-<p><strong>Role:</strong> defines the level used to draw the ellipses. <strong>Impact on the computation:</strong> a low threshold produces wider ellipses corresponding to a higher confidence level. <strong>Practical tip:</strong> leave 5% for a first trial. This is the default value.</p>
+<section id="ellipse-alpha" class="level4" data-number="3.4.6.3">
+<h4 data-number="3.4.6.3" class="anchored" data-anchor-id="ellipse-alpha"><span class="header-section-number">3.4.6.3</span> Ellipse alpha (%)</h4>
+<p><strong>Role:</strong> defines the alpha level used to draw the confidence ellipses. <strong>Impact on the computation:</strong> a lower alpha produces wider ellipses; with the default value of 5%, the ellipse corresponds to a 95% level in the covariance-based construction of the simulated positions. <strong>Practical tip:</strong> leave 5% for a first trial.</p>
 </section>
 <section id="center-by-subject" class="level4" data-number="3.4.6.4">
 <h4 data-number="3.4.6.4" class="anchored" data-anchor-id="center-by-subject"><span class="header-section-number">3.4.6.4</span> Center by subject</h4>
-<p><strong>Role:</strong> centers responses subject by subject. <strong>Impact on the computation:</strong> corrects differences in average level between subjects and often improves the comparison between profiles. <strong>Practical tip:</strong> leave this option checked in almost all analyses. It is <strong>enabled by default</strong>.</p>
+<p><strong>Role:</strong> centres responses subject by subject. <strong>Impact on the computation:</strong> corrects differences in average level between subjects and often improves the comparison between profiles. <strong>Practical tip:</strong> leave this option checked in almost all analyses. It is <strong>enabled by default</strong>.</p>
 </section>
 <section id="scale-by-subject" class="level4" data-number="3.4.6.5">
 <h4 data-number="3.4.6.5" class="anchored" data-anchor-id="scale-by-subject"><span class="header-section-number">3.4.6.5</span> Scale by subject</h4>
-<p><strong>Role:</strong> standardizes responses subject by subject. <strong>Impact on the computation:</strong> corrects differences in amplitude between subjects, but modifies the initial structure more strongly than centering alone. <strong>Practical tip:</strong> leave this option unchecked at first. It is <strong>disabled by default</strong>.</p>
+<p><strong>Role:</strong> standardises responses subject by subject. <strong>Impact on the computation:</strong> corrects differences in amplitude between subjects, but modifies the initial structure more strongly than centring alone. <strong>Practical tip:</strong> leave this option unchecked at first. It is <strong>disabled by default</strong>.</p>
 </section>
 </section>
 <section id="numerical-indicators" class="level3" data-number="3.4.7">
@@ -374,7 +382,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="number-of-dimensions" class="level4" data-number="3.4.7.2">
 <h4 data-number="3.4.7.2" class="anchored" data-anchor-id="number-of-dimensions"><span class="header-section-number">3.4.7.2</span> Number of dimensions</h4>
-<p><strong>Role:</strong> defines the number of dimensions to calculate and describe. <strong>Impact on the computation:</strong> this value is limited by the dimensions that can actually be calculated by the PCA. <strong>Practical tip:</strong> the default value, 2, is appropriate for an initial reading.</p>
+<p><strong>Role:</strong> defines the number of dimensions included in the automatic description. <strong>Impact on the computation:</strong> SEDA computes enough components to describe these dimensions; the displayed plane is selected separately with <strong>X-axis</strong> and <strong>Y-axis</strong>. <strong>Practical tip:</strong> the default value, 2, is appropriate for an initial reading.</p>
 </section>
 </section>
 </section>
@@ -388,20 +396,20 @@ ul.task-list li input[type="checkbox"] {
 <li>Place the subject variable in <strong>Subject Effect</strong>.</li>
 <li>Place all sensory attributes in <strong>Sensory Attributes</strong>.</li>
 <li>Leave <strong>Scale to unit variance</strong> checked.</li>
-<li>Set <strong>p-value of the Stimulus effect (%)</strong> to 20% for an initial exploration, or to 5% for a stricter selection.</li>
+<li>Set <strong>Descriptor selection threshold (%)</strong> to 20% for an initial exploration, or to 5% for a stricter selection.</li>
 <li>Keep X-axis = 1 and Y-axis = 2.</li>
 <li>Leave <strong>Center by subject</strong> checked and <strong>Scale by subject</strong> unchecked at first.</li>
-<li>Set <strong>Number of subjects</strong> to the panel size or a close value, leave <strong>Number of panels</strong> at 300 and <strong>Threshold (%)</strong> at 5.</li>
+<li>Set <strong>Subjects per virtual panel</strong> to the panel size or a close value, leave <strong>Number of virtual panels</strong> at 300 and <strong>Ellipse alpha (%)</strong> at 5.</li>
 <li>Activate <strong>Individual variability around stimuli</strong> and/or <strong>Variability around sensory attributes</strong> according to your needs.</li>
 <li>In <strong>Numerical Indicators</strong>, keep the default values for a first trial.</li>
-<li>First read <strong>Representation of the Stimuli with Ellipses</strong>, then <strong>Eigenvalue Decomposition</strong>, then <strong>Automatic Description of the Dimensions</strong>.</li>
+<li>First read <strong>Representation of the Stimuli</strong> and <strong>Representation of the Sensory Attributes</strong>, then <strong>Eigenvalue Decomposition</strong> and <strong>Automatic Description of the Dimensions</strong>. Next assess stability with <strong>Representation of the Stimuli with Confidence Ellipses</strong> and <strong>Hotelling Test</strong>.</li>
 <li>Then return to the settings to test the stability of your conclusions.</li>
 </ol>
 </section>
 <section id="interpretation-of-results" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="interpretation-of-results"><span class="header-section-number">3.6</span> Interpretation of results</h2>
-<section id="representation-of-the-stimuli-with-ellipses" class="level3" data-number="3.6.1">
-<h3 data-number="3.6.1" class="anchored" data-anchor-id="representation-of-the-stimuli-with-ellipses"><span class="header-section-number">3.6.1</span> Representation of the Stimuli with Ellipses</h3>
+<section id="representation-of-the-stimuli-with-confidence-ellipses" class="level3" data-number="3.6.1">
+<h3 data-number="3.6.1" class="anchored" data-anchor-id="representation-of-the-stimuli-with-confidence-ellipses"><span class="header-section-number">3.6.1</span> Representation of the Stimuli with Confidence Ellipses</h3>
 <p>This is the central graph of the function. Each stimulus is represented by a mean point in the factor space, surrounded by an ellipse. The axes come from the PCA, and the percentage displayed on each axis indicates the share of variance explained.</p>
 <table class="caption-top table">
 <colgroup>
@@ -421,7 +429,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td>Strongly overlapping ellipses</td>
-<td>Weakly significant difference (with respect to a change in panel)</td>
+<td>Less clear visual separation under resampling</td>
 </tr>
 <tr class="odd">
 <td>Small ellipse</td>
@@ -433,12 +441,12 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td>Clearly separated ellipses</td>
-<td>More significant difference</td>
+<td>Clearer visual separation under resampling</td>
 </tr>
 </tbody>
 </table>
 <blockquote class="blockquote">
-<p><strong>Point of vigilance:</strong> the ellipses describe the variability of the mean position of the stimuli under panel resampling. They do not directly represent the raw dispersion of individual ratings.</p>
+<p><strong>Point of vigilance:</strong> the ellipses describe the variability of the mean position of the stimuli under panel resampling. They do not directly represent the raw dispersion of individual ratings. Ellipse overlap is a visual guide, not a significance test; use the <strong>Hotelling Test</strong> for the pairwise statistical comparison.</p>
 </blockquote>
 </section>
 <section id="representation-of-the-stimuli" class="level3" data-number="3.6.2">
@@ -459,21 +467,21 @@ ul.task-list li input[type="checkbox"] {
 <h3 data-number="3.6.4" class="anchored" data-anchor-id="individual-variability-around-stimuli-available-only-if-the-option-is-activated"><span class="header-section-number">3.6.4</span> Individual variability around stimuli <em>(available only if the option is activated)</em></h3>
 <p>This output shows the dispersion of individual evaluations around the mean point of each stimulus. A compact cloud indicates strong consensus; a dispersed cloud indicates a more heterogeneous perception between subjects.</p>
 </section>
-<section id="variability-around-sensory-attributes-available-only-if-the-option-is-activated" class="level3" data-number="3.6.5">
-<h3 data-number="3.6.5" class="anchored" data-anchor-id="variability-around-sensory-attributes-available-only-if-the-option-is-activated"><span class="header-section-number">3.6.5</span> Variability around sensory attributes <em>(available only if the option is activated)</em></h3>
+<section id="variability-of-the-sensory-attributes-available-only-if-the-option-is-activated" class="level3" data-number="3.6.5">
+<h3 data-number="3.6.5" class="anchored" data-anchor-id="variability-of-the-sensory-attributes-available-only-if-the-option-is-activated"><span class="header-section-number">3.6.5</span> Variability of the Sensory Attributes <em>(available only if the option is activated)</em></h3>
 <p>This output shows the dispersion of the position of sensory attributes in the virtual panels. A compact cloud means that the attribute is stable; a dispersed cloud indicates that its interpretation is more fragile and depends more strongly on the composition of the panel.</p>
 </section>
 <section id="eigenvalue-decomposition" class="level3" data-number="3.6.6">
 <h3 data-number="3.6.6" class="anchored" data-anchor-id="eigenvalue-decomposition"><span class="header-section-number">3.6.6</span> Eigenvalue Decomposition</h3>
-<p>This table gives, for each dimension, the eigenvalue, the percentage of variance explained, and the cumulative percentage. If the first two dimensions explain a large share of the variance, the 2D map summarizes the data well. Otherwise, it is prudent to explore other planes, for example Dim 1 / Dim 3.</p>
+<p>This table gives, for each dimension, the eigenvalue, the percentage of variance explained, and the cumulative percentage. If the first two dimensions explain a large share of the variance, the 2D map summarises the data well. Otherwise, it is prudent to explore other planes, for example Dim 1 / Dim 3.</p>
 </section>
 <section id="automatic-description-of-the-dimensions-1" class="level3" data-number="3.6.7">
 <h3 data-number="3.6.7" class="anchored" data-anchor-id="automatic-description-of-the-dimensions-1"><span class="header-section-number">3.6.7</span> Automatic Description of the Dimensions</h3>
-<p>This textual output identifies the attributes most strongly linked to each dimension, filtered by <strong>Significance threshold (%)</strong>. It helps name the axes in sensory terms and complements the attribute map well.</p>
+<p>This table identifies the attributes most strongly linked to each dimension, filtered by <strong>Significance threshold (%)</strong>. It reports, in particular, their correlation with the dimension and the associated p-value. A dimension requested in <strong>Number of dimensions</strong> may not appear if no attribute reaches the selected significance threshold. The table helps give the axes a sensory interpretation and complements the attribute map.</p>
 </section>
-<section id="product-by-product-comparison-table-available-only-if-number-of-subjects-1" class="level3" data-number="3.6.8">
-<h3 data-number="3.6.8" class="anchored" data-anchor-id="product-by-product-comparison-table-available-only-if-number-of-subjects-1"><span class="header-section-number">3.6.8</span> Product-by-product comparison table <em>(available only if Number of subjects &gt; 1)</em></h3>
-<p>This p-value matrix compares each pair of stimuli in the factor space. A low p-value suggests a clearer difference between two stimuli; a high p-value suggests a more plausible proximity. This table complements the visual reading of the ellipses, especially when their overlap is difficult to interpret by eye.</p>
+<section id="hotelling-test" class="level3" data-number="3.6.8">
+<h3 data-number="3.6.8" class="anchored" data-anchor-id="hotelling-test"><span class="header-section-number">3.6.8</span> Hotelling Test</h3>
+<p>This p-value matrix compares each pair of stimuli on the <strong>selected factor plane</strong> defined by <strong>X-axis</strong> and <strong>Y-axis</strong>. A low p-value provides evidence of separation between two stimuli on that plane; a high p-value does not establish such separation. These pairwise comparisons are exploratory and are reported without multiplicity adjustment. The table therefore complements the visual reading of the ellipses rather than replacing it.</p>
 </section>
 </section>
 <section id="example-the-sensochoc-dataset" class="level2" data-number="3.7">
@@ -483,6 +491,10 @@ ul.task-list li input[type="checkbox"] {
 <h3 data-number="3.7.1" class="anchored" data-anchor-id="example-settings"><span class="header-section-number">3.7.1</span> Example settings</h3>
 <p>To reproduce this example, use the following values.</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 62%">
+<col style="width: 37%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Option</th>
@@ -507,7 +519,7 @@ ul.task-list li input[type="checkbox"] {
 <td>Checked</td>
 </tr>
 <tr class="odd">
-<td><strong>p-value of the Stimulus effect (%)</strong></td>
+<td><strong>Descriptor selection threshold (%)</strong></td>
 <td>20</td>
 </tr>
 <tr class="even">
@@ -515,15 +527,15 @@ ul.task-list li input[type="checkbox"] {
 <td>1 / 2</td>
 </tr>
 <tr class="odd">
-<td><strong>Number of subjects</strong></td>
+<td><strong>Subjects per virtual panel</strong></td>
 <td>20</td>
 </tr>
 <tr class="even">
-<td><strong>Number of panels</strong></td>
+<td><strong>Number of virtual panels</strong></td>
 <td>300</td>
 </tr>
 <tr class="odd">
-<td><strong>Threshold (%)</strong></td>
+<td><strong>Ellipse alpha (%)</strong></td>
 <td>5</td>
 </tr>
 <tr class="even">
@@ -545,27 +557,27 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <blockquote class="blockquote">
-<p><strong>Note:</strong> The results presented in this section are obtained from the default parameter values. The number of subjects making up the panel should be set to 29, the actual number of subjects in the experiment.</p>
+<p><strong>Reproducibility note:</strong> the numerical results and resampling-based plots discussed below were generated with the default value <strong>Subjects per virtual panel = 20</strong>. Use 20 to reproduce this chapter exactly. Because the actual panel contains 29 subjects, <strong>29</strong> is a natural choice for a new final analysis; changing this value changes the resampling-based outputs.</p>
 </blockquote>
 </section>
-<section id="analysis-of-the-representation-of-the-stimuli-with-ellipses-graph" class="level3" data-number="3.7.2">
-<h3 data-number="3.7.2" class="anchored" data-anchor-id="analysis-of-the-representation-of-the-stimuli-with-ellipses-graph"><span class="header-section-number">3.7.2</span> Analysis of the <em>Representation of the Stimuli with Ellipses</em> graph</h3>
+<section id="analysis-of-the-representation-of-the-stimuli-with-confidence-ellipses-graph" class="level3" data-number="3.7.2">
+<h3 data-number="3.7.2" class="anchored" data-anchor-id="analysis-of-the-representation-of-the-stimuli-with-confidence-ellipses-graph"><span class="header-section-number">3.7.2</span> Analysis of the <em>Representation of the Stimuli with Confidence Ellipses</em> graph</h3>
 <p>The map shows the 6 chocolates in the Dim. 1 / Dim. 2 plane. The first dimension alone accounts for 88.79% of the total variance — this 2D plane is therefore a very faithful representation of the data. The second dimension explains an additional 7.58%.</p>
-<p>On the horizontal axis (Dim. 1), <strong>choc1</strong> and <strong>choc3</strong> occupy the two opposite extremes: <strong>choc1</strong> on the left (bitter, cocoa side), <strong>choc3</strong> on the right (milky, sweet side). These are the two chocolates whose profiles are most clearly opposed, which is consistent with the results of the previous chapter. <strong>choc2</strong>, <strong>choc5</strong>, and <strong>choc6</strong> are grouped in the center, close to the origin. <strong>choc4</strong> is located slightly above the horizontal axis, between choc1 and the central group.</p>
-<p>The ellipses provide information about the robustness of these positions. The ellipses of <strong>choc2</strong>, <strong>choc5</strong>, and <strong>choc6</strong> overlap widely. In other words, if the composition of the panel were changed, their order could be reversed. Conversely, <strong>choc1</strong> and <strong>choc3</strong> have ellipses clearly separated from all the others: their position is stable, and their difference from the other chocolates can be considered reliable.</p>
+<p>On the horizontal axis (Dim. 1), <strong>choc1</strong> and <strong>choc3</strong> occupy the two opposite extremes: <strong>choc1</strong> on the left (bitter, cocoa side), <strong>choc3</strong> on the right (milky, sweet side). These are the two chocolates whose profiles are most clearly opposed, which is consistent with the results of the previous chapter. <strong>choc2</strong>, <strong>choc5</strong>, and <strong>choc6</strong> are grouped in the centre, close to the origin. <strong>choc4</strong> is located slightly above the horizontal axis, between choc1 and the central group.</p>
+<p>The ellipses provide information about the robustness of these positions. The ellipses of <strong>choc2</strong>, <strong>choc5</strong>, and <strong>choc6</strong> overlap widely: their visual separation is therefore less clear when panel composition changes. Conversely, <strong>choc1</strong> and <strong>choc3</strong> have ellipses clearly separated from all the others: their visual separation appears robust across the simulated panels. The <strong>Hotelling Test</strong> then provides the statistical assessment of these differences on the displayed plane.</p>
 </section>
 <section id="analysis-of-the-hotelling-test-table" class="level3" data-number="3.7.3">
 <h3 data-number="3.7.3" class="anchored" data-anchor-id="analysis-of-the-hotelling-test-table"><span class="header-section-number">3.7.3</span> Analysis of the <em>Hotelling Test</em> table</h3>
-<p>The <em>p-value</em> table quantitatively confirms what the ellipses show visually. The pairs <strong>choc2 / choc5</strong> (p = 0.76) and <strong>choc5 / choc6</strong> (p = 0.16) have high p-values: one cannot conclude that there is a significant difference between these chocolates in the sensory space. The pair <strong>choc2 / choc6</strong> is borderline (p = 0.04). By contrast, all comparisons involving <strong>choc1</strong> or <strong>choc3</strong> give p-values of 0.00: these two chocolates differ significantly from all the others.</p>
+<p>The <em>p-value</em> table quantitatively complements the ellipse reading on the Dim. 1 / Dim. 2 plane. The pairs <strong>choc2 / choc5</strong> (p = 0.76) and <strong>choc5 / choc6</strong> (p = 0.16) have high p-values: no separation is established between these chocolates on this plane. The pair <strong>choc2 / choc6</strong> is more borderline (p = 0.04). Conversely, all comparisons involving <strong>choc1</strong> or <strong>choc3</strong> give p-values of 0.00 in the results of this example. These pairwise comparisons are exploratory and are not adjusted for multiplicity.</p>
 </section>
 <section id="analysis-of-the-representation-of-the-sensory-attributes-graph" class="level3" data-number="3.7.4">
 <h3 data-number="3.7.4" class="anchored" data-anchor-id="analysis-of-the-representation-of-the-sensory-attributes-graph"><span class="header-section-number">3.7.4</span> Analysis of the <em>Representation of the Sensory Attributes</em> graph</h3>
 <p>The 14 attributes are distributed very clearly around the horizontal axis. On the right are grouped <em>MilkF</em>, <em>Sweetness</em>, <em>Caramel</em>, <em>Vanilla</em>, <em>MilkA</em>, and <em>Melting</em> — this is the profile of <strong>choc3.</strong> On the left are grouped <em>CocoaF</em>, <em>CocoaA</em>, <em>Bitterness</em>, <em>Astringency</em>, <em>Acidity</em>, <em>Crunchy</em>, and <em>Granular</em> — this is the profile of <strong>choc1</strong>. The horizontal axis therefore clearly corresponds to an opposition between <strong>sweet milk chocolate / bitter dark chocolate</strong>.</p>
-<p>The length of the arrows also indicates the quality of representation of each attribute on this plane. <em>Crunchy</em> has a shorter arrow pointing downward, reflecting part of its variability on the second dimension — confirming that this attribute is less stable in subjects’ perception than <em>CocoaF</em> or <em>MilkF</em>, whose arrows almost reach the edge of the circle.</p>
+<p>The length of the arrows also indicates the quality of representation of each attribute on this plane. <em>Crunchy</em> has a shorter arrow pointing downward, indicating that it is less well represented on this plane than <em>CocoaF</em> or <em>MilkF</em>, whose arrows almost reach the edge of the circle. Arrow length does not, by itself, measure stability across panels; that question is addressed by the <strong>Variability of the Sensory Attributes</strong> plot.</p>
 </section>
 <section id="analysis-of-the-automatic-description-of-the-dimensions-table" class="level3" data-number="3.7.5">
 <h3 data-number="3.7.5" class="anchored" data-anchor-id="analysis-of-the-automatic-description-of-the-dimensions-table"><span class="header-section-number">3.7.5</span> Analysis of the <em>Automatic Description of the Dimensions</em> table</h3>
-<p>The automatic description of the dimensions confirms these readings. On Dim. 1, the most positively correlated attributes are <em>MilkF</em> (correlation 0.86), <em>Sweetness</em> (0.66), and <em>Caramel</em> (0.65); the most negatively correlated are <em>CocoaF</em> (-0.79) and <em>Bitterness</em> (-0.70). On Dim. 2, <em>Sticky</em> (0.59), <em>Acidity</em> (0.58), and <em>Astringency</em> (0.57) appear on the positive side, while <em>Melting</em> (-0.15) is slightly negative.</p>
+<p>The automatic description of the dimensions confirms the very strong opposition carried by Dim. 1. The most positively correlated attributes are <em>MilkF</em> (1.00), <em>MilkA</em> (0.99), <em>Caramel</em> (0.99), <em>Vanilla</em> (0.98), and <em>Sweetness</em> (0.95). At the opposite end, the strongest negative correlations are observed for <em>CocoaF</em> (-1.00), <em>Bitterness</em> (-0.97), <em>CocoaA</em> (-0.97), <em>Granular</em> (-0.96), and <em>Astringency</em> (-0.94). With <strong>Significance threshold (%) = 5</strong>, no attribute is retained for Dim. 2 in this table.</p>
 </section>
 <section id="synthetic-interpretation" class="level3" data-number="3.7.6">
 <h3 data-number="3.7.6" class="anchored" data-anchor-id="synthetic-interpretation"><span class="header-section-number">3.7.6</span> Synthetic interpretation</h3>
@@ -575,23 +587,29 @@ ul.task-list li input[type="checkbox"] {
 </blockquote>
 </section>
 </section>
-<section id="practical-tips" class="level2" data-number="3.8">
-<h2 data-number="3.8" class="anchored" data-anchor-id="practical-tips"><span class="header-section-number">3.8</span> Practical tips</h2>
+<section id="from-jamovi-to-the-rj-editor" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="from-jamovi-to-the-rj-editor"><span class="header-section-number">3.8</span> From jamovi to the Rj Editor</h2>
+<p>Once the <strong>Rj Editor</strong> has been configured to use <strong>System R</strong> as described in Chapter 1, check <strong>R code</strong> to display the script corresponding to the analysis. For this chapter, the code loads <code>SensoMineR</code> and <code>FactoMineR</code>, prepares the selected variables, and then calls <code>panellipse()</code> using the settings chosen in the interface.</p>
+<p>The generated script also includes a small helper that prevents <code>panellipse()</code> from opening an additional graphics device that is not supported by the Rj Editor. This adaptation is handled automatically: no additional setting is required.</p>
+<p>The resulting objects provide access, among other things, to eigenvalues, Hotelling tests, and the automatic description of dimensions. The code therefore provides a reproducible continuation of the analysis performed in SEDA.</p>
+</section>
+<section id="practical-tips" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="practical-tips"><span class="header-section-number">3.9</span> Practical tips</h2>
 <ul>
 <li>Always start with X-axis = 1 and Y-axis = 2.</li>
 <li>Leave <strong>Scale to unit variance</strong> checked in most cases.</li>
 <li>Use <strong>Center by subject</strong> almost systematically.</li>
 <li>Activate <strong>Scale by subject</strong> only if you have a good reason to think that subjects use the scale with very different amplitudes.</li>
 <li>Start with 300 simulated panels; increase to 500 or more for a more stable final version.</li>
-<li>Set <strong>p-value of the Stimulus effect (%)</strong> between 5% and 20% depending on whether you want a streamlined or more exhaustive map.</li>
+<li>Set <strong>Descriptor selection threshold (%)</strong> between 5% and 20% depending on whether you want a streamlined or more exhaustive map.</li>
 <li>Never interpret the stimulus map without looking at the attribute map.</li>
-<li>Do not conclude too quickly that there is a difference when the ellipses overlap strongly.</li>
-<li>Consult <strong>Product-by-product comparison table</strong> to complement the visual reading when the overlap is ambiguous.</li>
-<li>If the first two dimensions summarize little variance, explore other factor planes.</li>
+<li>Do not conclude that there is a difference from ellipse overlap or separation alone.</li>
+<li>Consult <strong>Hotelling Test</strong> to complement the visual reading when the overlap is ambiguous.</li>
+<li>If the first two dimensions summarise little variance, explore other factor planes.</li>
 </ul>
 </section>
-<section id="in-summary" class="level2" data-number="3.9">
-<h2 data-number="3.9" class="anchored" data-anchor-id="in-summary"><span class="header-section-number">3.9</span> In summary</h2>
+<section id="in-summary" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="in-summary"><span class="header-section-number">3.10</span> In summary</h2>
 <p>This analysis produces a multivariate representation of stimuli suited to QDA data, while taking the subject effect into account in the construction of sensory profiles. It enriches the classical factor map with ellipses obtained by resampling, making it possible to assess the robustness of the observed positions. It therefore shows not only <strong>where the stimuli are located</strong>, but also <strong>how confidently they can be located there</strong>.</p>
 
 
@@ -1017,8 +1035,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./chapitre1_prompt_GBH.html" class="pagination-link" aria-label="QDA Data — Characterization of the Sensory Space">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">QDA Data — Characterization of the Sensory Space</span></span>
+      <a href="./chapitre1_prompt_GBH.html" class="pagination-link" aria-label="QDA Data — Characterisation of the Sensory Space">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">QDA Data — Characterisation of the Sensory Space</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
