@@ -66,11 +66,13 @@ L'analyse apparaît dans **SEDA \> Free Perception \> Analysis of Sorting Data**
 **Rôle :** regroupe des variables projetées comme qualitatives supplémentaires. **Impact sur le calcul :** n'influencent pas la construction des axes, mais leur position dans l'espace peut aider à l'interprétation. **Conseil pratique :** utile pour projeter un second groupe de sujets sans modifier le résultat principal.
 
 
-### Read me before running
+### Instructions and R Code
+
+#### Read me before running
 
 **Rôle :** affiche une aide intégrée dans les résultats. **Impact sur le calcul :** aucun. **Conseil pratique :** laissez-la cochée lors des premières utilisations. Elle est **activée par défaut**.
 
-### R code
+#### R code
 
 **Rôle :** affiche le script R correspondant à l'analyse courante. **Impact sur le calcul :** aucun. **Conseil pratique :** cochez cette option si vous souhaitez reproduire l'analyse dans le **Rj Editor** ; elle est désactivée par défaut.
 
@@ -232,7 +234,7 @@ Les tableaux de coordonnées, contributions et cosinus pour les **stimuli** et l
 
 ## Exemple : le jeu de données **perfumes_sorting**
 
-Le jeu de données **perfumes_sorting** porte sur 12 parfums regroupés par 60 sujets lors d'une tâche de tri libre. Il sert à illustrer les sorties de la fonction. Certains groupes ont en plus été verbalisés, ce qui permet à la fonction de produire à la fois une représentation factorielle des parfums et une description textuelle des profils. Les valeurs numériques et les graphiques commentés ci-dessous proviennent directement des résultats de l’analyse. Pour charger ce jeu de données, ouvrez jamovi, cliquez sur l'icône en haut à gauche (trois traits superposés), puis sur **Open** → **Data Library** → **SEDA**.
+Le jeu de données **perfumes_sorting** porte sur 12 parfums regroupés par **58 sujets** lors d'une tâche de tri libre. Il sert à illustrer les sorties de la fonction. Certains groupes ont en plus été verbalisés, ce qui permet à la fonction de produire à la fois une représentation factorielle des parfums et une description textuelle des profils. Les valeurs numériques et les graphiques commentés ci-dessous proviennent directement des résultats de l’analyse. Pour charger ce jeu de données, ouvrez jamovi, cliquez sur l'icône en haut à gauche (trois traits superposés), puis sur **Open** → **Data Library** → **SEDA**.
 
 ### Paramètres de l’exemple
 
@@ -252,6 +254,8 @@ Pour reproduire cet exemple, voici les valeurs à utiliser.
 | **Number of components**           | 5                                     |
 | **Representation of the clusters** | coché pour visualiser la classification |
 | **Number of clusters**             | -1                                    |
+
+> **Remarque de reproductibilité :** avec **Ventilation level (%) = 5**, les catégories rares peuvent être ventilées par réaffectation aléatoire avant l'ACM. De petites différences numériques peuvent donc apparaître d'une exécution à l'autre. Utilisez **Ventilation level (%) = 0** uniquement si une reproductibilité exacte de la solution factorielle entre exécutions est nécessaire, en gardant à l'esprit que cela modifie l'analyse.
 
 ### Analyse du tableau *Description of the Stimuli*
 

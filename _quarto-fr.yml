@@ -3,7 +3,7 @@ project:
 
 book:
   title: "Apprends moi à faire seul : analyse de données sensorielles avec jamovi et le module SEDA"
-  date: "Mai 2026"
+  date: "2026-08-31"
   chapters:
     - index.qmd
     - intro_ppt.qmd
@@ -16,6 +16,8 @@ book:
     - chapitre7_prompt_harmonise.qmd
 
 lang: fr-FR
+
+preface-title: "Préface"
 
 format:
   html:

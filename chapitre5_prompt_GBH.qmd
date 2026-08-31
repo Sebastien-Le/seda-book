@@ -6,17 +6,17 @@ This analysis is designed for **Napping** (*projective mapping*) data, in which 
 
 **Why not use a standard alternative?**
 
-A PCA applied directly to all coordinate columns would account for relationships among the variables, but would ignore their **grouping by subject**. In Napping, the data are naturally organized as **X/Y pairs** provided by each subject. Here, each pair is treated as a **group** in the MFA, which makes it possible to construct a more suitable compromise between the different individual maps. This MFA uses `type = "c"` in FactoMineR: the coordinates are **centered but not standardized**, preserving the geometry and relative scale of each Napping sheet rather than forcing X and Y to have the same variance.
+A PCA applied directly to all coordinate columns would account for relationships among the variables, but would ignore their **grouping by subject**. In Napping, the data are naturally organised as **X/Y pairs** provided by each subject. Here, each pair is treated as a **group** in the MFA, which makes it possible to construct a more suitable compromise between the different individual maps. This MFA uses `type = "c"` in FactoMineR: the coordinates are **centred but not standardised**, preserving the geometry and relative scale of each Napping sheet rather than forcing X and Y to have the same variance.
 
 ## Understanding what happens under the hood
 
 ### The data are read as pairs of coordinates
 
-The function expects in **Active (X,Y) Coordinate Pairs** a set of numeric columns organized as consecutive pairs: X then Y for a first subject, X then Y for a second subject, and so on. The same principle applies to **Supplementary (X,Y) Coordinate Pairs**. If the number of columns is odd in either block, the analysis is rejected. The active block must contain at least **4 columns**, that is, **2 pairs**. The same coordinate cannot be selected as both active and supplementary.
+The function expects in **Active (X,Y) Coordinate Pairs** a set of numeric columns organised as consecutive pairs: X then Y for a first subject, X then Y for a second subject, and so on. The same principle applies to **Supplementary (X,Y) Coordinate Pairs**. If the number of columns is odd in either block, the analysis is rejected. The active block must contain at least **4 columns**, that is, **2 pairs**. The same coordinate cannot be selected as both active and supplementary.
 
-### An MFA on groups of size 2, without standardization
+### An MFA on groups of size 2, without standardisation
 
-The core of the analysis is an **MFA**. Each X/Y pair in **Active (X,Y) Coordinate Pairs** is treated as a group of two quantitative variables. The MFA constructs a common space that summarizes the information carried by all subjects while **balancing the contribution of the groups**. With `type = "c"`, the coordinates are centered but not standardized, preserving the relative scale of the two coordinates in each individual configuration.
+The core of the analysis is an **MFA**. Each X/Y pair in **Active (X,Y) Coordinate Pairs** is treated as a group of two quantitative variables. The MFA constructs a common space that summarises the information carried by all subjects while **balancing the contribution of the groups**. With `type = "c"`, the coordinates are centred but not standardised, preserving the relative scale of the two coordinates in each individual configuration.
 
 ### The role of supplementary coordinates
 
@@ -28,7 +28,7 @@ Once the MFA has been computed, the function produces an **automatic description
 
 ### Saving dimensions and clustering
 
-The **Number of dimensions to save/use for clustering** field determines how many first dimensions are saved in **Coordinates** and used for clustering. If fewer dimensions are available than requested, SEDA uses those that can actually be computed. If you activate **Representation of the clusters** or request **Cluster variable**, the function runs an **HCPC** on these retained dimensions. By default, clustering uses the **first 5 dimensions**, and **Number of clusters = -1** lets FactoMineR choose the number of clusters automatically.
+The **Number of dimensions to save/use for clustering** field determines how many first dimensions are saved in **Coordinates** and used for clustering. If fewer dimensions are available than requested, SEDA uses those that can actually be computed. If you activate **Representation of the clusters** or request **Cluster variable**, the function runs an **HCPC** on these retained dimensions. By default, clustering uses the **first 5 dimensions**, and **Number of clusters = -1** lets FactoMineR choose the number of clusters automatically. The percentages displayed on the HCPC map refer to this retained clustering space and may therefore differ from those on the full MFA map.
 
 ## Expected data structure
 
@@ -60,17 +60,19 @@ The analysis appears in **SEDA \> Free Perception \> Analysis of Napping Data**.
 
 #### Active (X,Y) Coordinate Pairs
 
-**Role:** groups together the active coordinates used to construct the consensus representation. **Impact on the computation:** each X/Y pair becomes a group in the MFA. The number of columns must be even, and the function requires at least **4 columns**. **Practical tip:** strictly respect the order X, Y, X, Y… to avoid incorrectly organizing the groups.
+**Role:** groups together the active coordinates used to construct the consensus representation. **Impact on the computation:** each X/Y pair becomes a group in the MFA. The number of columns must be even, and the function requires at least **4 columns**. **Practical tip:** strictly respect the order X, Y, X, Y… to avoid incorrectly organising the groups.
 
 #### Supplementary (X,Y) Coordinate Pairs
 
 **Role:** adds pairs of coordinates projected as supplementary groups. **Impact on the computation:** these coordinates do not influence the construction of the axes, but are projected into the MFA space. **Practical tip:** use this block to project a second panel without modifying the main compromise.
 
-### Read me before running
+### Instructions and R Code
+
+#### Read me before running
 
 **Role:** displays integrated help in the results. **Impact on the computation:** none. **Practical tip:** leave it checked during the first uses. It is **enabled by default**.
 
-### R code
+#### R code
 
 **Role:** displays the R script corresponding to the analysis in an **R Code** output. **Impact on the computation:** none. **Practical tip:** enable this option to reproduce the analysis in the **Rj Editor**. It is **disabled by default**.
 
@@ -106,7 +108,7 @@ The analysis appears in **SEDA \> Free Perception \> Analysis of Napping Data**.
 
 #### Representation of the clusters
 
-**Role:** activates the display of the clustering graph. **Impact on the computation:** when this option is checked, the function computes the HCA if necessary and displays the map of stimuli according to clusters. **Practical tip:** leave it unchecked for a first reading, then activate it to complement the consensus map with a group-based reading.
+**Role:** activates the display of the clustering graph. **Impact on the computation:** when this option is checked, the function computes the HCPC classification if necessary and displays the map of stimuli according to clusters. **Practical tip:** leave it unchecked for a first reading, then activate it to complement the consensus map with a group-based reading.
 
 #### Number of clusters
 
@@ -119,7 +121,7 @@ The analysis appears in **SEDA \> Free Perception \> Analysis of Napping Data**.
 ## Step-by-step procedure
 
 1.  Open your dataset in jamovi.
-2.  In the **Data** tab, check that the coordinate columns are numeric and organized in X/Y pairs.
+2.  In the **Data** tab, check that the coordinate columns are numeric and organised in X/Y pairs.
 3.  If you have a stimulus identifier column, check that it is categorical.
 4.  Open **SEDA \> Free Perception \> Analysis of Napping Data**.
 5.  Place the stimulus name column in **Stimuli Labels**.
@@ -145,7 +147,7 @@ This is the important result of the function. It represents the stimuli in the c
 | Two distant stimuli      | Different global perceptions         |
 | Compact group of stimuli | Family of stimuli perceived as close |
 
-> **Point of vigilance:** the stimulus map shows a perceptual structure, but it is not always sufficient to name the axes. Adding supplementary information, such as verbalization, can greatly help interpretation.
+> **Point of vigilance:** the stimulus map shows a perceptual structure, but it is not always sufficient to name the axes. Adding supplementary information, such as verbalisation, can greatly help interpretation.
 
 ### Representation of the Subjects
 
@@ -174,7 +176,7 @@ This output automatically describes the retained dimensions according to **Signi
 
 ### Representation of the Stimuli According to Clusters *(available if "Representation of the clusters" is activated)*
 
-This graph shows the stimuli in the factor space, grouped according to the clusters derived from the HCPC classification.
+This graph shows the stimuli in the factor space, grouped according to the clusters derived from the HCPC classification. Classification uses the first dimensions defined by **Number of dimensions to save/use for clustering**, not only the two displayed axes. The percentages on the HCPC map are therefore computed relative to this retained space.
 
 | Element                     | Meaning                                 |
 |-----------------------------|-----------------------------------------|
@@ -212,7 +214,7 @@ To reproduce this example, use the following values.
 
 ### Analysis of the *Representation of the Stimuli* graph
 
-The map reveals a fairly clear perceptual structure on the Dim. 1 (25.07%) / Dim. 2 (18.03%) plane. On the horizontal axis, **Aromatics Elixir** and **Shalimar** are clearly located on the right (positive coordinates on Dim. 1), whereas **J'adore EP**, **J'adore ET**, **Coco Mademoiselle**, **Cinéma**, **Pleasures**, and **Pure Poison** are located on the left. **Chanel N5** differs from this right-hand group by a low position on the second dimension (strongly negative value on Dim. 2), which slightly isolates it from the Shalimar / Aromatics Elixir pair. On the vertical axis, **Angel**, **Lolita Lempicka**, and **L'instant** are clearly located above the center, forming a coherent perceptual group at the top of the plane.
+The map reveals a fairly clear perceptual structure on the Dim. 1 (25.07%) / Dim. 2 (18.03%) plane. On the horizontal axis, **Aromatics Elixir** and **Shalimar** are clearly located on the right (positive coordinates on Dim. 1), whereas **J'adore EP**, **J'adore ET**, **Coco Mademoiselle**, **Cinéma**, **Pleasures**, and **Pure Poison** are located on the left. **Chanel N5** differs from this right-hand group by a low position on the second dimension (strongly negative value on Dim. 2), which slightly isolates it from the Shalimar / Aromatics Elixir pair. On the vertical axis, **Angel**, **Lolita Lempicka**, and **L'instant** are clearly located above the centre, forming a coherent perceptual group at the top of the plane.
 
 ### Analysis of the *Representation of the Subjects* graph
 
@@ -228,13 +230,15 @@ The **Automatic Description of the Dimensions** output identifies the X/Y coordi
 
 ### Analysis of the *Representation of the Stimuli According to Clusters* graph
 
+With **Number of dimensions to save/use for clustering = 5**, the retained MFA dimensions account for 72.95% of the total inertia. The HCPC map therefore expresses Dim. 1 and Dim. 2 relative to this five-dimensional space: approximately **34.37%** and **24.72%**, rather than 25.07% and 18.03% on the full MFA map.
+
 With **Number of clusters = -1**, the automatic classification retains **three clusters**:
 
 -   **Cluster 1** (black): **Coco Mademoiselle**, **J'adore EP**, **J'adore ET**, **Cinéma**, **Pleasures**, and **Pure Poison**;
 -   **Cluster 2** (red): **Angel**, **Lolita Lempicka**, and **L'instant**;
 -   **Cluster 3** (green): **Shalimar**, **Aromatics Elixir**, and **Chanel N5**.
 
-On the 1/2 plane, the first group lies mainly on the left, the second at the top, and the third on the right and lower part of the map. However, the classification is calculated from the **first five retained dimensions**, not only from this plane. Without external sensory information or verbalization, qualities such as “floral”, “light”, or “intense” should not be assigned automatically to these clusters.
+On the 1/2 plane, the first group lies mainly on the left, the second at the top, and the third on the right and lower part of the map. However, the classification is calculated from the **first five retained dimensions**, not only from this plane. Without external sensory information or verbalisation, qualities such as “floral”, “light”, or “intense” should not be assigned automatically to these clusters.
 
 ### Synthetic interpretation
 
@@ -254,13 +258,13 @@ If clustering is requested, the code retains exactly the first dimensions define
 
 -   Always check that the columns in **Active (X,Y) Coordinate Pairs** are complete and supplied in X/Y pairs.
 -   Use **Stimuli Labels** almost systematically and check that the labels are unique.
--   Start with **X-axis = 1** and **Y-axis = 2**; if the first two dimensions summarize little variance, explore other factor planes.
+-   Start with **X-axis = 1** and **Y-axis = 2**; if the first two dimensions summarise little variance, explore other factor planes.
 -   Keep **Number of dimensions to save/use for clustering = 5** for a first trial, especially if you are considering clustering.
 -   Leave **Number of clusters = -1** at first to let the function choose automatically.
 -   Read **Representation of the Subjects** as the relationship between individual configurations and the common dimensions, not as a direct consensus index.
--   Do not assign sensory meaning to axes or clusters without verbalization or external information that can characterize them.
+-   Do not assign sensory meaning to axes or clusters without verbalisation or external information that can characterise them.
 -   Activate **Coordinates** and **Cluster variable** if you want to reuse the results in other jamovi analyses.
 
 ## In summary
 
-This analysis constructs a **consensus map of the stimuli** from Napping data by combining the individual maps through a **centered but non-standardized MFA** that balances the contribution of the groups. It represents the structure of the stimuli and the relationship between individual configurations and the common dimensions, and can be complemented by an **HCPC clustering** of the stimuli on the retained dimensions. Its main value is to transform a set of individual maps into a common representation of perceptual proximities, without requiring a predefined list of attributes.
+This analysis constructs a **consensus map of the stimuli** from Napping data by combining the individual maps through a **centred but non-standardised MFA** that balances the contribution of the groups. It represents the structure of the stimuli and the relationship between individual configurations and the common dimensions, and can be complemented by an **HCPC clustering** of the stimuli on the retained dimensions. Its main value is to transform a set of individual maps into a common representation of perceptual proximities, without requiring a predefined list of attributes.

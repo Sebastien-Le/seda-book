@@ -16,11 +16,11 @@ La comparaison avec d'autres outils courants est utile pour situer jamovi :
 
 | Fonctionnalité | Excel / Google Sheets | jamovi |
 |------------------|--------------------------|-----------------------------|
-| Saisie de données | \ok | \ok |
-| Analyses statistiques | \ko (besoin d'outils externes) | \ok (intégré nativement) |
-| Reproductibilité | \warn difficile à tracer | \ok via le format `.omv` |
-| Modules avancés | \ko | \ok via extensions |
-| Open source | \ko | \ok |
+| Saisie de données | Oui | Oui |
+| Analyses statistiques | Non (besoin d'outils externes) | Oui (intégré nativement) |
+| Reproductibilité | Difficile à tracer | Oui, via le format `.omv` |
+| Modules avancés | Non | Oui, via extensions |
+| Open source | Non | Oui |
 
 **Et XLSTAT ?** XLSTAT est un plugin payant pour Excel qui ajoute des fonctions statistiques avancées. Bien que puissant, il reste propriétaire, dépendant de Microsoft Excel, et son coût peut constituer un frein pour les étudiants ou les structures à budget limité. jamovi offre des fonctionnalités comparables, voire supérieures dans certains domaines, tout en étant entièrement gratuit et indépendant.
 
@@ -58,9 +58,17 @@ La première section, **Fixed List of Attributes**, regroupe les méthodes dans 
 
 La deuxième section regroupe les **approches holistiques**, dans lesquelles les sujets évaluent les stimuli de façon globale, sans liste d'attributs prédéfinie. Deux méthodes sont couvertes : le **Napping** (*projective mapping*), où chaque sujet positionne les stimuli sur un rectangle selon leurs ressemblances perçues, et le **tri libre** (*sorting task*), où chaque sujet regroupe librement les stimuli en catégories. Dans les deux cas, SEDA produit une représentation consensuelle des stimuli en combinant les cartes individuelles — par Analyse Factorielle Multiple pour le Napping, par Analyse des Correspondances Multiples pour le tri libre — et peut compléter cette représentation par une classification automatique des stimuli.
 
-La troisième section, **Hedonic Data**, est dédiée aux **données de liking**. Elle contient la **cartographie des préférences**, qui combine un espace de représentation déjà construit (issu par exemple d'une ACP) avec des notes d'appréciation individuelles, pour produire une surface de réponse indiquant, pour chaque zone de l'espace, la proportion de consommateurs qui y seraient théoriquement favorables. Cette analyse constitue le prolongement naturel des analyses précédentes : une fois que l'espace sensoriel a été construit et interprété, la carte de préférences permet de localiser l'optimum produit au sein de cet espace.
+La troisième section, **Hedonic Data**, est dédiée aux **données de liking**. Elle contient la **cartographie des préférences**, qui combine un espace de représentation déjà construit (issu par exemple d'une ACP) avec des notes d'appréciation individuelles afin d'identifier les zones favorables de cet espace. SEDA peut également classer les consommateurs à partir de leurs profils de liking centrés et produire une carte de préférence pour chaque segment obtenu. Cette analyse constitue le prolongement naturel des analyses précédentes : une fois l'espace sensoriel construit et interprété, la cartographie permet d'identifier les régions favorables et de vérifier si la même structure de préférence est partagée par les différents segments de consommateurs.
 
 Ce livret couvre l'ensemble de ces sept analyses, dans l'ordre du menu SEDA. Dans la suite de ce livret, les termes *produit* et *stimulus* désignent la même chose et sont utilisés indifféremment.
+
+## De jamovi à R : le Rj Editor
+
+SEDA peut afficher le script R correspondant aux options sélectionnées dans l'interface. Dans tout ce livret, ces scripts constituent un pont entre une analyse réalisée par menus et un workflow R reproductible.
+
+Avant la première utilisation du **Rj Editor**, ouvrez ses paramètres avec la roue dentée et sélectionnez **System R** plutôt que **jamovi R**. Le R système doit contenir les packages nécessaires aux analyses — principalement `SensoMineR` et `FactoMineR` dans ce livret — ainsi que `jmvconnect`, qui permet au Rj Editor d'accéder au jeu de données actuellement ouvert dans jamovi sous le nom `data`.
+
+Lorsqu'une analyse propose l'option **R code**, cochez-la pour afficher un script directement copiable dans le Rj Editor. Les chapitres suivants explicitent les principales fonctions et les principaux arguments utilisés dans chaque script généré.
 
 ## Quelques références utiles
 

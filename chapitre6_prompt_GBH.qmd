@@ -1,12 +1,12 @@
-# Sorting Data — Analysis of Categorization
+# Sorting Data — Analysis of Categorisation
 
 ## Introduction
 
-This analysis is designed for **free sorting** (*sorting task*) data, in which each subject groups stimuli into categories according to their own perception. It makes it possible to obtain a **multivariate representation of the stimuli** from the categorizations provided by the subjects, and, if needed, an **automatic classification** of the stimuli into groups. When the groups have been verbalized, the function also provides a **textual description of the stimuli** based on the words used to name these groups.
+This analysis is designed for **free sorting** (*sorting task*) data, in which each subject groups stimuli into categories according to their own perception. It makes it possible to obtain a **multivariate representation of the stimuli** from the categorisations provided by the subjects, and, if needed, an **automatic classification** of the stimuli into groups. When the groups have been verbalised, the function also provides a **textual description of the stimuli** based on the words used to name these groups.
 
 **Why not use a standard alternative?**
 
-A classical approach consists of transforming the sorting data into a similarity matrix between stimuli, then applying a projection method such as MDS. This strategy is useful, but it removes part of the individual information carried by each subject. Here, the function directly analyzes the columns in **Active Subjects** as qualitative variables and applies a **Multiple Correspondence Analysis (MCA)**, which preserves more of the structure of individual responses and makes it possible to represent stimuli and categories simultaneously in the same space.
+A classical approach consists of transforming the sorting data into a similarity matrix between stimuli, then applying a projection method such as MDS. This strategy is useful, but it removes part of the individual information carried by each subject. Here, the function directly analyses the columns in **Active Subjects** as qualitative variables and applies a **Multiple Correspondence Analysis (MCA)**, which preserves more of the structure of individual responses and makes it possible to represent stimuli and categories simultaneously in the same space.
 
 ## Understanding what happens under the hood
 
@@ -14,7 +14,7 @@ A classical approach consists of transforming the sorting data into a similarity
 
 The function reads the columns placed in **Active Subjects** as categorical variables. Each row corresponds to a **stimulus**, and each column indicates in which group a subject placed this stimulus. If **Stimuli Labels** is completed, this variable is used to name the stimuli in the outputs; otherwise, the function uses row numbers.
 
-### An MCA on the categorizations provided by the subjects
+### An MCA on the categorisations provided by the subjects
 
 The core of the function is an **MCA** applied to the columns in **Active Subjects**. In this framework, two stimuli are close when their sorting profiles are similar across the active subjects. The columns placed in **Supplementary Subjects**, if any, are projected as supplementary qualitative variables: they appear in the factor space, but do not participate in the construction of the axes.
 
@@ -38,7 +38,7 @@ The data must contain:
 -   at least **two** categorical columns in **Active Subjects**;
 -   optionally, categorical columns in **Supplementary Subjects**.
 
-Each row corresponds to a **stimulus**. This point is important: unlike in other analyses, here a row does not correspond to an individual response, but to a stimulus described by the categorizations provided by several subjects.
+Each row corresponds to a **stimulus**. This point is important: unlike in other analyses, here a row does not correspond to an individual response, but to a stimulus described by the categorisations provided by several subjects.
 
 Before running the analysis in jamovi, check in the **Data** tab that:
 
@@ -65,11 +65,13 @@ The analysis appears in **SEDA \> Free Perception \> Analysis of Sorting Data**.
 
 **Role:** groups together variables projected as supplementary qualitative variables. **Impact on the computation:** they do not influence the construction of the axes, but their position in the space can help interpretation. **Practical tip:** useful for projecting a second group of subjects without modifying the main result.
 
-### Read me before running
+### Instructions and R Code
+
+#### Read me before running
 
 **Role:** displays integrated help in the results. **Impact on the computation:** none. **Practical tip:** leave it checked during the first uses. It is **enabled by default**.
 
-### R code
+#### R code
 
 **Role:** displays the R script corresponding to the current analysis. **Impact on the computation:** none. **Practical tip:** check this option if you want to reproduce the analysis in the **Rj Editor**; it is disabled by default.
 
@@ -111,7 +113,7 @@ The analysis appears in **SEDA \> Free Perception \> Analysis of Sorting Data**.
 
 #### Long-format textual data
 
-**Role:** displays the intermediate textual dataset in long format. **Impact on the computation:** it does not add a new calculation; it makes it possible to check how the labels were reorganized before the textual analysis. **Practical tip:** activate this option if you want to inspect the transformation of the verbal data.
+**Role:** displays the intermediate textual dataset in long format. **Impact on the computation:** it does not add a new calculation; it makes it possible to check how the labels were reorganised before the textual analysis. **Practical tip:** activate this option if you want to inspect the transformation of the verbal data.
 
 #### Stimulus Table Options — Coordinates, Contributions, Cosine
 
@@ -153,7 +155,7 @@ The analysis appears in **SEDA \> Free Perception \> Analysis of Sorting Data**.
 6.  Place the sorting variables that construct the space in **Active Subjects**.
 7.  If needed, place other sorting variables in **Supplementary Subjects**.
 8.  Leave **Ventilation level (%) = 5**, **X-axis = 1**, **Y-axis = 2**, both **Significance threshold (%) = 5**, **Number of dimensions = 2**, and **Number of components = 5** for a first trial.
-9.  If subjects verbalized their groups, start with **Words Associated with the Stimuli**.
+9.  If subjects verbalised their groups, start with **Words Associated with the Stimuli**.
 10. Then read **Eigenvalue Decomposition**, **Representation of the Stimuli**, **Representation of the Subjects**, and **Representation of the Sorting Categories**.
 11. Consult **Automatic Description of the Dimensions** to identify the subjects and categories associated with the axes.
 12. Activate **Representation of the clusters** if you want an HCPC classification.
@@ -173,9 +175,9 @@ This table describes each stimulus based on the words used in the group labels. 
 | **Internal frequency** | Frequency of the word for this stimulus |
 | **Global frequency** | Global frequency of the word              |
 | **p**                | P-value of the test                       |
-| **V-test**           | Standardized intensity of the association |
+| **V-test**           | Standardised intensity of the association |
 
--   A word with an **Internal %** clearly higher than **Global %** characterizes this stimulus more strongly.
+-   A word with an **Internal %** clearly higher than **Global %** characterises this stimulus more strongly.
 -   A low **p-value** indicates a clearer association.
 -   A positive **V-test** indicates over-representation of the word for this stimulus; a negative **V-test** indicates under-representation.
 
@@ -189,11 +191,11 @@ This is the central result of the function. It represents the stimuli in the MCA
 | Two distant stimuli      | Their sorting profiles are more different |
 | Compact group of stimuli | Family of stimuli with similar sorting profiles |
 
-The percentage displayed on each axis indicates the share of MCA inertia explained by that dimension. Without verbalizations or external information, the axes describe **sorting contrasts** but do not automatically have a sensory meaning.
+The percentage displayed on each axis indicates the share of MCA inertia explained by that dimension. Without verbalisations or external information, the axes describe **sorting contrasts** but do not automatically have a sensory meaning.
 
 ### Representation of the Sorting Categories — category map
 
-This map represents the categories specific to each subject. Their direction from the origin helps characterize the sides of the axes; the direct distance between a category and a stimulus should not be interpreted as an ordinary measure of similarity. The **Active categories**, **Supplementary categories**, and **Selection of categories** options control what is displayed.
+This map represents the categories specific to each subject. Their direction from the origin helps characterise the sides of the axes; the direct distance between a category and a stimulus should not be interpreted as an ordinary measure of similarity. The **Active categories**, **Supplementary categories**, and **Selection of categories** options control what is displayed.
 
 > **Point of vigilance:** with many subjects, this map can become very crowded. The default value **cos2 10** helps keep only a more readable subset of categories.
 
@@ -210,7 +212,7 @@ This map represents the subjects as the qualitative variables of the MCA. It sho
 | **% of variance** | Share explained by the dimension |
 | **Cumulative %**  | Cumulative share explained       |
 
-If the first two dimensions explain a large share of the variance, the 1/2 plane summarizes the structure of the sorting data well. Otherwise, explore other factor planes.
+If the first two dimensions explain a large share of the variance, the 1/2 plane summarises the structure of the sorting data well. Otherwise, explore other factor planes.
 
 ### Automatic Description of the Dimensions
 
@@ -231,7 +233,7 @@ The coordinate, contribution, and cosine tables for **stimuli** and **subjects**
 
 ## Example: the **perfumes_sorting** dataset
 
-The **perfumes_sorting** dataset concerns 12 perfumes grouped by 60 subjects during a free sorting task. It is used to illustrate the function outputs. Some groups were also verbalized, which allows the function to produce both a factorial representation of the perfumes and a textual description of the profiles. The numerical values and graphics discussed below come directly from the analysis results. To load this dataset, open jamovi, click the icon in the top left corner, the three stacked lines, then **Open** → **Data Library** → **SEDA**.
+The **perfumes_sorting** dataset concerns 12 perfumes grouped by **58 subjects** during a free sorting task. It is used to illustrate the function outputs. Some groups were also verbalised, which allows the function to produce both a factorial representation of the perfumes and a textual description of the profiles. The numerical values and graphics discussed below come directly from the analysis results. To load this dataset, open jamovi, click the icon in the top left corner, the three stacked lines, then **Open** → **Data Library** → **SEDA**.
 
 ### Example settings
 
@@ -249,8 +251,10 @@ To reproduce this example, use the following values.
 | **Number of dimensions** | 2 |
 | **Significance threshold (%)** *(sorting-label description)* | 5 |
 | **Number of components** | 5 |
-| **Representation of the clusters** | checked to visualize the classification |
+| **Representation of the clusters** | checked to visualise the classification |
 | **Number of clusters** | -1 |
+
+> **Reproducibility note:** with **Ventilation level (%) = 5**, rare categories may be ventilated by random reassignment before the MCA. Small numerical differences can therefore occur between runs. Use **Ventilation level (%) = 0** only if exact run-to-run reproducibility of the factor solution is required, bearing in mind that this changes the analysis.
 
 ### Analysis of the *Description of the Stimuli* table
 
@@ -260,11 +264,11 @@ The table shows that several perfumes have very marked lexical profiles. A few p
 
 **Chanel N5** stands out with *soap* (test value 3.72, p \< .001; 7.69% versus 1.61% overall), *deodorant* (2.06), and *unpleasant* (1.99), while being under-represented by *fruit* (-2.47) and *flower* (-2.21).
 
-**Lolita Lempicka** is characterized by *sweet* (test value 3.94, p \< .001; 14.55% versus 4.98% overall) and *vanilla* (2.09), but is under-represented by *flower* (-2.34).
+**Lolita Lempicka** is characterised by *sweet* (test value 3.94, p \< .001; 14.55% versus 4.98% overall) and *vanilla* (2.09), but is under-represented by *flower* (-2.34).
 
 **Pleasures** is the perfume most associated with *flower* (test value 3.46, p \< .001; 15.00% versus 5.70% overall) and *fresh* (2.05), and clearly opposed to *strong* (-2.46).
 
-**Shalimar** is characterized by *old* (test value 2.67, p = 0.008) and *sun* (2.40), and under-represented by *flower* (-2.42).
+**Shalimar** is characterised by *old* (test value 2.67, p = 0.008) and *sun* (2.40), and under-represented by *flower* (-2.42).
 
 **Angel** is associated with *vanilla* (2.23), *heady* (1.99), and *too* (1.99), but under-represented by *fresh* (-2.03) and *flower* (-2.19).
 
@@ -299,7 +303,7 @@ With **Number of clusters = -1**, the automatic classification retains **six clu
 
 This example clearly shows the value of the function. It does not only provide a proximity map between perfumes: it also shows **which words** subjects associate with each perfume, **which oppositions structure the space**, and **which groups of perfumes** emerge from the classification. Cross-reading the description table, the factor map, and the classification makes it possible to name the families more precisely than with the map alone.
 
-> **What we take away from this example:** free sorting analysis makes it possible to link the factorial structure of the categorizations, their verbal interpretation, and the formation of coherent families of stimuli.
+> **What we take away from this example:** free sorting analysis makes it possible to link the factorial structure of the categorisations, their verbal interpretation, and the formation of coherent families of stimuli.
 
 
 ## From jamovi to the Rj Editor
@@ -323,4 +327,4 @@ If clustering is requested, the script extracts exactly the first coordinates de
 
 ## In summary
 
-This analysis transforms free sorting data into a reading of the stimuli that is simultaneously **factorial**, **textual**, and **typological**. It combines an **MCA** on the categorizations provided by the subjects, a **description of the stimuli based on the labels**, and, if desired, an **automatic classification** of the stimuli. Its main value is to preserve subjects’ individual information while constructing a consensus and directly interpretable view of the perceptual space of the stimuli.
+This analysis transforms free sorting data into a reading of the stimuli that is simultaneously **factorial**, **textual**, and **typological**. It combines an **MCA** on the categorisations provided by the subjects, a **description of the stimuli based on the labels**, and, if desired, an **automatic classification** of the stimuli. Its main value is to preserve subjects’ individual information while constructing a consensus and directly interpretable view of the perceptual space of the stimuli.

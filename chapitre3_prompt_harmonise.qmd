@@ -28,13 +28,13 @@ Si au moins **trois** variables sont placées dans le champ **CATA**, la fonctio
 
 ### Classification des stimuli
 
-Lorsque l'analyse des correspondances a été calculée, la fonction lance une **classification hiérarchique sur composantes principales (HCPC)**. Par défaut, **Number of clusters = -1** laisse FactoMineR déterminer automatiquement le nombre de groupes, mais l'utilisateur peut aussi imposer un nombre de clusters. La classification utilise les premières dimensions de l'analyse des correspondances définies par **Number of dimensions for clustering** ; ce réglage est distinct du choix du plan affiché avec **X-axis** et **Y-axis**.
+Lorsque l'analyse des correspondances a été calculée, la fonction lance une **classification hiérarchique sur composantes principales (HCPC)**. Par défaut, **Number of clusters = -1** laisse FactoMineR déterminer automatiquement le nombre de groupes, mais l'utilisateur peut aussi imposer un nombre de clusters. La classification utilise les premières dimensions de l'analyse des correspondances définies par **Number of dimensions for clustering** ; ce réglage est distinct du choix du plan affiché avec **X-axis** et **Y-axis**. Les pourcentages affichés sur la carte HCPC sont exprimés relativement à l'inertie de cet espace de classification retenu et peuvent donc différer de ceux de la carte AC complète.
 
 La fonction produit ensuite une carte des stimuli selon leurs clusters et une description des clusters avec le même seuil de significativité que pour la description des stimuli.
 
 ### Conditions minimales pour lancer l'analyse
 
-SEDA 1.4.2 exige au moins **trois variables CATA**. Avec moins de trois attributs, l'analyse s'arrête. Pour construire une carte d'analyse des correspondances en deux dimensions, le tableau agrégé doit également contenir au moins **trois stimuli** et **trois attributs CATA informatifs**.
+SEDA exige au moins **trois variables CATA**. Avec moins de trois attributs, l'analyse s'arrête. Pour construire une carte d'analyse des correspondances en deux dimensions, le tableau agrégé doit également contenir au moins **trois stimuli** et **trois attributs CATA informatifs**.
 
 Les variables CATA doivent être des indicateurs complets codés **0/1** : `0` signifie que le terme n'a pas été coché et `1` qu'il a été coché. Les valeurs manquantes ne sont pas interprétées comme des réponses non cochées et doivent être résolues avant l'analyse.
 
@@ -69,11 +69,13 @@ L'analyse apparaît dans le menu **SEDA \> Fixed List of Attributes \> Analysis 
 
 **Rôle :** regroupe les termes de la liste CATA. **Impact sur le calcul :** ces variables définissent les colonnes du tableau de contingence ; elles servent ensuite à la description des stimuli, à l'analyse des correspondances et à la classification. **Conseil pratique :** sélectionnez au moins **trois** variables CATA complètes codées en 0/1.
 
-### Read me before running
+### Instructions and R Code
+
+#### Read me before running
 
 **Rôle :** affiche une aide intégrée dans les résultats. **Impact sur le calcul :** aucun. **Conseil pratique :** laissez-la cochée lors des premières utilisations. Elle est **activée par défaut**.
 
-### R code
+#### R code
 
 **Rôle :** affiche le script R correspondant à l'analyse dans une sortie **R Code**. **Impact sur le calcul :** aucun. **Conseil pratique :** activez cette option pour reproduire l'analyse dans le **Rj Editor** ou poursuivre le travail dans R. Elle est **désactivée par défaut**.
 
@@ -148,7 +150,7 @@ Ce tableau décrit chaque stimulus par les termes qui lui sont significativement
 
 > Un stimulus absent de ce tableau n'est pas "sans profil" ; il se situe simplement proche de la moyenne de l'ensemble des stimuli au seuil choisi.
 
-### Representation of the Stimuli and the CATA *(disponible avec ≥ 3 termes)*
+### Representation of the Stimuli and the CATA *(disponible avec au moins 3 termes)*
 
 Ce graphique n'est produit que si au moins **trois** termes sont placés dans **CATA**. Il représente simultanément les stimuli et les termes dans l'espace factoriel issu de l'analyse des correspondances.
 
@@ -158,15 +160,15 @@ Ce graphique n'est produit que si au moins **trois** termes sont placés dans **
 
 Cette carte donne une vue d'ensemble, mais elle ne remplace pas la table descriptive. Les deux doivent être lues ensemble.
 
-### Representation of the Stimuli According to Clusters *(disponible avec ≥ 3 termes)*
+### Representation of the Stimuli According to Clusters *(disponible avec au moins 3 termes)*
 
-Ce graphique représente les stimuli selon la partition issue de HCPC. Avec **Number of clusters = -1**, la partition est choisie automatiquement ; si un nombre de clusters est imposé, la carte reflète cette partition. La classification utilise les premières dimensions définies par **Number of dimensions for clustering**, tandis que **X-axis** et **Y-axis** déterminent le plan affiché.
+Ce graphique représente les stimuli selon la partition issue de HCPC. Avec **Number of clusters = -1**, la partition est choisie automatiquement ; si un nombre de clusters est imposé, la carte reflète cette partition. La classification utilise les premières dimensions définies par **Number of dimensions for clustering**, tandis que **X-axis** et **Y-axis** déterminent le plan affiché. Les pourcentages de la carte HCPC se rapportent à l'espace de classification retenu, et non à l'inertie totale de l'AC.
 
 -   Des stimuli dans le même cluster ont des profils CATA proches.
 -   Des clusters éloignés correspondent à des familles de stimuli plus contrastées.
 -   Cette sortie aide à résumer la structure globale des stimuli.
 
-### Description of the Clusters *(disponible avec ≥ 3 termes)*
+### Description of the Clusters *(disponible avec au moins 3 termes)*
 
 Lorsque la classification est disponible, la fonction produit aussi une table décrivant chaque cluster par les termes qui lui sont significativement associés, avec la même logique que pour la description des stimuli.
 

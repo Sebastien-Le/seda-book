@@ -80,11 +80,13 @@ L'analyse apparaît dans le menu **SEDA \> Fixed List of Attributes \> Represent
 **Rôle :** regroupe les attributs sensoriels utilisés pour construire l'espace factoriel. **Impact sur le calcul :** seuls des attributs numériques sont acceptés ; le nombre de dimensions calculables dépend du nombre d'attributs retenus. **Conseil pratique :** commencez par inclure tous les attributs sensoriels pertinents, puis affinez avec **Descriptor selection threshold (%)**.
 
 
-### Read me before running
+### Instructions and R Code
+
+#### Read me before running
 
 **Rôle :** affiche une aide intégrée dans les résultats. **Impact sur le calcul :** aucun. **Conseil pratique :** laissez-la cochée lors des premières utilisations. Elle est **activée par défaut**.
 
-### R code
+#### R code
 
 **Rôle :** affiche le script R correspondant à l'analyse dans une sortie **R Code**. **Impact sur le calcul :** aucun. **Conseil pratique :** activez cette option pour reproduire l'analyse dans le **Rj Editor** ou poursuivre le travail dans R. Elle est **désactivée par défaut**.
 
@@ -234,7 +236,7 @@ Pour reproduire cet exemple, voici les valeurs à utiliser.
 | **Significance threshold (%)**         | 5                             |
 | **Number of dimensions**               | 2                             |
 
-> **Remarque :** Les résultats présentés dans cette partie sont obtenus à partir des valeurs des paramètres définies par défaut. Le nombre de sujets constituant le panel devrait être fixé à 29, le nombre réel de sujets dans l'expérience.
+> **Remarque de reproductibilité :** les résultats numériques et les graphiques issus du rééchantillonnage commentés ci-dessous ont été obtenus avec la valeur par défaut **Subjects per virtual panel = 20**. Utilisez 20 pour reproduire exactement ce chapitre. Comme le panel réel comporte 29 sujets, **29** constitue un choix naturel pour une nouvelle analyse finale ; modifier cette valeur modifie les sorties fondées sur le rééchantillonnage.
 
 ### Analyse du graphique *Representation of the Stimuli with Confidence Ellipses*
 

@@ -16,11 +16,11 @@ A comparison with other common tools is useful for situating jamovi:
 
 | Feature | Excel / Google Sheets | jamovi |
 |------------------|--------------------------|-----------------------------|
-| Data entry | \ok | \ok |
-| Statistical analyses | \ko (requires external tools) | \ok (built in natively) |
-| Reproducibility | \warn difficult to track | \ok via the `.omv` format |
-| Advanced modules | \ko | \ok via extensions |
-| Open source | \ko | \ok |
+| Data entry | Yes | Yes |
+| Statistical analyses | No (requires external tools) | Yes (built in natively) |
+| Reproducibility | Difficult to track | Yes, via the `.omv` format |
+| Advanced modules | No | Yes, via extensions |
+| Open source | No | Yes |
 
 **What about XLSTAT?** XLSTAT is a paid-for Excel plug-in that adds advanced statistical functions. Although it is powerful, it remains proprietary, dependent on Microsoft Excel, and its cost may be a barrier for students or organisations with limited budgets. jamovi offers comparable features, and in some areas superior ones, while being entirely free and independent.
 
@@ -58,9 +58,17 @@ The first section, **Fixed List of Attributes**, brings together methods in whic
 
 The second section brings together **holistic approaches**, in which subjects evaluate the stimuli globally, without any predefined list of attributes. Two methods are covered: **Napping** (*projective mapping*), in which each subject positions the stimuli on a rectangle according to their perceived similarities, and **free sorting** (*sorting task*), in which each subject freely groups the stimuli into categories. In both cases, SEDA produces a consensual representation of the stimuli by combining the individual maps — by Multiple Factor Analysis for Napping, and by Multiple Correspondence Analysis for free sorting — and may complement this representation with an automatic classification of the stimuli.
 
-The third section, **Hedonic Data**, is dedicated to **liking data**. It contains **preference mapping**, which combines an already constructed representation space (for example, from a PCA) with individual liking scores in order to produce a response surface indicating, for each area of the space, the proportion of consumers who would theoretically respond favourably to it. This analysis is the natural extension of the previous analyses: once the sensory space has been constructed and interpreted, the preference map makes it possible to locate the product optimum within that space.
+The third section, **Hedonic Data**, is dedicated to **liking data**. It contains **preference mapping**, which combines an already constructed representation space (for example, from a PCA) with individual liking scores in order to identify favourable regions of that space. SEDA can also classify consumers from their centred liking profiles and produce preference maps for the resulting segments. This analysis is the natural extension of the previous analyses: once the sensory space has been constructed and interpreted, preference mapping helps identify which regions are favourable and whether the same preference structure is shared across consumer segments.
 
 This booklet covers all seven of these analyses, in the order of the SEDA menu. Throughout the rest of this booklet, the terms *product* and *stimulus* mean the same thing and are used interchangeably.
+
+## From jamovi to R: the Rj Editor
+
+SEDA can display the R script corresponding to the options selected in the interface. Throughout this booklet, these scripts provide a bridge from a point-and-click analysis to a reproducible R workflow.
+
+Before using the **Rj Editor** for the first time, open its settings with the gear icon and select **System R** rather than **jamovi R**. Your system R installation must contain the packages required by the analysis — mainly `SensoMineR` and `FactoMineR` in this booklet — as well as `jmvconnect`, which gives the Rj Editor access to the dataset currently open in jamovi under the name `data`.
+
+When an analysis offers the **R code** option, check it to display a script that can be copied into the Rj Editor. The chapters below explain the main functions and arguments used by each generated script.
 
 ## Some useful references
 

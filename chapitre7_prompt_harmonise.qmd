@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Cette analyse permet de construire une **carte de préférences** à partir de deux types d'informations : un **espace de représentation à deux dimensions** déjà calculé, et plusieurs **Liking Variables** correspondant à des notes d'appréciation. Elle sert à repérer quelles zones de cet espace sont associées à une préférence plus forte, et à visualiser **quelle proportion de sujets** serait théoriquement attirée par chaque région du plan. Dans SEDA, ce principe peut être utilisé aussi bien pour une **cartographie externe** des préférences (espace sensoriel) que pour une **cartographie interne** (espace hédonique), selon l'origine des deux axes utilisés. L'analyse peut également **classer les consommateurs** à partir de leurs profils hédoniques et produire une carte de préférence propre à chaque segment.
+Cette analyse permet de construire une **carte de préférences** à partir de deux types d'informations : un **espace de représentation à deux dimensions** déjà calculé, et plusieurs **Liking Variables** correspondant à des notes d'appréciation. Elle sert à repérer quelles zones de cet espace sont associées à une préférence plus forte, et à représenter **la proportion de consommateurs pour lesquels chaque région du plan est prédite comme favorable selon le seuil choisi**. Dans SEDA, ce principe peut être utilisé aussi bien pour une **cartographie externe** des préférences (espace sensoriel) que pour une **cartographie interne** (espace hédonique), selon l'origine des deux axes utilisés. L'analyse peut également **classer les consommateurs** à partir de leurs profils hédoniques et produire une carte de préférence propre à chaque segment.
 
 **Pourquoi ne pas utiliser une alternative standard ?**
 
@@ -206,11 +206,11 @@ Le dendrogramme représente la classification hiérarchique de Ward calculée su
 
 ### Preference Maps by Consumer Cluster *(optionnel)*
 
-Une carte est recalculée pour chaque cluster avec **le même espace produit, le même Regression model et le même Preference threshold (SD)** que la carte globale. Les différences entre cartes peuvent donc être lues comme une hétérogénéité des structures de préférence entre segments, et non comme un changement de repère factoriel.
+Une carte est recalculée pour chaque cluster avec **le même espace produit, le même Regression model et le même Preference threshold (SD)** que la carte globale. Les différences entre cartes peuvent donc être lues comme une hétérogénéité des structures de préférence entre segments, et non comme un changement de repère factoriel. Sur une carte propre à un cluster, le **% of consumers** est calculé au sein de ce cluster : 100 % signifie tous les consommateurs de ce segment, et non tous les consommateurs du panel complet.
 
 ## Exemple : le jeu de données **senso_hedo_cocktail**
 
-Le jeu de données **senso_hedo_cocktail** contient les évaluations sensorielles de 13 cocktails décrits par 13 attributs, ainsi que les jugements hédoniques d'un panel de 47 sujets. Il sert à illustrer la construction d'une **cartographie des préférences** : l'espace sensoriel est d'abord construit par ACP dans MEDA, puis les notes hédoniques y sont projetées via cette fonction. Les valeurs numériques et les graphiques commentés ci-dessous proviennent directement des résultats de l’analyse. Pour charger ce jeu de données, ouvrez jamovi, cliquez sur l'icône en haut à gauche (trois traits superposés), puis sur **Open** → **Data Library** → **SEDA**.
+Le jeu de données **senso_hedo_cocktail** contient les évaluations sensorielles de 16 cocktails décrits par 13 attributs, ainsi que les notes de liking individuelles de **100 consommateurs**. Il sert à illustrer la construction d'une **cartographie des préférences** : l'espace sensoriel est d'abord construit par ACP dans MEDA, puis les notes hédoniques y sont projetées via cette fonction. Les valeurs numériques et les graphiques commentés ci-dessous proviennent directement des résultats de l’analyse. Pour charger ce jeu de données, ouvrez jamovi, cliquez sur l'icône en haut à gauche (trois traits superposés), puis sur **Open** → **Data Library** → **SEDA**.
 
 ### Paramètres de l’exemple
 
@@ -260,7 +260,7 @@ Pour reproduire également la lecture par segments, activez **Classification of 
 
 ### Analyse du graphique *Overall Preference Map*
 
-La carte résultante superpose la surface de densité à la position des 13 cocktails dans l'espace sensoriel. La zone rouge foncée — correspondant à plus de 80–90 % de consommateurs favorables — se situe **à gauche du plan**, dans la région des coordonnées négatives sur Dim. 1, là où se trouvent les cocktails **182**, **444**, **343** et **447**. Ces cocktails, caractérisés par des profils plus sucrés, épais et bananés, correspondent à la zone optimale de préférence.
+La carte résultante superpose la surface de préférence à la position des 16 cocktails dans l'espace sensoriel. La zone rouge foncée — correspondant à plus de 80–90 % de consommateurs favorables — se situe **à gauche du plan**, dans la région des coordonnées négatives sur Dim. 1, là où se trouvent les cocktails **182**, **444**, **343** et **447**. Ces cocktails, caractérisés par des profils plus sucrés, épais et bananés, se situent dans une zone de forte préférence.
 
 À l'inverse, la zone bleue — correspondant à moins de 20 % de consommateurs favorables — se situe **à droite du plan**, là où se trouvent les cocktails **194**, **233** et **245**, caractérisés par des profils acides et intenses.
 
@@ -268,15 +268,24 @@ Les cocktails **131** (en bas au centre) et **386** (en haut à droite) se situe
 
 ### Lecture de la classification des consommateurs
 
-Lorsque **Classification of consumers** est activé, commencez par **Consumer Cluster Sizes** pour voir le nombre et le poids relatif des segments, puis utilisez **Consumer Cluster Membership** pour identifier les consommateurs qui les composent. Le **Consumer Cluster Dendrogram** montre la hiérarchie à l'origine de cette partition.
+Avec **Number of clusters = -1**, la classification de Ward appliquée aux profils de liking centrés retient **2 clusters de consommateurs** dans cet exemple :
 
-Les **Preference Maps by Consumer Cluster** sont ensuite les sorties les plus importantes pour l'interprétation : elles permettent de vérifier si la zone globale de forte préférence est partagée par tous les consommateurs ou si elle résulte de la superposition de groupes aux optima différents. Comme les cartes utilisent exactement le même espace sensoriel et le même seuil, leurs différences sont directement comparables. Les petits clusters doivent néanmoins être interprétés avec prudence.
+-   **Cluster 1** : **62 consommateurs** (62.0 %). Les produits présentant le liking relatif le plus élevé dans le profil centré du cluster sont **182**, **447**, **472**.
+-   **Cluster 2** : **38 consommateurs** (38.0 %). Les produits présentant le liking relatif le plus élevé dans le profil centré du cluster sont **343**, **312**, **182**.
+
+Le produit **182** figure parmi les liking relatifs les plus élevés dans les deux clusters, tandis que **447/472** distinguent davantage le cluster 1 et **343/312** le cluster 2 parmi les cocktails observés. Cela donne une première lecture concrète de ce qui est partagé et de ce qui différencie les segments.
+
+Ces descriptions courtes reposent sur le **profil moyen de liking centré au sein de chaque cluster**. Elles indiquent quels produits testés caractérisent le mieux les préférences relatives d'un segment ; elles ne donnent pas, à elles seules, une signification sensorielle au segment.
+
+Utilisez **Consumer Cluster Sizes** pour apprécier le poids de chaque segment et **Consumer Cluster Membership** pour identifier les consommateurs qui le composent. Le **Consumer Cluster Dendrogram** montre la hiérarchie à l'origine de la partition.
+
+Les **Preference Maps by Consumer Cluster** doivent ensuite être comparées dans le même espace sensoriel. Comme chaque carte utilise exactement les mêmes coordonnées produit, le même modèle de régression et le même seuil que la carte globale, leurs différences traduisent une hétérogénéité des structures de préférence prédites et non un changement de repère. Les clusters très petits doivent néanmoins être interprétés avec prudence.
 
 ### Interprétation synthétique
 
-L'espace sensoriel structuré par l'ACP, fondé sur l'opposition acide-intense vs sucré-épais, s'avère directement lisible sur la carte de préférences. L'optimum se situe du côté sucré-épais, tandis que les profils acides et intenses sont moins appréciés. Aucun cocktail ne se trouve exactement dans la zone de préférence maximale, ce qui suggère davantage une **direction d'amélioration formulation** qu'un produit déjà optimal.
+L'espace sensoriel structuré par l'ACP, fondé sur l'opposition acide-intense vs sucré-épais, s'avère directement lisible sur la carte de préférences. La région de préférence la plus élevée se situe du côté sucré-épais, tandis que les profils acides et intenses sont moins appréciés. Aucun cocktail ne semble occuper exactement le centre de cette région de forte préférence, ce qui suggère davantage une **direction d'amélioration de la formulation** qu'un produit déjà optimal.
 
-> **Ce qu’on retient de cet exemple :** la cartographie des préférences relie directement l’espace sensoriel et les préférences hédoniques, ce qui permet d’identifier une zone optimale même lorsqu’aucun produit existant ne l’occupe exactement.
+> **Ce qu’on retient de cet exemple :** la cartographie des préférences relie directement l’espace sensoriel et les préférences hédoniques, ce qui permet d’identifier une région favorable de l’espace produit même lorsqu’aucun produit existant n’en occupe exactement le centre.
 
 ## De jamovi au Rj Editor
 

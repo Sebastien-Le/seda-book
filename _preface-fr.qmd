@@ -1,5 +1,3 @@
-# Préface {.unnumbered}
-
 Ce livret est né d'une conviction simple : on apprend mieux à faire seul lorsque quelqu'un a pris le temps d'expliquer non seulement **comment**, mais aussi **pourquoi**.
 
 L'analyse statistique de données sensorielles s'est longtemps apprise dans R, à travers des ouvrages, des scripts et des tutoriels qui supposaient une certaine familiarité avec la programmation, les packages, et parfois même avec une forme de résilience face aux messages d'erreur. Ces outils ont leur force, leur élégance, et restent indispensables. Mais ils peuvent aussi constituer une barrière pour de nombreux praticiens qui travaillent pourtant régulièrement avec des données sensorielles, sans venir du monde de la statistique ou du code.

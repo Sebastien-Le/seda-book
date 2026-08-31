@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This analysis makes it possible to construct a **preference map** from two types of information: an already computed **two-dimensional representation space**, and several **Liking Variables** corresponding to liking scores. It is used to identify which areas of this space are associated with stronger preference, and to visualize **what proportion of subjects** would theoretically be attracted to each region of the plane. In SEDA, this principle can be used both for **external preference mapping** (sensory space) and for **internal preference mapping** (hedonic space), depending on the origin of the two axes used. The analysis can also **classify consumers** from their liking profiles and produce a preference map for each segment.
+This analysis makes it possible to construct a **preference map** from two types of information: an already computed **two-dimensional representation space**, and several **Liking Variables** corresponding to liking scores. It is used to identify which areas of this space are associated with stronger preference, and to represent **the proportion of consumers for whom each region of the plane is predicted to be favourable under the selected threshold**. In SEDA, this principle can be used both for **external preference mapping** (sensory space) and for **internal preference mapping** (hedonic space), depending on the origin of the two axes used. The analysis can also **classify consumers** from their liking profiles and produce a preference map for each segment.
 
 **Why not use a standard alternative?**
 
@@ -38,21 +38,21 @@ A simple interpretation is that **Vector** describes a preference direction; **Q
 
 ### Construction of the preference surface
 
-For each consumer, SEDA fits the selected model to the observed products and predicts liking over a regular grid covering the **X-axis / Y-axis** plane. Each consumer's predicted surface is then standardized to mean 0 and standard deviation 1 over the grid.
+For each consumer, SEDA fits the selected model to the observed products and predicts liking over a regular grid covering the **X-axis / Y-axis** plane. Each consumer's predicted surface is then standardised to mean 0 and standard deviation 1 over the grid.
 
-At each grid location, SEDA counts how many consumers have a standardized predicted value above **Preference threshold (SD)**. This count is converted to a percentage and forms the **% of consumers** surface.
+At each grid location, SEDA counts how many consumers have a standardised predicted value above **Preference threshold (SD)**. This count is converted to a percentage and forms the **% of consumers** surface.
 
 ### Preference threshold (SD)
 
-The threshold is expressed in standard deviations of each consumer's own predicted surface. With the default value **0**, a location is considered favorable for a consumer when predicted liking is above that consumer's average predicted level over the grid. A positive value makes the criterion more selective; a negative value broadens the favorable region. This is a **preference criterion**, not a statistical significance threshold.
+The threshold is expressed in standard deviations of each consumer's own predicted surface. With the default value **0**, a location is considered favourable for a consumer when predicted liking is above that consumer's average predicted level over the grid. A positive value makes the criterion more selective; a negative value broadens the favourable region. This is a **preference criterion**, not a statistical significance threshold.
 
 ### What the final map really represents
 
-The final map does not directly display the observed product-by-product scores. It shows a **modeled surface** constructed from the individual consumer models. The regions indicate the proportion of consumers for whom each location in the plane exceeds the selected preference threshold. The **% of consumers** legend should therefore be read as the percentage of consumers for whom a location is predicted to be favorable, not as a mean liking score.
+The final map does not directly display the observed product-by-product scores. It shows a **modelled surface** constructed from the individual consumer models. The regions indicate the proportion of consumers for whom each location in the plane exceeds the selected preference threshold. The **% of consumers** legend should therefore be read as the percentage of consumers for whom a location is predicted to be favourable, not as a mean liking score.
 
 ### Consumer classification
 
-If **Classification of consumers** is enabled, classification is computed separately from the preference map. SEDA centers each consumer's liking profile across stimuli, computes distances between consumers, and applies Ward hierarchical clustering (`ward.D2`). Centering removes each consumer's average rating level, so the groups mainly reflect **different patterns of preference across products**, rather than a simple distinction between consumers who rate high or low overall.
+If **Classification of consumers** is enabled, classification is computed separately from the preference map. SEDA centres each consumer's liking profile across stimuli, computes distances between consumers, and applies Ward hierarchical clustering (`ward.D2`). Centring removes each consumer's average rating level, so the groups mainly reflect **different patterns of preference across products**, rather than a simple distinction between consumers who rate high or low overall.
 
 With **Number of clusters = -1**, SEDA automatically selects a cut from the largest upper-level jump in the hierarchy. A fixed number of groups can also be imposed. Cluster-specific preference maps are then recomputed using the consumers in each group while keeping exactly the same product space, regression model, and preference threshold as the overall map.
 
@@ -125,13 +125,13 @@ The analysis appears in **SEDA \> Hedonic Data \> Preference Mapping**. The inte
 
 #### Preference threshold (SD)
 
-**Role:** sets the standardized level that predicted preference must exceed for a location to be counted as favorable for one consumer. **Impact on the computation:** directly changes the percentage displayed on the map. **Practical tip:** start with **0**. Positive values identify more selective high-preference regions; negative values broaden favorable regions.
+**Role:** sets the standardised level that predicted preference must exceed for a location to be counted as favourable for one consumer. **Impact on the computation:** directly changes the percentage displayed on the map. **Practical tip:** start with **0**. Positive values identify more selective high-preference regions; negative values broaden favourable regions.
 
 ### Consumer Classification *(collapsed by default)*
 
 #### Classification of consumers
 
-**Role:** enables segmentation of consumers from their centered liking profiles. **Impact on the computation:** adds cluster tables, the dendrogram, and, when requested, segment-specific preference maps. Disabled by default.
+**Role:** enables segmentation of consumers from their centred liking profiles. **Impact on the computation:** adds cluster tables, the dendrogram, and, when requested, segment-specific preference maps. Disabled by default.
 
 #### Number of clusters
 
@@ -139,7 +139,7 @@ The analysis appears in **SEDA \> Hedonic Data \> Preference Mapping**. The inte
 
 #### Cluster dendrogram
 
-**Role:** displays the Ward clustering dendrogram. **Impact on the computation:** none; it visualizes the hierarchy used to form the groups. Enabled by default when classification is used.
+**Role:** displays the Ward clustering dendrogram. **Impact on the computation:** none; it visualises the hierarchy used to form the groups. Enabled by default when classification is used.
 
 #### Preference maps by cluster
 
@@ -179,16 +179,16 @@ The map shows the space supplied by **X-axis** and **Y-axis**, overlaid with the
 
 | Element | Meaning |
 |---|---|
-| Areas toward **Color for high preference areas** | Regions favorable for a high proportion of consumers according to the selected threshold |
-| Areas toward **Color for low preference areas** | Regions favorable for a low proportion of consumers |
-| Intermediate areas | Intermediate proportions of favorable consumers |
+| Areas toward **Color for high preference areas** | Regions favourable for a high proportion of consumers according to the selected threshold |
+| Areas toward **Color for low preference areas** | Regions favourable for a low proportion of consumers |
+| Intermediate areas | Intermediate proportions of favourable consumers |
 | Contour lines | Mark selected consumer percentages from 20% up to 95% |
 | Squares with labels | Positions of the tested stimuli in the selected space |
 | Subtitle | Reports the **Preference threshold (SD)** used |
 
 With the default threshold **0**, a high region means that a large proportion of consumers have predicted preference above their own average predicted level there. The map therefore represents neither raw mean liking nor a probability in the statistical sense.
 
-> **Point of vigilance:** the surface is modeled over a grid covering the plane. Regions far from observed stimuli involve more extrapolation and should be interpreted cautiously.
+> **Point of vigilance:** the surface is modelled over a grid covering the plane. Regions far from observed stimuli involve more extrapolation and should be interpreted cautiously.
 
 > **Point of vigilance:** a visually smooth surface does not guarantee robustness. The number of stimuli, the selected model, and consumer diversity determine how much information is available.
 
@@ -198,19 +198,19 @@ This table gives the **number** and **percentage** of consumers in each cluster.
 
 ### Consumer Cluster Membership *(if Classification of consumers is enabled)*
 
-This table gives the cluster assigned to every consumer. It can be used to reconnect segments with the original liking columns or to characterize the groups in a complementary analysis.
+This table gives the cluster assigned to every consumer. It can be used to reconnect segments with the original liking columns or to characterise the groups in a complementary analysis.
 
 ### Consumer Cluster Dendrogram *(optional)*
 
-The dendrogram displays the Ward hierarchical clustering computed from centered liking profiles. Consumers that are close in this hierarchy have similar patterns of preference across products, largely independently of their average rating level.
+The dendrogram displays the Ward hierarchical clustering computed from centred liking profiles. Consumers that are close in this hierarchy have similar patterns of preference across products, largely independently of their average rating level.
 
 ### Preference Maps by Consumer Cluster *(optional)*
 
-A preference map is recomputed for every cluster using **the same product space, Regression model, and Preference threshold (SD)** as the overall map. Differences between maps can therefore be interpreted as heterogeneity in preference structure between segments, rather than as changes in the factorial reference space.
+A preference map is recomputed for every cluster using **the same product space, Regression model, and Preference threshold (SD)** as the overall map. Differences between maps can therefore be interpreted as heterogeneity in preference structure between segments, rather than as changes in the factorial reference space. On a cluster-specific map, the **% of consumers** is calculated within that cluster: 100% means all consumers in that segment, not all consumers in the full panel.
 
 ## Example: the **senso_hedo_cocktail** dataset
 
-The **senso_hedo_cocktail** dataset contains the sensory evaluations of 13 cocktails described by 13 attributes, as well as hedonic judgments from a panel of 47 subjects. It is used to illustrate the construction of a **preference map**: the sensory space is first constructed by PCA in MEDA, then the hedonic scores are projected into it through this function. The numerical values and graphics discussed below come directly from the analysis results. To load this dataset, open jamovi, click the icon in the top left corner, the three stacked lines, then **Open** → **Data Library** → **SEDA**.
+The **senso_hedo_cocktail** dataset contains the sensory evaluations of 16 cocktails described by 13 attributes, as well as individual liking scores from **100 consumers**. It is used to illustrate the construction of a **preference map**: the sensory space is first constructed by PCA in MEDA, then the hedonic scores are projected into it through this function. The numerical values and graphics discussed below come directly from the analysis results. To load this dataset, open jamovi, click the icon in the top left corner, the three stacked lines, then **Open** → **Data Library** → **SEDA**.
 
 ### Example settings
 
@@ -243,14 +243,14 @@ In the **MEDA** module, run a PCA on the 13 sensory attributes with the followin
 | **Number of components (Save)** | 2                           |
 | **Coordinates (Save)**          | Checked                      |
 
-The PCA produces a two-dimensional space: **Dim. 1 explains 53.25%** of the variance and **Dim. 2 explains 24.13%**, that is, **77.37% cumulative**. The 1/2 plane therefore summarizes the sensory profiles of the cocktails well.
+The PCA produces a two-dimensional space: **Dim. 1 explains 53.25%** of the variance and **Dim. 2 explains 24.13%**, that is, **77.37% cumulative**. The 1/2 plane therefore summarises the sensory profiles of the cocktails well.
 
 The automatic description of the dimensions confirms the interpretation of the axes:
 
 -   **Dim. 1** opposes *acidity* (correlation 0.93), *bitterness* (0.88), *odor.orange* (0.75), and *intensity* (0.73) on one side, to *odor.banana* (-0.93), *sweet* (-0.93), *thickness* (-0.88), and *pulp* (-0.70) on the other. This is a clear opposition between acidic and intense cocktails vs sweet, thick, banana-like cocktails.
 -   **Dim. 2** is more strongly structured by *odor.lemon* (0.77), *odor.mango* (0.69), *persistence* (0.66), and *color.intensity* (0.58), with *odor.orange* (-0.61) on the negative side.
 
-On the individual map, the cocktails are widely distributed across the plane. **386** is located in the upper right (high on Dim. 2), **131** at the bottom center, **447** and **312** on the left (sweet, thick), and **194**, **233**, and **245** on the right (acidic, intense). Once the PCA has been run, the **Dim. 1** and **Dim. 2** columns automatically appear in the jamovi data sheet.
+On the individual map, the cocktails are widely distributed across the plane. **386** is located in the upper right (high on Dim. 2), **131** at the bottom centre, **447** and **312** on the left (sweet, thick), and **194**, **233**, and **245** on the right (acidic, intense). Once the PCA has been run, the **Dim. 1** and **Dim. 2** columns automatically appear in the jamovi data sheet.
 
 ### Step 2 — Construct the preference map in SEDA
 
@@ -260,31 +260,40 @@ To reproduce the segment-based reading as well, enable **Classification of consu
 
 ### Analysis of the *Overall Preference Map* graph
 
-The resulting map superimposes the density surface onto the position of the 13 cocktails in the sensory space. The dark red area — corresponding to more than 80–90% favorable consumers — is located **on the left of the plane**, in the region with negative coordinates on Dim. 1, where the cocktails **182**, **444**, **343**, and **447** are located. These cocktails, characterized by sweeter, thicker, banana-like profiles, correspond to the optimal preference area.
+The resulting map superimposes the preference surface onto the position of the 16 cocktails in the sensory space. The dark red area — corresponding to more than 80–90% favourable consumers — is located **on the left of the plane**, in the region with negative coordinates on Dim. 1, where the cocktails **182**, **444**, **343**, and **447** are located. These cocktails, characterised by sweeter, thicker, banana-like profiles, lie in a high-preference region.
 
-Conversely, the blue area — corresponding to fewer than 20% favorable consumers — is located **on the right of the plane**, where the cocktails **194**, **233**, and **245** are located, characterized by acidic and intense profiles.
+Conversely, the blue area — corresponding to fewer than 20% favourable consumers — is located **on the right of the plane**, where the cocktails **194**, **233**, and **245** are located, characterised by acidic and intense profiles.
 
-The cocktails **131** (bottom center) and **386** (upper right) are located in intermediate to low-preference areas (light blue, 10–25%).
+The cocktails **131** (bottom centre) and **386** (upper right) are located in intermediate to low-preference areas (light blue, 10–25%).
 
 ### Reading the consumer classification
 
-When **Classification of consumers** is enabled, start with **Consumer Cluster Sizes** to assess the size and relative weight of the segments, then use **Consumer Cluster Membership** to identify which consumers compose them. The **Consumer Cluster Dendrogram** shows the hierarchy underlying the partition.
+With **Number of clusters = -1**, the Ward classification applied to the centred liking profiles retains **2 consumer clusters** in this example:
 
-The **Preference Maps by Consumer Cluster** are then the most important outputs for interpretation: they show whether the overall high-preference region is shared by most consumers or results from superimposing groups with different optima. Because the maps use exactly the same sensory space and threshold, their differences can be compared directly. Very small clusters should nevertheless be interpreted cautiously.
+-   **Cluster 1**: **62 consumers** (62.0%). The products with the highest relative liking in the centred cluster profile are **182**, **447**, **472**.
+-   **Cluster 2**: **38 consumers** (38.0%). The products with the highest relative liking in the centred cluster profile are **343**, **312**, **182**.
+
+Product **182** appears among the highest relative liking values in both clusters, whereas **447/472** distinguish Cluster 1 and **343/312** distinguish Cluster 2 among the observed cocktails. This gives a concrete first indication of both shared and segment-specific preference patterns.
+
+These short descriptions are based on the **mean centred liking profile within each cluster**. They identify which tested products most distinguish the relative preferences of a segment; they do not, by themselves, assign a sensory meaning to that segment.
+
+Use **Consumer Cluster Sizes** to assess the weight of each segment and **Consumer Cluster Membership** to identify the consumers composing it. The **Consumer Cluster Dendrogram** shows the hierarchy underlying the partition.
+
+The **Preference Maps by Consumer Cluster** should then be compared in the common sensory space. Because every cluster map uses exactly the same product coordinates, regression model, and preference threshold as the overall map, differences between maps reflect heterogeneity in predicted preference patterns rather than a change of reference space. Very small clusters should nevertheless be interpreted cautiously.
 
 ### Synthetic interpretation
 
-The sensory space structured by the PCA, based on the acidic-intense vs sweet-thick opposition, is directly readable on the preference map. The optimum is located on the sweet-thick side, whereas acidic and intense profiles are less appreciated. No cocktail is located exactly in the maximum preference area, which suggests more of a **formulation improvement direction** than an already optimal product.
+The sensory space structured by the PCA, based on the acidic-intense vs sweet-thick opposition, is directly readable on the preference map. The highest-preference region lies on the sweet-thick side, whereas acidic and intense profiles are less appreciated. No cocktail appears to occupy the centre of this highest-preference region, which suggests a **direction for formulation improvement** rather than an already optimal product.
 
-> **What we take away from this example:** preference mapping directly links the sensory space and hedonic preferences, making it possible to identify an optimal area even when no existing product occupies it exactly.
+> **What we take away from this example:** preference mapping directly links the sensory space and hedonic preferences, making it possible to identify a favourable region of the product space even when no existing product occupies its centre.
 
 ## From jamovi to the Rj Editor
 
 Once the **Rj Editor** has been configured with **System R** as described in Chapter 1, check **R code** to display the script corresponding to the analysis. The dataset open in jamovi is available as `data`.
 
-The generated code reconstructs the two coordinates and liking columns, fits a separate response surface for each consumer, standardizes predictions over the grid, and applies **Preference threshold (SD)** before computing the **% of consumers**. It therefore reproduces the logic of the map explicitly rather than treating the result as a simple mean liking score.
+The generated code reconstructs the two coordinates and liking columns, fits a separate response surface for each consumer, standardises predictions over the grid, and applies **Preference threshold (SD)** before computing the **% of consumers**. It therefore reproduces the logic of the map explicitly rather than treating the result as a simple mean liking score.
 
-If **Classification of consumers** is enabled, the script also centers the liking profiles, computes distances between consumers, performs Ward clustering with `hclust(..., method = "ward.D2")`, uses `cutree()` to form the groups, and then recomputes a map for the consumers in each cluster. The generated code therefore reproduces both the overall map and the full segmentation in the Rj Editor.
+If **Classification of consumers** is enabled, the script also centres the liking profiles, computes distances between consumers, performs Ward clustering with `hclust(..., method = "ward.D2")`, uses `cutree()` to form the groups, and then recomputes a map for the consumers in each cluster. The generated code therefore reproduces both the overall map and the full segmentation in the Rj Editor.
 
 ## Practical tips
 
@@ -292,11 +301,11 @@ If **Classification of consumers** is enabled, the script also centers the likin
 -   Use **individual scores** in **Liking Variables**, one column per consumer.
 -   Start with **Preference threshold (SD) = 0**; then vary it to assess whether high-preference regions remain stable.
 -   Match **Regression model** complexity to the number of products: the minima are 4, 5, 6, and 7 products for Vector, Circular, Elliptical, and Quadratic respectively.
--   For external preference mapping, interpret the sensory axes before translating a favorable region into a formulation direction.
+-   For external preference mapping, interpret the sensory axes before translating a favourable region into a formulation direction.
 -   If you enable **Classification of consumers**, inspect cluster sizes first and be cautious with very small segments.
 -   Compare cluster maps in the same reference space: differences reflect different preference structures, not different factorial spaces.
 -   Check **R code** when you want a reproducible record of the settings and calculations.
 
 ## In summary
 
-Preference mapping links a **two-dimensional stimulus space** to **individual liking scores**. SEDA fits a preference surface for each consumer, standardizes the predictions, and represents the proportion of consumers exceeding **Preference threshold (SD)** in each region of the plane. The overall map can be complemented by **Ward clustering of centered liking profiles** and by cluster-specific preference maps. The analysis can therefore distinguish a broadly shared preference region from an overall pattern that hides several consumer segments, while keeping the same product space for all comparisons.
+Preference mapping links a **two-dimensional stimulus space** to **individual liking scores**. SEDA fits a preference surface for each consumer, standardises the predictions, and represents the proportion of consumers exceeding **Preference threshold (SD)** in each region of the plane. The overall map can be complemented by **Ward clustering of centred liking profiles** and by cluster-specific preference maps. The analysis can therefore distinguish a broadly shared preference region from an overall pattern that hides several consumer segments, while keeping the same product space for all comparisons.

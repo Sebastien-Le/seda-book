@@ -28,7 +28,7 @@ Une fois l'AFM calculée, la fonction produit une **description automatique des 
 
 ### Sauvegarde des dimensions et clustering
 
-Le champ **Number of dimensions to save/use for clustering** détermine combien de premières dimensions sont sauvegardées dans **Coordinates** et utilisées pour la classification. Si le nombre demandé dépasse le nombre de dimensions disponibles, SEDA utilise celles qui peuvent effectivement être calculées. Si vous activez **Representation of the clusters** ou demandez **Cluster variable**, la fonction lance une **HCPC** sur ces dimensions retenues. Par défaut, le clustering utilise les **5 premières dimensions**, et **Number of clusters = -1** laisse FactoMineR choisir automatiquement le nombre de clusters.
+Le champ **Number of dimensions to save/use for clustering** détermine combien de premières dimensions sont sauvegardées dans **Coordinates** et utilisées pour la classification. Si le nombre demandé dépasse le nombre de dimensions disponibles, SEDA utilise celles qui peuvent effectivement être calculées. Si vous activez **Representation of the clusters** ou demandez **Cluster variable**, la fonction lance une **HCPC** sur ces dimensions retenues. Par défaut, le clustering utilise les **5 premières dimensions**, et **Number of clusters = -1** laisse FactoMineR choisir automatiquement le nombre de clusters. Les pourcentages affichés sur la carte HCPC se rapportent à cet espace de classification retenu et peuvent donc différer de ceux de la carte AFM complète.
 
 ## Structure des données attendues
 
@@ -66,11 +66,13 @@ L'analyse apparaît dans **SEDA \> Free Perception \> Analysis of Napping Data**
 
 **Rôle :** ajoute des paires de coordonnées projetées comme groupes supplémentaires. **Impact sur le calcul :** ces coordonnées n'influencent pas la construction des axes, mais sont projetées dans l'espace AFM. **Conseil pratique :** utilisez ce bloc pour projeter un second panel sans modifier le compromis principal.
 
-### Read me before running
+### Instructions and R Code
+
+#### Read me before running
 
 **Rôle :** affiche une aide intégrée dans les résultats. **Impact sur le calcul :** aucun. **Conseil pratique :** laissez-la cochée lors des premières utilisations. Elle est **activée par défaut**.
 
-### R code
+#### R code
 
 **Rôle :** affiche le script R correspondant à l'analyse dans une sortie **R Code**. **Impact sur le calcul :** aucun. **Conseil pratique :** activez cette option pour reproduire l'analyse dans le **Rj Editor**. Elle est **désactivée par défaut**.
 
@@ -106,7 +108,7 @@ L'analyse apparaît dans **SEDA \> Free Perception \> Analysis of Napping Data**
 
 #### Representation of the clusters
 
-**Rôle :** active l'affichage du graphique de clustering. **Impact sur le calcul :** lorsque cette option est cochée, la fonction calcule la CAH si nécessaire et affiche la carte des stimuli selon les clusters. **Conseil pratique :** laissez-la décochée pour une première lecture, puis activez-la pour compléter la carte consensuelle par une lecture en groupes.
+**Rôle :** active l'affichage du graphique de clustering. **Impact sur le calcul :** lorsque cette option est cochée, la fonction calcule la classification HCPC si nécessaire et affiche la carte des stimuli selon les clusters. **Conseil pratique :** laissez-la décochée pour une première lecture, puis activez-la pour compléter la carte consensuelle par une lecture en groupes.
 
 #### Number of clusters
 
@@ -174,7 +176,7 @@ Cette sortie décrit automatiquement les dimensions retenues selon **Significanc
 
 ### Representation of the Stimuli According to Clusters *(disponible si "Representation of the clusters" est activé)*
 
-Ce graphique montre les stimuli dans l'espace factoriel, regroupés selon les clusters issus de la classification HCPC.
+Ce graphique montre les stimuli dans l'espace factoriel, regroupés selon les clusters issus de la classification HCPC. La classification utilise les premières dimensions définies par **Number of dimensions to save/use for clustering**, et pas seulement les deux axes affichés. Les pourcentages de la carte HCPC sont donc calculés relativement à cet espace retenu.
 
 | Élément                      | Signification                          |
 |------------------------------|----------------------------------------|
@@ -227,6 +229,8 @@ Les deux premières dimensions expliquent 43.09 % de la variance totale (Dim. 1 
 La sortie **Automatic Description of the Dimensions** identifie les coordonnées X/Y les plus corrélées à chaque axe. Pour **Dim. 1**, les corrélations positives les plus fortes sont **X20** (r = 0.93), **X1** (r = 0.92) et **Y21** (r = 0.90). À l'opposé, **Y48** (r = -0.91) et **X42** (r = -0.85) présentent les corrélations négatives les plus fortes. Ces résultats indiquent quelles directions des configurations individuelles sont les plus alignées, ou opposées, à la première dimension du compromis. Ils n'attribuent pas à eux seuls une signification sensorielle à l'axe.
 
 ### Analyse du graphique *Representation of the Stimuli According to Clusters*
+
+Avec **Number of dimensions to save/use for clustering = 5**, les dimensions AFM retenues cumulent 72.95 % de l'inertie totale. La carte HCPC exprime donc Dim. 1 et Dim. 2 relativement à cet espace à cinq dimensions : environ **34.37 %** et **24.72 %**, au lieu de 25.07 % et 18.03 % sur la carte AFM complète.
 
 Avec **Number of clusters = -1**, la classification automatique retient **trois clusters** :
 

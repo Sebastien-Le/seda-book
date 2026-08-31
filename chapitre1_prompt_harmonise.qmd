@@ -8,7 +8,7 @@ Cette analyse est conçue pour les données de type **QDA** (*Quantitative Descr
 
 Une simple comparaison de moyennes par stimulus peut être trompeuse si les sujets n'utilisent pas tous l'échelle de notation de la même façon. Ici, l'analyse tient compte à la fois de l'effet produit (**Stimulus Effect**) et de l'effet sujet (**Subject Effect**), ce qui permet d'identifier des attributs discriminants et des profils de manière plus *robuste* qu'une lecture purement descriptive.
 
-Pour tester cette fonction, il vous suffit de charger les données *sensochoc* disponibles avec le module SEDA — elles apparaissent dans la liste des jeux de données d'exemple lors de l'ouverture d'un nouveau fichier dans jamovi (*cf.* paragraphe 7).
+Pour tester cette fonction, il vous suffit de charger les données *sensochoc* disponibles avec le module SEDA — elles apparaissent dans la liste des jeux de données d'exemple lors de l'ouverture d'un nouveau fichier dans jamovi.
 
 ## Comprendre ce qui se passe "sous le capot"
 
@@ -73,11 +73,13 @@ L'analyse apparaît dans le menu **SEDA \> Fixed List of Attributes \> Character
 **Rôle :** regroupe les attributs sensoriels analysés. **Impact sur le calcul :** la fonction applique la même logique d'analyse à chacun de ces attributs ; seuls les attributs numériques sont acceptés. **Conseil pratique :** incluez tous les attributs pertinents de votre QDA ; la sélection statistique se fera ensuite via **Significance threshold (%)**.
 
 
-### Read me before running
+### Instructions and R Code
+
+#### Read me before running
 
 **Rôle :** affiche une aide intégrée dans les résultats. **Impact sur le calcul :** aucun. **Conseil pratique :** laissez-la cochée lors des premières utilisations. Elle est **activée par défaut**.
 
-### R code
+#### R code
 
 **Rôle :** affiche le script R correspondant à l'analyse dans une sortie **R Code**. **Impact sur le calcul :** aucun. **Conseil pratique :** activez cette option si vous souhaitez reproduire l'analyse dans le **Rj Editor** de jamovi ou poursuivre ensuite le travail dans R. Elle est **désactivée par défaut**.
 
@@ -176,9 +178,7 @@ Cet exemple montre que les six chocolats couvrent un espace sensoriel large, ave
 
 ## De jamovi au Rj Editor
 
-Avant la première utilisation du **Rj Editor**, ouvrez ses paramètres avec la roue dentée et remplacez la version de R utilisée par défaut (**jamovi R**) par **System R**. Le R système doit disposer des packages nécessaires à l'analyse — ici `SensoMineR` — ainsi que du package `jmvconnect`, qui permet au Rj Editor d'accéder au jeu de données ouvert dans jamovi sous le nom `data`.
-
-En cochant **R code**, SEDA affiche ensuite une sortie **R Code** conçue pour être copiée directement dans le **Rj Editor** de jamovi.
+Une fois le **Rj Editor** configuré avec **System R** comme indiqué au chapitre 1, cochez **R code** pour afficher le script correspondant à l'analyse. Le jeu de données actuellement ouvert dans jamovi est disponible sous le nom `data`.
 
 Pour cette analyse, le script charge `SensoMineR`, prépare les variables sélectionnées puis appelle `decat()` avec un modèle comprenant l'effet stimulus et l'effet sujet. La valeur de **Significance threshold (%)** est transmise à l'argument `proba` : 5 % dans l'interface correspond à `0.05` en R. Les objets `res_QDA$resF` et `res_QDA$resT` correspondent respectivement aux deux tables commentées dans ce chapitre.
 

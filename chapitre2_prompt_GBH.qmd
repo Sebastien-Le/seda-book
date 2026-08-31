@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This analysis is designed for **Quantitative Descriptive Analysis (QDA)** data, that is, when several subjects evaluate several stimuli using a fixed list of sensory attributes. It extends the univariate characterization of the sensory space by providing a multivariate representation of the stimuli and their variability. It answers two complementary questions: **which stimuli are sensorially similar** and **is this proximity stable despite variability between subjects**? Its central output is a map of the stimuli enriched with **ellipses**, which visualize not only the position of the stimuli, but also the robustness of this position under panel resampling.
+This analysis is designed for **Quantitative Descriptive Analysis (QDA)** data, that is, when several subjects evaluate several stimuli using a fixed list of sensory attributes. It extends the univariate characterisation of the sensory space by providing a multivariate representation of the stimuli and their variability. It answers two complementary questions: **which stimuli are sensorially similar** and **is this proximity stable despite variability between subjects**? Its central output is a map of the stimuli enriched with **ellipses**, which visualise not only the position of the stimuli, but also the robustness of this position under panel resampling.
 
 **Why not use a standard alternative?**
 
@@ -31,7 +31,7 @@ A **PCA** is then performed on the resulting table of sensory profiles. It produ
 
 The key point of the function is the use of **resampling**. In PCA, it is possible to distinguish between **active individuals** — those used to construct the axes — and **supplementary individuals** — those projected afterwards, without modifying the axes. This is precisely the mechanism that makes it possible to construct the ellipses.
 
-At each simulation, a subset of subjects is drawn with replacement from the original panel, new mean stimulus profiles are recalculated, and then projected into the factor space as supplementary individuals. The dispersion of these projections around each stimulus is then summarized by an ellipse.
+At each simulation, a subset of subjects is drawn with replacement from the original panel, new mean stimulus profiles are recalculated, and then projected into the factor space as supplementary individuals. The dispersion of these projections around each stimulus is then summarised by an ellipse.
 
 These ellipses therefore describe the variability of the **mean position of the stimuli when the composition of the panel changes**, not the simple raw dispersion of individual ratings.
 
@@ -79,17 +79,19 @@ The analysis appears in the menu **SEDA \> Fixed List of Attributes \> Represent
 
 **Role:** groups together the sensory attributes used to construct the factor space. **Impact on the computation:** only numeric attributes are accepted; the number of calculable dimensions depends on the number of retained attributes. **Practical tip:** start by including all relevant sensory attributes, then refine the selection with **Descriptor selection threshold (%)**.
 
-### Read me before running
+### Instructions and R Code
+
+#### Read me before running
 
 **Role:** displays integrated help in the results. **Impact on the computation:** none. **Practical tip:** leave it checked during the first uses. It is **enabled by default**.
 
-### R code
+#### R code
 
 **Role:** displays the R script corresponding to the analysis in an **R Code** output. **Impact on the computation:** none. **Practical tip:** enable this option to reproduce the analysis in the **Rj Editor** or continue working in R. It is **disabled by default**.
 
 ### Standardization of the Sensory Attributes: Scale to unit variance
 
-**Role:** standardizes the sensory attributes when performing the PCA. **Impact on the computation:** when checked, each attribute contributes equally to the construction of the axes; when unchecked, the most dispersed attributes have a greater influence on the construction of the axes. **Practical tip:** leave this option checked in most analyses. It is **enabled by default**.
+**Role:** standardises the sensory attributes when performing the PCA. **Impact on the computation:** when checked, each attribute contributes equally to the construction of the axes; when unchecked, the most dispersed attributes have a greater influence on the construction of the axes. **Practical tip:** leave this option checked in most analyses. It is **enabled by default**.
 
 ### Selection of the Sensory Attributes: Descriptor selection threshold (%)
 
@@ -125,11 +127,11 @@ The analysis appears in the menu **SEDA \> Fixed List of Attributes \> Represent
 
 #### Center by subject
 
-**Role:** centers responses subject by subject. **Impact on the computation:** corrects differences in average level between subjects and often improves the comparison between profiles. **Practical tip:** leave this option checked in almost all analyses. It is **enabled by default**.
+**Role:** centres responses subject by subject. **Impact on the computation:** corrects differences in average level between subjects and often improves the comparison between profiles. **Practical tip:** leave this option checked in almost all analyses. It is **enabled by default**.
 
 #### Scale by subject
 
-**Role:** standardizes responses subject by subject. **Impact on the computation:** corrects differences in amplitude between subjects, but modifies the initial structure more strongly than centering alone. **Practical tip:** leave this option unchecked at first. It is **disabled by default**.
+**Role:** standardises responses subject by subject. **Impact on the computation:** corrects differences in amplitude between subjects, but modifies the initial structure more strongly than centring alone. **Practical tip:** leave this option unchecked at first. It is **disabled by default**.
 
 ### Numerical Indicators
 
@@ -199,7 +201,7 @@ This output shows the dispersion of the position of sensory attributes in the vi
 
 ### Eigenvalue Decomposition
 
-This table gives, for each dimension, the eigenvalue, the percentage of variance explained, and the cumulative percentage. If the first two dimensions explain a large share of the variance, the 2D map summarizes the data well. Otherwise, it is prudent to explore other planes, for example Dim 1 / Dim 3.
+This table gives, for each dimension, the eigenvalue, the percentage of variance explained, and the cumulative percentage. If the first two dimensions explain a large share of the variance, the 2D map summarises the data well. Otherwise, it is prudent to explore other planes, for example Dim 1 / Dim 3.
 
 ### Automatic Description of the Dimensions
 
@@ -233,13 +235,13 @@ To reproduce this example, use the following values.
 | **Significance threshold (%)**         | 5                      |
 | **Number of dimensions**               | 2                      |
 
-> **Note:** The results presented in this section are obtained from the default parameter values. The number of subjects making up the panel should be set to 29, the actual number of subjects in the experiment.
+> **Reproducibility note:** the numerical results and resampling-based plots discussed below were generated with the default value **Subjects per virtual panel = 20**. Use 20 to reproduce this chapter exactly. Because the actual panel contains 29 subjects, **29** is a natural choice for a new final analysis; changing this value changes the resampling-based outputs.
 
 ### Analysis of the *Representation of the Stimuli with Confidence Ellipses* graph
 
 The map shows the 6 chocolates in the Dim. 1 / Dim. 2 plane. The first dimension alone accounts for 88.79% of the total variance — this 2D plane is therefore a very faithful representation of the data. The second dimension explains an additional 7.58%.
 
-On the horizontal axis (Dim. 1), **choc1** and **choc3** occupy the two opposite extremes: **choc1** on the left (bitter, cocoa side), **choc3** on the right (milky, sweet side). These are the two chocolates whose profiles are most clearly opposed, which is consistent with the results of the previous chapter. **choc2**, **choc5**, and **choc6** are grouped in the center, close to the origin. **choc4** is located slightly above the horizontal axis, between choc1 and the central group.
+On the horizontal axis (Dim. 1), **choc1** and **choc3** occupy the two opposite extremes: **choc1** on the left (bitter, cocoa side), **choc3** on the right (milky, sweet side). These are the two chocolates whose profiles are most clearly opposed, which is consistent with the results of the previous chapter. **choc2**, **choc5**, and **choc6** are grouped in the centre, close to the origin. **choc4** is located slightly above the horizontal axis, between choc1 and the central group.
 
 The ellipses provide information about the robustness of these positions. The ellipses of **choc2**, **choc5**, and **choc6** overlap widely: their visual separation is therefore less clear when panel composition changes. Conversely, **choc1** and **choc3** have ellipses clearly separated from all the others: their visual separation appears robust across the simulated panels. The **Hotelling Test** then provides the statistical assessment of these differences on the displayed plane.
 
@@ -265,7 +267,7 @@ The sensory space of the chocolates is very largely structured by a single stron
 
 ## From jamovi to the Rj Editor
 
-Once the **Rj Editor** has been configured to use **System R** as described in the previous chapter, check **R code** to display the script corresponding to the analysis. For this chapter, the code loads `SensoMineR` and `FactoMineR`, prepares the selected variables, and then calls `panellipse()` using the settings chosen in the interface.
+Once the **Rj Editor** has been configured to use **System R** as described in Chapter 1, check **R code** to display the script corresponding to the analysis. For this chapter, the code loads `SensoMineR` and `FactoMineR`, prepares the selected variables, and then calls `panellipse()` using the settings chosen in the interface.
 
 The generated script also includes a small helper that prevents `panellipse()` from opening an additional graphics device that is not supported by the Rj Editor. This adaptation is handled automatically: no additional setting is required.
 
@@ -282,7 +284,7 @@ The resulting objects provide access, among other things, to eigenvalues, Hotell
 -   Never interpret the stimulus map without looking at the attribute map.
 -   Do not conclude that there is a difference from ellipse overlap or separation alone.
 -   Consult **Hotelling Test** to complement the visual reading when the overlap is ambiguous.
--   If the first two dimensions summarize little variance, explore other factor planes.
+-   If the first two dimensions summarise little variance, explore other factor planes.
 
 ## In summary
 

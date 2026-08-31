@@ -4,7 +4,7 @@
 
 Cette analyse est conçue pour les données **JAR** (*Just About Right*), dans lesquelles les sujets évaluent un attribut sensoriel par rapport à un niveau jugé idéal : par exemple *pas assez / juste comme il faut / trop*. Elle permet d'identifier les écarts au niveau JAR, d'estimer leur fréquence et d'étudier leur lien avec l'appréciation.
 
-SEDA 1.4.2 fournit désormais **deux lectures complémentaires des pénalités**. La première est une lecture **globale**, issue de `SensoMineR::JAR`, qui estime l'importance des défauts dans l'ensemble de l'espace produit. La seconde est une analyse **classique spécifique à chaque produit**, qui compare, pour un produit donné, le liking des consommateurs situés au niveau JAR à celui des consommateurs situés en dessous ou au-dessus du JAR. Cette évolution rapproche l'analyse de l'usage classique des penalty analyses tout en conservant la lecture multidimensionnelle déjà présente dans SEDA. L'approche reste dans la continuité des travaux et recommandations du cahier n°6 de la SFAS.
+SEDA fournit **deux lectures complémentaires des pénalités**. La première est une lecture **globale**, issue de `SensoMineR::JAR`, qui estime l'importance des défauts dans l'ensemble de l'espace produit. La seconde est une analyse **classique spécifique à chaque produit**, qui compare, pour un produit donné, le liking des consommateurs situés au niveau JAR à celui des consommateurs situés en dessous ou au-dessus du JAR. L'ensemble associe ainsi une lecture multidimensionnelle des défauts et la penalty analysis classique spécifique à chaque produit.
 
 **Pourquoi ne pas utiliser une simple moyenne de liking ?**
 
@@ -111,11 +111,13 @@ L'analyse apparaît dans **SEDA \> Fixed List of Attributes \> Analysis of JAR D
 
 **Rôle :** regroupe les variables JAR. **Impact sur le calcul :** chaque variable est utilisée dans les analyses globale, spécifique au produit et multivariée. **Conseil pratique :** les variables doivent être **nominales**, même si les modalités traduisent un ordre conceptuel *pas assez / JAR / trop*.
 
-### Read me before running
+### Instructions and R Code
+
+#### Read me before running
 
 **Rôle :** affiche l'aide intégrée. **Impact sur le calcul :** aucun. Elle est **activée par défaut**.
 
-### R code
+#### R code
 
 **Rôle :** affiche le script R reproduisant l'analyse. **Impact sur le calcul :** aucun. Activez cette option pour poursuivre l'analyse dans le **Rj Editor**. Elle est **désactivée par défaut**.
 
@@ -261,7 +263,7 @@ Cette table contient les fréquences produits × modalités non-JAR utilisées p
 
 Le jeu de données **milkshake** porte sur trois milkshakes, **284**, **859** et **972**, évalués par 47 consommateurs à l'aide de plusieurs attributs JAR liés notamment à la couleur, à la fluidité, aux odeurs, à la sucrosité, à l'acidité, à la texture et au goût. Pour charger ce jeu de données, ouvrez jamovi, cliquez sur l'icône en haut à gauche, puis sur **Open** → **Data Library** → **SEDA**.
 
-Cet exemple est particulièrement utile avec SEDA 1.4.2 parce qu'il montre que les lectures **globale** et **spécifique au produit** peuvent conduire à des diagnostics complémentaires.
+Cet exemple est particulièrement utile parce qu'il montre que les lectures **globale** et **spécifique au produit** peuvent conduire à des diagnostics complémentaires.
 
 ### Paramètres de l'exemple
 
@@ -303,7 +305,7 @@ Dans **Global Multidimensional Penalties (All Products)**, un seul défaut est s
 
 Plusieurs autres effets présentent un mean drop notable sans franchir le seuil de 5 %, par exemple *Too_much_acidity* (4.02, p = 0.082), *Too_much_texture* (1.78, p = 0.089) et *Not_enough_acidity* (1.03, p = 0.087).
 
-Dans SEDA 1.4.2, un **Mean drop positif** représente une perte de liking.
+Dans SEDA, un **Mean drop positif** représente une perte de liking.
 
 ### Global Defects Applied to Each Product
 

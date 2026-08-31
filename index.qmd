@@ -1,3 +1,5 @@
+# {{< meta preface-title >}} {.unnumbered}
+
 ::: {.content-visible when-profile="fr"}
 
 {{< include _preface-fr.qmd >}}

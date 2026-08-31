@@ -4,11 +4,11 @@
 
 This analysis is designed for **JAR** (*Just About Right*) data, in which subjects evaluate a sensory attribute relative to an ideal level, for example *too little / just about right / too much*. It identifies deviations from the JAR level, estimates their frequency, and studies their relationship with liking.
 
-SEDA 1.4.2 now provides **two complementary penalty views**. The first is a **global** view, based on `SensoMineR::JAR`, which estimates the importance of defects across the whole product space. The second is a **classical product-specific analysis**, which compares, for a given product, the liking of consumers who rate an attribute JAR with that of consumers who rate it below or above JAR.
+SEDA provides **two complementary penalty views**. The first is a **global** view, based on `SensoMineR::JAR`, which estimates the importance of defects across the whole product space. The second is a **classical product-specific analysis**, which compares, for a given product, the liking of consumers who rate an attribute JAR with that of consumers who rate it below or above JAR.
 
 **Why not use a simple mean liking score?**
 
-A mean liking score by product does not show which sensory deviations are associated with a decrease in liking. Likewise, the frequency of JAR responses alone does not indicate whether a frequent defect is actually penalizing. The value of the analysis is therefore to combine three different pieces of information: **defect frequency**, **size of the liking loss**, and **statistical uncertainty around that loss**.
+A mean liking score by product does not show which sensory deviations are associated with a decrease in liking. Likewise, the frequency of JAR responses alone does not indicate whether a frequent defect is actually penalising. The value of the analysis is therefore to combine three different pieces of information: **defect frequency**, **size of the liking loss**, and **statistical uncertainty around that loss**.
 
 ## Understanding what happens under the hood
 
@@ -66,7 +66,7 @@ Finally, SEDA constructs a **products × non-JAR categories** frequency table, d
 
 The product description deliberately uses a permissive exploratory threshold (`proba = 0.5`). It is intended to reveal the categories structuring the space and **should not be interpreted as a conventional 5% significance filter**.
 
-The correspondence map summarizes the product × defect structure. As in the CATA chapter, products and defects should be interpreted relative to the factor dimensions; a direct row-to-column distance is not an ordinary Euclidean distance. Proximity on this map is not, by itself, evidence of a liking penalty.
+The correspondence map summarises the product × defect structure. As in the CATA chapter, products and defects should be interpreted relative to the factor dimensions; a direct row-to-column distance is not an ordinary Euclidean distance. Proximity on this map is not, by itself, evidence of a liking penalty.
 
 ## Expected data structure
 
@@ -97,7 +97,7 @@ The analysis appears in **SEDA \> Fixed List of Attributes \> Analysis of JAR Da
 
 #### Stimulus Effect
 
-**Role:** identifies the products to analyze. **Impact on the computation:** this variable defines the products used in both global and product-specific analyses. **Practical tip:** use short, explicit labels.
+**Role:** identifies the products to analyse. **Impact on the computation:** this variable defines the products used in both global and product-specific analyses. **Practical tip:** use short, explicit labels.
 
 #### Subject Effect
 
@@ -111,11 +111,13 @@ The analysis appears in **SEDA \> Fixed List of Attributes \> Analysis of JAR Da
 
 **Role:** groups the JAR variables. **Impact on the computation:** each variable is used in the global, product-specific, and multivariate analyses. **Practical tip:** variables must be **nominal**, even when their categories conceptually follow an order such as *too little / JAR / too much*.
 
-### Read me before running
+### Instructions and R Code
+
+#### Read me before running
 
 **Role:** displays integrated help. **Impact on the computation:** none. It is **enabled by default**.
 
-### R code
+#### R code
 
 **Role:** displays the R script reproducing the analysis. **Impact on the computation:** none. Enable it to continue the analysis in the **Rj Editor**. It is **disabled by default**.
 
@@ -135,11 +137,11 @@ The analysis appears in **SEDA \> Fixed List of Attributes \> Analysis of JAR Da
 
 #### Below-JAR keywords
 
-**Role:** defines the words or expressions used to recognize categories below the JAR level. The default is `too low|not enough|too weak|plain|low`.
+**Role:** defines the words or expressions used to recognise categories below the JAR level. The default is `too low|not enough|too weak|plain|low`.
 
 #### Above-JAR keywords
 
-**Role:** defines the words or expressions used to recognize categories above the JAR level. The default is `too high|too much|too strong|vivid|high`.
+**Role:** defines the words or expressions used to recognise categories above the JAR level. The default is `too high|too much|too strong|vivid|high`.
 
 **Practical tip:** always start by checking **JAR Coding Used for the Classical Penalty Analysis**. If a category is **Unclassified**, adapt the keywords before interpreting product-specific results.
 
@@ -158,7 +160,7 @@ The analysis appears in **SEDA \> Fixed List of Attributes \> Analysis of JAR Da
 11. Use **Global Penalty Context for Each Product** to see which products are exposed to globally important defects.
 12. Then read **Product-Specific Classical Penalty Analysis** and the **Product-Specific Penalty Plots**.
 13. Finish with **Description of the Products According to Defects**, **Representation of the Products and the Defects**, and **Frequency Table Used for the Correspondence Analysis**.
-14. Cross-read frequency, mean-drop magnitude, and statistical uncertainty before retaining a product-optimization lever.
+14. Cross-read frequency, mean-drop magnitude, and statistical uncertainty before retaining a product-optimisation lever.
 
 ## Interpretation of results
 
@@ -209,7 +211,7 @@ With the default settings, **Priority = Yes** therefore means at least 20% of co
 
 ### Global Penalty Context for Each Product
 
-These graphs provide the native SensoMineR visualization of the **global** penalty in the context of each product. They help identify products exposed to globally important defects, but the y-coordinate does not thereby become a product-specific penalty.
+These graphs provide the native SensoMineR visualisation of the **global** penalty in the context of each product. They help identify products exposed to globally important defects, but the y-coordinate does not thereby become a product-specific penalty.
 
 ### Product-Specific Classical Penalty Analysis
 
@@ -261,7 +263,7 @@ This table contains the products × non-JAR-category frequencies used by `descfr
 
 The **milkshake** dataset contains three milkshakes, **284**, **859**, and **972**, evaluated by 47 consumers using several JAR attributes related to color, fluidity, odors, sweetness, acidity, texture, and taste. To load the dataset, open jamovi, click the icon in the top left corner, then **Open** → **Data Library** → **SEDA**.
 
-This example is especially useful with SEDA 1.4.2 because it shows that the **global** and **product-specific** views can lead to complementary diagnoses.
+This example is especially useful because it shows that the **global** and **product-specific** views can lead to complementary diagnoses.
 
 ### Example settings
 
@@ -277,7 +279,7 @@ This example is especially useful with SEDA 1.4.2 because it shows that the **gl
 | **Below-JAR keywords** | `too low|not enough|too weak|plain|low` |
 | **Above-JAR keywords** | `too high|too much|too strong|vivid|high|too_fluid` |
 
-The final term added to **Above-JAR keywords** correctly classifies `Too_fluid` as **Above JAR**. SEDA also accepts the form `too fluid`: both original labels and their normalized forms are now recognized.
+The final term added to **Above-JAR keywords** correctly classifies `Too_fluid` as **Above JAR**. SEDA accepts both `Too_fluid` and `too fluid`: original labels and their normalised forms are recognised.
 
 ### Check the JAR coding first
 
@@ -303,7 +305,7 @@ In **Global Multidimensional Penalties (All Products)**, only one defect is sign
 
 Several other effects have notable mean drops without reaching the 5% threshold, for example *Too_much_acidity* (4.02, p = 0.082), *Too_much_texture* (1.78, p = 0.089), and *Not_enough_acidity* (1.03, p = 0.087).
 
-In SEDA 1.4.2, a **positive Mean drop** represents a loss of liking.
+In SEDA, a **positive Mean drop** represents a loss of liking.
 
 ### Global Defects Applied to Each Product
 
@@ -324,7 +326,7 @@ For **284**, several deviations are associated with a significant liking loss:
 - *Sweetness — Below JAR*: 21.28%, Mean drop = 1.22, 95% CI [0.04, 2.40], p = 0.044;
 - *Texture — Below JAR*: 57.45%, Mean drop = 1.06, 95% CI [0.10, 2.02], p = 0.032.
 
-For *Fluidity — Above JAR*, 46.81% of consumers are concerned, but Mean drop is only 0.69 with p = 0.182. The deviation is therefore frequent without being clearly penalizing for **284**.
+For *Fluidity — Above JAR*, 46.81% of consumers are concerned, but Mean drop is only 0.69 with p = 0.182. The deviation is therefore frequent without being clearly penalising for **284**.
 
 For **859**, *Fluidity — Above JAR* gives a particularly instructive result: **70.21%** of consumers are concerned, but Mean drop is only **0.87**, p = **0.298**. Likewise, *Texture — Below JAR* concerns **80.85%** of consumers but has Mean drop = **0.98**, p = **0.272**. These two deviations are extremely frequent without a clearly established hedonic impact in the product-specific analysis.
 
@@ -342,7 +344,7 @@ Two other effects are significant:
 - *Color — Above JAR*: 6.38%, Mean drop = 2.74, p = 0.009;
 - *Taste_Van — Above JAR*: 21.28%, Mean drop = 1.57, 95% CI [0.19, 2.95], p = 0.028.
 
-The second is especially useful because it combines frequency above 20%, mean drop above 1, and p < .05. *Taste_Van — Above JAR* is therefore the clearest product-specific optimization lever for **972**.
+The second is especially useful because it combines frequency above 20%, mean drop above 1, and p < .05. *Taste_Van — Above JAR* is therefore the clearest product-specific optimisation lever for **972**.
 
 ### What the product-specific plots show
 
@@ -368,9 +370,9 @@ Product **284** shows a less marked structure; its strongest positive category i
 
 ### Representation of the Products and the Defects
 
-The correspondence analysis is entirely summarized by the two available dimensions: **Dim. 1 = 74.78%** and **Dim. 2 = 25.22%**.
+The correspondence analysis is entirely summarised by the two available dimensions: **Dim. 1 = 74.78%** and **Dim. 2 = 25.22%**.
 
-Dim. 1 mainly opposes **859** and **972**, while **284** occupies a more intermediate position. The map summarizes the non-JAR profile structure, but product-to-defect relationships should be interpreted relative to the factor dimensions rather than from simple row-to-column proximity.
+Dim. 1 mainly opposes **859** and **972**, while **284** occupies a more intermediate position. The map summarises the non-JAR profile structure, but product-to-defect relationships should be interpreted relative to the factor dimensions rather than from simple row-to-column proximity.
 
 ### Synthetic interpretation
 
@@ -378,9 +380,9 @@ The example mainly shows that the different pieces of JAR information are not re
 
 The **global** view identifies *Too_much_odor_fruit* as the only defect clearly associated with a liking loss across the whole product space, but this defect is too rare within each product to become a priority under the 20% threshold.
 
-The **product-specific** view instead shows that extremely frequent deviations may be weakly or non-penalizing: this is the case for *Too_fluid* and *Not_enough_texture* for **859**. It also reveals local levers, including several deviations for **284** and especially *Taste_Van — Above JAR* for **972**.
+The **product-specific** view instead shows that extremely frequent deviations may be weakly or non-penalising: this is the case for *Too_fluid* and *Not_enough_texture* for **859**. It also reveals local levers, including several deviations for **284** and especially *Taste_Van — Above JAR* for **972**.
 
-> **What we take away from this example:** useful JAR analysis is not about finding “the most penalizing defect”. It distinguishes what is **frequent**, what is **globally penalizing**, what is **specifically penalizing for a product**, and what combines enough frequency, effect size, and statistical evidence to become an **optimization priority**.
+> **What we take away from this example:** useful JAR analysis is not about finding “the most penalising defect”. It distinguishes what is **frequent**, what is **globally penalising**, what is **specifically penalising for a product**, and what combines enough frequency, effect size, and statistical evidence to become an **optimisation priority**.
 
 ## From jamovi to the Rj Editor
 
@@ -398,15 +400,15 @@ Graphics calls are written so that each product produces a separate output in th
 - Do not confuse the two views: **Global Multidimensional Penalties** describes the whole product space, whereas **Product-Specific Classical Penalty Analysis** answers the question separately for each product.
 - A **positive Mean drop** indicates a liking loss. Interpret its magnitude together with the percentage of consumers concerned, the confidence interval, and the p-value.
 - **Consumer threshold (%)** and **Mean-drop threshold** are practical decision thresholds, not significance thresholds.
-- A frequent defect is not necessarily penalizing; a strongly penalizing but very rare defect is not necessarily a priority.
+- A frequent defect is not necessarily penalising; a strongly penalising but very rare defect is not necessarily a priority.
 - Use the correspondence-analysis map to understand the structure of defect profiles, not to conclude that a defect affects liking.
 
 ## In summary
 
-Use this analysis when JAR responses are available together with a liking measure and the objective is to identify deviations from the ideal level that may guide product optimization.
+Use this analysis when JAR responses are available together with a liking measure and the objective is to identify deviations from the ideal level that may guide product optimisation.
 
 SEDA first checks the **JAR coding**, then describes the **Below/JAR/Above response frequencies**, and provides two complementary views: a **global penalty analysis** across the whole product space and a **classical product-specific penalty analysis**. The multivariate correspondence-analysis synthesis completes these diagnostics by showing how products are structured according to their non-JAR categories.
 
 Read the coding and distributions first, then the global penalties, next the product-specific penalties, and finish with the factorial synthesis.
 
-The main point is that an optimization priority should not rely on a single cutoff: it should combine **defect frequency**, **mean-drop magnitude**, and **statistical uncertainty**.
+The main point is that an optimisation priority should not rely on a single cutoff: it should combine **defect frequency**, **mean-drop magnitude**, and **statistical uncertainty**.

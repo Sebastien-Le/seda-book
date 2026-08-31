@@ -3,7 +3,7 @@ project:
 
 book:
   title: "Help Me Do It on My Own: Sensory Data Analysis with jamovi and the SEDA Module"
-  date: "May 2026"
+  date: "2026-08-31"
   chapters:
     - index.qmd
     - intro_ppt_GB.qmd
@@ -16,6 +16,8 @@ book:
     - chapitre7_prompt_GBH.qmd
 
 lang: en-GB
+
+preface-title: "Preface"
 
 format:
   html:
