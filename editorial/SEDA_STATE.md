@@ -65,14 +65,12 @@ Shared entry point: index.qmd
 ```text
 SEDA repository: Sebastien-Le/SEDA
 SEDA master version: 1.4.2
-jamovi version used for companion validation: TO CONFIRM
+jamovi version used for companion validation: 2.6.45
 ```
 
 SEDA `master` currently declares version **1.4.2** in `DESCRIPTION`.
 
-The exact interface baseline must still be confirmed by running the current module in jamovi.
-
-Do not infer current interface behavior from the previous companion alone.
+The interface baseline has been checked against the current SEDA 1.4.2 module and the validated companion sources.
 
 Software truth follows:
 
@@ -114,13 +112,13 @@ COMPLETE
 
 | # | Analysis | French source | English source | Main cross-method link | Status | Main outstanding work |
 |---|---|---|---|---|---|---|
-| 1 | QDA — Characterization of the stimulus space | `chapitre1_prompt_harmonise.qmd` | `chapitre1_prompt_GBH.qmd` | adjusted means / product and subject effects | NOT STARTED | Full software + scientific audit |
-| 2 | QDA — Multivariate representation with ellipses | `chapitre2_prompt_harmonise.qmd` | `chapitre2_prompt_GBH.qmd` | PCA / resampling / confidence regions | NOT STARTED | Full software + scientific audit |
-| 3 | CATA | `chapitre3_prompt_harmonise.qmd` | `chapitre3_prompt_GBH.qmd` | CA / characterization / clustering | NOT STARTED | Full software + scientific audit |
-| 4 | JAR | `chapitre4_prompt_harmonise.qmd` | `chapitre4_prompt_GBH.qmd` | defects / CA / penalty analysis | NOT STARTED | Full software + scientific audit |
-| 5 | Napping | `chapitre5_prompt_harmonise.qmd` | `chapitre5_prompt_GBH.qmd` | MFA / grouped coordinates | NOT STARTED | Full software + scientific audit |
-| 6 | Sorting | `chapitre6_prompt_harmonise.qmd` | `chapitre6_prompt_GBH.qmd` | MCA / categorizations / textual information | NOT STARTED | Full software + scientific audit |
-| 7 | Preference Mapping | `chapitre7_prompt_harmonise.qmd` | `chapitre7_prompt_GBH.qmd` | upstream MEDA PCA + preference modelling | NOT STARTED | Full software + scientific audit |
+| 1 | QDA — Characterization of the stimulus space | `chapitre1_prompt_harmonise.qmd` | `chapitre1_prompt_GBH.qmd` | adjusted means / product and subject effects | COMPLETE | None |
+| 2 | QDA — Multivariate representation with ellipses | `chapitre2_prompt_harmonise.qmd` | `chapitre2_prompt_GBH.qmd` | PCA / resampling / confidence regions | COMPLETE | None |
+| 3 | CATA | `chapitre3_prompt_harmonise.qmd` | `chapitre3_prompt_GBH.qmd` | CA / characterization / clustering | COMPLETE | None |
+| 4 | JAR | `chapitre4_prompt_harmonise.qmd` | `chapitre4_prompt_GBH.qmd` | defects / CA / penalty analysis | COMPLETE | None |
+| 5 | Napping | `chapitre5_prompt_harmonise.qmd` | `chapitre5_prompt_GBH.qmd` | MFA / grouped coordinates | COMPLETE | None |
+| 6 | Sorting | `chapitre6_prompt_harmonise.qmd` | `chapitre6_prompt_GBH.qmd` | MCA / categorizations / textual information | COMPLETE | None |
+| 7 | Preference Mapping | `chapitre7_prompt_harmonise.qmd` | `chapitre7_prompt_GBH.qmd` | upstream MEDA PCA + preference modelling | COMPLETE | None |
 
 ---
 
@@ -363,32 +361,35 @@ git push origin main
 
 ## 10. Current next action
 
-### Chapter 1 — QDA Characterization of the stimulus space
+### Maintenance state
 
-Start with a software-first audit.
+The seven companion analyses have been audited, revised, rendered, validated, committed, and pushed for **SEDA 1.4.2**.
 
-Before editing either language source, record:
-
-```text
-current SEDA version
-current jamovi version
-exact menu path
-exact field labels
-all options and defaults
-all current outputs
-conditions under which outputs appear
-R Code behavior
-validated example dataset
-```
-
-Then compare current module behavior with:
+The English companion is published at:
 
 ```text
-chapitre1_prompt_harmonise.qmd
-chapitre1_prompt_GBH.qmd
+https://sebastien-le.github.io/seda-book/
 ```
 
-No prose revision should begin until this baseline is established.
+The current PDF is published at:
+
+```text
+https://sebastien-le.github.io/seda-book/Help-Me-Do-It-on-My-Own--Sensory-Data-Analysis-with-jamovi-and-the-SEDA-Module.pdf
+```
+
+No blocking editorial or scientific issue is currently known.
+
+Future work should begin only when one of the following changes materially:
+
+```text
+SEDA interface or implementation
+example datasets
+jamovi compatibility
+statistical behaviour
+companion editorial policy
+```
+
+When that happens, reopen the relevant analysis rather than restarting the full companion audit by default.
 
 ---
 
