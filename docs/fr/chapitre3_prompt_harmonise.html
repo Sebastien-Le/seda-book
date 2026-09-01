@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr-FR" xml:lang="fr-FR"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Données CATA — Analyse par termes cochés – Apprends moi à faire seul : analyse de données sensorielles avec jamovi et le module SEDA</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./chapitre4_prompt_harmonise.html" rel="next">
+<link href="./chapitre2_prompt_harmonise.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-b7c2d8834e08b04a63bb76a724ffbcac.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Apprends moi à faire seul : analyse de données sensorielles avec jamovi et le module SEDA</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Recherche"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Basculer la navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://sebastien-le.github.io/seda-book/">
+<span class="menu-text">English</span></a>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapitre3_prompt_harmonise.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Données CATA — Analyse par termes cochés</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container">
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Préface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./intro_ppt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre1_prompt_harmonise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Données QDA — Caractérisation de l’espace sensoriel</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre2_prompt_harmonise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Données QDA — Représentation multivariée avec ellipses</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre3_prompt_harmonise.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Données CATA — Analyse par termes cochés</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre4_prompt_harmonise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Données JAR — Analyse des défauts et pénalités</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre5_prompt_harmonise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Données de Napping — Représentation consensuelle</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre6_prompt_harmonise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Données de tri libre — Analyse des catégorisations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre7_prompt_harmonise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Données hédoniques — Cartographie des préférences</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">4.1</span> Introduction</a></li>
+  <li><a href="#comprendre-ce-qui-se-passe-sous-le-capot" id="toc-comprendre-ce-qui-se-passe-sous-le-capot" class="nav-link" data-scroll-target="#comprendre-ce-qui-se-passe-sous-le-capot"><span class="header-section-number">4.2</span> Comprendre ce qui se passe “sous le capot”</a>
+  <ul class="collapse">
+  <li><a href="#construction-du-tableau-de-contingence" id="toc-construction-du-tableau-de-contingence" class="nav-link" data-scroll-target="#construction-du-tableau-de-contingence"><span class="header-section-number">4.2.1</span> Construction du tableau de contingence</a></li>
+  <li><a href="#description-des-stimuli-par-les-termes" id="toc-description-des-stimuli-par-les-termes" class="nav-link" data-scroll-target="#description-des-stimuli-par-les-termes"><span class="header-section-number">4.2.2</span> Description des stimuli par les termes</a></li>
+  <li><a href="#analyse-des-correspondances" id="toc-analyse-des-correspondances" class="nav-link" data-scroll-target="#analyse-des-correspondances"><span class="header-section-number">4.2.3</span> Analyse des correspondances</a></li>
+  <li><a href="#classification-des-stimuli" id="toc-classification-des-stimuli" class="nav-link" data-scroll-target="#classification-des-stimuli"><span class="header-section-number">4.2.4</span> Classification des stimuli</a></li>
+  <li><a href="#conditions-minimales-pour-lancer-lanalyse" id="toc-conditions-minimales-pour-lancer-lanalyse" class="nav-link" data-scroll-target="#conditions-minimales-pour-lancer-lanalyse"><span class="header-section-number">4.2.5</span> Conditions minimales pour lancer l’analyse</a></li>
+  </ul></li>
+  <li><a href="#structure-des-données-attendues" id="toc-structure-des-données-attendues" class="nav-link" data-scroll-target="#structure-des-données-attendues"><span class="header-section-number">4.3</span> Structure des données attendues</a></li>
+  <li><a href="#guide-de-linterface" id="toc-guide-de-linterface" class="nav-link" data-scroll-target="#guide-de-linterface"><span class="header-section-number">4.4</span> Guide de l’interface</a>
+  <ul class="collapse">
+  <li><a href="#variables-à-renseigner" id="toc-variables-à-renseigner" class="nav-link" data-scroll-target="#variables-à-renseigner"><span class="header-section-number">4.4.1</span> Variables à renseigner</a></li>
+  <li><a href="#instructions-and-r-code" id="toc-instructions-and-r-code" class="nav-link" data-scroll-target="#instructions-and-r-code"><span class="header-section-number">4.4.2</span> Instructions and R Code</a></li>
+  <li><a href="#significance-threshold" id="toc-significance-threshold" class="nav-link" data-scroll-target="#significance-threshold"><span class="header-section-number">4.4.3</span> Significance threshold (%)</a></li>
+  <li><a href="#graphic-options" id="toc-graphic-options" class="nav-link" data-scroll-target="#graphic-options"><span class="header-section-number">4.4.4</span> Graphic Options</a></li>
+  <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering"><span class="header-section-number">4.4.5</span> Clustering</a></li>
+  </ul></li>
+  <li><a href="#procédure-pas-à-pas" id="toc-procédure-pas-à-pas" class="nav-link" data-scroll-target="#procédure-pas-à-pas"><span class="header-section-number">4.5</span> Procédure pas à pas</a></li>
+  <li><a href="#interprétation-des-résultats" id="toc-interprétation-des-résultats" class="nav-link" data-scroll-target="#interprétation-des-résultats"><span class="header-section-number">4.6</span> Interprétation des résultats</a>
+  <ul class="collapse">
+  <li><a href="#tableau-de-contingence" id="toc-tableau-de-contingence" class="nav-link" data-scroll-target="#tableau-de-contingence"><span class="header-section-number">4.6.1</span> Tableau de contingence</a></li>
+  <li><a href="#description-of-the-stimuli-according-to-cata" id="toc-description-of-the-stimuli-according-to-cata" class="nav-link" data-scroll-target="#description-of-the-stimuli-according-to-cata"><span class="header-section-number">4.6.2</span> Description of the Stimuli According to CATA</a></li>
+  <li><a href="#representation-of-the-stimuli-and-the-cata-disponible-avec-au-moins-3-termes" id="toc-representation-of-the-stimuli-and-the-cata-disponible-avec-au-moins-3-termes" class="nav-link" data-scroll-target="#representation-of-the-stimuli-and-the-cata-disponible-avec-au-moins-3-termes"><span class="header-section-number">4.6.3</span> Representation of the Stimuli and the CATA <em>(disponible avec au moins 3 termes)</em></a></li>
+  <li><a href="#representation-of-the-stimuli-according-to-clusters-disponible-avec-au-moins-3-termes" id="toc-representation-of-the-stimuli-according-to-clusters-disponible-avec-au-moins-3-termes" class="nav-link" data-scroll-target="#representation-of-the-stimuli-according-to-clusters-disponible-avec-au-moins-3-termes"><span class="header-section-number">4.6.4</span> Representation of the Stimuli According to Clusters <em>(disponible avec au moins 3 termes)</em></a></li>
+  <li><a href="#description-of-the-clusters-disponible-avec-au-moins-3-termes" id="toc-description-of-the-clusters-disponible-avec-au-moins-3-termes" class="nav-link" data-scroll-target="#description-of-the-clusters-disponible-avec-au-moins-3-termes"><span class="header-section-number">4.6.5</span> Description of the Clusters <em>(disponible avec au moins 3 termes)</em></a></li>
+  </ul></li>
+  <li><a href="#exemple-le-jeu-de-données-giacalone_et_al_cata" id="toc-exemple-le-jeu-de-données-giacalone_et_al_cata" class="nav-link" data-scroll-target="#exemple-le-jeu-de-données-giacalone_et_al_cata"><span class="header-section-number">4.7</span> Exemple : le jeu de données <em>Giacalone_et_al_cata</em></a>
+  <ul class="collapse">
+  <li><a href="#paramètres-de-lexemple" id="toc-paramètres-de-lexemple" class="nav-link" data-scroll-target="#paramètres-de-lexemple"><span class="header-section-number">4.7.1</span> Paramètres de l’exemple</a></li>
+  <li><a href="#analyse-du-tableau-description-of-the-stimuli-according-to-cata" id="toc-analyse-du-tableau-description-of-the-stimuli-according-to-cata" class="nav-link" data-scroll-target="#analyse-du-tableau-description-of-the-stimuli-according-to-cata"><span class="header-section-number">4.7.2</span> Analyse du tableau <em>Description of the Stimuli According to CATA</em></a></li>
+  <li><a href="#analyse-du-graphique-representation-of-the-stimuli-and-the-cata" id="toc-analyse-du-graphique-representation-of-the-stimuli-and-the-cata" class="nav-link" data-scroll-target="#analyse-du-graphique-representation-of-the-stimuli-and-the-cata"><span class="header-section-number">4.7.3</span> Analyse du graphique <em>Representation of the Stimuli and the CATA</em></a></li>
+  <li><a href="#analyse-du-graphique-representation-of-the-stimuli-according-to-clusters-et-de-la-description-of-the-clusters" id="toc-analyse-du-graphique-representation-of-the-stimuli-according-to-clusters-et-de-la-description-of-the-clusters" class="nav-link" data-scroll-target="#analyse-du-graphique-representation-of-the-stimuli-according-to-clusters-et-de-la-description-of-the-clusters"><span class="header-section-number">4.7.4</span> Analyse du graphique <em>Representation of the Stimuli According to Clusters et de la Description of the Clusters</em></a></li>
+  <li><a href="#interprétation-synthétique" id="toc-interprétation-synthétique" class="nav-link" data-scroll-target="#interprétation-synthétique"><span class="header-section-number">4.7.5</span> Interprétation synthétique</a></li>
+  </ul></li>
+  <li><a href="#de-jamovi-au-rj-editor" id="toc-de-jamovi-au-rj-editor" class="nav-link" data-scroll-target="#de-jamovi-au-rj-editor"><span class="header-section-number">4.8</span> De jamovi au Rj Editor</a></li>
+  <li><a href="#conseils-pratiques" id="toc-conseils-pratiques" class="nav-link" data-scroll-target="#conseils-pratiques"><span class="header-section-number">4.9</span> Conseils pratiques</a></li>
+  <li><a href="#en-résumé" id="toc-en-résumé" class="nav-link" data-scroll-target="#en-résumé"><span class="header-section-number">4.10</span> En résumé</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Données CATA — Analyse par termes cochés</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+
+
+
+  </div>
+
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">4.1</span> Introduction</h2>
+<p>Cette analyse est conçue pour les données de type <strong>CATA</strong> (<em>Check-All-That-Apply</em>), c’est-à-dire lorsque des sujets cochent, parmi une liste prédéfinie, tous les termes qu’ils jugent appropriés pour décrire un stimulus. Elle permet de répondre à deux questions complémentaires : <strong>quels termes caractérisent chaque stimulus</strong> et <strong>comment les stimuli s’organisent globalement selon leurs profils CATA</strong>. La fonction produit un tableau de contingence, une description des stimuli selon les termes CATA, ainsi qu’une <strong>analyse des correspondances</strong> suivie d’une <strong>classification des stimuli</strong>, automatique par défaut.</p>
+<p><strong>Pourquoi ne pas utiliser une alternative standard ?</strong></p>
+<p>Les données CATA sont, à l’origine, des réponses binaires par sujet et par terme. Une comparaison de moyennes classique n’est donc pas l’outil le plus adapté pour représenter la structure globale de ces données. La fonction commence par agréger les réponses dans un <strong>tableau de contingence stimuli × termes</strong>, puis applique des méthodes adaptées à cette structure : description des fréquences, analyse des correspondances et, si possible, classification.</p>
+</section>
+<section id="comprendre-ce-qui-se-passe-sous-le-capot" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="comprendre-ce-qui-se-passe-sous-le-capot"><span class="header-section-number">4.2</span> Comprendre ce qui se passe “sous le capot”</h2>
+<section id="construction-du-tableau-de-contingence" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="construction-du-tableau-de-contingence"><span class="header-section-number">4.2.1</span> Construction du tableau de contingence</h3>
+<p>La première étape consiste à regrouper les réponses par stimulus. La fonction additionne les colonnes placées dans le champ <strong>CATA</strong> pour chaque modalité de <strong>Stimulus Effect</strong>. On obtient ainsi un tableau où les lignes sont les stimuli, les colonnes sont les termes CATA, et chaque cellule indique combien de fois un terme a été coché pour un stimulus donné. C’est ce tableau qui sert de base à toutes les sorties suivantes.</p>
+<blockquote class="blockquote">
+<p><strong>Remarque :</strong> il est possible de copier ce tableau dans un fichier de type tableur.</p>
+</blockquote>
+</section>
+<section id="description-des-stimuli-par-les-termes" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="description-des-stimuli-par-les-termes"><span class="header-section-number">4.2.2</span> Description des stimuli par les termes</h3>
+<p>À partir de ce tableau de contingence, la fonction applique une procédure de description des fréquences dépendante de la valeur du seuil défini dans <strong>Significance threshold (%)</strong>. Pour chaque stimulus, il repère les termes qui sont significativement plus ou moins fréquents que dans l’ensemble du tableau. Cette logique est proche de celle d’une description statistique des profils, mais adaptée ici à des fréquences de <em>coche</em> plutôt qu’à des notes continues. Le même seuil s’applique ensuite à la description des clusters.</p>
+<blockquote class="blockquote">
+<p>Un terme absent du tableau de description n’est pas significativement associé à un stimulus au seuil choisi. Cela peut signifier qu’il est coché de façon assez homogène entre les stimuli.</p>
+</blockquote>
+</section>
+<section id="analyse-des-correspondances" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="analyse-des-correspondances"><span class="header-section-number">4.2.3</span> Analyse des correspondances</h3>
+<p>Si au moins <strong>trois</strong> variables sont placées dans le champ <strong>CATA</strong>, la fonction réalise une <strong>analyse des correspondances</strong> sur le tableau de contingence. Cette méthode représente simultanément les stimuli et les termes dans un même espace factoriel. Deux stimuli proches sur la carte ont tendance à partager des profils CATA proches ; deux termes proches ont tendance à être cochés pour des stimuli similaires. Les axes résument les grandes oppositions de profils entre stimuli et termes.</p>
+</section>
+<section id="classification-des-stimuli" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="classification-des-stimuli"><span class="header-section-number">4.2.4</span> Classification des stimuli</h3>
+<p>Lorsque l’analyse des correspondances a été calculée, la fonction lance une <strong>classification hiérarchique sur composantes principales (HCPC)</strong>. Par défaut, <strong>Number of clusters = -1</strong> laisse FactoMineR déterminer automatiquement le nombre de groupes, mais l’utilisateur peut aussi imposer un nombre de clusters. La classification utilise les premières dimensions de l’analyse des correspondances définies par <strong>Number of dimensions for clustering</strong> ; ce réglage est distinct du choix du plan affiché avec <strong>X-axis</strong> et <strong>Y-axis</strong>. Les pourcentages affichés sur la carte HCPC sont exprimés relativement à l’inertie de cet espace de classification retenu et peuvent donc différer de ceux de la carte AC complète.</p>
+<p>La fonction produit ensuite une carte des stimuli selon leurs clusters et une description des clusters avec le même seuil de significativité que pour la description des stimuli.</p>
+</section>
+<section id="conditions-minimales-pour-lancer-lanalyse" class="level3" data-number="4.2.5">
+<h3 data-number="4.2.5" class="anchored" data-anchor-id="conditions-minimales-pour-lancer-lanalyse"><span class="header-section-number">4.2.5</span> Conditions minimales pour lancer l’analyse</h3>
+<p>SEDA exige au moins <strong>trois variables CATA</strong>. Avec moins de trois attributs, l’analyse s’arrête. Pour construire une carte d’analyse des correspondances en deux dimensions, le tableau agrégé doit également contenir au moins <strong>trois stimuli</strong> et <strong>trois attributs CATA informatifs</strong>.</p>
+<p>Les variables CATA doivent être des indicateurs complets codés <strong>0/1</strong> : <code>0</code> signifie que le terme n’a pas été coché et <code>1</code> qu’il a été coché. Les valeurs manquantes ne sont pas interprétées comme des réponses non cochées et doivent être résolues avant l’analyse.</p>
+</section>
+</section>
+<section id="structure-des-données-attendues" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="structure-des-données-attendues"><span class="header-section-number">4.3</span> Structure des données attendues</h2>
+<p>Les données doivent contenir :</p>
+<ul>
+<li>une colonne catégorielle identifiant les <strong>stimuli</strong> ;</li>
+<li>au moins <strong>trois colonnes CATA</strong> codées en <strong>0/1</strong>.</li>
+</ul>
+<p>Chaque ligne correspond à l’évaluation d’un stimulus par un sujet. Si 40 sujets évaluent 6 stimuli, le fichier contient en général une ligne par sujet et par stimulus, avec une colonne par terme <em>CATA</em>.</p>
+<p>Avant de lancer l’analyse dans jamovi, vérifiez dans l’onglet <strong>Données</strong> que :</p>
+<ul>
+<li>la variable destinée à <strong>Stimulus Effect</strong> est bien catégorielle ;</li>
+<li>les variables destinées à <strong>CATA</strong> sont numériques et ne contiennent que <code>0</code> et <code>1</code> ;</li>
+<li>aucune réponse CATA n’est manquante : une valeur manquante n’est pas assimilée à <code>0</code> ;</li>
+<li>au moins <strong>trois</strong> termes CATA sont sélectionnés ;</li>
+<li>au moins <strong>trois stimuli</strong> sont effectivement observés pour obtenir le plan factoriel en deux dimensions.</li>
+</ul>
+</section>
+<section id="guide-de-linterface" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="guide-de-linterface"><span class="header-section-number">4.4</span> Guide de l’interface</h2>
+<p>L’analyse apparaît dans le menu <strong>SEDA &gt; Fixed List of Attributes &gt; Analysis of CATA Data</strong>. L’interface comporte deux zones de dépôt de variables, un bloc <strong>Instructions and R Code</strong>, le champ <strong>Significance threshold (%)</strong>, puis deux menus repliables : <strong>Graphic Options</strong> et <strong>Clustering</strong>.</p>
+<section id="variables-à-renseigner" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="variables-à-renseigner"><span class="header-section-number">4.4.1</span> Variables à renseigner</h3>
+<section id="stimulus-effect" class="level4" data-number="4.4.1.1">
+<h4 data-number="4.4.1.1" class="anchored" data-anchor-id="stimulus-effect"><span class="header-section-number">4.4.1.1</span> Stimulus Effect</h4>
+<p><strong>Rôle :</strong> identifie les stimuli à comparer. <strong>Impact sur le calcul :</strong> cette variable définit les lignes du tableau de contingence et organise l’ensemble des sorties descriptives et graphiques. <strong>Conseil pratique :</strong> utilisez des libellés clairs, car ils apparaîtront dans les tableaux et dans les graphiques.</p>
+</section>
+<section id="cata" class="level4" data-number="4.4.1.2">
+<h4 data-number="4.4.1.2" class="anchored" data-anchor-id="cata"><span class="header-section-number">4.4.1.2</span> CATA</h4>
+<p><strong>Rôle :</strong> regroupe les termes de la liste CATA. <strong>Impact sur le calcul :</strong> ces variables définissent les colonnes du tableau de contingence ; elles servent ensuite à la description des stimuli, à l’analyse des correspondances et à la classification. <strong>Conseil pratique :</strong> sélectionnez au moins <strong>trois</strong> variables CATA complètes codées en 0/1.</p>
+</section>
+</section>
+<section id="instructions-and-r-code" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="instructions-and-r-code"><span class="header-section-number">4.4.2</span> Instructions and R Code</h3>
+<section id="read-me-before-running" class="level4" data-number="4.4.2.1">
+<h4 data-number="4.4.2.1" class="anchored" data-anchor-id="read-me-before-running"><span class="header-section-number">4.4.2.1</span> Read me before running</h4>
+<p><strong>Rôle :</strong> affiche une aide intégrée dans les résultats. <strong>Impact sur le calcul :</strong> aucun. <strong>Conseil pratique :</strong> laissez-la cochée lors des premières utilisations. Elle est <strong>activée par défaut</strong>.</p>
+</section>
+<section id="r-code" class="level4" data-number="4.4.2.2">
+<h4 data-number="4.4.2.2" class="anchored" data-anchor-id="r-code"><span class="header-section-number">4.4.2.2</span> R code</h4>
+<p><strong>Rôle :</strong> affiche le script R correspondant à l’analyse dans une sortie <strong>R Code</strong>. <strong>Impact sur le calcul :</strong> aucun. <strong>Conseil pratique :</strong> activez cette option pour reproduire l’analyse dans le <strong>Rj Editor</strong> ou poursuivre le travail dans R. Elle est <strong>désactivée par défaut</strong>.</p>
+</section>
+</section>
+<section id="significance-threshold" class="level3" data-number="4.4.3">
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="significance-threshold"><span class="header-section-number">4.4.3</span> Significance threshold (%)</h3>
+<p><strong>Rôle :</strong> définit le seuil de la p-value utilisé pour sélectionner les termes caractéristiques des stimuli et des clusters. <strong>Impact sur le calcul :</strong> ce seuil agit sur les tables de description produites par <code>descfreq</code>, mais ne change pas la construction de l’analyse des correspondances ni de la classification. <strong>Conseil pratique :</strong> la valeur par défaut est 5 %.</p>
+</section>
+<section id="graphic-options" class="level3" data-number="4.4.4">
+<h3 data-number="4.4.4" class="anchored" data-anchor-id="graphic-options"><span class="header-section-number">4.4.4</span> Graphic Options</h3>
+<section id="x-axis-et-y-axis" class="level4" data-number="4.4.4.1">
+<h4 data-number="4.4.4.1" class="anchored" data-anchor-id="x-axis-et-y-axis"><span class="header-section-number">4.4.4.1</span> X-axis et Y-axis</h4>
+<p><strong>Rôle :</strong> choisissent les deux dimensions de l’analyse des correspondances affichées sur les cartes. <strong>Impact sur le calcul :</strong> ils modifient le plan représenté, pas la structure de l’AC elle-même. <strong>Conseil pratique :</strong> commencez avec X-axis = 1 et Y-axis = 2, les valeurs par défaut.</p>
+</section>
+</section>
+<section id="clustering" class="level3" data-number="4.4.5">
+<h3 data-number="4.4.5" class="anchored" data-anchor-id="clustering"><span class="header-section-number">4.4.5</span> Clustering</h3>
+<section id="number-of-dimensions-for-clustering" class="level4" data-number="4.4.5.1">
+<h4 data-number="4.4.5.1" class="anchored" data-anchor-id="number-of-dimensions-for-clustering"><span class="header-section-number">4.4.5.1</span> Number of dimensions for clustering</h4>
+<p><strong>Rôle :</strong> fixe le nombre de premières dimensions de l’AC utilisées par HCPC. <strong>Impact sur le calcul :</strong> la classification peut donc utiliser plus d’information que le seul plan affiché. La valeur par défaut est 5 ; si moins de cinq dimensions sont disponibles, SEDA utilise toutes les dimensions disponibles. <strong>Conseil pratique :</strong> les axes choisis pour le graphique doivent être inclus parmi les dimensions utilisées pour la classification.</p>
+</section>
+<section id="number-of-clusters" class="level4" data-number="4.4.5.2">
+<h4 data-number="4.4.5.2" class="anchored" data-anchor-id="number-of-clusters"><span class="header-section-number">4.4.5.2</span> Number of clusters</h4>
+<p><strong>Rôle :</strong> fixe le nombre de groupes de stimuli. <strong>Impact sur le calcul :</strong> avec la valeur par défaut <code>-1</code>, FactoMineR détermine automatiquement le nombre de clusters ; une valeur entière d’au moins 2 impose ce nombre de groupes. Le nombre demandé doit rester inférieur au nombre de stimuli. <strong>Conseil pratique :</strong> commencez avec <code>-1</code>, puis imposez un nombre de groupes seulement si vous avez une raison analytique de le faire.</p>
+</section>
+</section>
+</section>
+<section id="procédure-pas-à-pas" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="procédure-pas-à-pas"><span class="header-section-number">4.5</span> Procédure pas à pas</h2>
+<ol type="1">
+<li>Ouvrez votre jeu de données dans jamovi.</li>
+<li>Dans l’onglet <strong>Données</strong>, vérifiez que la variable stimulus est catégorielle et que les variables CATA sont complètes et codées en 0/1.</li>
+<li>Ouvrez <strong>SEDA &gt; Fixed List of Attributes &gt; Analysis of CATA Data</strong>.</li>
+<li>Placez la variable stimulus dans <strong>Stimulus Effect</strong>.</li>
+<li>Placez au moins trois termes dans <strong>CATA</strong>.</li>
+<li>Laissez <strong>Significance threshold (%)</strong> à 5 % pour un premier essai.</li>
+<li>Conservez X-axis = 1 et Y-axis = 2.</li>
+<li>Laissez <strong>Number of dimensions for clustering = 5</strong> et <strong>Number of clusters = -1</strong> pour une première analyse.</li>
+<li>Commencez par lire <strong>Description of the Stimuli According to CATA</strong>.</li>
+<li>Consultez ensuite <strong>Representation of the Stimuli and the CATA</strong> en interprétant les stimuli et les termes par rapport aux axes.</li>
+<li>Lisez <strong>Representation of the Stimuli According to Clusters</strong> puis <strong>Description of the Clusters</strong>.</li>
+<li>Vérifiez enfin <strong>Aggregated CATA Table — Stimuli × CATA Frequency Table</strong>, qui contient les fréquences réellement utilisées dans les calculs.</li>
+<li>Si nécessaire, modifiez le plan factoriel ou les paramètres de classification, puis vérifiez que vos conclusions restent cohérentes.</li>
+</ol>
+</section>
+<section id="interprétation-des-résultats" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="interprétation-des-résultats"><span class="header-section-number">4.6</span> Interprétation des résultats</h2>
+<section id="tableau-de-contingence" class="level3" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="tableau-de-contingence"><span class="header-section-number">4.6.1</span> Tableau de contingence</h3>
+<p>Ce premier tableau croise les stimuli en lignes et les termes CATA en colonnes. Chaque cellule indique le nombre de fois où un terme a été coché pour un stimulus donné.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Élément</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Valeur élevée dans une cellule</td>
+<td>Le terme a souvent été coché pour ce stimulus</td>
+</tr>
+<tr class="even">
+<td>Ligne avec plusieurs valeurs élevées</td>
+<td>Le stimulus est associé à plusieurs termes fréquents</td>
+</tr>
+<tr class="odd">
+<td>Colonne élevée pour presque tous les stimuli</td>
+<td>Terme fréquent, mais pas forcément discriminant</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><strong>Point de vigilance :</strong> un terme très fréquent n’est pas automatiquement un terme caractéristique. S’il est coché pour presque tous les stimuli, il contribuera peu à les distinguer.</p>
+</blockquote>
+</section>
+<section id="description-of-the-stimuli-according-to-cata" class="level3" data-number="4.6.2">
+<h3 data-number="4.6.2" class="anchored" data-anchor-id="description-of-the-stimuli-according-to-cata"><span class="header-section-number">4.6.2</span> Description of the Stimuli According to CATA</h3>
+<p>Ce tableau décrit chaque stimulus par les termes qui lui sont significativement associés, regroupés par stimulus. Les termes sont triés par V-test décroissante au sein de chaque groupe.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 69%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Élément</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>(première colonne)</em></td>
+<td>Stimulus concerné</td>
+</tr>
+<tr class="even">
+<td><strong>CATA</strong></td>
+<td>Terme caractéristique</td>
+</tr>
+<tr class="odd">
+<td><strong>Intern %</strong></td>
+<td>Pourcentage d’utilisation du terme pour ce stimulus</td>
+</tr>
+<tr class="even">
+<td><strong>Global %</strong></td>
+<td>Pourcentage global d’utilisation du terme</td>
+</tr>
+<tr class="odd">
+<td><strong>Intern frequency</strong></td>
+<td>Fréquence absolue du terme pour ce stimulus</td>
+</tr>
+<tr class="even">
+<td><strong>Global frequency</strong></td>
+<td>Fréquence absolue totale du terme</td>
+</tr>
+<tr class="odd">
+<td><strong>p</strong></td>
+<td>P-value du test</td>
+</tr>
+<tr class="even">
+<td><strong>V-test</strong></td>
+<td>Intensité standardisée de l’association</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Une <strong>V-test</strong> positive indique que le terme est plus fréquemment coché pour ce stimulus que dans l’ensemble.</li>
+<li>Une <strong>V-test</strong> négative indique qu’il est moins fréquemment coché — et est tout aussi informatif.</li>
+<li>Une <strong>p-value</strong> faible indique une caractérisation plus nette.</li>
+</ul>
+<blockquote class="blockquote">
+<p>Un stimulus absent de ce tableau n’est pas “sans profil” ; il se situe simplement proche de la moyenne de l’ensemble des stimuli au seuil choisi.</p>
+</blockquote>
+</section>
+<section id="representation-of-the-stimuli-and-the-cata-disponible-avec-au-moins-3-termes" class="level3" data-number="4.6.3">
+<h3 data-number="4.6.3" class="anchored" data-anchor-id="representation-of-the-stimuli-and-the-cata-disponible-avec-au-moins-3-termes"><span class="header-section-number">4.6.3</span> Representation of the Stimuli and the CATA <em>(disponible avec au moins 3 termes)</em></h3>
+<p>Ce graphique n’est produit que si au moins <strong>trois</strong> termes sont placés dans <strong>CATA</strong>. Il représente simultanément les stimuli et les termes dans l’espace factoriel issu de l’analyse des correspondances.</p>
+<ul>
+<li>Deux stimuli proches ont des profils CATA proches.</li>
+<li>Stimuli et termes doivent être interprétés par rapport aux <strong>axes factoriels</strong> et aux oppositions qu’ils structurent ; une distance directe entre un stimulus et un terme ne se lit pas comme une distance euclidienne ordinaire.</li>
+<li>Le pourcentage affiché sur chaque axe indique la part de l’information totale capturée par cette dimension.</li>
+</ul>
+<p>Cette carte donne une vue d’ensemble, mais elle ne remplace pas la table descriptive. Les deux doivent être lues ensemble.</p>
+</section>
+<section id="representation-of-the-stimuli-according-to-clusters-disponible-avec-au-moins-3-termes" class="level3" data-number="4.6.4">
+<h3 data-number="4.6.4" class="anchored" data-anchor-id="representation-of-the-stimuli-according-to-clusters-disponible-avec-au-moins-3-termes"><span class="header-section-number">4.6.4</span> Representation of the Stimuli According to Clusters <em>(disponible avec au moins 3 termes)</em></h3>
+<p>Ce graphique représente les stimuli selon la partition issue de HCPC. Avec <strong>Number of clusters = -1</strong>, la partition est choisie automatiquement ; si un nombre de clusters est imposé, la carte reflète cette partition. La classification utilise les premières dimensions définies par <strong>Number of dimensions for clustering</strong>, tandis que <strong>X-axis</strong> et <strong>Y-axis</strong> déterminent le plan affiché. Les pourcentages de la carte HCPC se rapportent à l’espace de classification retenu, et non à l’inertie totale de l’AC.</p>
+<ul>
+<li>Des stimuli dans le même cluster ont des profils CATA proches.</li>
+<li>Des clusters éloignés correspondent à des familles de stimuli plus contrastées.</li>
+<li>Cette sortie aide à résumer la structure globale des stimuli.</li>
+</ul>
+</section>
+<section id="description-of-the-clusters-disponible-avec-au-moins-3-termes" class="level3" data-number="4.6.5">
+<h3 data-number="4.6.5" class="anchored" data-anchor-id="description-of-the-clusters-disponible-avec-au-moins-3-termes"><span class="header-section-number">4.6.5</span> Description of the Clusters <em>(disponible avec au moins 3 termes)</em></h3>
+<p>Lorsque la classification est disponible, la fonction produit aussi une table décrivant chaque cluster par les termes qui lui sont significativement associés, avec la même logique que pour la description des stimuli.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 72%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Élément</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>(première colonne)</em></td>
+<td>Groupe de stimuli concerné</td>
+</tr>
+<tr class="even">
+<td><strong>CATA</strong></td>
+<td>Terme caractéristique</td>
+</tr>
+<tr class="odd">
+<td><strong>Intern %</strong></td>
+<td>Pourcentage du terme dans le cluster</td>
+</tr>
+<tr class="even">
+<td><strong>Global %</strong></td>
+<td>Pourcentage global du terme</td>
+</tr>
+<tr class="odd">
+<td><strong>Intern frequency</strong></td>
+<td>Fréquence absolue du terme dans le cluster</td>
+</tr>
+<tr class="even">
+<td><strong>Global frequency</strong></td>
+<td>Fréquence absolue totale du terme</td>
+</tr>
+<tr class="odd">
+<td><strong>p</strong></td>
+<td>P-value</td>
+</tr>
+<tr class="even">
+<td><strong>V-test</strong></td>
+<td>Intensité standardisée de l’association</td>
+</tr>
+</tbody>
+</table>
+<p>Cette table est particulièrement utile pour résumer les grandes familles de stimuli, au-delà du détail stimulus par stimulus.</p>
+</section>
+</section>
+<section id="exemple-le-jeu-de-données-giacalone_et_al_cata" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="exemple-le-jeu-de-données-giacalone_et_al_cata"><span class="header-section-number">4.7</span> Exemple : le jeu de données <em>Giacalone_et_al_cata</em></h2>
+<p>Le jeu de données <strong>Giacalone_et_al_cata</strong> décrit 9 bières évaluées par 74 consommateurs sur 15 items CATA : il s’agit ici d’associer des bières à des occasions particulières. Il sert à illustrer les sorties de la fonction. Les valeurs numériques et les graphiques commentés ci-dessous proviennent directement des résultats de l’analyse. Pour charger ce jeu de données, ouvrez jamovi, cliquez sur l’icône en haut à gauche (trois traits superposés), puis sur <strong>Open</strong> → <strong>Data Library</strong> → <strong>SEDA</strong>.</p>
+<section id="paramètres-de-lexemple" class="level3" data-number="4.7.1">
+<h3 data-number="4.7.1" class="anchored" data-anchor-id="paramètres-de-lexemple"><span class="header-section-number">4.7.1</span> Paramètres de l’exemple</h3>
+<p>Pour reproduire cet exemple, voici les valeurs à utiliser.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 47%">
+<col style="width: 52%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Stimulus Effect</strong></td>
+<td>Product</td>
+</tr>
+<tr class="even">
+<td><strong>CATA</strong></td>
+<td>tous les items CATA de ThirstQ à Concert</td>
+</tr>
+<tr class="odd">
+<td><strong>Significance threshold (%)</strong></td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td><strong>X-axis / Y-axis</strong></td>
+<td>1 / 2</td>
+</tr>
+<tr class="odd">
+<td><strong>Number of dimensions for clustering</strong></td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td><strong>Number of clusters</strong></td>
+<td>-1 (automatic)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="analyse-du-tableau-description-of-the-stimuli-according-to-cata" class="level3" data-number="4.7.2">
+<h3 data-number="4.7.2" class="anchored" data-anchor-id="analyse-du-tableau-description-of-the-stimuli-according-to-cata"><span class="header-section-number">4.7.2</span> Analyse du tableau <em>Description of the Stimuli According to CATA</em></h3>
+<p>La table permet une lecture stimulus par stimulus avec les valeurs test et fréquences réelles.</p>
+<p><strong>GMA</strong> est significativement caractérisé par <em>Rugby</em> (V-test = 3.95, p &lt; .001 ; 11.61 % contre 7.08 % globalement) et <em>CampingFishing</em> (2.73, p = 0.006). Il est à l’inverse sous-représenté par <em>Gift</em> (V-test = -4.36), <em>Treat</em> (-3.84) et <em>FineDinning</em> (-3.51) — tous très significatifs.</p>
+<p><strong>LR</strong> présente le profil le plus fortement marqué par <em>Rugby</em> de tout l’ensemble (V-test = 5.74, p &lt; .001 ; 15.24 % contre 7.08 % globalement) et <em>CampingFishing</em> (2.83). Il est sous-représenté par <em>Guests</em> (-4.77), <em>FineDinning</em> (-3.91), <em>Treat</em> (-3.74) et <em>Gift</em> (-3.50).</p>
+<p><strong>SSA</strong> se distingue de tous les autres stimuli par l’intensité de ses associations positives : <em>Gift</em> (V-test = 6.43, p &lt; .001 ; 13.41 % contre 4.21 % globalement), <em>FineDinning</em> (6.09), <em>Treat</em> (4.53), <em>Achievement</em> (3.71) et <em>Guests</em> (2.72). À l’inverse, il est fortement sous-représenté par <em>Rugby</em> (-4.29), <em>ThirstQ</em> (-3.63), <em>Work</em> (-3.01), <em>CampingFishing</em> (-2.88) et <em>TV</em> (-2.80). C’est le stimulus dont le profil s’écarte le plus nettement de la moyenne.</p>
+<p><strong>SC</strong> est davantage lié à <em>Rugby</em> (2.82) et <em>ThirstQ</em> (2.69), et sous-représenté par <em>PubHouse</em> (-2.67), <em>Treat</em> (-2.58) et <em>Gift</em> (-2.55).</p>
+<p><strong>HPW</strong> est davantage associé à <em>Treat</em> (V-test = 2.41) et <em>Gift</em> (2.21), et sous-représenté par <em>Rugby</em> (-3.29). <strong>PKB</strong> est davantage associé à <em>Gift</em> (2.60) et <em>Treat</em> (2.10) ; aucun terme négatif n’atteint le seuil de 5 % pour ce stimulus.</p>
+<p><strong>MBB</strong> ressort principalement par <em>PubHouse</em> (2.62) et se distingue négativement par <em>ThirstQ</em> (-2.35) et <em>Rugby</em> (-2.19).</p>
+<p><strong>STG</strong> n’est caractérisé que par <em>Rugby</em> en négatif (-2.75, p = 0.006).</p>
+</section>
+<section id="analyse-du-graphique-representation-of-the-stimuli-and-the-cata" class="level3" data-number="4.7.3">
+<h3 data-number="4.7.3" class="anchored" data-anchor-id="analyse-du-graphique-representation-of-the-stimuli-and-the-cata"><span class="header-section-number">4.7.3</span> Analyse du graphique <em>Representation of the Stimuli and the CATA</em></h3>
+<p>La première dimension explique 85.59 % de l’inertie — c’est une valeur remarquablement élevée, qui signifie que l’opposition principale entre les stimuli est très forte et très lisible sur l’axe horizontal. La seconde dimension n’explique que 7.43 %, mais affine des distinctions secondaires.</p>
+<p>Sur la carte, <em>SSA</em> se situe très nettement à droite, isolé près de <em>Gift</em>, <em>FineDinning</em> et <em>Achievement</em>. À gauche se regroupent <em>LR</em>, <em>GMA</em> et <em>SC</em>, proches de <em>Rugby</em> et <em>CampingFishing</em>. <em>MBB</em>, <em>HPW</em>, <em>PKB</em>, <em>MHR</em> et <em>STG</em> occupent une position centrale ou légèrement à droite, entre les deux pôles. Sur la seconde dimension, <em>LR</em> se situe légèrement plus haut que <em>GMA</em> et <em>SC</em>, ce qui reflète sa plus forte association à <em>Rugby</em>.</p>
+</section>
+<section id="analyse-du-graphique-representation-of-the-stimuli-according-to-clusters-et-de-la-description-of-the-clusters" class="level3" data-number="4.7.4">
+<h3 data-number="4.7.4" class="anchored" data-anchor-id="analyse-du-graphique-representation-of-the-stimuli-according-to-clusters-et-de-la-description-of-the-clusters"><span class="header-section-number">4.7.4</span> Analyse du graphique <em>Representation of the Stimuli According to Clusters et de la Description of the Clusters</em></h3>
+<p>La classification automatique retient <strong>trois clusters</strong> :</p>
+<ul>
+<li><p><strong>Cluster 1</strong> (noir) : <em>LR</em>, <em>GMA</em> et <em>SC</em> — caractérisé positivement par <em>Rugby</em> (V-test = 9.12, p &lt; .001), <em>CampingFishing</em> (4.86), <em>ThirstQ</em> (3.81) et <em>TV</em> (3.01), et sous-représenté notamment par <em>Gift</em> (-6.97), <em>Treat</em> (-6.81), <em>FineDinning</em> (-6.21) et <em>Guests</em> (-4.67). Ce cluster correspond au pôle le plus fortement associé aux contextes sportifs et de plein air.</p></li>
+<li><p><strong>Cluster 2</strong> (rouge) : <em>MBB</em>, <em>HPW</em>, <em>PKB</em>, <em>MHR</em> et <em>STG</em> — caractérisé positivement par <em>Treat</em> (V-test = 3.52), <em>Guests</em> (2.86), <em>Gift</em> (2.18), <em>PubHouse</em> (2.15) et <em>Achievement</em> (2.05), et sous-représenté par <em>Rugby</em> (-7.07), <em>CampingFishing</em> (-3.34) et <em>ThirstQ</em> (-2.02). Ce cluster rassemble des boissons davantage associées à des contextes sociaux ou de plaisir et moins aux contextes sportifs et de plein air.</p></li>
+<li><p><strong>Cluster 3</strong> (vert) : <em>SSA</em> seul — caractérisé positivement par <em>Gift</em> (V-test = 6.43), <em>FineDinning</em> (6.09), <em>Treat</em> (4.53), <em>Achievement</em> (3.71) et <em>Guests</em> (2.72), et négativement par <em>Rugby</em> (-4.29), <em>ThirstQ</em> (-3.63), <em>Work</em> (-3.01), <em>CampingFishing</em> (-2.88), <em>TV</em> (-2.80) et <em>Party</em> (-2.39). Le profil de <em>SSA</em> est suffisamment singulier pour former à lui seul un cluster.</p></li>
+</ul>
+</section>
+<section id="interprétation-synthétique" class="level3" data-number="4.7.5">
+<h3 data-number="4.7.5" class="anchored" data-anchor-id="interprétation-synthétique"><span class="header-section-number">4.7.5</span> Interprétation synthétique</h3>
+<p>Cet exemple montre bien l’intérêt de la fonction. On ne se contente pas de savoir qu’un item est souvent coché : on voit <strong>pour quels stimuli il est vraiment caractéristique</strong>, <strong>comment les stimuli s’opposent globalement</strong>, et <strong>quels grands profils</strong> émergent de l’ensemble des réponses. Ici, l’opposition majeure — capturée à 85.59 % par la première dimension — oppose des boissons associées à des contextes sportifs et de plein air (<em>Rugby</em>, <em>CampingFishing</em>) à des boissons perçues comme plus sophistiquées (<em>Gift</em>, <em>FineDinning</em>, <em>Treat</em>). <em>SSA</em> constitue un cas à part, dont le profil est suffisamment singulier pour former un cluster seul.</p>
+<blockquote class="blockquote">
+<p><strong>Ce qu’on retient de cet exemple :</strong> l’analyse CATA permet de passer d’une simple fréquence de coches à une lecture structurée des oppositions entre stimuli et des grands profils qui s’en dégagent.</p>
+</blockquote>
+</section>
+</section>
+<section id="de-jamovi-au-rj-editor" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="de-jamovi-au-rj-editor"><span class="header-section-number">4.8</span> De jamovi au Rj Editor</h2>
+<p>Une fois le <strong>Rj Editor</strong> configuré avec <strong>System R</strong> comme indiqué au chapitre 1, cochez <strong>R code</strong> pour afficher le script correspondant à l’analyse. Le jeu de données ouvert dans jamovi est disponible sous le nom <code>data</code>.</p>
+<p>Pour CATA, le script charge <code>FactoMineR</code>, agrège les indicateurs 0/1 par stimulus, puis utilise <code>descfreq()</code> pour la caractérisation, <code>CA()</code> pour l’analyse des correspondances et <code>HCPC()</code> pour la classification. Les paramètres <strong>X-axis / Y-axis</strong>, <strong>Number of dimensions for clustering</strong> et <strong>Number of clusters</strong> sont repris dans le code généré.</p>
+<p>Le script utilise également les options graphiques adaptées au Rj Editor afin d’éviter l’ouverture d’un périphérique graphique externe. Aucun réglage supplémentaire n’est nécessaire.</p>
+</section>
+<section id="conseils-pratiques" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="conseils-pratiques"><span class="header-section-number">4.9</span> Conseils pratiques</h2>
+<ul>
+<li>Commencez avec <strong>Significance threshold (%) = 5 %</strong> ; augmentez à 10 % si les tables de description sont trop vides.</li>
+<li>Vérifiez toujours le tableau de contingence avant d’interpréter les graphiques.</li>
+<li>Il faut <strong>au moins trois termes CATA et trois stimuli observés</strong> pour construire le plan factoriel en deux dimensions.</li>
+<li>Une <strong>V-test</strong> négative est aussi informative qu’une <strong>V-test</strong> positive : elle signale qu’un terme est significativement moins coché pour un stimulus que pour les autres.</li>
+<li>Ne surinterpretez pas l’absence d’un stimulus dans la table descriptive : il peut simplement avoir un profil proche du profil moyen.</li>
+<li>La classification est <strong>automatique par défaut</strong> (<code>Number of clusters = -1</code>), mais vous pouvez imposer un nombre de groupes ; jugez toujours sa pertinence en croisant la carte et la description des clusters.</li>
+<li>Lisez la carte de correspondances conjointement avec le tableau de description : la carte donne une vue d’ensemble, le tableau fournit les détails.</li>
+<li>Les colonnes CATA doivent contenir uniquement <code>0</code> et <code>1</code> et ne pas comporter de valeurs manquantes ; une valeur manquante n’est pas traitée comme une réponse non cochée.</li>
+</ul>
+</section>
+<section id="en-résumé" class="level2" data-number="4.10">
+<h2 data-number="4.10" class="anchored" data-anchor-id="en-résumé"><span class="header-section-number">4.10</span> En résumé</h2>
+<p>Cette analyse transforme des réponses CATA en une lecture structurée des profils CATA des stimuli. Elle combine un <strong>tableau de contingence</strong>, une <strong>description statistique des stimuli</strong>, une <strong>analyse des correspondances</strong> et une <strong>classification</strong>, automatique par défaut. Son intérêt principal est de passer d’une simple accumulation de coches à une vision à la fois <strong>descriptive</strong>, <strong>factorielle</strong> et <strong>typologique</strong> des stimuli.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copié");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copié");
+      tooltip = new bootstrap.Tooltip(button,
+        { trigger: "manual",
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config);
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined;
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            }
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          }
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./chapitre2_prompt_harmonise.html" class="pagination-link" aria-label="Données QDA — Représentation multivariée avec ellipses">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Données QDA — Représentation multivariée avec ellipses</span></span>
+      </a>
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./chapitre4_prompt_harmonise.html" class="pagination-link" aria-label="Données JAR — Analyse des défauts et pénalités">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Données JAR — Analyse des défauts et pénalités</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -4,6 +4,10 @@ project:
 book:
   title: "Apprends moi à faire seul : analyse de données sensorielles avec jamovi et le module SEDA"
   date: "2026-08-31"
+  navbar:
+    right:
+      - text: "English"
+        href: https://sebastien-le.github.io/seda-book/
   chapters:
     - index.qmd
     - intro_ppt.qmd

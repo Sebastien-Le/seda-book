@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr-FR" xml:lang="fr-FR"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; Données de Napping — Représentation consensuelle – Apprends moi à faire seul : analyse de données sensorielles avec jamovi et le module SEDA</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./chapitre6_prompt_harmonise.html" rel="next">
+<link href="./chapitre4_prompt_harmonise.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-b7c2d8834e08b04a63bb76a724ffbcac.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Apprends moi à faire seul : analyse de données sensorielles avec jamovi et le module SEDA</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Recherche"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Basculer la navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://sebastien-le.github.io/seda-book/">
+<span class="menu-text">English</span></a>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapitre5_prompt_harmonise.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Données de Napping — Représentation consensuelle</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container">
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Préface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./intro_ppt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre1_prompt_harmonise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Données QDA — Caractérisation de l’espace sensoriel</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre2_prompt_harmonise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Données QDA — Représentation multivariée avec ellipses</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre3_prompt_harmonise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Données CATA — Analyse par termes cochés</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre4_prompt_harmonise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Données JAR — Analyse des défauts et pénalités</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre5_prompt_harmonise.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Données de Napping — Représentation consensuelle</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre6_prompt_harmonise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Données de tri libre — Analyse des catégorisations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre7_prompt_harmonise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Données hédoniques — Cartographie des préférences</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">6.1</span> Introduction</a></li>
+  <li><a href="#comprendre-ce-qui-se-passe-sous-le-capot" id="toc-comprendre-ce-qui-se-passe-sous-le-capot" class="nav-link" data-scroll-target="#comprendre-ce-qui-se-passe-sous-le-capot"><span class="header-section-number">6.2</span> Comprendre ce qui se passe “sous le capot”</a>
+  <ul class="collapse">
+  <li><a href="#les-données-sont-lues-par-paires-de-coordonnées" id="toc-les-données-sont-lues-par-paires-de-coordonnées" class="nav-link" data-scroll-target="#les-données-sont-lues-par-paires-de-coordonnées"><span class="header-section-number">6.2.1</span> Les données sont lues par paires de coordonnées</a></li>
+  <li><a href="#une-afm-sur-des-groupes-de-taille-2-sans-standardisation" id="toc-une-afm-sur-des-groupes-de-taille-2-sans-standardisation" class="nav-link" data-scroll-target="#une-afm-sur-des-groupes-de-taille-2-sans-standardisation"><span class="header-section-number">6.2.2</span> Une AFM sur des groupes de taille 2, sans standardisation</a></li>
+  <li><a href="#le-rôle-des-coordonnées-supplémentaires" id="toc-le-rôle-des-coordonnées-supplémentaires" class="nav-link" data-scroll-target="#le-rôle-des-coordonnées-supplémentaires"><span class="header-section-number">6.2.3</span> Le rôle des coordonnées supplémentaires</a></li>
+  <li><a href="#description-automatique-des-dimensions" id="toc-description-automatique-des-dimensions" class="nav-link" data-scroll-target="#description-automatique-des-dimensions"><span class="header-section-number">6.2.4</span> Description automatique des dimensions</a></li>
+  <li><a href="#sauvegarde-des-dimensions-et-clustering" id="toc-sauvegarde-des-dimensions-et-clustering" class="nav-link" data-scroll-target="#sauvegarde-des-dimensions-et-clustering"><span class="header-section-number">6.2.5</span> Sauvegarde des dimensions et clustering</a></li>
+  </ul></li>
+  <li><a href="#structure-des-données-attendues" id="toc-structure-des-données-attendues" class="nav-link" data-scroll-target="#structure-des-données-attendues"><span class="header-section-number">6.3</span> Structure des données attendues</a></li>
+  <li><a href="#guide-de-linterface" id="toc-guide-de-linterface" class="nav-link" data-scroll-target="#guide-de-linterface"><span class="header-section-number">6.4</span> Guide de l’interface</a>
+  <ul class="collapse">
+  <li><a href="#variables-à-renseigner" id="toc-variables-à-renseigner" class="nav-link" data-scroll-target="#variables-à-renseigner"><span class="header-section-number">6.4.1</span> Variables à renseigner</a></li>
+  <li><a href="#instructions-and-r-code" id="toc-instructions-and-r-code" class="nav-link" data-scroll-target="#instructions-and-r-code"><span class="header-section-number">6.4.2</span> Instructions and R Code</a></li>
+  <li><a href="#graphic-options" id="toc-graphic-options" class="nav-link" data-scroll-target="#graphic-options"><span class="header-section-number">6.4.3</span> Graphic Options</a></li>
+  <li><a href="#numerical-indicators" id="toc-numerical-indicators" class="nav-link" data-scroll-target="#numerical-indicators"><span class="header-section-number">6.4.4</span> Numerical Indicators</a></li>
+  <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering"><span class="header-section-number">6.4.5</span> Clustering</a></li>
+  </ul></li>
+  <li><a href="#procédure-pas-à-pas" id="toc-procédure-pas-à-pas" class="nav-link" data-scroll-target="#procédure-pas-à-pas"><span class="header-section-number">6.5</span> Procédure pas à pas</a></li>
+  <li><a href="#interprétation-des-résultats" id="toc-interprétation-des-résultats" class="nav-link" data-scroll-target="#interprétation-des-résultats"><span class="header-section-number">6.6</span> Interprétation des résultats</a>
+  <ul class="collapse">
+  <li><a href="#representation-of-the-stimuli" id="toc-representation-of-the-stimuli" class="nav-link" data-scroll-target="#representation-of-the-stimuli"><span class="header-section-number">6.6.1</span> Representation of the Stimuli</a></li>
+  <li><a href="#representation-of-the-subjects" id="toc-representation-of-the-subjects" class="nav-link" data-scroll-target="#representation-of-the-subjects"><span class="header-section-number">6.6.2</span> Representation of the Subjects</a></li>
+  <li><a href="#eigenvalue-decomposition-tableau-des-valeurs-propres" id="toc-eigenvalue-decomposition-tableau-des-valeurs-propres" class="nav-link" data-scroll-target="#eigenvalue-decomposition-tableau-des-valeurs-propres"><span class="header-section-number">6.6.3</span> Eigenvalue Decomposition — tableau des valeurs propres</a></li>
+  <li><a href="#automatic-description-of-the-dimensions" id="toc-automatic-description-of-the-dimensions" class="nav-link" data-scroll-target="#automatic-description-of-the-dimensions"><span class="header-section-number">6.6.4</span> Automatic Description of the Dimensions</a></li>
+  <li><a href="#representation-of-the-stimuli-according-to-clusters-disponible-si-representation-of-the-clusters-est-activé" id="toc-representation-of-the-stimuli-according-to-clusters-disponible-si-representation-of-the-clusters-est-activé" class="nav-link" data-scroll-target="#representation-of-the-stimuli-according-to-clusters-disponible-si-representation-of-the-clusters-est-activé"><span class="header-section-number">6.6.5</span> Representation of the Stimuli According to Clusters <em>(disponible si “Representation of the clusters” est activé)</em></a></li>
+  <li><a href="#coordinates-sortie-de-données" id="toc-coordinates-sortie-de-données" class="nav-link" data-scroll-target="#coordinates-sortie-de-données"><span class="header-section-number">6.6.6</span> Coordinates <em>(sortie de données)</em></a></li>
+  <li><a href="#cluster-variable-sortie-de-données" id="toc-cluster-variable-sortie-de-données" class="nav-link" data-scroll-target="#cluster-variable-sortie-de-données"><span class="header-section-number">6.6.7</span> Cluster variable <em>(sortie de données)</em></a></li>
+  </ul></li>
+  <li><a href="#exemple-le-jeu-de-données-perfumes_napping" id="toc-exemple-le-jeu-de-données-perfumes_napping" class="nav-link" data-scroll-target="#exemple-le-jeu-de-données-perfumes_napping"><span class="header-section-number">6.7</span> Exemple : le jeu de données <strong>perfumes_napping</strong></a>
+  <ul class="collapse">
+  <li><a href="#paramètres-de-lexemple" id="toc-paramètres-de-lexemple" class="nav-link" data-scroll-target="#paramètres-de-lexemple"><span class="header-section-number">6.7.1</span> Paramètres de l’exemple</a></li>
+  <li><a href="#analyse-du-graphique-representation-of-the-stimuli" id="toc-analyse-du-graphique-representation-of-the-stimuli" class="nav-link" data-scroll-target="#analyse-du-graphique-representation-of-the-stimuli"><span class="header-section-number">6.7.2</span> Analyse du graphique <em>Representation of the Stimuli</em></a></li>
+  <li><a href="#analyse-du-graphique-representation-of-the-subjects" id="toc-analyse-du-graphique-representation-of-the-subjects" class="nav-link" data-scroll-target="#analyse-du-graphique-representation-of-the-subjects"><span class="header-section-number">6.7.3</span> Analyse du graphique <em>Representation of the Subjects</em></a></li>
+  <li><a href="#analyse-du-tableau-eigenvalue-decomposition" id="toc-analyse-du-tableau-eigenvalue-decomposition" class="nav-link" data-scroll-target="#analyse-du-tableau-eigenvalue-decomposition"><span class="header-section-number">6.7.4</span> Analyse du tableau <em>Eigenvalue Decomposition</em></a></li>
+  <li><a href="#analyse-du-tableau-automatic-description-of-the-dimensions" id="toc-analyse-du-tableau-automatic-description-of-the-dimensions" class="nav-link" data-scroll-target="#analyse-du-tableau-automatic-description-of-the-dimensions"><span class="header-section-number">6.7.5</span> Analyse du tableau <em>Automatic Description of the Dimensions</em></a></li>
+  <li><a href="#analyse-du-graphique-representation-of-the-stimuli-according-to-clusters" id="toc-analyse-du-graphique-representation-of-the-stimuli-according-to-clusters" class="nav-link" data-scroll-target="#analyse-du-graphique-representation-of-the-stimuli-according-to-clusters"><span class="header-section-number">6.7.6</span> Analyse du graphique <em>Representation of the Stimuli According to Clusters</em></a></li>
+  <li><a href="#interprétation-synthétique" id="toc-interprétation-synthétique" class="nav-link" data-scroll-target="#interprétation-synthétique"><span class="header-section-number">6.7.7</span> Interprétation synthétique</a></li>
+  </ul></li>
+  <li><a href="#de-jamovi-au-rj-editor" id="toc-de-jamovi-au-rj-editor" class="nav-link" data-scroll-target="#de-jamovi-au-rj-editor"><span class="header-section-number">6.8</span> De jamovi au Rj Editor</a></li>
+  <li><a href="#conseils-pratiques" id="toc-conseils-pratiques" class="nav-link" data-scroll-target="#conseils-pratiques"><span class="header-section-number">6.9</span> Conseils pratiques</a></li>
+  <li><a href="#en-résumé" id="toc-en-résumé" class="nav-link" data-scroll-target="#en-résumé"><span class="header-section-number">6.10</span> En résumé</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Données de Napping — Représentation consensuelle</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+
+
+
+  </div>
+
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">6.1</span> Introduction</h2>
+<p>Cette analyse est conçue pour les données de <strong>Napping</strong> (<em>projective mapping</em>), dans lesquelles chaque sujet positionne un ensemble de stimuli dans un espace à deux dimensions selon leurs ressemblances et leurs différences perçues. Elle permet de construire une <strong>représentation consensuelle</strong> des stimuli à partir de plusieurs cartes individuelles, puis, si souhaité, de regrouper les stimuli en <strong>clusters</strong>. La fonction s’appuie sur une <strong>Analyse Factorielle Multiple (AFM)</strong> pour fusionner les différentes paires de coordonnées dans un même espace.</p>
+<p><strong>Pourquoi ne pas utiliser une alternative standard ?</strong></p>
+<p>Une ACP appliquée directement à toutes les colonnes de coordonnées tiendrait compte de leurs relations, mais ignorerait leur <strong>structure en groupes par sujet</strong>. Or, en Napping, les données sont naturellement organisées par <strong>paires X/Y</strong> fournies par chaque sujet. Ici, chaque paire est traitée comme un <strong>groupe</strong> dans l’AFM, ce qui permet de construire un compromis plus adapté entre les différentes cartes individuelles. Cette AFM utilise <code>type = "c"</code> dans FactoMineR : les coordonnées sont <strong>centrées mais non standardisées</strong>, afin de préserver la géométrie et l’échelle relative de chaque nappe plutôt que de forcer X et Y à avoir la même variance.</p>
+</section>
+<section id="comprendre-ce-qui-se-passe-sous-le-capot" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="comprendre-ce-qui-se-passe-sous-le-capot"><span class="header-section-number">6.2</span> Comprendre ce qui se passe “sous le capot”</h2>
+<section id="les-données-sont-lues-par-paires-de-coordonnées" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="les-données-sont-lues-par-paires-de-coordonnées"><span class="header-section-number">6.2.1</span> Les données sont lues par paires de coordonnées</h3>
+<p>La fonction attend dans <strong>Active (X,Y) Coordinate Pairs</strong> un ensemble de colonnes numériques organisées par paires consécutives : X puis Y pour un premier sujet, X puis Y pour un second, etc. Le même principe vaut pour <strong>Supplementary (X,Y) Coordinate Pairs</strong>. Si le nombre de colonnes est impair dans l’un des deux blocs, l’analyse est rejetée. Le bloc actif doit contenir au moins <strong>4 colonnes</strong>, soit <strong>2 paires</strong>. Une même coordonnée ne peut pas être utilisée à la fois comme active et supplémentaire.</p>
+</section>
+<section id="une-afm-sur-des-groupes-de-taille-2-sans-standardisation" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="une-afm-sur-des-groupes-de-taille-2-sans-standardisation"><span class="header-section-number">6.2.2</span> Une AFM sur des groupes de taille 2, sans standardisation</h3>
+<p>Le cœur de l’analyse est une <strong>AFM</strong>. Chaque paire X/Y de <strong>Active (X,Y) Coordinate Pairs</strong> est traitée comme un groupe de deux variables quantitatives. L’AFM construit un espace commun qui résume l’information portée par l’ensemble des sujets en <strong>équilibrant la contribution des groupes</strong>. Avec <code>type = "c"</code>, les coordonnées sont centrées mais non standardisées : l’analyse conserve ainsi l’échelle relative des deux coordonnées de chaque configuration individuelle.</p>
+</section>
+<section id="le-rôle-des-coordonnées-supplémentaires" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="le-rôle-des-coordonnées-supplémentaires"><span class="header-section-number">6.2.3</span> Le rôle des coordonnées supplémentaires</h3>
+<p>Si vous fournissez des variables dans <strong>Supplementary (X,Y) Coordinate Pairs</strong>, elles sont projetées comme <strong>groupes supplémentaires</strong> dans l’AFM. Elles ne participent pas à la construction des axes, mais permettent de situer d’autres sujets dans le même espace.</p>
+</section>
+<section id="description-automatique-des-dimensions" class="level3" data-number="6.2.4">
+<h3 data-number="6.2.4" class="anchored" data-anchor-id="description-automatique-des-dimensions"><span class="header-section-number">6.2.4</span> Description automatique des dimensions</h3>
+<p>Une fois l’AFM calculée, la fonction produit une <strong>description automatique des dimensions</strong> filtrée par <strong>Significance threshold (%)</strong> et <strong>Number of dimensions</strong>. Cette sortie aide à comprendre quelles variables sont les plus liées aux premiers axes.</p>
+</section>
+<section id="sauvegarde-des-dimensions-et-clustering" class="level3" data-number="6.2.5">
+<h3 data-number="6.2.5" class="anchored" data-anchor-id="sauvegarde-des-dimensions-et-clustering"><span class="header-section-number">6.2.5</span> Sauvegarde des dimensions et clustering</h3>
+<p>Le champ <strong>Number of dimensions to save/use for clustering</strong> détermine combien de premières dimensions sont sauvegardées dans <strong>Coordinates</strong> et utilisées pour la classification. Si le nombre demandé dépasse le nombre de dimensions disponibles, SEDA utilise celles qui peuvent effectivement être calculées. Si vous activez <strong>Representation of the clusters</strong> ou demandez <strong>Cluster variable</strong>, la fonction lance une <strong>HCPC</strong> sur ces dimensions retenues. Par défaut, le clustering utilise les <strong>5 premières dimensions</strong>, et <strong>Number of clusters = -1</strong> laisse FactoMineR choisir automatiquement le nombre de clusters. Les pourcentages affichés sur la carte HCPC se rapportent à cet espace de classification retenu et peuvent donc différer de ceux de la carte AFM complète.</p>
+</section>
+</section>
+<section id="structure-des-données-attendues" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="structure-des-données-attendues"><span class="header-section-number">6.3</span> Structure des données attendues</h2>
+<p>Les données doivent contenir :</p>
+<ul>
+<li>une colonne facultative mais fortement recommandée pour <strong>Stimuli Labels</strong> ;</li>
+<li>au moins <strong>deux paires</strong> de colonnes numériques dans <strong>Active (X,Y) Coordinate Pairs</strong> ;</li>
+<li>éventuellement des paires numériques dans <strong>Supplementary (X,Y) Coordinate Pairs</strong>.</li>
+</ul>
+<p>Chaque ligne correspond à un <strong>stimulus</strong>. Cela distingue cette analyse d’autres analyses où chaque ligne correspond à une réponse individuelle. SEDA exige au moins <strong>trois stimuli</strong>. Si <strong>Stimuli Labels</strong> n’est pas renseigné, la fonction utilise les numéros de ligne comme noms de stimuli.</p>
+<p>Avant de lancer l’analyse dans jamovi, vérifiez dans l’onglet <strong>Données</strong> que :</p>
+<ul>
+<li><strong>Stimuli Labels</strong> est catégorielle si vous l’utilisez, sans valeur manquante ou vide et avec un libellé unique par stimulus ;</li>
+<li>toutes les coordonnées actives et supplémentaires sont numériques, complètes et finies ;</li>
+<li>le nombre de colonnes dans chacun des deux blocs de coordonnées est <strong>pair</strong> ;</li>
+<li>aucune coordonnée n’est sélectionnée à la fois comme active et supplémentaire ;</li>
+<li>chaque paire X/Y présente de la variabilité sur au moins une de ses deux coordonnées.</li>
+</ul>
+</section>
+<section id="guide-de-linterface" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="guide-de-linterface"><span class="header-section-number">6.4</span> Guide de l’interface</h2>
+<p>L’analyse apparaît dans <strong>SEDA &gt; Free Perception &gt; Analysis of Napping Data</strong>. L’interface comprend trois zones de dépôt de variables, une section <strong>Instructions and R Code</strong>, puis les menus <strong>Graphic Options</strong>, <strong>Numerical Indicators</strong> et <strong>Clustering</strong>.</p>
+<section id="variables-à-renseigner" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="variables-à-renseigner"><span class="header-section-number">6.4.1</span> Variables à renseigner</h3>
+<section id="stimuli-labels" class="level4" data-number="6.4.1.1">
+<h4 data-number="6.4.1.1" class="anchored" data-anchor-id="stimuli-labels"><span class="header-section-number">6.4.1.1</span> Stimuli Labels</h4>
+<p><strong>Rôle :</strong> fournit les noms des stimuli dans les sorties. <strong>Impact sur le calcul :</strong> cette variable ne modifie pas l’AFM elle-même, mais détermine les étiquettes affichées dans les graphiques et les noms associés aux coordonnées sauvegardées. <strong>Conseil pratique :</strong> utilisez des libellés courts et uniques ; sinon, la lecture des cartes devient vite difficile.</p>
+</section>
+<section id="active-xy-coordinate-pairs" class="level4" data-number="6.4.1.2">
+<h4 data-number="6.4.1.2" class="anchored" data-anchor-id="active-xy-coordinate-pairs"><span class="header-section-number">6.4.1.2</span> Active (X,Y) Coordinate Pairs</h4>
+<p><strong>Rôle :</strong> regroupe les coordonnées actives utilisées pour construire la représentation consensuelle. <strong>Impact sur le calcul :</strong> chaque paire X/Y devient un groupe dans l’AFM. Le nombre de colonnes doit être pair, et la fonction exige au moins <strong>4 colonnes</strong>. <strong>Conseil pratique&nbsp;:</strong> respectez strictement l’ordre X, Y, X, Y… pour éviter une organisation incorrecte des groupes.</p>
+</section>
+<section id="supplementary-xy-coordinate-pairs" class="level4" data-number="6.4.1.3">
+<h4 data-number="6.4.1.3" class="anchored" data-anchor-id="supplementary-xy-coordinate-pairs"><span class="header-section-number">6.4.1.3</span> Supplementary (X,Y) Coordinate Pairs</h4>
+<p><strong>Rôle :</strong> ajoute des paires de coordonnées projetées comme groupes supplémentaires. <strong>Impact sur le calcul :</strong> ces coordonnées n’influencent pas la construction des axes, mais sont projetées dans l’espace AFM. <strong>Conseil pratique :</strong> utilisez ce bloc pour projeter un second panel sans modifier le compromis principal.</p>
+</section>
+</section>
+<section id="instructions-and-r-code" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="instructions-and-r-code"><span class="header-section-number">6.4.2</span> Instructions and R Code</h3>
+<section id="read-me-before-running" class="level4" data-number="6.4.2.1">
+<h4 data-number="6.4.2.1" class="anchored" data-anchor-id="read-me-before-running"><span class="header-section-number">6.4.2.1</span> Read me before running</h4>
+<p><strong>Rôle :</strong> affiche une aide intégrée dans les résultats. <strong>Impact sur le calcul :</strong> aucun. <strong>Conseil pratique :</strong> laissez-la cochée lors des premières utilisations. Elle est <strong>activée par défaut</strong>.</p>
+</section>
+<section id="r-code" class="level4" data-number="6.4.2.2">
+<h4 data-number="6.4.2.2" class="anchored" data-anchor-id="r-code"><span class="header-section-number">6.4.2.2</span> R code</h4>
+<p><strong>Rôle :</strong> affiche le script R correspondant à l’analyse dans une sortie <strong>R Code</strong>. <strong>Impact sur le calcul :</strong> aucun. <strong>Conseil pratique :</strong> activez cette option pour reproduire l’analyse dans le <strong>Rj Editor</strong>. Elle est <strong>désactivée par défaut</strong>.</p>
+</section>
+</section>
+<section id="graphic-options" class="level3" data-number="6.4.3">
+<h3 data-number="6.4.3" class="anchored" data-anchor-id="graphic-options"><span class="header-section-number">6.4.3</span> Graphic Options</h3>
+<section id="x-axis" class="level4" data-number="6.4.3.1">
+<h4 data-number="6.4.3.1" class="anchored" data-anchor-id="x-axis"><span class="header-section-number">6.4.3.1</span> X-axis</h4>
+<p><strong>Rôle :</strong> choisit la dimension affichée en abscisse. <strong>Impact sur le calcul :</strong> ne modifie pas l’AFM, mais change le plan factoriel affiché dans les graphiques. <strong>Conseil pratique :</strong> commencez avec 1 (valeur par défaut).</p>
+</section>
+<section id="y-axis" class="level4" data-number="6.4.3.2">
+<h4 data-number="6.4.3.2" class="anchored" data-anchor-id="y-axis"><span class="header-section-number">6.4.3.2</span> Y-axis</h4>
+<p><strong>Rôle :</strong> choisit la dimension affichée en ordonnée. <strong>Impact sur le calcul :</strong> ne modifie pas l’AFM, mais change le plan factoriel affiché dans les graphiques. <strong>Conseil pratique :</strong> commencez avec 2 (valeur par défaut).</p>
+</section>
+</section>
+<section id="numerical-indicators" class="level3" data-number="6.4.4">
+<h3 data-number="6.4.4" class="anchored" data-anchor-id="numerical-indicators"><span class="header-section-number">6.4.4</span> Numerical Indicators</h3>
+<section id="significance-threshold" class="level4" data-number="6.4.4.1">
+<h4 data-number="6.4.4.1" class="anchored" data-anchor-id="significance-threshold"><span class="header-section-number">6.4.4.1</span> Significance threshold (%)</h4>
+<p><strong>Rôle :</strong> fixe le seuil de significativité de la description automatique des dimensions. <strong>Impact sur le calcul :</strong> plus le seuil est strict, plus la description automatique est sélective. <strong>Conseil pratique :</strong> la valeur par défaut 5 % constitue un bon point de départ.</p>
+</section>
+<section id="number-of-dimensions" class="level4" data-number="6.4.4.2">
+<h4 data-number="6.4.4.2" class="anchored" data-anchor-id="number-of-dimensions"><span class="header-section-number">6.4.4.2</span> Number of dimensions</h4>
+<p><strong>Rôle :</strong> détermine le nombre d’axes décrits automatiquement. <strong>Impact sur le calcul :</strong> pilote la sortie de description des dimensions et contribue aussi à déterminer le nombre de dimensions de l’AFM calculées en interne. <strong>Conseil pratique :</strong> laissez 2 pour une première lecture.</p>
+</section>
+<section id="number-of-dimensions-to-saveuse-for-clustering" class="level4" data-number="6.4.4.3">
+<h4 data-number="6.4.4.3" class="anchored" data-anchor-id="number-of-dimensions-to-saveuse-for-clustering"><span class="header-section-number">6.4.4.3</span> Number of dimensions to save/use for clustering</h4>
+<p><strong>Rôle :</strong> définit le nombre de premières dimensions à sauvegarder et à utiliser pour la classification. <strong>Impact sur le calcul&nbsp;:</strong> détermine les colonnes enregistrées dans <strong>Coordinates</strong> et les dimensions transmises à HCPC ; si moins de dimensions sont disponibles, SEDA utilise le maximum calculable. <strong>Conseil pratique :</strong> la valeur par défaut 5 constitue un bon point de départ.</p>
+</section>
+<section id="coordinates" class="level4" data-number="6.4.4.4">
+<h4 data-number="6.4.4.4" class="anchored" data-anchor-id="coordinates"><span class="header-section-number">6.4.4.4</span> Coordinates</h4>
+<p><strong>Rôle :</strong> permet d’enregistrer les coordonnées factorielles des stimuli dans la feuille de données jamovi. <strong>Impact sur le calcul :</strong> n’ajoute pas de nouveau calcul, mais sauvegarde les résultats de l’AFM. <strong>Conseil pratique :</strong> activez cette sortie si vous souhaitez réutiliser les dimensions dans d’autres analyses jamovi.</p>
+</section>
+</section>
+<section id="clustering" class="level3" data-number="6.4.5">
+<h3 data-number="6.4.5" class="anchored" data-anchor-id="clustering"><span class="header-section-number">6.4.5</span> Clustering</h3>
+<section id="representation-of-the-clusters" class="level4" data-number="6.4.5.1">
+<h4 data-number="6.4.5.1" class="anchored" data-anchor-id="representation-of-the-clusters"><span class="header-section-number">6.4.5.1</span> Representation of the clusters</h4>
+<p><strong>Rôle :</strong> active l’affichage du graphique de clustering. <strong>Impact sur le calcul :</strong> lorsque cette option est cochée, la fonction calcule la classification HCPC si nécessaire et affiche la carte des stimuli selon les clusters. <strong>Conseil pratique :</strong> laissez-la décochée pour une première lecture, puis activez-la pour compléter la carte consensuelle par une lecture en groupes.</p>
+</section>
+<section id="number-of-clusters" class="level4" data-number="6.4.5.2">
+<h4 data-number="6.4.5.2" class="anchored" data-anchor-id="number-of-clusters"><span class="header-section-number">6.4.5.2</span> Number of clusters</h4>
+<p><strong>Rôle :</strong> fixe le nombre de clusters à extraire. <strong>Impact sur le calcul :</strong> avec -1, le nombre de clusters est déterminé automatiquement ; sinon, vous pouvez imposer un entier compris entre 2 et le nombre de stimuli moins 1. <strong>Conseil pratique :</strong> commencez avec -1, puis fixez un nombre seulement si vous avez une justification analytique claire.</p>
+</section>
+<section id="cluster-variable" class="level4" data-number="6.4.5.3">
+<h4 data-number="6.4.5.3" class="anchored" data-anchor-id="cluster-variable"><span class="header-section-number">6.4.5.3</span> Cluster variable</h4>
+<p><strong>Rôle :</strong> enregistre l’appartenance de chaque stimulus à un cluster comme nouvelle variable dans jamovi. <strong>Impact sur le calcul :</strong> n’ajoute pas de nouveau calcul, mais sauvegarde les résultats de la classification. <strong>Conseil pratique :</strong> utile si vous voulez ensuite croiser les clusters avec d’autres variables dans jamovi.</p>
+</section>
+</section>
+</section>
+<section id="procédure-pas-à-pas" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="procédure-pas-à-pas"><span class="header-section-number">6.5</span> Procédure pas à pas</h2>
+<ol type="1">
+<li>Ouvrez votre jeu de données dans jamovi.</li>
+<li>Dans l’onglet <strong>Données</strong>, vérifiez que les colonnes de coordonnées sont numériques et organisées par paires X/Y.</li>
+<li>Si vous avez une colonne d’identifiants de stimuli, vérifiez qu’elle est catégorielle.</li>
+<li>Ouvrez <strong>SEDA &gt; Free Perception &gt; Analysis of Napping Data</strong>.</li>
+<li>Placez la colonne des noms de stimuli dans <strong>Stimuli Labels</strong>.</li>
+<li>Placez toutes les paires actives dans <strong>Active (X,Y) Coordinate Pairs</strong>.</li>
+<li>Placez, si besoin, les paires supplémentaires dans <strong>Supplementary (X,Y) Coordinate Pairs</strong>.</li>
+<li>Vérifiez que les coordonnées sont complètes et que chaque bloc contient un nombre pair de colonnes.</li>
+<li>Laissez <strong>X-axis = 1</strong> et <strong>Y-axis = 2</strong>.</li>
+<li>Laissez <strong>Significance threshold (%) = 5</strong>, <strong>Number of dimensions = 2</strong> et <strong>Number of dimensions to save/use for clustering = 5</strong>.</li>
+<li>Commencez par <strong>Eigenvalue Decomposition</strong>, puis lisez <strong>Representation of the Stimuli</strong> et <strong>Representation of the Subjects</strong>.</li>
+<li>Consultez ensuite <strong>Automatic Description of the Dimensions</strong>.</li>
+<li>Activez <strong>Representation of the clusters</strong> si vous souhaitez visualiser <strong>Representation of the Stimuli According to Clusters</strong>.</li>
+<li>Cochez <strong>R code</strong> pour obtenir le script reproductible et enregistrez éventuellement <strong>Coordinates</strong> et <strong>Cluster variable</strong>.</li>
+</ol>
+</section>
+<section id="interprétation-des-résultats" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="interprétation-des-résultats"><span class="header-section-number">6.6</span> Interprétation des résultats</h2>
+<section id="representation-of-the-stimuli" class="level3" data-number="6.6.1">
+<h3 data-number="6.6.1" class="anchored" data-anchor-id="representation-of-the-stimuli"><span class="header-section-number">6.6.1</span> Representation of the Stimuli</h3>
+<p>C’est le résultat important de la fonction. Elle représente les stimuli dans l’espace factoriel de consensus construit par l’AFM. Deux stimuli proches ont été positionnés de manière similaire par l’ensemble des sujets ; deux stimuli éloignés sont perçus comme plus différents. Le pourcentage affiché sur chaque axe indique la part de variance expliquée par la dimension correspondante.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Élément</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Deux stimuli proches</td>
+<td>Perceptions globales proches</td>
+</tr>
+<tr class="even">
+<td>Deux stimuli éloignés</td>
+<td>Perceptions globales différentes</td>
+</tr>
+<tr class="odd">
+<td>Groupe compact de stimuli</td>
+<td>Famille de stimuli perçus comme voisins</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><strong>Point de vigilance :</strong> la carte des stimuli montre une structure perceptive, mais elle ne suffit pas toujours à nommer les axes. L’ajout d’information supplémentaire (verbalisation) peut grandement aider à l’interprétation.</p>
+</blockquote>
+</section>
+<section id="representation-of-the-subjects" class="level3" data-number="6.6.2">
+<h3 data-number="6.6.2" class="anchored" data-anchor-id="representation-of-the-subjects"><span class="header-section-number">6.6.2</span> Representation of the Subjects</h3>
+<p>Cette carte représente les groupes de coordonnées X/Y — donc les configurations individuelles des sujets — dans l’espace factoriel. Elle montre comment chaque nappe est reliée aux dimensions du compromis.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Élément</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Groupes occupant des positions proches</td>
+<td>Configurations liées de façon similaire aux dimensions communes</td>
+</tr>
+<tr class="even">
+<td>Groupe éloigné de l’origine sur un axe</td>
+<td>Configuration fortement liée à cette dimension</td>
+</tr>
+<tr class="odd">
+<td>Groupe proche de l’origine</td>
+<td>Configuration peu liée aux dimensions affichées</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="eigenvalue-decomposition-tableau-des-valeurs-propres" class="level3" data-number="6.6.3">
+<h3 data-number="6.6.3" class="anchored" data-anchor-id="eigenvalue-decomposition-tableau-des-valeurs-propres"><span class="header-section-number">6.6.3</span> Eigenvalue Decomposition — tableau des valeurs propres</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Élément</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Dim.</strong></td>
+<td>Numéro de la dimension</td>
+</tr>
+<tr class="even">
+<td><strong>Eigenvalue</strong></td>
+<td>Importance de la dimension</td>
+</tr>
+<tr class="odd">
+<td><strong>% of variance</strong></td>
+<td>Part de la variabilité expliquée</td>
+</tr>
+<tr class="even">
+<td><strong>Cumulative %</strong></td>
+<td>Part cumulée expliquée</td>
+</tr>
+</tbody>
+</table>
+<p>Si les deux premières dimensions expliquent une part importante de la variance, le plan 1/2 donne une bonne synthèse ; sinon, il peut être utile d’explorer d’autres plans factoriels.</p>
+</section>
+<section id="automatic-description-of-the-dimensions" class="level3" data-number="6.6.4">
+<h3 data-number="6.6.4" class="anchored" data-anchor-id="automatic-description-of-the-dimensions"><span class="header-section-number">6.6.4</span> Automatic Description of the Dimensions</h3>
+<p>Cette sortie décrit automatiquement les dimensions retenues selon <strong>Significance threshold (%)</strong> et <strong>Number of dimensions</strong>. Elle aide à repérer quelles variables sont les plus liées aux axes et devient particulièrement utile quand des <strong>Supplementary (X,Y) Coordinate Pairs</strong> ont été ajoutées.</p>
+</section>
+<section id="representation-of-the-stimuli-according-to-clusters-disponible-si-representation-of-the-clusters-est-activé" class="level3" data-number="6.6.5">
+<h3 data-number="6.6.5" class="anchored" data-anchor-id="representation-of-the-stimuli-according-to-clusters-disponible-si-representation-of-the-clusters-est-activé"><span class="header-section-number">6.6.5</span> Representation of the Stimuli According to Clusters <em>(disponible si “Representation of the clusters” est activé)</em></h3>
+<p>Ce graphique montre les stimuli dans l’espace factoriel, regroupés selon les clusters issus de la classification HCPC. La classification utilise les premières dimensions définies par <strong>Number of dimensions to save/use for clustering</strong>, et pas seulement les deux axes affichés. Les pourcentages de la carte HCPC sont donc calculés relativement à cet espace retenu.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Élément</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Stimuli dans un même cluster</td>
+<td>Profils de positionnement proches</td>
+</tr>
+<tr class="even">
+<td>Clusters bien séparés</td>
+<td>Familles de stimuli bien différenciées</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="coordinates-sortie-de-données" class="level3" data-number="6.6.6">
+<h3 data-number="6.6.6" class="anchored" data-anchor-id="coordinates-sortie-de-données"><span class="header-section-number">6.6.6</span> Coordinates <em>(sortie de données)</em></h3>
+<p>Cette sortie enregistre les coordonnées factorielles des stimuli sur les premières dimensions retenues par <strong>Number of dimensions to save/use for clustering</strong>. Chaque colonne correspond à une dimension (<code>Dim. 1</code>, <code>Dim. 2</code>, etc.).</p>
+</section>
+<section id="cluster-variable-sortie-de-données" class="level3" data-number="6.6.7">
+<h3 data-number="6.6.7" class="anchored" data-anchor-id="cluster-variable-sortie-de-données"><span class="header-section-number">6.6.7</span> Cluster variable <em>(sortie de données)</em></h3>
+<p>Cette sortie enregistre l’appartenance de chaque stimulus à un cluster, sous forme de variable nominale. Elle est utile pour des analyses ultérieures dans jamovi.</p>
+</section>
+</section>
+<section id="exemple-le-jeu-de-données-perfumes_napping" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="exemple-le-jeu-de-données-perfumes_napping"><span class="header-section-number">6.7</span> Exemple : le jeu de données <strong>perfumes_napping</strong></h2>
+<p>Le jeu de données <strong>perfumes_napping</strong> décrit 12 parfums positionnés sur une nappe (de dimension 60 par 40) par 60 sujets, soit 120 colonnes de coordonnées (une paire X/Y par sujet). Il sert à illustrer les sorties de la fonction. Les valeurs numériques et les graphiques commentés ci-dessous proviennent directement des résultats de l’analyse. Pour charger ce jeu de données, ouvrez jamovi, cliquez sur l’icône en haut à gauche (trois traits superposés), puis sur <strong>Open</strong> → <strong>Data Library</strong> → <strong>SEDA</strong>.</p>
+<section id="paramètres-de-lexemple" class="level3" data-number="6.7.1">
+<h3 data-number="6.7.1" class="anchored" data-anchor-id="paramètres-de-lexemple"><span class="header-section-number">6.7.1</span> Paramètres de l’exemple</h3>
+<p>Pour reproduire cet exemple, voici les valeurs à utiliser.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 54%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Stimuli Labels</strong></td>
+<td>variable <code>Ident</code></td>
+</tr>
+<tr class="even">
+<td><strong>Active (X,Y) Coordinate Pairs</strong></td>
+<td>les 60 premières colonnes de coordonnées (30 paires)</td>
+</tr>
+<tr class="odd">
+<td><strong>Supplementary (X,Y) Coordinate Pairs</strong></td>
+<td>les 60 colonnes de coordonnées suivantes (30 paires)</td>
+</tr>
+<tr class="even">
+<td><strong>X-axis / Y-axis</strong></td>
+<td>1 / 2</td>
+</tr>
+<tr class="odd">
+<td><strong>Significance threshold (%)</strong></td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td><strong>Number of dimensions</strong></td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td><strong>Number of dimensions to save/use for clustering</strong></td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td><strong>Representation of the clusters</strong></td>
+<td>coché</td>
+</tr>
+<tr class="odd">
+<td><strong>Number of clusters</strong></td>
+<td>-1</td>
+</tr>
+<tr class="even">
+<td><strong>R code</strong></td>
+<td>coché</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="analyse-du-graphique-representation-of-the-stimuli" class="level3" data-number="6.7.2">
+<h3 data-number="6.7.2" class="anchored" data-anchor-id="analyse-du-graphique-representation-of-the-stimuli"><span class="header-section-number">6.7.2</span> Analyse du graphique <em>Representation of the Stimuli</em></h3>
+<p>La carte fait apparaître une structure perceptive assez nette sur le plan Dim. 1 (25.07 %) / Dim. 2 (18.03 %). Sur l’axe horizontal, <strong>Aromatics Elixir</strong> et <strong>Shalimar</strong> se situent clairement à droite (coordonnées positives sur Dim. 1), tandis que <strong>J’adore EP</strong>, <strong>J’adore ET</strong>, <strong>Coco Mademoiselle</strong>, <strong>Cinéma</strong>, <strong>Pleasures</strong> et <strong>Pure Poison</strong> se trouvent à gauche. <strong>Chanel N5</strong> se distingue de ce groupe de droite par une position basse sur la seconde dimension (valeur fortement négative sur Dim. 2), ce qui l’isole légèrement du couple Shalimar / Aromatics Elixir. Sur l’axe vertical, <strong>Angel</strong>, <strong>Lolita Lempicka</strong> et <strong>L’instant</strong> se situent nettement au-dessus du centre, constituant un groupe perceptif cohérent en haut du plan.</p>
+</section>
+<section id="analyse-du-graphique-representation-of-the-subjects" class="level3" data-number="6.7.3">
+<h3 data-number="6.7.3" class="anchored" data-anchor-id="analyse-du-graphique-representation-of-the-subjects"><span class="header-section-number">6.7.3</span> Analyse du graphique <em>Representation of the Subjects</em></h3>
+<p>La carte des sujets représente les 60 groupes de coordonnées, S1 à S60. Les groupes situés loin de l’origine sur Dim. 1, comme <strong>S1</strong> ou <strong>S20</strong>, sont fortement liés à la première dimension commune. Des groupes comme <strong>S4</strong> ou <strong>S30</strong>, situés plus haut sur Dim. 2, sont davantage liés à la seconde. Les nombreux groupes proches de l’origine sont moins fortement associés aux deux dimensions affichées. Cette carte renseigne donc sur la relation entre les configurations individuelles et le compromis ; elle ne constitue pas, à elle seule, un indice numérique de consensus.</p>
+</section>
+<section id="analyse-du-tableau-eigenvalue-decomposition" class="level3" data-number="6.7.4">
+<h3 data-number="6.7.4" class="anchored" data-anchor-id="analyse-du-tableau-eigenvalue-decomposition"><span class="header-section-number">6.7.4</span> Analyse du tableau <em>Eigenvalue Decomposition</em></h3>
+<p>Les deux premières dimensions expliquent 43.09 % de la variance totale (Dim. 1 : 25.07 %, Dim. 2 : 18.03 %). Le plan 1/2 fournit donc une première synthèse utile, mais plus de la moitié de la variabilité se trouve au-delà de ce plan. Les dimensions suivantes restent non négligeables (Dim. 3 : 12.31 %, Dim. 4 : 9.58 %, Dim. 5 : 7.96 %), ce qui justifie d’examiner d’autres plans si l’objectif l’exige.</p>
+</section>
+<section id="analyse-du-tableau-automatic-description-of-the-dimensions" class="level3" data-number="6.7.5">
+<h3 data-number="6.7.5" class="anchored" data-anchor-id="analyse-du-tableau-automatic-description-of-the-dimensions"><span class="header-section-number">6.7.5</span> Analyse du tableau <em>Automatic Description of the Dimensions</em></h3>
+<p>La sortie <strong>Automatic Description of the Dimensions</strong> identifie les coordonnées X/Y les plus corrélées à chaque axe. Pour <strong>Dim. 1</strong>, les corrélations positives les plus fortes sont <strong>X20</strong> (r = 0.93), <strong>X1</strong> (r = 0.92) et <strong>Y21</strong> (r = 0.90). À l’opposé, <strong>Y48</strong> (r = -0.91) et <strong>X42</strong> (r = -0.85) présentent les corrélations négatives les plus fortes. Ces résultats indiquent quelles directions des configurations individuelles sont les plus alignées, ou opposées, à la première dimension du compromis. Ils n’attribuent pas à eux seuls une signification sensorielle à l’axe.</p>
+</section>
+<section id="analyse-du-graphique-representation-of-the-stimuli-according-to-clusters" class="level3" data-number="6.7.6">
+<h3 data-number="6.7.6" class="anchored" data-anchor-id="analyse-du-graphique-representation-of-the-stimuli-according-to-clusters"><span class="header-section-number">6.7.6</span> Analyse du graphique <em>Representation of the Stimuli According to Clusters</em></h3>
+<p>Avec <strong>Number of dimensions to save/use for clustering = 5</strong>, les dimensions AFM retenues cumulent 72.95 % de l’inertie totale. La carte HCPC exprime donc Dim. 1 et Dim. 2 relativement à cet espace à cinq dimensions : environ <strong>34.37 %</strong> et <strong>24.72 %</strong>, au lieu de 25.07 % et 18.03 % sur la carte AFM complète.</p>
+<p>Avec <strong>Number of clusters = -1</strong>, la classification automatique retient <strong>trois clusters</strong> :</p>
+<ul>
+<li><strong>Cluster 1</strong> (noir) : <strong>Coco Mademoiselle</strong>, <strong>J’adore EP</strong>, <strong>J’adore ET</strong>, <strong>Cinéma</strong>, <strong>Pleasures</strong> et <strong>Pure Poison</strong> ;</li>
+<li><strong>Cluster 2</strong> (rouge) : <strong>Angel</strong>, <strong>Lolita Lempicka</strong> et <strong>L’instant</strong> ;</li>
+<li><strong>Cluster 3</strong> (vert) : <strong>Shalimar</strong>, <strong>Aromatics Elixir</strong> et <strong>Chanel N5</strong>.</li>
+</ul>
+<p>Sur le plan 1/2, le premier groupe se situe principalement à gauche, le deuxième en haut et le troisième à droite et en bas. La classification est toutefois calculée sur les <strong>cinq premières dimensions</strong> retenues, et non uniquement sur ce plan. Sans information sensorielle externe ou verbalisation, il faut éviter d’attribuer automatiquement des qualités telles que « floral », « léger » ou « intense » à ces clusters.</p>
+</section>
+<section id="interprétation-synthétique" class="level3" data-number="6.7.7">
+<h3 data-number="6.7.7" class="anchored" data-anchor-id="interprétation-synthétique"><span class="header-section-number">6.7.7</span> Interprétation synthétique</h3>
+<p>Cet exemple montre bien l’intérêt de la fonction. On n’obtient pas seulement une carte moyenne des parfums : on construit un <strong>espace consensuel</strong>, on voit comment les configurations individuelles sont reliées à ses dimensions et quels <strong>groupes de parfums</strong> émergent de la classification. Les trois clusters sont nets dans cet exemple, mais leur interprétation sensorielle demanderait une information supplémentaire.</p>
+<blockquote class="blockquote">
+<p><strong>Ce qu’on retient de cet exemple :</strong> l’analyse Napping transforme un ensemble de cartes individuelles en une représentation consensuelle, puis permet d’examiner les relations entre configurations individuelles et dimensions communes ainsi que les groupes de stimuli.</p>
+</blockquote>
+</section>
+</section>
+<section id="de-jamovi-au-rj-editor" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="de-jamovi-au-rj-editor"><span class="header-section-number">6.8</span> De jamovi au Rj Editor</h2>
+<p>Une fois le <strong>Rj Editor</strong> configuré avec <strong>System R</strong> comme indiqué au chapitre 1, cochez <strong>R code</strong> pour afficher le script correspondant à l’analyse. Le jeu de données ouvert dans jamovi est disponible sous le nom <code>data</code>.</p>
+<p>Pour le Napping, le script charge <code>FactoMineR</code>, construit une paire X/Y par sujet et exécute <code>MFA()</code> avec <code>type = "c"</code>. Les paires supplémentaires sont indiquées avec <code>num.group.sup</code>. Le script reproduit ensuite les valeurs propres, les cartes des stimuli et des sujets avec <code>plot.MFA()</code>, puis la description automatique avec <code>dimdesc()</code>.</p>
+<p>Si une classification est demandée, le code conserve exactement les premières dimensions définies par <strong>Number of dimensions to save/use for clustering</strong>, exécute <code>HCPC()</code> sur cet espace retenu et affiche la carte avec <code>plot.HCPC()</code>. Le code généré dans cet exemple utilise 30 sujets actifs, 30 sujets supplémentaires et 5 dimensions pour la classification.</p>
+</section>
+<section id="conseils-pratiques" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="conseils-pratiques"><span class="header-section-number">6.9</span> Conseils pratiques</h2>
+<ul>
+<li>Vérifiez toujours que les colonnes de <strong>Active (X,Y) Coordinate Pairs</strong> sont complètes et fournies par paires X/Y.</li>
+<li>Utilisez <strong>Stimuli Labels</strong> presque systématiquement et vérifiez que les libellés sont uniques.</li>
+<li>Commencez avec <strong>X-axis = 1</strong> et <strong>Y-axis = 2</strong> ; si les deux premières dimensions résument peu de variance, explorez d’autres plans factoriels.</li>
+<li>Gardez <strong>Number of dimensions to save/use for clustering = 5</strong> pour un premier essai, surtout si vous envisagez le clustering.</li>
+<li>Laissez <strong>Number of clusters = -1</strong> au départ pour laisser la fonction choisir automatiquement.</li>
+<li>Lisez <strong>Representation of the Subjects</strong> comme la relation des configurations individuelles aux dimensions communes, et non comme un indice direct de consensus.</li>
+<li>N’attribuez pas de signification sensorielle aux axes ou aux clusters sans verbalisation ou information externe permettant de les caractériser.</li>
+<li>Activez <strong>Coordinates</strong> et <strong>Cluster variable</strong> si vous souhaitez réutiliser les résultats dans d’autres analyses jamovi.</li>
+</ul>
+</section>
+<section id="en-résumé" class="level2" data-number="6.10">
+<h2 data-number="6.10" class="anchored" data-anchor-id="en-résumé"><span class="header-section-number">6.10</span> En résumé</h2>
+<p>Cette analyse construit une <strong>carte consensuelle des stimuli</strong> à partir de données de Napping, en combinant les cartes individuelles par une <strong>AFM centrée mais non standardisée</strong> qui équilibre la contribution des groupes. Elle représente la structure des stimuli et la relation des configurations individuelles aux dimensions communes, et peut être complétée par une <strong>classification HCPC</strong> des stimuli sur les dimensions retenues. Son intérêt principal est de transformer un ensemble de cartes individuelles en une représentation commune des proximités perceptives, sans nécessiter de liste d’attributs prédéfinie.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copié");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copié");
+      tooltip = new bootstrap.Tooltip(button,
+        { trigger: "manual",
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config);
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined;
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            }
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          }
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./chapitre4_prompt_harmonise.html" class="pagination-link" aria-label="Données JAR — Analyse des défauts et pénalités">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Données JAR — Analyse des défauts et pénalités</span></span>
+      </a>
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./chapitre6_prompt_harmonise.html" class="pagination-link" aria-label="Données de tri libre — Analyse des catégorisations">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Données de tri libre — Analyse des catégorisations</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

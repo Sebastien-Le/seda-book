@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr-FR" xml:lang="fr-FR"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Données QDA — Caractérisation de l’espace sensoriel – Apprends moi à faire seul : analyse de données sensorielles avec jamovi et le module SEDA</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./chapitre2_prompt_harmonise.html" rel="next">
+<link href="./intro_ppt.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-b7c2d8834e08b04a63bb76a724ffbcac.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Apprends moi à faire seul : analyse de données sensorielles avec jamovi et le module SEDA</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Recherche"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Basculer la navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://sebastien-le.github.io/seda-book/">
+<span class="menu-text">English</span></a>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapitre1_prompt_harmonise.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Données QDA — Caractérisation de l’espace sensoriel</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container">
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Préface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./intro_ppt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre1_prompt_harmonise.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Données QDA — Caractérisation de l’espace sensoriel</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre2_prompt_harmonise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Données QDA — Représentation multivariée avec ellipses</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre3_prompt_harmonise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Données CATA — Analyse par termes cochés</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre4_prompt_harmonise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Données JAR — Analyse des défauts et pénalités</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre5_prompt_harmonise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Données de Napping — Représentation consensuelle</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre6_prompt_harmonise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Données de tri libre — Analyse des catégorisations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="./chapitre7_prompt_harmonise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Données hédoniques — Cartographie des préférences</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table des matières</h2>
+
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">2.1</span> Introduction</a></li>
+  <li><a href="#comprendre-ce-qui-se-passe-sous-le-capot" id="toc-comprendre-ce-qui-se-passe-sous-le-capot" class="nav-link" data-scroll-target="#comprendre-ce-qui-se-passe-sous-le-capot"><span class="header-section-number">2.2</span> Comprendre ce qui se passe “sous le capot”</a>
+  <ul class="collapse">
+  <li><a href="#vérification-et-préparation-des-données" id="toc-vérification-et-préparation-des-données" class="nav-link" data-scroll-target="#vérification-et-préparation-des-données"><span class="header-section-number">2.2.1</span> Vérification et préparation des données</a></li>
+  <li><a href="#une-analyse-attribut-par-attribut" id="toc-une-analyse-attribut-par-attribut" class="nav-link" data-scroll-target="#une-analyse-attribut-par-attribut"><span class="header-section-number">2.2.2</span> Une analyse attribut par attribut</a></li>
+  <li><a href="#sélection-des-attributs-discriminants" id="toc-sélection-des-attributs-discriminants" class="nav-link" data-scroll-target="#sélection-des-attributs-discriminants"><span class="header-section-number">2.2.3</span> Sélection des attributs discriminants</a></li>
+  <li><a href="#description-stimulus-par-stimulus" id="toc-description-stimulus-par-stimulus" class="nav-link" data-scroll-target="#description-stimulus-par-stimulus"><span class="header-section-number">2.2.4</span> Description stimulus par stimulus</a></li>
+  <li><a href="#le-rôle-des-moyennes-ajustées" id="toc-le-rôle-des-moyennes-ajustées" class="nav-link" data-scroll-target="#le-rôle-des-moyennes-ajustées"><span class="header-section-number">2.2.5</span> Le rôle des moyennes ajustées</a></li>
+  <li><a href="#ce-que-signifie-un-stimulus-absent-de-la-seconde-table-sensory-description-of-the-stimuli" id="toc-ce-que-signifie-un-stimulus-absent-de-la-seconde-table-sensory-description-of-the-stimuli" class="nav-link" data-scroll-target="#ce-que-signifie-un-stimulus-absent-de-la-seconde-table-sensory-description-of-the-stimuli"><span class="header-section-number">2.2.6</span> Ce que signifie un stimulus absent de la seconde table, Sensory Description of the Stimuli</a></li>
+  </ul></li>
+  <li><a href="#structure-des-données-attendues" id="toc-structure-des-données-attendues" class="nav-link" data-scroll-target="#structure-des-données-attendues"><span class="header-section-number">2.3</span> Structure des données attendues</a></li>
+  <li><a href="#guide-de-linterface" id="toc-guide-de-linterface" class="nav-link" data-scroll-target="#guide-de-linterface"><span class="header-section-number">2.4</span> Guide de l’interface</a>
+  <ul class="collapse">
+  <li><a href="#variables-à-renseigner" id="toc-variables-à-renseigner" class="nav-link" data-scroll-target="#variables-à-renseigner"><span class="header-section-number">2.4.1</span> Variables à renseigner</a></li>
+  <li><a href="#instructions-and-r-code" id="toc-instructions-and-r-code" class="nav-link" data-scroll-target="#instructions-and-r-code"><span class="header-section-number">2.4.2</span> Instructions and R Code</a></li>
+  <li><a href="#seuil-de-significativité-significance-threshold" id="toc-seuil-de-significativité-significance-threshold" class="nav-link" data-scroll-target="#seuil-de-significativité-significance-threshold"><span class="header-section-number">2.4.3</span> Seuil de significativité : Significance threshold (%)</a></li>
+  </ul></li>
+  <li><a href="#procédure-pas-à-pas" id="toc-procédure-pas-à-pas" class="nav-link" data-scroll-target="#procédure-pas-à-pas"><span class="header-section-number">2.5</span> Procédure pas à pas</a></li>
+  <li><a href="#interprétation-des-résultats" id="toc-interprétation-des-résultats" class="nav-link" data-scroll-target="#interprétation-des-résultats"><span class="header-section-number">2.6</span> Interprétation des résultats</a>
+  <ul class="collapse">
+  <li><a href="#identification-of-the-sensory-dimensions" id="toc-identification-of-the-sensory-dimensions" class="nav-link" data-scroll-target="#identification-of-the-sensory-dimensions"><span class="header-section-number">2.6.1</span> Identification of the Sensory Dimensions</a></li>
+  <li><a href="#sensory-description-of-the-stimuli" id="toc-sensory-description-of-the-stimuli" class="nav-link" data-scroll-target="#sensory-description-of-the-stimuli"><span class="header-section-number">2.6.2</span> Sensory Description of the Stimuli</a></li>
+  </ul></li>
+  <li><a href="#exemple-le-jeu-de-données-sensochoc" id="toc-exemple-le-jeu-de-données-sensochoc" class="nav-link" data-scroll-target="#exemple-le-jeu-de-données-sensochoc"><span class="header-section-number">2.7</span> Exemple : le jeu de données <strong>sensochoc</strong></a>
+  <ul class="collapse">
+  <li><a href="#paramètres-de-lexemple" id="toc-paramètres-de-lexemple" class="nav-link" data-scroll-target="#paramètres-de-lexemple"><span class="header-section-number">2.7.1</span> Paramètres de l’exemple</a></li>
+  <li><a href="#analyse-du-tableau-identification-of-the-sensory-dimensions" id="toc-analyse-du-tableau-identification-of-the-sensory-dimensions" class="nav-link" data-scroll-target="#analyse-du-tableau-identification-of-the-sensory-dimensions"><span class="header-section-number">2.7.2</span> Analyse du tableau <em>Identification of the Sensory Dimensions</em></a></li>
+  <li><a href="#analyse-du-tableau-sensory-description-of-the-stimuli" id="toc-analyse-du-tableau-sensory-description-of-the-stimuli" class="nav-link" data-scroll-target="#analyse-du-tableau-sensory-description-of-the-stimuli"><span class="header-section-number">2.7.3</span> Analyse du tableau <em>Sensory Description of the Stimuli</em></a></li>
+  <li><a href="#interprétation-synthétique" id="toc-interprétation-synthétique" class="nav-link" data-scroll-target="#interprétation-synthétique"><span class="header-section-number">2.7.4</span> Interprétation synthétique</a></li>
+  </ul></li>
+  <li><a href="#de-jamovi-au-rj-editor" id="toc-de-jamovi-au-rj-editor" class="nav-link" data-scroll-target="#de-jamovi-au-rj-editor"><span class="header-section-number">2.8</span> De jamovi au Rj Editor</a></li>
+  <li><a href="#conseils-pratiques" id="toc-conseils-pratiques" class="nav-link" data-scroll-target="#conseils-pratiques"><span class="header-section-number">2.9</span> Conseils pratiques</a></li>
+  <li><a href="#en-résumé" id="toc-en-résumé" class="nav-link" data-scroll-target="#en-résumé"><span class="header-section-number">2.10</span> En résumé</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Données QDA — Caractérisation de l’espace sensoriel</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+
+
+
+  </div>
+
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2.1</span> Introduction</h2>
+<p>Cette analyse est conçue pour les données de type <strong>QDA</strong> (<em>Quantitative Descriptive Analysis</em>), lorsque plusieurs sujets évaluent plusieurs stimuli à l’aide d’une liste fixe d’attributs sensoriels. Elle répond à deux questions complémentaires : <strong>quels attributs structurent l’espace sensoriel dans son ensemble</strong> et <strong>quels attributs caractérisent chaque stimulus en particulier</strong>. La fonction renvoie précisément deux familles de résultats : une liste triée des attributs qui différencient l’ensemble des stimuli, puis, pour chaque stimulus, une liste des attributs qui le caractérisent.</p>
+<p><strong>Pourquoi ne pas utiliser une alternative standard ?</strong></p>
+<p>Une simple comparaison de moyennes par stimulus peut être trompeuse si les sujets n’utilisent pas tous l’échelle de notation de la même façon. Ici, l’analyse tient compte à la fois de l’effet produit (<strong>Stimulus Effect</strong>) et de l’effet sujet (<strong>Subject Effect</strong>), ce qui permet d’identifier des attributs discriminants et des profils de manière plus <em>robuste</em> qu’une lecture purement descriptive.</p>
+<p>Pour tester cette fonction, il vous suffit de charger les données <em>sensochoc</em> disponibles avec le module SEDA — elles apparaissent dans la liste des jeux de données d’exemple lors de l’ouverture d’un nouveau fichier dans jamovi.</p>
+</section>
+<section id="comprendre-ce-qui-se-passe-sous-le-capot" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="comprendre-ce-qui-se-passe-sous-le-capot"><span class="header-section-number">2.2</span> Comprendre ce qui se passe “sous le capot”</h2>
+<section id="vérification-et-préparation-des-données" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="vérification-et-préparation-des-données"><span class="header-section-number">2.2.1</span> Vérification et préparation des données</h3>
+<p>L’analyse commence par vérifier que la variable placée dans le champ <strong>Stimulus Effect</strong> (effet produit) et celle placée dans le champ <strong>Subject Effect</strong> (effet sujet) peuvent être traitées comme des facteurs, et que toutes les variables placées dans <strong>Sensory Attributes</strong> sont numériques. Si un attribut sensoriel n’est pas numérique, l’analyse s’arrête avec un message d’erreur.</p>
+</section>
+<section id="une-analyse-attribut-par-attribut" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="une-analyse-attribut-par-attribut"><span class="header-section-number">2.2.2</span> Une analyse attribut par attribut</h3>
+<p>Une manière simple de comprendre le calcul est de dire que la fonction procède <strong>attribut par attribut</strong> par une analyse de variance (ANOVA). Pour chaque variable de <strong>Sensory Attributes</strong>, elle évalue d’abord si l’effet <em>produit</em> est significatif, tout en tenant compte de l’effet <em>sujet</em>. Cette première étape joue le rôle de filtre global : elle détermine quels attributs structurent réellement l’espace sensoriel.</p>
+</section>
+<section id="sélection-des-attributs-discriminants" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="sélection-des-attributs-discriminants"><span class="header-section-number">2.2.3</span> Sélection des attributs discriminants</h3>
+<p>Les attributs dont la significativité est inférieure au seuil défini par <strong>Significance threshold (%)</strong> sont retenus dans la première table de résultats. Le seuil par défaut est de <strong>5 %</strong>, ce qui en fait un bon point de départ pour une lecture prudente. Si aucun attribut ne passe ce seuil, la fonction s’arrête et indique qu’aucun attribut sensoriel n’est discriminant au seuil sélectionné.</p>
+</section>
+<section id="description-stimulus-par-stimulus" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="description-stimulus-par-stimulus"><span class="header-section-number">2.2.4</span> Description stimulus par stimulus</h3>
+<p>Une fois les attributs globalement discriminants repérés, la fonction examine, pour chaque stimulus, quels attributs le caractérisent significativement. Chaque stimulus est comparé à une référence globale, ce qui permet de repérer des attributs associés positivement ou négativement à ce stimulus. La référence globale correspond à la moyenne des stimuli sur chaque attribut (le stimulus moyen). Le résultat prend la forme d’une seconde table regroupée par stimulus.</p>
+</section>
+<section id="le-rôle-des-moyennes-ajustées" class="level3" data-number="2.2.5">
+<h3 data-number="2.2.5" class="anchored" data-anchor-id="le-rôle-des-moyennes-ajustées"><span class="header-section-number">2.2.5</span> Le rôle des moyennes ajustées</h3>
+<p>La colonne <strong>Adjusted mean</strong> peut se comprendre comme une estimation de la moyenne du stimulus sur un attribut, corrigée de l’effet sujet. Cette colonne permet de lire le niveau de perception d’un stimulus sans se limiter à une moyenne brute potentiellement influencée par des sujets plus “généreux” ou plus “sévères” dans leur notation.</p>
+<blockquote class="blockquote">
+<p>Lorsque le plan de dégustation est complet (chaque sujet évalue tous les stimuli), la moyenne ajustée est égale à la moyenne arithmétique. Elle s’en écarte en présence de données manquantes ; la moyenne ajustée est alors plus fiable.</p>
+</blockquote>
+</section>
+<section id="ce-que-signifie-un-stimulus-absent-de-la-seconde-table-sensory-description-of-the-stimuli" class="level3" data-number="2.2.6">
+<h3 data-number="2.2.6" class="anchored" data-anchor-id="ce-que-signifie-un-stimulus-absent-de-la-seconde-table-sensory-description-of-the-stimuli"><span class="header-section-number">2.2.6</span> Ce que signifie un stimulus absent de la seconde table, Sensory Description of the Stimuli</h3>
+<p>Un stimulus peut ne pas apparaître dans la seconde table si aucun attribut ne le caractérise significativement au seuil choisi. Cela ne signifie pas qu’il est “sans profil”, mais plutôt qu’il ne se distingue pas assez nettement de la moyenne de l’ensemble des stimuli sur les attributs testés.</p>
+</section>
+</section>
+<section id="structure-des-données-attendues" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="structure-des-données-attendues"><span class="header-section-number">2.3</span> Structure des données attendues</h2>
+<p>Les données doivent contenir :</p>
+<ul>
+<li>une colonne identifiant les <strong>stimuli</strong> ;</li>
+<li>une colonne identifiant les <strong>sujets</strong> ;</li>
+<li>plusieurs colonnes numériques correspondant aux <strong>attributs sensoriels</strong>.</li>
+</ul>
+<p>Chaque ligne correspond à l’évaluation d’un stimulus par un sujet. Si les sujets évaluent les stimuli en plusieurs répétitions ou en plusieurs sessions, chaque évaluation doit apparaître sur une ligne distincte.</p>
+<p>Avant de lancer l’analyse dans jamovi, vérifiez dans l’onglet <strong>Données</strong> que :</p>
+<ul>
+<li>la variable destinée à <strong>Stimulus Effect</strong> est bien catégorielle ;</li>
+<li>la variable destinée à <strong>Subject Effect</strong> est bien catégorielle ;</li>
+<li>toutes les variables destinées à <strong>Sensory Attributes</strong> sont numériques.</li>
+</ul>
+</section>
+<section id="guide-de-linterface" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="guide-de-linterface"><span class="header-section-number">2.4</span> Guide de l’interface</h2>
+<p>L’analyse apparaît dans le menu <strong>SEDA &gt; Fixed List of Attributes &gt; Characterization of the Stimulus Space</strong>. L’interface comprend trois zones de dépôt de variables, un bloc <strong>Instructions and R Code</strong> contenant les cases <strong>Read me before running</strong> et <strong>R code</strong>, puis un champ numérique <strong>Significance threshold (%)</strong>.</p>
+<section id="variables-à-renseigner" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="variables-à-renseigner"><span class="header-section-number">2.4.1</span> Variables à renseigner</h3>
+<section id="stimulus-effect" class="level4" data-number="2.4.1.1">
+<h4 data-number="2.4.1.1" class="anchored" data-anchor-id="stimulus-effect"><span class="header-section-number">2.4.1.1</span> Stimulus Effect</h4>
+<p><strong>Rôle :</strong> identifie les stimuli/produits à comparer. <strong>Impact sur le calcul :</strong> cette variable définit les groupes étudiés dans l’analyse globale et dans la description stimulus par stimulus. <strong>Conseil pratique :</strong> utilisez des libellés explicites, car ils structurent directement la lecture de la seconde table.</p>
+</section>
+<section id="subject-effect" class="level4" data-number="2.4.1.2">
+<h4 data-number="2.4.1.2" class="anchored" data-anchor-id="subject-effect"><span class="header-section-number">2.4.1.2</span> Subject Effect</h4>
+<p><strong>Rôle :</strong> identifie les sujets. <strong>Impact sur le calcul :</strong> cette variable est utilisée pour tenir compte des différences systématiques entre sujets lors de l’estimation des effets stimulus. <strong>Conseil pratique :</strong> vérifiez qu’un même sujet conserve exactement le même identifiant dans tout le fichier.</p>
+</section>
+<section id="sensory-attributes" class="level4" data-number="2.4.1.3">
+<h4 data-number="2.4.1.3" class="anchored" data-anchor-id="sensory-attributes"><span class="header-section-number">2.4.1.3</span> Sensory Attributes</h4>
+<p><strong>Rôle :</strong> regroupe les attributs sensoriels analysés. <strong>Impact sur le calcul :</strong> la fonction applique la même logique d’analyse à chacun de ces attributs ; seuls les attributs numériques sont acceptés. <strong>Conseil pratique :</strong> incluez tous les attributs pertinents de votre QDA ; la sélection statistique se fera ensuite via <strong>Significance threshold (%)</strong>.</p>
+</section>
+</section>
+<section id="instructions-and-r-code" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="instructions-and-r-code"><span class="header-section-number">2.4.2</span> Instructions and R Code</h3>
+<section id="read-me-before-running" class="level4" data-number="2.4.2.1">
+<h4 data-number="2.4.2.1" class="anchored" data-anchor-id="read-me-before-running"><span class="header-section-number">2.4.2.1</span> Read me before running</h4>
+<p><strong>Rôle :</strong> affiche une aide intégrée dans les résultats. <strong>Impact sur le calcul :</strong> aucun. <strong>Conseil pratique :</strong> laissez-la cochée lors des premières utilisations. Elle est <strong>activée par défaut</strong>.</p>
+</section>
+<section id="r-code" class="level4" data-number="2.4.2.2">
+<h4 data-number="2.4.2.2" class="anchored" data-anchor-id="r-code"><span class="header-section-number">2.4.2.2</span> R code</h4>
+<p><strong>Rôle :</strong> affiche le script R correspondant à l’analyse dans une sortie <strong>R Code</strong>. <strong>Impact sur le calcul :</strong> aucun. <strong>Conseil pratique :</strong> activez cette option si vous souhaitez reproduire l’analyse dans le <strong>Rj Editor</strong> de jamovi ou poursuivre ensuite le travail dans R. Elle est <strong>désactivée par défaut</strong>.</p>
+</section>
+</section>
+<section id="seuil-de-significativité-significance-threshold" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="seuil-de-significativité-significance-threshold"><span class="header-section-number">2.4.3</span> Seuil de significativité : Significance threshold (%)</h3>
+<p><strong>Rôle :</strong> fixe le seuil de la <em>p-value</em> utilisé pour sélectionner les attributs discriminants et les attributs caractéristiques de chaque stimulus. <strong>Impact sur le calcul :</strong> ce seuil contrôle à la fois quels attributs apparaissent dans <strong>Identification of the Sensory Dimensions</strong> (test global) et quels attributs apparaissent dans <strong>Sensory Description of the Stimuli</strong> (tests par stimulus). Un seuil faible produit des résultats plus conservateurs ; un seuil plus élevé retient davantage d’attributs dans les deux tables. <strong>Conseil pratique :</strong> la valeur par défaut est <strong>5 %</strong>, bon point de départ pour un premier essai. Si les résultats sont trop pauvres, essayez <strong>10 %</strong>, puis éventuellement <strong>20 %</strong> en exploration.</p>
+</section>
+</section>
+<section id="procédure-pas-à-pas" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="procédure-pas-à-pas"><span class="header-section-number">2.5</span> Procédure pas à pas</h2>
+<ol type="1">
+<li>Ouvrez votre jeu de données dans jamovi.</li>
+<li>Dans l’onglet <strong>Données</strong>, vérifiez que la variable stimulus est catégorielle, que la variable sujet est catégorielle, et que les attributs sensoriels sont numériques.</li>
+<li>Ouvrez <strong>SEDA &gt; Fixed List of Attributes &gt; Characterization of the Stimulus Space</strong>.</li>
+<li>Placez la variable stimulus dans <strong>Stimulus Effect</strong>.</li>
+<li>Placez la variable sujet dans <strong>Subject Effect</strong>.</li>
+<li>Placez tous les attributs sensoriels dans <strong>Sensory Attributes</strong>.</li>
+<li>Laissez <strong>Significance threshold (%)</strong> à <strong>5 %</strong> pour un premier essai.</li>
+<li>Lisez d’abord <strong>Identification of the Sensory Dimensions</strong> pour repérer les attributs qui structurent l’espace sensoriel.</li>
+<li>Lisez ensuite <strong>Sensory Description of the Stimuli</strong> pour comprendre les caractéristiques propres à chaque stimulus.</li>
+<li>Si aucun résultat n’apparaît, ou si la seconde table est très pauvre, testez un seuil un peu plus large.</li>
+</ol>
+</section>
+<section id="interprétation-des-résultats" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="interprétation-des-résultats"><span class="header-section-number">2.6</span> Interprétation des résultats</h2>
+<section id="identification-of-the-sensory-dimensions" class="level3" data-number="2.6.1">
+<h3 data-number="2.6.1" class="anchored" data-anchor-id="identification-of-the-sensory-dimensions"><span class="header-section-number">2.6.1</span> Identification of the Sensory Dimensions</h3>
+<p>Ce premier tableau liste les attributs sensoriels qui <strong>discriminent significativement</strong> les stimuli, triés du plus discriminant au moins discriminant. Il constitue la porte d’entrée de l’interprétation : il indique quels attributs structurent l’espace sensoriel dans son ensemble.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Élément</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>(première colonne)</em></td>
+<td>Attribut sensoriel discriminant</td>
+</tr>
+<tr class="even">
+<td><strong>Vtest</strong></td>
+<td>Mesure standardisée de l’effet discriminant — plus la valeur est élevée, plus le signal est marqué</td>
+</tr>
+<tr class="odd">
+<td><strong>p</strong></td>
+<td>P-value du test global — plus elle est faible, plus l’attribut différencie nettement les stimuli</td>
+</tr>
+</tbody>
+</table>
+<p>Les premières lignes du tableau correspondent aux attributs les plus structurants.</p>
+<blockquote class="blockquote">
+<p><strong>Point de vigilance :</strong> un attribut absent de ce tableau n’est pas suffisamment discriminant au seuil choisi. Si aucun attribut n’est retenu, la fonction affiche un message d’erreur et ne produit pas de résultat interprétable.</p>
+</blockquote>
+</section>
+<section id="sensory-description-of-the-stimuli" class="level3" data-number="2.6.2">
+<h3 data-number="2.6.2" class="anchored" data-anchor-id="sensory-description-of-the-stimuli"><span class="header-section-number">2.6.2</span> Sensory Description of the Stimuli</h3>
+<p>Ce second tableau décrit chaque stimulus par les attributs qui le caractérisent significativement. Les lignes sont regroupées par stimulus, et les attributs les plus saillants apparaissent en premier au sein de chaque groupe.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Élément</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>(première colonne)</em></td>
+<td>Nom du stimulus</td>
+</tr>
+<tr class="even">
+<td><strong>Descriptor</strong></td>
+<td>Attribut sensoriel caractéristique</td>
+</tr>
+<tr class="odd">
+<td><strong>Coefficient</strong></td>
+<td>Écart estimé par rapport à la référence globale — positif si le stimulus est perçu plus intensément, négatif sinon</td>
+</tr>
+<tr class="even">
+<td><strong>Adjusted mean</strong></td>
+<td>Moyenne ajustée du stimulus sur cet attribut, corrigée de l’effet sujet</td>
+</tr>
+<tr class="odd">
+<td><strong>p</strong></td>
+<td>P-value du test de caractérisation</td>
+</tr>
+<tr class="even">
+<td><strong>Vtest</strong></td>
+<td>Intensité standardisée de l’association — positive = sur-représenté, négative = sous-représenté</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Une <strong>V-test</strong> positive suggère que le stimulus est perçu comme plus intense que la référence (la moyenne) sur cet attribut.</li>
+<li>Une <strong>V-test</strong> négative suggère l’inverse — et est tout aussi informative.</li>
+<li>Appuyez-vous sur <strong>Adjusted mean</strong> pour lire le niveau sensoriel, mais ne l’interprétez jamais sans <strong>p</strong> et <strong>Vtest</strong>.</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>Point de vigilance :</strong> un stimulus absent du tableau n’est pas “sans profil” ; il est simplement non significativement différent de la moyenne de l’ensemble des stimuli au seuil choisi.</p>
+</blockquote>
+<p>Dans la configuration actuelle de la fonction, aucune sortie graphique n’est produite. L’interprétation repose entièrement sur les deux tables de résultats.</p>
+</section>
+</section>
+<section id="exemple-le-jeu-de-données-sensochoc" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="exemple-le-jeu-de-données-sensochoc"><span class="header-section-number">2.7</span> Exemple : le jeu de données <strong>sensochoc</strong></h2>
+<p>Le jeu de données <strong>sensochoc</strong> décrit 6 chocolats évalués par 29 sujets sur 14 attributs sensoriels. Il sert à illustrer les sorties de la fonction. Les valeurs numériques commentées ci-dessous proviennent directement des résultats de l’analyse. Pour charger ce jeu de données, ouvrez jamovi, cliquez sur l’icône en haut à gauche (trois traits superposés), puis sur <strong>Open</strong> → <strong>Data Library</strong> → <strong>SEDA</strong>.</p>
+<section id="paramètres-de-lexemple" class="level3" data-number="2.7.1">
+<h3 data-number="2.7.1" class="anchored" data-anchor-id="paramètres-de-lexemple"><span class="header-section-number">2.7.1</span> Paramètres de l’exemple</h3>
+<p>Pour reproduire cet exemple, voici les valeurs à utiliser.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Stimulus Effect</strong></td>
+<td>Product</td>
+</tr>
+<tr class="even">
+<td><strong>Subject Effect</strong></td>
+<td>Panelist</td>
+</tr>
+<tr class="odd">
+<td><strong>Sensory Attributes</strong></td>
+<td>tous les attributs sensoriels numériques</td>
+</tr>
+<tr class="even">
+<td><strong>Significance threshold (%)</strong></td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="analyse-du-tableau-identification-of-the-sensory-dimensions" class="level3" data-number="2.7.2">
+<h3 data-number="2.7.2" class="anchored" data-anchor-id="analyse-du-tableau-identification-of-the-sensory-dimensions"><span class="header-section-number">2.7.2</span> Analyse du tableau <em>Identification of the Sensory Dimensions</em></h3>
+<p>Avec ces réglages, les 14 attributs ressortent tous comme discriminants au seuil de 5 %. Le tableau est trié par V-test décroissante : les attributs en tête sont ceux qui différencient le plus nettement les chocolats entre eux. <em>MilkF</em> arrive en premier (V-test = 16.40), suivi de <em>CocoaF</em> (13.48) et <em>Bitterness</em> (13.34). En bas du tableau, <em>Sticky</em> (V-test = 3.56) et <em>Granular</em> (4.37) sont significatifs mais moins structurants. Ce classement donne une première lecture de l’espace sensoriel : les oppositions entre chocolats reposent avant tout sur les dimensions lactée, cacaotée et amère.</p>
+</section>
+<section id="analyse-du-tableau-sensory-description-of-the-stimuli" class="level3" data-number="2.7.3">
+<h3 data-number="2.7.3" class="anchored" data-anchor-id="analyse-du-tableau-sensory-description-of-the-stimuli"><span class="header-section-number">2.7.3</span> Analyse du tableau <em>Sensory Description of the Stimuli</em></h3>
+<p>La seconde table permet de lire le profil de chaque chocolat par rapport à la moyenne générale de l’ensemble des six chocolats.</p>
+<p><strong>choc1</strong> est caractérisé par un profil très contrasté. Pour ce chocolat, côté positif, <em>Bitterness</em> ressort avec la V-test la plus élevée (9.95, coefficient +2.46) et une moyenne ajustée de 7.07, nettement au-dessus de la moyenne de l’ensemble. <em>CocoaF</em> (V-test = 8.48), <em>Astringency</em> (7.08) et <em>Acidity</em> (6.14) complètent ce profil. Côté négatif, <em>Sweetness</em> (V-test = -8.29, coefficient -1.95, moyenne ajustée 3.14) et <em>MilkF</em> (V-test = -8.70) désignent un chocolat très peu sucré et très peu lacté.</p>
+<p><strong>choc3</strong> présente le profil opposé. Il est fortement caractérisé par <em>MilkF</em> (V-test = 16.52, la plus élevée du tableau), <em>Caramel</em> (11.52), <em>Sweetness</em> (10.39) et <em>Melting</em> (9.19). À l’inverse, il est négativement caractérisé par <em>Bitterness</em> (-12.42), <em>Crunchy</em> (-12.49) et <em>CocoaF</em> (-13.33). C’est le chocolat le plus lacté, sucré et fondant, et le moins amer et cacaoté. Au vu du nombre d’attributs sensoriels significatifs, <strong>choc3</strong> semble être le chocolat dont le profil va s’écarter le plus nettement de la moyenne.</p>
+<p><strong>choc2</strong> se distingue surtout par <em>Crunchy</em> (V-test = 6.92) et une moindre perception de <em>MilkF</em> (-5.16). <strong>choc6</strong> est également <em>Crunchy</em> (5.35) et légèrement plus <em>Sweetness</em> (2.41), mais moins <em>Melting</em> (-3.08).</p>
+<p><strong>choc4</strong> affiche un profil modéré et peu contrasté — à l’exception de <em>MilkF</em>, aucune V-test ne dépasse 4 en valeur absolue — ce qui suggère un chocolat proche de la moyenne sensorielle générale sur la plupart des attributs.</p>
+<p><strong>choc5</strong> présente très peu de caractéristiques saillantes : seuls <em>CocoaA</em>, <em>Crunchy</em> et <em>CocoaF</em> ressortent légèrement en positif, et <em>Sticky</em> en négatif. Son profil est le moins distinctif des six chocolats au seuil de 5 %.</p>
+</section>
+<section id="interprétation-synthétique" class="level3" data-number="2.7.4">
+<h3 data-number="2.7.4" class="anchored" data-anchor-id="interprétation-synthétique"><span class="header-section-number">2.7.4</span> Interprétation synthétique</h3>
+<p>Cet exemple montre que les six chocolats couvrent un espace sensoriel large, avec à un extrême un chocolat très amer et intense (<strong>choc1</strong>) et, à l’autre, un chocolat lacté, sucré et fondant (<strong>choc3</strong>). Entre ces deux pôles, les autres chocolats occupent des positions plus intermédiaires. La première table permet d’identifier les attributs qui structurent globalement l’espace sensoriel, tandis que la seconde précise le profil propre à chaque stimulus. La lecture conjointe de ces deux sorties constitue l’apport principal de la fonction.</p>
+<blockquote class="blockquote">
+<p><strong>Ce qu’on retient de cet exemple :</strong> l’analyse combine une lecture globale des attributs discriminants et une lecture locale des profils de stimuli, ce qui permet de caractériser finement l’espace sensoriel.</p>
+</blockquote>
+</section>
+</section>
+<section id="de-jamovi-au-rj-editor" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="de-jamovi-au-rj-editor"><span class="header-section-number">2.8</span> De jamovi au Rj Editor</h2>
+<p>Une fois le <strong>Rj Editor</strong> configuré avec <strong>System R</strong> comme indiqué au chapitre 1, cochez <strong>R code</strong> pour afficher le script correspondant à l’analyse. Le jeu de données actuellement ouvert dans jamovi est disponible sous le nom <code>data</code>.</p>
+<p>Pour cette analyse, le script charge <code>SensoMineR</code>, prépare les variables sélectionnées puis appelle <code>decat()</code> avec un modèle comprenant l’effet stimulus et l’effet sujet. La valeur de <strong>Significance threshold (%)</strong> est transmise à l’argument <code>proba</code> : 5 % dans l’interface correspond à <code>0.05</code> en R. Les objets <code>res_QDA$resF</code> et <code>res_QDA$resT</code> correspondent respectivement aux deux tables commentées dans ce chapitre.</p>
+<p>Cette sortie permet de vérifier et de reproduire le calcul, puis de poursuivre l’analyse dans R si nécessaire. Elle n’est pas indispensable pour utiliser SEDA.</p>
+</section>
+<section id="conseils-pratiques" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="conseils-pratiques"><span class="header-section-number">2.9</span> Conseils pratiques</h2>
+<ul>
+<li>Commencez avec <strong>Significance threshold (%) = 5 %</strong>.</li>
+<li>Si aucun attribut n’est retenu, testez <strong>10 %</strong>, puis <strong>20 %</strong> en exploration.</li>
+<li>Lisez toujours la table globale avant la table stimulus par stimulus.</li>
+<li>Ne confondez pas un attribut globalement discriminant avec un attribut qui caractérise fortement <strong>tous</strong> les stimuli : un attribut peut différencier les stimuli entre eux sans que tous soient fortement associés à lui.</li>
+<li>Une <strong>V-test</strong> négative est informative : elle signale qu’un stimulus est perçu comme moins intense que la moyenne sur un attribut, ce qui peut être une caractéristique sensorielle à part entière.</li>
+<li>Utilisez des noms de stimuli clairs et cohérents pour faciliter la lecture des résultats.</li>
+<li>Si votre panel comporte des répétitions, conservez toutes les lignes dans le fichier.</li>
+<li>Ne surinterpretez pas l’absence d’un stimulus dans la seconde table : il peut simplement se situer proche de la moyenne sensorielle générale.</li>
+</ul>
+</section>
+<section id="en-résumé" class="level2" data-number="2.10">
+<h2 data-number="2.10" class="anchored" data-anchor-id="en-résumé"><span class="header-section-number">2.10</span> En résumé</h2>
+<p>Cette analyse identifie d’abord les attributs sensoriels qui discriminent globalement les stimuli, puis décrit chaque stimulus par les attributs qui le distinguent de la référence globale (la moyenne). Elle tient compte à la fois de l’effet stimulus et de l’effet sujet, ce qui la rend plus informative qu’une simple comparaison de moyennes brutes. Son intérêt principal est de combiner une lecture <strong>globale</strong> de l’espace sensoriel et une lecture <strong>locale</strong> stimulus par stimulus, dans deux tables directement interprétables.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copié");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copié");
+      tooltip = new bootstrap.Tooltip(button,
+        { trigger: "manual",
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config);
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined;
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            }
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          }
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./intro_ppt.html" class="pagination-link" aria-label="Introduction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./chapitre2_prompt_harmonise.html" class="pagination-link" aria-label="Données QDA — Représentation multivariée avec ellipses">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Données QDA — Représentation multivariée avec ellipses</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

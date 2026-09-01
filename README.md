@@ -6,15 +6,23 @@ This repository contains the companion guide to the **SEDA** jamovi module for s
 
 ## Online companion
 
-The current English version is available here:
+### English
 
-**https://sebastien-le.github.io/seda-book/**
+https://sebastien-le.github.io/seda-book/
 
-## PDF version
+### Français
 
-A PDF version is also available:
+https://sebastien-le.github.io/seda-book/fr/
 
-**https://sebastien-le.github.io/seda-book/Help-Me-Do-It-on-My-Own--Sensory-Data-Analysis-with-jamovi-and-the-SEDA-Module.pdf**
+## PDF versions
+
+### English
+
+https://sebastien-le.github.io/seda-book/Help-Me-Do-It-on-My-Own--Sensory-Data-Analysis-with-jamovi-and-the-SEDA-Module.pdf
+
+### Français
+
+https://sebastien-le.github.io/seda-book/fr/Apprends-moi-à-faire-seul---analyse-de-données-sensorielles-avec-jamovi-et-le-module-SEDA.pdf
 
 ## About SEDA
 
@@ -28,4 +36,4 @@ SEDA (*Sensory Evaluation Data Analysis*) is a jamovi module dedicated to sensor
 - Free sorting
 - Preference mapping
 
-The guide is designed to connect the jamovi interface with the statistical logic of each method and, when useful, with the corresponding R workflow.
+The guide is signed to connect the jamovi interface with the statistical logic of each method and, when useful, with the correspondflow.

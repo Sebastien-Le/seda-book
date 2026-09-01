@@ -4,6 +4,10 @@ project:
 book:
   title: "Help Me Do It on My Own: Sensory Data Analysis with jamovi and the SEDA Module"
   date: "2026-08-31"
+  navbar:
+    right:
+      - text: "Français"
+        href: https://sebastien-le.github.io/seda-book/fr/
   chapters:
     - index.qmd
     - intro_ppt_GB.qmd
