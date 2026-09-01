@@ -1,3 +1,7 @@
+---
+bread-crumbs: false
+---
+
 # {{< meta preface-title >}} {.unnumbered}
 
 ::: {.content-visible when-profile="fr"}

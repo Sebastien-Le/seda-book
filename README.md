@@ -36,4 +36,4 @@ SEDA (*Sensory Evaluation Data Analysis*) is a jamovi module dedicated to sensor
 - Free sorting
 - Preference mapping
 
-The guide is signed to connect the jamovi interface with the statistical logic of each method and, when useful, with the correspondflow.
+The guide is designed to connect the jamovi interface with the statistical logic of each method and, when useful, with the corresponding R workflow.
