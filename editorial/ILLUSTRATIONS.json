@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "profiles": {
+    "fr": {
+      "render_dir": "_render/fr",
+      "publish_dir": "docs/fr",
+      "search_file": "search.json",
+      "pdf": "Apprends-moi-à-faire-seul---analyse-de-données-sensorielles-avec-jamovi-et-le-module-SEDA.pdf"
+    },
+    "en": {
+      "render_dir": "_render/en",
+      "publish_dir": "docs",
+      "search_file": "search.json",
+      "pdf": "Help-Me-Do-It-on-My-Own--Sensory-Data-Analysis-with-jamovi-and-the-SEDA-Module.pdf"
+    }
+  },
+  "chapters": {
+    "qda-multi": {
+      "label": "QDA — multivariate representation with confidence ellipses",
+      "languages": {
+        "fr": {
+          "source": "chapitre2_prompt_harmonise.qmd",
+          "rendered_html": "chapitre2_prompt_harmonise.html",
+          "figures": [
+            {
+              "id": "fig-qda-multi-interface",
+              "image": "images/qda-multi/qda-multi-interface.png",
+              "caption": "Configuration de l’analyse multivariée QDA sur le jeu de données *sensochoc*.",
+              "width": "62%",
+              "anchor_line": "### Analyse du graphique *Representation of the Stimuli with Confidence Ellipses*",
+              "position": "before",
+              "reference": "@fig-qda-multi-interface récapitule la configuration utilisée pour cet exemple.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-qda-multi-ellipses",
+              "image": "images/qda-multi/qda-multi-stimuli-ellipses.png",
+              "caption": "Représentation des stimuli dans le plan factoriel avec les ellipses obtenues par rééchantillonnage du panel.",
+              "width": "100%",
+              "anchor_line": "### Analyse du graphique *Representation of the Stimuli with Confidence Ellipses*",
+              "position": "after",
+              "reference": "@fig-qda-multi-ellipses montre les 6 chocolats dans le plan Dim. 1 / Dim. 2.",
+              "reference_position": "after",
+              "validation_only": true
+            },
+            {
+              "id": "fig-qda-multi-hotelling",
+              "image": "images/qda-multi/qda-multi-hotelling.png",
+              "caption": "Test de Hotelling : p-values des comparaisons paire par paire entre stimuli sur le plan Dim. 1 / Dim. 2.",
+              "width": "65%",
+              "anchor_line": "### Analyse du tableau *Hotelling Test*",
+              "position": "after",
+              "reference": "@fig-qda-multi-hotelling",
+              "reference_position": "after",
+              "validation_only": true
+            },
+            {
+              "id": "fig-qda-multi-attributes",
+              "image": "images/qda-multi/qda-multi-sensory-attributes.png",
+              "caption": "Représentation des attributs sensoriels dans le plan factoriel Dim. 1 / Dim. 2.",
+              "width": "78%",
+              "anchor_line": "### Analyse du graphique *Representation of the Sensory Attributes*",
+              "position": "after",
+              "reference": "@fig-qda-multi-attributes",
+              "reference_position": "after",
+              "validation_only": true
+            }
+          ]
+        },
+        "en": {
+          "source": "chapitre2_prompt_GBH.qmd",
+          "rendered_html": "chapitre2_prompt_GBH.html",
+          "figures": [
+            {
+              "id": "fig-qda-multi-interface",
+              "image": "images/qda-multi/qda-multi-interface.png",
+              "caption": "Configuration of the multivariate QDA analysis for the *sensochoc* dataset.",
+              "width": "62%",
+              "anchor_line": "### Analysis of the *Representation of the Stimuli with Confidence Ellipses* graph",
+              "position": "before",
+              "reference": "@fig-qda-multi-interface summarises the configuration used for this example.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-qda-multi-ellipses",
+              "image": "images/qda-multi/qda-multi-stimuli-ellipses.png",
+              "caption": "Stimuli represented in the factorial plane with ellipses obtained by panel resampling.",
+              "width": "100%",
+              "anchor_line": "### Analysis of the *Representation of the Stimuli with Confidence Ellipses* graph",
+              "position": "after",
+              "reference": "@fig-qda-multi-ellipses shows the 6 chocolates in the Dim. 1 / Dim. 2 plane.",
+              "reference_position": "after",
+              "validation_only": true
+            },
+            {
+              "id": "fig-qda-multi-hotelling",
+              "image": "images/qda-multi/qda-multi-hotelling.png",
+              "caption": "Hotelling test: p-values for pairwise comparisons between stimuli on the Dim. 1 / Dim. 2 plane.",
+              "width": "65%",
+              "anchor_line": "### Analysis of the *Hotelling Test* table",
+              "position": "after",
+              "reference": "@fig-qda-multi-hotelling",
+              "reference_position": "after",
+              "validation_only": true
+            },
+            {
+              "id": "fig-qda-multi-attributes",
+              "image": "images/qda-multi/qda-multi-sensory-attributes.png",
+              "caption": "Sensory attributes represented in the Dim. 1 / Dim. 2 factorial plane.",
+              "width": "78%",
+              "anchor_line": "### Analysis of the *Representation of the Sensory Attributes* graph",
+              "position": "after",
+              "reference": "@fig-qda-multi-attributes",
+              "reference_position": "after",
+              "validation_only": true
+            }
+          ]
+        }
+      }
+    }
+  }
+}
