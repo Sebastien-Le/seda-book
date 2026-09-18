@@ -115,7 +115,7 @@ L'analyse apparaît dans le menu **SEDA \> Fixed List of Attributes \> Represent
 
 #### Subjects per virtual panel
 
-**Rôle :** définit le nombre de dimensions incluses dans la description automatique. **Impact sur le calcul :** SEDA calcule suffisamment de composantes pour décrire ces dimensions ; le plan affiché reste choisi séparément avec **X-axis** et **Y-axis**. **Conseil pratique&nbsp;:** la valeur par défaut, 2, est adaptée à une lecture initiale.
+**Rôle :** définit le nombre de sujets tirés dans chaque panel virtuel. **Impact sur le calcul :** plus cette valeur est proche de l'effectif réel du panel, plus les panels simulés lui ressemblent. **Conseil pratique :** utilisez l'effectif réel du panel comme point de départ. La valeur par défaut est 20.
 
 #### Number of virtual panels
 
