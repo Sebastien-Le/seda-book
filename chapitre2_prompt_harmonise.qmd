@@ -18,8 +18,8 @@ Avant de construire la carte, la fonction identifie les attributs qui discrimine
 
 Une manière simple de comprendre l'étape suivante est de dire que l'analyse reconstruit des **profils sensoriels moyens par stimulus**, en tenant compte des différences entre sujets. Deux options interviennent ici :
 
--   **Center by subject** corrige les différences de niveau moyen entre sujets ;
--   **Scale by subject** corrige les différences d'amplitude d'utilisation de l'échelle.
+- **Center by subject** corrige les différences de niveau moyen entre sujets ;
+- **Scale by subject** corrige les différences d'amplitude d'utilisation de l'échelle.
 
 L'objectif est d'éviter qu'un sujet très généreux, très sévère, ou très "étalé" dans ses réponses déforme artificiellement la carte des stimuli.
 
@@ -49,17 +49,17 @@ La fonction propose enfin une description automatique des axes, filtrée selon l
 
 Les données doivent contenir :
 
--   une colonne identifiant les **stimuli** ;
--   une colonne identifiant les **sujets** ;
--   au moins deux colonnes numériques correspondant aux **attributs sensoriels**.
+- une colonne identifiant les **stimuli** ;
+- une colonne identifiant les **sujets** ;
+- au moins deux colonnes numériques correspondant aux **attributs sensoriels**.
 
 Chaque ligne correspond à l'évaluation d'un stimulus par un sujet. Si un sujet évalue plusieurs fois un même stimulus (répétitions ou sessions), chaque évaluation doit apparaître sur une ligne distincte.
 
 Avant de lancer l'analyse dans jamovi, vérifiez dans l'onglet **Données** que :
 
--   la variable destinée à **Stimulus Effect** est bien catégorielle ;
--   la variable destinée à **Subject Effect** est bien catégorielle ;
--   toutes les variables destinées à **Sensory Attributes** sont numériques.
+- la variable destinée à **Stimulus Effect** est bien catégorielle ;
+- la variable destinée à **Subject Effect** est bien catégorielle ;
+- toutes les variables destinées à **Sensory Attributes** sont numériques.
 
 ## Guide de l'interface
 
@@ -78,7 +78,6 @@ L'analyse apparaît dans le menu **SEDA \> Fixed List of Attributes \> Represent
 #### Sensory Attributes
 
 **Rôle :** regroupe les attributs sensoriels utilisés pour construire l'espace factoriel. **Impact sur le calcul :** seuls des attributs numériques sont acceptés ; le nombre de dimensions calculables dépend du nombre d'attributs retenus. **Conseil pratique :** commencez par inclure tous les attributs sensoriels pertinents, puis affinez avec **Descriptor selection threshold (%)**.
-
 
 ### Instructions and R Code
 
@@ -116,7 +115,7 @@ L'analyse apparaît dans le menu **SEDA \> Fixed List of Attributes \> Represent
 
 #### Subjects per virtual panel
 
-**Rôle :** définit le nombre de sujets tirés dans chaque panel virtuel. **Impact sur le calcul :** plus cette valeur est proche de l'effectif réel du panel, plus les panels simulés lui ressemblent. **Conseil pratique :** utilisez l'effectif réel du panel comme point de départ. La valeur par défaut est 20.
+**Rôle :** définit le nombre de dimensions incluses dans la description automatique. **Impact sur le calcul :** SEDA calcule suffisamment de composantes pour décrire ces dimensions ; le plan affiché reste choisi séparément avec **X-axis** et **Y-axis**. **Conseil pratique&nbsp;:** la valeur par défaut, 2, est adaptée à une lecture initiale.
 
 #### Number of virtual panels
 
@@ -142,7 +141,7 @@ L'analyse apparaît dans le menu **SEDA \> Fixed List of Attributes \> Represent
 
 #### Number of dimensions
 
-**Rôle :** définit le nombre de dimensions incluses dans la description automatique. **Impact sur le calcul :** SEDA calcule suffisamment de composantes pour décrire ces dimensions ; le plan affiché reste choisi séparément avec **X-axis** et **Y-axis**. **Conseil pratique&nbsp;:** la valeur par défaut, 2, est adaptée à une lecture initiale.
+**Rôle :** définit le nombre de dimensions incluses dans la description automatique. **Impact sur le calcul :** SEDA calcule suffisamment de composantes pour décrire ces dimensions ; le plan affiché reste choisi séparément avec **X-axis** et **Y-axis**. **Conseil pratique :** la valeur par défaut, 2, est adaptée à une lecture initiale.
 
 ## Procédure pas à pas
 
@@ -186,9 +185,9 @@ Cette carte montre les positions relatives des stimuli sans mettre l'accent sur 
 
 Cette carte montre les attributs sensoriels dans l'espace factoriel. On la lit selon trois repères simples :
 
--   **la direction** : vers quels stimuli l'attribut "tire" la structure ;
--   **la longueur** : plus un attribut est long, mieux il est représenté sur le plan ;
--   **l'angle entre deux attributs** : petit angle = corrélation positive ; angle proche de 180° = opposition ; angle proche de 90° = quasi-indépendance.
+- **la direction** : vers quels stimuli l'attribut "tire" la structure ;
+- **la longueur** : plus un attribut est long, mieux il est représenté sur le plan ;
+- **l'angle entre deux attributs** : petit angle = corrélation positive ; angle proche de 180° = opposition ; angle proche de 90° = quasi-indépendance.
 
 C'est cette carte qui permet de donner un sens sensoriel aux axes.
 
@@ -220,27 +219,33 @@ Le jeu de données **sensochoc** décrit 6 chocolats évalués par 29 sujets sur
 
 Pour reproduire cet exemple, voici les valeurs à utiliser.
 
-| Option                             | Valeur                        |
-|------------------------------------|-------------------------------|
+| Option                                 | Valeur                        |
+|----------------------------------------|-------------------------------|
 | **Stimulus Effect**                    | Product                       |
 | **Subject Effect**                     | Panelist                      |
 | **Sensory Attributes**                 | tous les attributs sensoriels |
 | **Scale to unit variance**             | Coché                         |
 | **Descriptor selection threshold (%)** | 20                            |
 | **X-axis / Y-axis**                    | 1 / 2                         |
-| **Subjects per virtual panel**                 | 20                            |
-| **Number of virtual panels**                   | 300                           |
-| **Ellipse alpha (%)**                      | 5                             |
+| **Subjects per virtual panel**         | 20                            |
+| **Number of virtual panels**           | 300                           |
+| **Ellipse alpha (%)**                  | 5                             |
 | **Center by subject**                  | Coché                         |
-| *Scale by subject*                   | Décoché                       |
+| *Scale by subject*                     | Décoché                       |
 | **Significance threshold (%)**         | 5                             |
 | **Number of dimensions**               | 2                             |
 
 > **Remarque de reproductibilité :** les résultats numériques et les graphiques issus du rééchantillonnage commentés ci-dessous ont été obtenus avec la valeur par défaut **Subjects per virtual panel = 20**. Utilisez 20 pour reproduire exactement ce chapitre. Comme le panel réel comporte 29 sujets, **29** constitue un choix naturel pour une nouvelle analyse finale ; modifier cette valeur modifie les sorties fondées sur le rééchantillonnage.
 
+@fig-qda-multi-interface récapitule la configuration utilisée pour cet exemple.
+
+![Configuration de l’analyse multivariée QDA sur le jeu de données *sensochoc*.](images/qda-multi/qda-multi-interface.png){#fig-qda-multi-interface width="62%" fig-align="center"}
+
 ### Analyse du graphique *Representation of the Stimuli with Confidence Ellipses*
 
-La carte montre les 6 chocolats dans le plan Dim. 1 / Dim. 2. La première dimension concentre à elle seule 88.79 % de la variance totale — ce plan 2D est donc une représentation très fidèle des données. La deuxième dimension n'en explique que 7.58 % supplémentaires.
+![Représentation des stimuli dans le plan factoriel avec les ellipses obtenues par rééchantillonnage du panel.](images/qda-multi/qda-multi-stimuli-ellipses.png){#fig-qda-multi-ellipses width="100%" fig-align="center"}
+
+@fig-qda-multi-ellipses montre les 6 chocolats dans le plan Dim. 1 / Dim. 2. La première dimension concentre à elle seule 88.79 % de la variance totale — ce plan 2D est donc une représentation très fidèle des données. La deuxième dimension n'en explique que 7.58 % supplémentaires.
 
 Sur l'axe horizontal (Dim. 1), **choc1** et **choc3** occupent les deux extrémités opposées : **choc1** à gauche (côté amer, cacaoté), **choc3** à droite (côté lacté, sucré). Ce sont les deux chocolats dont les profils s'opposent le plus nettement, ce qui est cohérent avec les résultats du chapitre précédent. **choc2**, **choc5** et **choc6** sont regroupés au centre, près de l'origine. **choc4** se situe légèrement au-dessus de l'axe horizontal, entre choc1 et le groupe central.
 
@@ -248,11 +253,15 @@ Les ellipses renseignent sur la robustesse de ces positions. Les ellipses de **c
 
 ### Analyse du tableau *Hotelling Test*
 
-Le tableau de *p-values* complète quantitativement la lecture des ellipses sur le plan Dim. 1 / Dim. 2. Les paires **choc2 / choc5** (p = 0.76) et **choc5 / choc6** (p = 0.16) présentent des p-values élevées : on ne met pas en évidence de séparation entre ces chocolats sur ce plan. La paire **choc2 / choc6** est plus limite (p = 0.04). En revanche, toutes les comparaisons impliquant **choc1** ou **choc3** donnent des p-values de 0.00 dans les résultats de cet exemple. Ces comparaisons paire par paire sont exploratoires et ne sont pas ajustées pour multiplicité.
+![Test de Hotelling : p-values des comparaisons paire par paire entre stimuli sur le plan Dim. 1 / Dim. 2.](images/qda-multi/qda-multi-hotelling.png){#fig-qda-multi-hotelling width="65%" fig-align="center"}
+
+@fig-qda-multi-hotelling présente les *p-values* qui complètent quantitativement la lecture des ellipses sur le plan Dim. 1 / Dim. 2. Les paires **choc2 / choc5** (p = 0.76) et **choc5 / choc6** (p = 0.16) présentent des p-values élevées : on ne met pas en évidence de séparation entre ces chocolats sur ce plan. La paire **choc2 / choc6** est plus limite (p = 0.04). En revanche, toutes les comparaisons impliquant **choc1** ou **choc3** donnent des p-values de 0.00 dans les résultats de cet exemple. Ces comparaisons paire par paire sont exploratoires et ne sont pas ajustées pour multiplicité.
 
 ### Analyse du graphique *Representation of the Sensory Attributes*
 
-Les 14 attributs se distribuent de façon très lisible autour de l'axe horizontal. À droite se regroupent *MilkF*, *Sweetness*, *Caramel*, *Vanilla*, *MilkA* et *Melting* — c'est le profil de **choc3.** À gauche se regroupent *CocoaF*, *CocoaA*, *Bitterness*, *Astringency*, *Acidity*, *Crunchy* et *Granular* — c'est le profil de **choc1**. L'axe horizontal correspond donc clairement à une opposition **chocolat au lait sucré / chocolat noir amer**.
+![Représentation des attributs sensoriels dans le plan factoriel Dim. 1 / Dim. 2.](images/qda-multi/qda-multi-sensory-attributes.png){#fig-qda-multi-attributes width="78%" fig-align="center"}
+
+@fig-qda-multi-attributes montre les 14 attributs distribués autour de l'axe horizontal. À droite se regroupent *MilkF*, *Sweetness*, *Caramel*, *Vanilla*, *MilkA* et *Melting* — c'est le profil de **choc3.** À gauche se regroupent *CocoaF*, *CocoaA*, *Bitterness*, *Astringency*, *Acidity*, *Crunchy* et *Granular* — c'est le profil de **choc1**. L'axe horizontal correspond donc clairement à une opposition **chocolat au lait sucré / chocolat noir amer**.
 
 La longueur des flèches indique aussi la qualité de représentation de chaque attribut sur ce plan. *Crunchy* a une flèche plus courte et orientée vers le bas, ce qui indique qu'il est moins bien représenté sur ce plan que *CocoaF* ou *MilkF*, dont les flèches atteignent presque le bord du cercle. Cette longueur ne renseigne pas, à elle seule, sur la stabilité de l'attribut entre panels ; cette question relève du graphique **Variability of the Sensory Attributes**.
 
@@ -276,16 +285,16 @@ Les objets produits permettent notamment de retrouver les valeurs propres, les t
 
 ## Conseils pratiques
 
--   Commencez toujours avec X-axis = 1 et Y-axis = 2.
--   Laissez **Scale to unit variance** coché dans la plupart des cas.
--   Utilisez **Center by subject** presque systématiquement.
--   N'activez **Scale by subject** que si vous avez une bonne raison de penser que les sujets utilisent l'échelle avec des amplitudes très différentes.
--   Commencez avec 300 panels simulés ; augmentez à 500 ou plus pour une version finale plus stable.
--   Réglez **Descriptor selection threshold (%)** entre 5 % et 20 % selon que vous cherchez une carte épurée ou plus exhaustive.
--   N'interprétez jamais la carte des stimuli sans regarder la carte des attributs.
--   Ne concluez pas à une différence sur la seule base du chevauchement ou de la séparation des ellipses.
--   Consultez **Hotelling Test** pour compléter la lecture visuelle lorsque le chevauchement est ambigu.
--   Si les deux premières dimensions résument peu de variance, explorez d'autres plans factoriels.
+- Commencez toujours avec X-axis = 1 et Y-axis = 2.
+- Laissez **Scale to unit variance** coché dans la plupart des cas.
+- Utilisez **Center by subject** presque systématiquement.
+- N'activez **Scale by subject** que si vous avez une bonne raison de penser que les sujets utilisent l'échelle avec des amplitudes très différentes.
+- Commencez avec 300 panels simulés ; augmentez à 500 ou plus pour une version finale plus stable.
+- Réglez **Descriptor selection threshold (%)** entre 5 % et 20 % selon que vous cherchez une carte épurée ou plus exhaustive.
+- N'interprétez jamais la carte des stimuli sans regarder la carte des attributs.
+- Ne concluez pas à une différence sur la seule base du chevauchement ou de la séparation des ellipses.
+- Consultez **Hotelling Test** pour compléter la lecture visuelle lorsque le chevauchement est ambigu.
+- Si les deux premières dimensions résument peu de variance, explorez d'autres plans factoriels.
 
 ## En résumé
 

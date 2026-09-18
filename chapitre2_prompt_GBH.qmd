@@ -18,8 +18,8 @@ Before constructing the map, the function identifies the attributes that discrim
 
 A simple way to understand the next step is to say that the analysis reconstructs **mean sensory profiles by stimulus**, while taking differences between subjects into account. Two options are involved here:
 
--   **Center by subject** corrects differences in average level between subjects;
--   **Scale by subject** corrects differences in the amplitude with which subjects use the scale.
+- **Center by subject** corrects differences in average level between subjects;
+- **Scale by subject** corrects differences in the amplitude with which subjects use the scale.
 
 The objective is to prevent a very generous, very severe, or very “spread-out” subject from artificially distorting the map of the stimuli.
 
@@ -49,17 +49,17 @@ Finally, the function provides an automatic description of the axes, filtered ac
 
 The data must contain:
 
--   one column identifying the **stimuli**;
--   one column identifying the **subjects**;
--   at least two numeric columns corresponding to the **sensory attributes**.
+- one column identifying the **stimuli**;
+- one column identifying the **subjects**;
+- at least two numeric columns corresponding to the **sensory attributes**.
 
 Each row corresponds to the evaluation of one stimulus by one subject. If a subject evaluates the same stimulus several times (repetitions or sessions), each evaluation must appear on a separate row.
 
 Before running the analysis in jamovi, check in the **Data** tab that:
 
--   the variable intended for **Stimulus Effect** is categorical;
--   the variable intended for **Subject Effect** is categorical;
--   all variables intended for **Sensory Attributes** are numeric.
+- the variable intended for **Stimulus Effect** is categorical;
+- the variable intended for **Subject Effect** is categorical;
+- all variables intended for **Sensory Attributes** are numeric.
 
 ## Interface guide
 
@@ -185,9 +185,9 @@ This map shows the relative positions of the stimuli without emphasizing the ell
 
 This map shows the sensory attributes in the factor space. It is read using three simple cues:
 
--   **direction**: toward which stimuli the attribute “pulls” the structure;
--   **length**: the longer an attribute is, the better it is represented on the plane;
--   **the angle between two attributes**: small angle = positive correlation; angle close to 180° = opposition; angle close to 90° = near-independence.
+- **direction**: toward which stimuli the attribute “pulls” the structure;
+- **length**: the longer an attribute is, the better it is represented on the plane;
+- **the angle between two attributes**: small angle = positive correlation; angle close to 180° = opposition; angle close to 90° = near-independence.
 
 This is the map that gives sensory meaning to the axes.
 
@@ -227,9 +227,9 @@ To reproduce this example, use the following values.
 | **Scale to unit variance**             | Checked                |
 | **Descriptor selection threshold (%)** | 20                     |
 | **X-axis / Y-axis**                    | 1 / 2                  |
-| **Subjects per virtual panel**                 | 20                     |
-| **Number of virtual panels**                   | 300                    |
-| **Ellipse alpha (%)**                      | 5                      |
+| **Subjects per virtual panel**         | 20                     |
+| **Number of virtual panels**           | 300                    |
+| **Ellipse alpha (%)**                  | 5                      |
 | **Center by subject**                  | Checked                |
 | *Scale by subject*                     | Unchecked              |
 | **Significance threshold (%)**         | 5                      |
@@ -237,9 +237,15 @@ To reproduce this example, use the following values.
 
 > **Reproducibility note:** the numerical results and resampling-based plots discussed below were generated with the default value **Subjects per virtual panel = 20**. Use 20 to reproduce this chapter exactly. Because the actual panel contains 29 subjects, **29** is a natural choice for a new final analysis; changing this value changes the resampling-based outputs.
 
+@fig-qda-multi-interface summarises the configuration used for this example.
+
+![Configuration of the multivariate QDA analysis for the *sensochoc* dataset.](images/qda-multi/qda-multi-interface.png){#fig-qda-multi-interface width=62% fig-align="center"}
+
 ### Analysis of the *Representation of the Stimuli with Confidence Ellipses* graph
 
-The map shows the 6 chocolates in the Dim. 1 / Dim. 2 plane. The first dimension alone accounts for 88.79% of the total variance — this 2D plane is therefore a very faithful representation of the data. The second dimension explains an additional 7.58%.
+![Stimuli represented in the factorial plane with ellipses obtained by panel resampling.](images/qda-multi/qda-multi-stimuli-ellipses.png){#fig-qda-multi-ellipses width=100% fig-align="center"}
+
+@fig-qda-multi-ellipses shows the 6 chocolates in the Dim. 1 / Dim. 2 plane. The first dimension alone accounts for 88.79% of the total variance — this 2D plane is therefore a very faithful representation of the data. The second dimension explains an additional 7.58%.
 
 On the horizontal axis (Dim. 1), **choc1** and **choc3** occupy the two opposite extremes: **choc1** on the left (bitter, cocoa side), **choc3** on the right (milky, sweet side). These are the two chocolates whose profiles are most clearly opposed, which is consistent with the results of the previous chapter. **choc2**, **choc5**, and **choc6** are grouped in the centre, close to the origin. **choc4** is located slightly above the horizontal axis, between choc1 and the central group.
 
@@ -247,11 +253,15 @@ The ellipses provide information about the robustness of these positions. The el
 
 ### Analysis of the *Hotelling Test* table
 
-The *p-value* table quantitatively complements the ellipse reading on the Dim. 1 / Dim. 2 plane. The pairs **choc2 / choc5** (p = 0.76) and **choc5 / choc6** (p = 0.16) have high p-values: no separation is established between these chocolates on this plane. The pair **choc2 / choc6** is more borderline (p = 0.04). Conversely, all comparisons involving **choc1** or **choc3** give p-values of 0.00 in the results of this example. These pairwise comparisons are exploratory and are not adjusted for multiplicity.
+![Hotelling test: p-values for pairwise comparisons between stimuli on the Dim. 1 / Dim. 2 plane.](images/qda-multi/qda-multi-hotelling.png){#fig-qda-multi-hotelling width=65% fig-align="center"}
+
+@fig-qda-multi-hotelling presents the *p-values* that quantitatively complement the ellipse reading on the Dim. 1 / Dim. 2 plane. The pairs **choc2 / choc5** (p = 0.76) and **choc5 / choc6** (p = 0.16) have high p-values: no separation is established between these chocolates on this plane. The pair **choc2 / choc6** is more borderline (p = 0.04). Conversely, all comparisons involving **choc1** or **choc3** give p-values of 0.00 in the results of this example. These pairwise comparisons are exploratory and are not adjusted for multiplicity.
 
 ### Analysis of the *Representation of the Sensory Attributes* graph
 
-The 14 attributes are distributed very clearly around the horizontal axis. On the right are grouped *MilkF*, *Sweetness*, *Caramel*, *Vanilla*, *MilkA*, and *Melting* — this is the profile of **choc3.** On the left are grouped *CocoaF*, *CocoaA*, *Bitterness*, *Astringency*, *Acidity*, *Crunchy*, and *Granular* — this is the profile of **choc1**. The horizontal axis therefore clearly corresponds to an opposition between **sweet milk chocolate / bitter dark chocolate**.
+![Sensory attributes represented in the Dim. 1 / Dim. 2 factorial plane.](images/qda-multi/qda-multi-sensory-attributes.png){#fig-qda-multi-attributes width=78% fig-align="center"}
+
+@fig-qda-multi-attributes shows the 14 attributes distributed around the horizontal axis. On the right are grouped *MilkF*, *Sweetness*, *Caramel*, *Vanilla*, *MilkA*, and *Melting* — this is the profile of **choc3.** On the left are grouped *CocoaF*, *CocoaA*, *Bitterness*, *Astringency*, *Acidity*, *Crunchy*, and *Granular* — this is the profile of **choc1**. The horizontal axis therefore clearly corresponds to an opposition between **sweet milk chocolate / bitter dark chocolate**.
 
 The length of the arrows also indicates the quality of representation of each attribute on this plane. *Crunchy* has a shorter arrow pointing downward, indicating that it is less well represented on this plane than *CocoaF* or *MilkF*, whose arrows almost reach the edge of the circle. Arrow length does not, by itself, measure stability across panels; that question is addressed by the **Variability of the Sensory Attributes** plot.
 
@@ -275,16 +285,16 @@ The resulting objects provide access, among other things, to eigenvalues, Hotell
 
 ## Practical tips
 
--   Always start with X-axis = 1 and Y-axis = 2.
--   Leave **Scale to unit variance** checked in most cases.
--   Use **Center by subject** almost systematically.
--   Activate **Scale by subject** only if you have a good reason to think that subjects use the scale with very different amplitudes.
--   Start with 300 simulated panels; increase to 500 or more for a more stable final version.
--   Set **Descriptor selection threshold (%)** between 5% and 20% depending on whether you want a streamlined or more exhaustive map.
--   Never interpret the stimulus map without looking at the attribute map.
--   Do not conclude that there is a difference from ellipse overlap or separation alone.
--   Consult **Hotelling Test** to complement the visual reading when the overlap is ambiguous.
--   If the first two dimensions summarise little variance, explore other factor planes.
+- Always start with X-axis = 1 and Y-axis = 2.
+- Leave **Scale to unit variance** checked in most cases.
+- Use **Center by subject** almost systematically.
+- Activate **Scale by subject** only if you have a good reason to think that subjects use the scale with very different amplitudes.
+- Start with 300 simulated panels; increase to 500 or more for a more stable final version.
+- Set **Descriptor selection threshold (%)** between 5% and 20% depending on whether you want a streamlined or more exhaustive map.
+- Never interpret the stimulus map without looking at the attribute map.
+- Do not conclude that there is a difference from ellipse overlap or separation alone.
+- Consult **Hotelling Test** to complement the visual reading when the overlap is ambiguous.
+- If the first two dimensions summarise little variance, explore other factor planes.
 
 ## In summary
 
