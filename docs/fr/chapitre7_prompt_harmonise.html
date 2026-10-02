@@ -613,6 +613,17 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+<p><a href="#fig-prefmap-meda-pca" class="quarto-xref">Figure&nbsp;<span>8.1</span></a> présente la configuration de l’ACP utilisée pour construire l’espace sensoriel.</p>
+<div id="fig-prefmap-meda-pca" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prefmap-meda-pca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/prefmap/prefmap-meda-pca.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:62.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prefmap-meda-pca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.1: Configuration de l’ACP dans MEDA utilisée pour construire l’espace sensoriel et sauvegarder les deux premières dimensions.
+</figcaption>
+</figure>
+</div>
 <p>L’ACP produit un espace en deux dimensions : <strong>Dim. 1 explique 53.25 %</strong> de la variance et <strong>Dim. 2 en explique 24.13 %</strong>, soit <strong>77.37 % cumulés</strong>. Le plan 1/2 résume donc bien les profils sensoriels des cocktails.</p>
 <p>La description automatique des dimensions confirme l’interprétation des axes :</p>
 <ul>
@@ -625,9 +636,31 @@ ul.task-list li input[type="checkbox"] {
 <h3 data-number="8.7.3" class="anchored" data-anchor-id="étape-2-construire-la-carte-de-préférence-dans-seda"><span class="header-section-number">8.7.3</span> Étape 2 — Construire la carte de préférence dans SEDA</h3>
 <p>Revenez dans <strong>SEDA &gt; Hedonic Data &gt; Preference Mapping</strong> et utilisez les coordonnées sauvegardées comme <strong>X-axis</strong> et <strong>Y-axis</strong>. Sélectionnez les colonnes hédoniques dans <strong>Liking Variables</strong>, gardez <strong>Regression model = Quadratic</strong> et <strong>Preference threshold (SD) = 0</strong>.</p>
 <p>Pour reproduire également la lecture par segments, activez <strong>Classification of consumers</strong>, laissez <strong>Number of clusters = -1</strong>, et gardez <strong>Cluster dendrogram</strong> et <strong>Preference maps by cluster</strong> cochés. La carte globale ne change pas lorsque la classification est activée ; celle-ci ajoute des résultats complémentaires sur l’hétérogénéité des consommateurs.</p>
+<p><a href="#fig-prefmap-interface" class="quarto-xref">Figure&nbsp;<span>8.2</span></a> présente la configuration de la cartographie des préférences dans SEDA.</p>
+<div id="fig-prefmap-interface" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prefmap-interface-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/prefmap/prefmap-interface.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:62.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prefmap-interface-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.2: Configuration de la cartographie des préférences dans SEDA pour le jeu de données <em>senso_hedo_cocktail</em>.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="analyse-du-graphique-overall-preference-map" class="level3" data-number="8.7.4">
 <h3 data-number="8.7.4" class="anchored" data-anchor-id="analyse-du-graphique-overall-preference-map"><span class="header-section-number">8.7.4</span> Analyse du graphique <em>Overall Preference Map</em></h3>
+<p><a href="#fig-prefmap-overall" class="quarto-xref">Figure&nbsp;<span>8.3</span></a> montre la carte globale des préférences.</p>
+<div id="fig-prefmap-overall" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prefmap-overall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/prefmap/prefmap-overall.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prefmap-overall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.3: Carte globale des préférences dans l’espace sensoriel des cocktails.
+</figcaption>
+</figure>
+</div>
 <p>La carte résultante superpose la surface de préférence à la position des 16 cocktails dans l’espace sensoriel. La zone rouge foncée — correspondant à plus de 80–90 % de consommateurs favorables — se situe <strong>à gauche du plan</strong>, dans la région des coordonnées négatives sur Dim. 1, là où se trouvent les cocktails <strong>182</strong>, <strong>444</strong>, <strong>343</strong> et <strong>447</strong>. Ces cocktails, caractérisés par des profils plus sucrés, épais et bananés, se situent dans une zone de forte préférence.</p>
 <p>À l’inverse, la zone bleue — correspondant à moins de 20 % de consommateurs favorables — se situe <strong>à droite du plan</strong>, là où se trouvent les cocktails <strong>194</strong>, <strong>233</strong> et <strong>245</strong>, caractérisés par des profils acides et intenses.</p>
 <p>Les cocktails <strong>131</strong> (en bas au centre) et <strong>386</strong> (en haut à droite) se situent dans des zones intermédiaires à faible préférence (bleu clair, 10–25 %).</p>
@@ -642,7 +675,40 @@ ul.task-list li input[type="checkbox"] {
 <p>Le produit <strong>182</strong> figure parmi les liking relatifs les plus élevés dans les deux clusters, tandis que <strong>447/472</strong> distinguent davantage le cluster 1 et <strong>343/312</strong> le cluster 2 parmi les cocktails observés. Cela donne une première lecture concrète de ce qui est partagé et de ce qui différencie les segments.</p>
 <p>Ces descriptions courtes reposent sur le <strong>profil moyen de liking centré au sein de chaque cluster</strong>. Elles indiquent quels produits testés caractérisent le mieux les préférences relatives d’un segment ; elles ne donnent pas, à elles seules, une signification sensorielle au segment.</p>
 <p>Utilisez <strong>Consumer Cluster Sizes</strong> pour apprécier le poids de chaque segment et <strong>Consumer Cluster Membership</strong> pour identifier les consommateurs qui le composent. Le <strong>Consumer Cluster Dendrogram</strong> montre la hiérarchie à l’origine de la partition.</p>
+<p><a href="#fig-prefmap-dendrogram" class="quarto-xref">Figure&nbsp;<span>8.4</span></a> montre la hiérarchie de la classification des consommateurs.</p>
+<div id="fig-prefmap-dendrogram" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prefmap-dendrogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/prefmap/prefmap-dendrogram.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prefmap-dendrogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.4: Dendrogramme de la classification des consommateurs selon leurs profils hédoniques centrés.
+</figcaption>
+</figure>
+</div>
 <p>Les <strong>Preference Maps by Consumer Cluster</strong> doivent ensuite être comparées dans le même espace sensoriel. Comme chaque carte utilise exactement les mêmes coordonnées produit, le même modèle de régression et le même seuil que la carte globale, leurs différences traduisent une hétérogénéité des structures de préférence prédites et non un changement de repère. Les clusters très petits doivent néanmoins être interprétés avec prudence.</p>
+<p><a href="#fig-prefmap-cluster1" class="quarto-xref">Figure&nbsp;<span>8.5</span></a> montre la carte des préférences du cluster 1.</p>
+<div id="fig-prefmap-cluster1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prefmap-cluster1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/prefmap/prefmap-cluster1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prefmap-cluster1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.5: Carte des préférences du cluster 1 de consommateurs.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-prefmap-cluster2" class="quarto-xref">Figure&nbsp;<span>8.6</span></a> montre la carte des préférences du cluster 2.</p>
+<div id="fig-prefmap-cluster2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prefmap-cluster2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/prefmap/prefmap-cluster2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prefmap-cluster2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.6: Carte des préférences du cluster 2 de consommateurs.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="interprétation-synthétique" class="level3" data-number="8.7.6">
 <h3 data-number="8.7.6" class="anchored" data-anchor-id="interprétation-synthétique"><span class="header-section-number">8.7.6</span> Interprétation synthétique</h3>
@@ -774,7 +840,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+  var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

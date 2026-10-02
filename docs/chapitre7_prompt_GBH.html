@@ -613,6 +613,17 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+<p><a href="#fig-prefmap-meda-pca" class="quarto-xref">Figure&nbsp;<span>8.1</span></a> shows the PCA configuration used to construct the sensory space.</p>
+<div id="fig-prefmap-meda-pca" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prefmap-meda-pca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/prefmap/prefmap-meda-pca.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:62.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prefmap-meda-pca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.1: PCA configuration in MEDA used to construct the sensory space and save the first two dimensions.
+</figcaption>
+</figure>
+</div>
 <p>The PCA produces a two-dimensional space: <strong>Dim. 1 explains 53.25%</strong> of the variance and <strong>Dim. 2 explains 24.13%</strong>, that is, <strong>77.37% cumulative</strong>. The 1/2 plane therefore summarises the sensory profiles of the cocktails well.</p>
 <p>The automatic description of the dimensions confirms the interpretation of the axes:</p>
 <ul>
@@ -625,9 +636,31 @@ ul.task-list li input[type="checkbox"] {
 <h3 data-number="8.7.3" class="anchored" data-anchor-id="step-2-construct-the-preference-map-in-seda"><span class="header-section-number">8.7.3</span> Step 2 — Construct the preference map in SEDA</h3>
 <p>Return to <strong>SEDA &gt; Hedonic Data &gt; Preference Mapping</strong> and use the saved coordinates as <strong>X-axis</strong> and <strong>Y-axis</strong>. Select the hedonic columns in <strong>Liking Variables</strong>, keep <strong>Regression model = Quadratic</strong>, and use <strong>Preference threshold (SD) = 0</strong>.</p>
 <p>To reproduce the segment-based reading as well, enable <strong>Classification of consumers</strong>, leave <strong>Number of clusters = -1</strong>, and keep <strong>Cluster dendrogram</strong> and <strong>Preference maps by cluster</strong> checked. Enabling classification does not change the overall map; it adds complementary results about consumer heterogeneity.</p>
+<p><a href="#fig-prefmap-interface" class="quarto-xref">Figure&nbsp;<span>8.2</span></a> shows the Preference Mapping configuration in SEDA.</p>
+<div id="fig-prefmap-interface" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prefmap-interface-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/prefmap/prefmap-interface.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:62.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prefmap-interface-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.2: Configuration of Preference Mapping in SEDA for the <em>senso_hedo_cocktail</em> dataset.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="analysis-of-the-overall-preference-map-graph" class="level3" data-number="8.7.4">
 <h3 data-number="8.7.4" class="anchored" data-anchor-id="analysis-of-the-overall-preference-map-graph"><span class="header-section-number">8.7.4</span> Analysis of the <em>Overall Preference Map</em> graph</h3>
+<p><a href="#fig-prefmap-overall" class="quarto-xref">Figure&nbsp;<span>8.3</span></a> shows the overall preference map.</p>
+<div id="fig-prefmap-overall" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prefmap-overall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/prefmap/prefmap-overall.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prefmap-overall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.3: Overall preference map in the sensory space of the cocktails.
+</figcaption>
+</figure>
+</div>
 <p>The resulting map superimposes the preference surface onto the position of the 16 cocktails in the sensory space. The dark red area — corresponding to more than 80–90% favourable consumers — is located <strong>on the left of the plane</strong>, in the region with negative coordinates on Dim. 1, where the cocktails <strong>182</strong>, <strong>444</strong>, <strong>343</strong>, and <strong>447</strong> are located. These cocktails, characterised by sweeter, thicker, banana-like profiles, lie in a high-preference region.</p>
 <p>Conversely, the blue area — corresponding to fewer than 20% favourable consumers — is located <strong>on the right of the plane</strong>, where the cocktails <strong>194</strong>, <strong>233</strong>, and <strong>245</strong> are located, characterised by acidic and intense profiles.</p>
 <p>The cocktails <strong>131</strong> (bottom centre) and <strong>386</strong> (upper right) are located in intermediate to low-preference areas (light blue, 10–25%).</p>
@@ -642,7 +675,40 @@ ul.task-list li input[type="checkbox"] {
 <p>Product <strong>182</strong> appears among the highest relative liking values in both clusters, whereas <strong>447/472</strong> distinguish Cluster 1 and <strong>343/312</strong> distinguish Cluster 2 among the observed cocktails. This gives a concrete first indication of both shared and segment-specific preference patterns.</p>
 <p>These short descriptions are based on the <strong>mean centred liking profile within each cluster</strong>. They identify which tested products most distinguish the relative preferences of a segment; they do not, by themselves, assign a sensory meaning to that segment.</p>
 <p>Use <strong>Consumer Cluster Sizes</strong> to assess the weight of each segment and <strong>Consumer Cluster Membership</strong> to identify the consumers composing it. The <strong>Consumer Cluster Dendrogram</strong> shows the hierarchy underlying the partition.</p>
+<p><a href="#fig-prefmap-dendrogram" class="quarto-xref">Figure&nbsp;<span>8.4</span></a> shows the hierarchy of the consumer classification.</p>
+<div id="fig-prefmap-dendrogram" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prefmap-dendrogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/prefmap/prefmap-dendrogram.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prefmap-dendrogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.4: Dendrogram of the consumer classification based on centred hedonic profiles.
+</figcaption>
+</figure>
+</div>
 <p>The <strong>Preference Maps by Consumer Cluster</strong> should then be compared in the common sensory space. Because every cluster map uses exactly the same product coordinates, regression model, and preference threshold as the overall map, differences between maps reflect heterogeneity in predicted preference patterns rather than a change of reference space. Very small clusters should nevertheless be interpreted cautiously.</p>
+<p><a href="#fig-prefmap-cluster1" class="quarto-xref">Figure&nbsp;<span>8.5</span></a> shows the preference map for consumer cluster 1.</p>
+<div id="fig-prefmap-cluster1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prefmap-cluster1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/prefmap/prefmap-cluster1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prefmap-cluster1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.5: Preference map for consumer cluster 1.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-prefmap-cluster2" class="quarto-xref">Figure&nbsp;<span>8.6</span></a> shows the preference map for consumer cluster 2.</p>
+<div id="fig-prefmap-cluster2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prefmap-cluster2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/prefmap/prefmap-cluster2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prefmap-cluster2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.6: Preference map for consumer cluster 2.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="synthetic-interpretation" class="level3" data-number="8.7.6">
 <h3 data-number="8.7.6" class="anchored" data-anchor-id="synthetic-interpretation"><span class="header-section-number">8.7.6</span> Synthetic interpretation</h3>

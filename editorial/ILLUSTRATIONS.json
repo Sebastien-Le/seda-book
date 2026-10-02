@@ -485,6 +485,143 @@
           ]
         }
       }
+    },
+    "prefmap": {
+      "label": "Preference Mapping — sensory space, overall map, and consumer clusters",
+      "languages": {
+        "fr": {
+          "source": "chapitre7_prompt_harmonise.qmd",
+          "rendered_html": "chapitre7_prompt_harmonise.html",
+          "figures": [
+            {
+              "id": "fig-prefmap-meda-pca",
+              "image": "images/prefmap/prefmap-meda-pca.png",
+              "caption": "Configuration de l’ACP dans MEDA utilisée pour construire l’espace sensoriel et sauvegarder les deux premières dimensions.",
+              "width": "62%",
+              "anchor_line": "L'ACP produit un espace en deux dimensions : **Dim. 1 explique 53.25 %** de la variance et **Dim. 2 en explique 24.13 %**, soit **77.37 % cumulés**. Le plan 1/2 résume donc bien les profils sensoriels des cocktails.",
+              "position": "before",
+              "reference": "@fig-prefmap-meda-pca présente la configuration de l’ACP utilisée pour construire l’espace sensoriel.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-prefmap-interface",
+              "image": "images/prefmap/prefmap-interface.png",
+              "caption": "Configuration de la cartographie des préférences dans SEDA pour le jeu de données *senso_hedo_cocktail*.",
+              "width": "62%",
+              "anchor_line": "Pour reproduire également la lecture par segments, activez **Classification of consumers**, laissez **Number of clusters = -1**, et gardez **Cluster dendrogram** et **Preference maps by cluster** cochés. La carte globale ne change pas lorsque la classification est activée ; celle-ci ajoute des résultats complémentaires sur l'hétérogénéité des consommateurs.",
+              "position": "after",
+              "reference": "@fig-prefmap-interface présente la configuration de la cartographie des préférences dans SEDA.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-prefmap-overall",
+              "image": "images/prefmap/prefmap-overall.png",
+              "caption": "Carte globale des préférences dans l’espace sensoriel des cocktails.",
+              "width": "100%",
+              "anchor_line": "### Analyse du graphique *Overall Preference Map*",
+              "position": "after",
+              "reference": "@fig-prefmap-overall montre la carte globale des préférences.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-prefmap-dendrogram",
+              "image": "images/prefmap/prefmap-dendrogram.png",
+              "caption": "Dendrogramme de la classification des consommateurs selon leurs profils hédoniques centrés.",
+              "width": "95%",
+              "anchor_line": "Utilisez **Consumer Cluster Sizes** pour apprécier le poids de chaque segment et **Consumer Cluster Membership** pour identifier les consommateurs qui le composent. Le **Consumer Cluster Dendrogram** montre la hiérarchie à l'origine de la partition.",
+              "position": "after",
+              "reference": "@fig-prefmap-dendrogram montre la hiérarchie de la classification des consommateurs.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-prefmap-cluster1",
+              "image": "images/prefmap/prefmap-cluster1.png",
+              "caption": "Carte des préférences du cluster 1 de consommateurs.",
+              "width": "100%",
+              "anchor_line": "Les **Preference Maps by Consumer Cluster** doivent ensuite être comparées dans le même espace sensoriel. Comme chaque carte utilise exactement les mêmes coordonnées produit, le même modèle de régression et le même seuil que la carte globale, leurs différences traduisent une hétérogénéité des structures de préférence prédites et non un changement de repère. Les clusters très petits doivent néanmoins être interprétés avec prudence.",
+              "position": "after",
+              "reference": "@fig-prefmap-cluster1 montre la carte des préférences du cluster 1.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-prefmap-cluster2",
+              "image": "images/prefmap/prefmap-cluster2.png",
+              "caption": "Carte des préférences du cluster 2 de consommateurs.",
+              "width": "100%",
+              "anchor_line": "![Carte des préférences du cluster 1 de consommateurs.](images/prefmap/prefmap-cluster1.png){#fig-prefmap-cluster1 width=100% fig-align=\"center\"}",
+              "position": "after",
+              "reference": "@fig-prefmap-cluster2 montre la carte des préférences du cluster 2.",
+              "reference_position": "before"
+            }
+          ]
+        },
+        "en": {
+          "source": "chapitre7_prompt_GBH.qmd",
+          "rendered_html": "chapitre7_prompt_GBH.html",
+          "figures": [
+            {
+              "id": "fig-prefmap-meda-pca",
+              "image": "images/prefmap/prefmap-meda-pca.png",
+              "caption": "PCA configuration in MEDA used to construct the sensory space and save the first two dimensions.",
+              "width": "62%",
+              "anchor_line": "The PCA produces a two-dimensional space: **Dim. 1 explains 53.25%** of the variance and **Dim. 2 explains 24.13%**, that is, **77.37% cumulative**. The 1/2 plane therefore summarises the sensory profiles of the cocktails well.",
+              "position": "before",
+              "reference": "@fig-prefmap-meda-pca shows the PCA configuration used to construct the sensory space.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-prefmap-interface",
+              "image": "images/prefmap/prefmap-interface.png",
+              "caption": "Configuration of Preference Mapping in SEDA for the *senso_hedo_cocktail* dataset.",
+              "width": "62%",
+              "anchor_line": "To reproduce the segment-based reading as well, enable **Classification of consumers**, leave **Number of clusters = -1**, and keep **Cluster dendrogram** and **Preference maps by cluster** checked. Enabling classification does not change the overall map; it adds complementary results about consumer heterogeneity.",
+              "position": "after",
+              "reference": "@fig-prefmap-interface shows the Preference Mapping configuration in SEDA.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-prefmap-overall",
+              "image": "images/prefmap/prefmap-overall.png",
+              "caption": "Overall preference map in the sensory space of the cocktails.",
+              "width": "100%",
+              "anchor_line": "### Analysis of the *Overall Preference Map* graph",
+              "position": "after",
+              "reference": "@fig-prefmap-overall shows the overall preference map.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-prefmap-dendrogram",
+              "image": "images/prefmap/prefmap-dendrogram.png",
+              "caption": "Dendrogram of the consumer classification based on centred hedonic profiles.",
+              "width": "95%",
+              "anchor_line": "Use **Consumer Cluster Sizes** to assess the weight of each segment and **Consumer Cluster Membership** to identify the consumers composing it. The **Consumer Cluster Dendrogram** shows the hierarchy underlying the partition.",
+              "position": "after",
+              "reference": "@fig-prefmap-dendrogram shows the hierarchy of the consumer classification.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-prefmap-cluster1",
+              "image": "images/prefmap/prefmap-cluster1.png",
+              "caption": "Preference map for consumer cluster 1.",
+              "width": "100%",
+              "anchor_line": "The **Preference Maps by Consumer Cluster** should then be compared in the common sensory space. Because every cluster map uses exactly the same product coordinates, regression model, and preference threshold as the overall map, differences between maps reflect heterogeneity in predicted preference patterns rather than a change of reference space. Very small clusters should nevertheless be interpreted cautiously.",
+              "position": "after",
+              "reference": "@fig-prefmap-cluster1 shows the preference map for consumer cluster 1.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-prefmap-cluster2",
+              "image": "images/prefmap/prefmap-cluster2.png",
+              "caption": "Preference map for consumer cluster 2.",
+              "width": "100%",
+              "anchor_line": "![Preference map for consumer cluster 1.](images/prefmap/prefmap-cluster1.png){#fig-prefmap-cluster1 width=100% fig-align=\"center\"}",
+              "position": "after",
+              "reference": "@fig-prefmap-cluster2 shows the preference map for consumer cluster 2.",
+              "reference_position": "before"
+            }
+          ]
+        }
+      }
     }
   }
 }

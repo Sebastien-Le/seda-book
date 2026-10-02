@@ -243,6 +243,10 @@ Dans le module **MEDA**, lancez une ACP sur les 13 attributs sensoriels avec les
 | **Number of components (Save)** | 2                           |
 | **Coordinates (Save)**          | Coché                      |
 
+@fig-prefmap-meda-pca présente la configuration de l’ACP utilisée pour construire l’espace sensoriel.
+
+![Configuration de l’ACP dans MEDA utilisée pour construire l’espace sensoriel et sauvegarder les deux premières dimensions.](images/prefmap/prefmap-meda-pca.png){#fig-prefmap-meda-pca width=62% fig-align="center"}
+
 L'ACP produit un espace en deux dimensions : **Dim. 1 explique 53.25 %** de la variance et **Dim. 2 en explique 24.13 %**, soit **77.37 % cumulés**. Le plan 1/2 résume donc bien les profils sensoriels des cocktails.
 
 La description automatique des dimensions confirme l'interprétation des axes :
@@ -258,7 +262,15 @@ Revenez dans **SEDA \> Hedonic Data \> Preference Mapping** et utilisez les coor
 
 Pour reproduire également la lecture par segments, activez **Classification of consumers**, laissez **Number of clusters = -1**, et gardez **Cluster dendrogram** et **Preference maps by cluster** cochés. La carte globale ne change pas lorsque la classification est activée ; celle-ci ajoute des résultats complémentaires sur l'hétérogénéité des consommateurs.
 
+@fig-prefmap-interface présente la configuration de la cartographie des préférences dans SEDA.
+
+![Configuration de la cartographie des préférences dans SEDA pour le jeu de données *senso_hedo_cocktail*.](images/prefmap/prefmap-interface.png){#fig-prefmap-interface width=62% fig-align="center"}
+
 ### Analyse du graphique *Overall Preference Map*
+
+@fig-prefmap-overall montre la carte globale des préférences.
+
+![Carte globale des préférences dans l’espace sensoriel des cocktails.](images/prefmap/prefmap-overall.png){#fig-prefmap-overall width=100% fig-align="center"}
 
 La carte résultante superpose la surface de préférence à la position des 16 cocktails dans l'espace sensoriel. La zone rouge foncée — correspondant à plus de 80–90 % de consommateurs favorables — se situe **à gauche du plan**, dans la région des coordonnées négatives sur Dim. 1, là où se trouvent les cocktails **182**, **444**, **343** et **447**. Ces cocktails, caractérisés par des profils plus sucrés, épais et bananés, se situent dans une zone de forte préférence.
 
@@ -279,7 +291,19 @@ Ces descriptions courtes reposent sur le **profil moyen de liking centré au sei
 
 Utilisez **Consumer Cluster Sizes** pour apprécier le poids de chaque segment et **Consumer Cluster Membership** pour identifier les consommateurs qui le composent. Le **Consumer Cluster Dendrogram** montre la hiérarchie à l'origine de la partition.
 
+@fig-prefmap-dendrogram montre la hiérarchie de la classification des consommateurs.
+
+![Dendrogramme de la classification des consommateurs selon leurs profils hédoniques centrés.](images/prefmap/prefmap-dendrogram.png){#fig-prefmap-dendrogram width=95% fig-align="center"}
+
 Les **Preference Maps by Consumer Cluster** doivent ensuite être comparées dans le même espace sensoriel. Comme chaque carte utilise exactement les mêmes coordonnées produit, le même modèle de régression et le même seuil que la carte globale, leurs différences traduisent une hétérogénéité des structures de préférence prédites et non un changement de repère. Les clusters très petits doivent néanmoins être interprétés avec prudence.
+
+@fig-prefmap-cluster1 montre la carte des préférences du cluster 1.
+
+![Carte des préférences du cluster 1 de consommateurs.](images/prefmap/prefmap-cluster1.png){#fig-prefmap-cluster1 width=100% fig-align="center"}
+
+@fig-prefmap-cluster2 montre la carte des préférences du cluster 2.
+
+![Carte des préférences du cluster 2 de consommateurs.](images/prefmap/prefmap-cluster2.png){#fig-prefmap-cluster2 width=100% fig-align="center"}
 
 ### Interprétation synthétique
 
