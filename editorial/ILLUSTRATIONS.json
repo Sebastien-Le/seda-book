@@ -388,6 +388,103 @@
           ]
         }
       }
+    },
+    "sorting": {
+      "label": "Sorting — multiple correspondence analysis and clustering",
+      "languages": {
+        "fr": {
+          "source": "chapitre6_prompt_harmonise.qmd",
+          "rendered_html": "chapitre6_prompt_harmonise.html",
+          "figures": [
+            {
+              "id": "fig-sorting-interface",
+              "image": "images/sorting/sorting-interface.png",
+              "caption": "Configuration de l’analyse de tri libre dans jamovi pour le jeu de données *perfumes_sorting*.",
+              "width": "62%",
+              "anchor_line": "> **Remarque de reproductibilité :** avec **Ventilation level (%) = 5**, les catégories rares peuvent être ventilées par réaffectation aléatoire avant l'ACM. De petites différences numériques peuvent donc apparaître d'une exécution à l'autre. Utilisez **Ventilation level (%) = 0** uniquement si une reproductibilité exacte de la solution factorielle entre exécutions est nécessaire, en gardant à l'esprit que cela modifie l'analyse.",
+              "position": "before",
+              "reference": "@fig-sorting-interface présente la configuration utilisée pour l’exemple de tri libre.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-sorting-stimuli",
+              "image": "images/sorting/sorting-stimuli.png",
+              "caption": "Représentation des stimuli dans le plan factoriel de l’ACM.",
+              "width": "100%",
+              "anchor_line": "### Analyse du graphique *Representation of the Stimuli*",
+              "position": "after",
+              "reference": "@fig-sorting-stimuli montre la représentation des stimuli dans le plan factoriel de l’ACM.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-sorting-categories",
+              "image": "images/sorting/sorting-categories.png",
+              "caption": "Représentation des catégories de tri dans le plan factoriel.",
+              "width": "100%",
+              "anchor_line": "### Representation of the Sorting Categories — carte des catégories",
+              "position": "after",
+              "reference": "@fig-sorting-categories montre la représentation des catégories de tri dans le plan factoriel.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-sorting-clusters",
+              "image": "images/sorting/sorting-clusters.png",
+              "caption": "Représentation des stimuli selon les clusters issus de la classification HCPC.",
+              "width": "100%",
+              "anchor_line": "### Analyse du graphique *Representation of the Stimuli According to Clusters*",
+              "position": "after",
+              "reference": "@fig-sorting-clusters montre la représentation des stimuli selon les clusters.",
+              "reference_position": "before"
+            }
+          ]
+        },
+        "en": {
+          "source": "chapitre6_prompt_GBH.qmd",
+          "rendered_html": "chapitre6_prompt_GBH.html",
+          "figures": [
+            {
+              "id": "fig-sorting-interface",
+              "image": "images/sorting/sorting-interface.png",
+              "caption": "Configuration of the sorting analysis in jamovi for the *perfumes_sorting* dataset.",
+              "width": "62%",
+              "anchor_line": "> **Reproducibility note:** with **Ventilation level (%) = 5**, rare categories may be ventilated by random reassignment before the MCA. Small numerical differences can therefore occur between runs. Use **Ventilation level (%) = 0** only if exact run-to-run reproducibility of the factor solution is required, bearing in mind that this changes the analysis.",
+              "position": "before",
+              "reference": "@fig-sorting-interface shows the configuration used for the free-sorting example.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-sorting-stimuli",
+              "image": "images/sorting/sorting-stimuli.png",
+              "caption": "Representation of the stimuli in the MCA factorial plane.",
+              "width": "100%",
+              "anchor_line": "### Analysis of the *Representation of the Stimuli* graph",
+              "position": "after",
+              "reference": "@fig-sorting-stimuli shows the representation of the stimuli in the MCA factorial plane.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-sorting-categories",
+              "image": "images/sorting/sorting-categories.png",
+              "caption": "Representation of the sorting categories in the factorial plane.",
+              "width": "100%",
+              "anchor_line": "### Representation of the Sorting Categories — category map",
+              "position": "after",
+              "reference": "@fig-sorting-categories shows the representation of the sorting categories in the factorial plane.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-sorting-clusters",
+              "image": "images/sorting/sorting-clusters.png",
+              "caption": "Representation of the stimuli according to the clusters obtained from HCPC.",
+              "width": "100%",
+              "anchor_line": "### Analysis of the *Representation of the Stimuli According to Clusters* graph",
+              "position": "after",
+              "reference": "@fig-sorting-clusters shows the representation of the stimuli according to the clusters.",
+              "reference_position": "before"
+            }
+          ]
+        }
+      }
     }
   }
 }

@@ -195,6 +195,10 @@ The percentage displayed on each axis indicates the share of MCA inertia explain
 
 ### Representation of the Sorting Categories — category map
 
+@fig-sorting-categories shows the representation of the sorting categories in the factorial plane.
+
+![Representation of the sorting categories in the factorial plane.](images/sorting/sorting-categories.png){#fig-sorting-categories width=100% fig-align="center"}
+
 This map represents the categories specific to each subject. Their direction from the origin helps characterise the sides of the axes; the direct distance between a category and a stimulus should not be interpreted as an ordinary measure of similarity. The **Active categories**, **Supplementary categories**, and **Selection of categories** options control what is displayed.
 
 > **Point of vigilance:** with many subjects, this map can become very crowded. The default value **cos2 10** helps keep only a more readable subset of categories.
@@ -254,6 +258,10 @@ To reproduce this example, use the following values.
 | **Representation of the clusters** | checked to visualise the classification |
 | **Number of clusters** | -1 |
 
+@fig-sorting-interface shows the configuration used for the free-sorting example.
+
+![Configuration of the sorting analysis in jamovi for the *perfumes_sorting* dataset.](images/sorting/sorting-interface.png){#fig-sorting-interface width=62% fig-align="center"}
+
 > **Reproducibility note:** with **Ventilation level (%) = 5**, rare categories may be ventilated by random reassignment before the MCA. Small numerical differences can therefore occur between runs. Use **Ventilation level (%) = 0** only if exact run-to-run reproducibility of the factor solution is required, bearing in mind that this changes the analysis.
 
 ### Analysis of the *Description of the Stimuli* table
@@ -274,6 +282,10 @@ The table shows that several perfumes have very marked lexical profiles. A few p
 
 ### Analysis of the *Representation of the Stimuli* graph
 
+@fig-sorting-stimuli shows the representation of the stimuli in the MCA factorial plane.
+
+![Representation of the stimuli in the MCA factorial plane.](images/sorting/sorting-stimuli.png){#fig-sorting-stimuli width=100% fig-align="center"}
+
 The map reveals a readable perceptual structure on the Dim. 1 (15.53%) / Dim. 2 (14.14%) plane. On the right side of the plane, *Shalimar*, *Aromatics Elixir*, and *Chanel N5* form a group — confirming their strong, spicy, and low-floral profile. On the lower left, *J'adore ET*, *J'adore EP*, and *Pleasures* group together around a floral and fresh profile. At the top, *Angel* and *Lolita Lempicka* occupy a clearly distinct position on the second dimension — a vanilla and sweet profile. *Cinéma*, *L'instant*, and *Coco Mademoiselle* form an intermediate central-left area, with profiles that are more difficult to name without the textual description.
 
 ### Analysis of the *Eigenvalue Decomposition* table
@@ -287,6 +299,10 @@ On **Dim. 1**, the categories most strongly associated with the positive side (r
 On **Dim. 2**, the positive side is dominated by *vanilla;spicy;hot* (S16, 1.51), *woman;mature* (S7, 1.55), *sweet;too;strong* (S11, 1.43), *teenage;likeable* (S51, 1.54), and *vanilla;sweet* (S34, 1.05). The negative side includes *soap* (S12, -1.03) and *fresh* (S10, -0.50). Dim. 2 therefore opposes **vanilla, sweet, enveloping** perfumes to **fresher or soapy** profiles.
 
 ### Analysis of the *Representation of the Stimuli According to Clusters* graph
+
+@fig-sorting-clusters shows the representation of the stimuli according to the clusters.
+
+![Representation of the stimuli according to the clusters obtained from HCPC.](images/sorting/sorting-clusters.png){#fig-sorting-clusters width=100% fig-align="center"}
 
 With **Number of components = 5**, HCPC works on the first five MCA dimensions, which together account for **59.59%** of the inertia. The classification map therefore displays **26.06%** on Dim. 1 and **23.73%** on Dim. 2 instead of **15.53%** and **14.14%** on the MCA map: the percentages are renormalized within the five-dimensional space actually used for clustering.
 

@@ -196,6 +196,10 @@ Le pourcentage affiché sur chaque axe indique la part d'inertie de l'ACM expliq
 
 ### Representation of the Sorting Categories — carte des catégories
 
+@fig-sorting-categories montre la représentation des catégories de tri dans le plan factoriel.
+
+![Représentation des catégories de tri dans le plan factoriel.](images/sorting/sorting-categories.png){#fig-sorting-categories width=100% fig-align="center"}
+
 Cette carte représente les catégories propres à chaque sujet. Leur direction par rapport à l'origine aide à caractériser les côtés des axes ; la distance directe entre une catégorie et un stimulus ne doit pas être interprétée comme une mesure ordinaire de similarité. Les options **Active categories**, **Supplementary categories** et **Selection of categories** contrôlent ce qui est affiché.
 
 > **Point de vigilance :** avec de nombreux sujets, cette carte peut devenir très chargée. La valeur par défaut **cos2 10** aide justement à ne conserver qu'un sous-ensemble plus lisible des catégories.
@@ -255,6 +259,10 @@ Pour reproduire cet exemple, voici les valeurs à utiliser.
 | **Representation of the clusters** | coché pour visualiser la classification |
 | **Number of clusters**             | -1                                    |
 
+@fig-sorting-interface présente la configuration utilisée pour l’exemple de tri libre.
+
+![Configuration de l’analyse de tri libre dans jamovi pour le jeu de données *perfumes_sorting*.](images/sorting/sorting-interface.png){#fig-sorting-interface width=62% fig-align="center"}
+
 > **Remarque de reproductibilité :** avec **Ventilation level (%) = 5**, les catégories rares peuvent être ventilées par réaffectation aléatoire avant l'ACM. De petites différences numériques peuvent donc apparaître d'une exécution à l'autre. Utilisez **Ventilation level (%) = 0** uniquement si une reproductibilité exacte de la solution factorielle entre exécutions est nécessaire, en gardant à l'esprit que cela modifie l'analyse.
 
 ### Analyse du tableau *Description of the Stimuli*
@@ -275,6 +283,10 @@ La table montre que plusieurs parfums possèdent des profils lexicaux très marq
 
 ### Analyse du graphique *Representation of the Stimuli*
 
+@fig-sorting-stimuli montre la représentation des stimuli dans le plan factoriel de l’ACM.
+
+![Représentation des stimuli dans le plan factoriel de l’ACM.](images/sorting/sorting-stimuli.png){#fig-sorting-stimuli width=100% fig-align="center"}
+
 La carte fait apparaître une structure perceptive lisible sur le plan Dim. 1 (15.53 %) / Dim. 2 (14.14 %). À droite du plan, *Shalimar*, *Aromatics Elixir* et *Chanel N5* forment un groupe — confirmant leur profil fort, épicé et peu floral. À gauche et en bas, *J'adore ET*, *J'adore EP* et *Pleasures* se regroupent autour d'un profil floral et frais. En haut, *Angel* et *Lolita Lempicka* occupent une position nettement distincte sur la seconde dimension — profil vanillé et sucré. *Cinéma*, *L'instant* et *Coco Mademoiselle* forment une zone intermédiaire centrale-gauche, avec des profils plus difficiles à nommer sans la description textuelle.
 
 ### Analyse du tableau *Eigenvalue Decomposition*
@@ -288,6 +300,10 @@ Sur **Dim. 1**, les catégories les plus fortement associées au côté positif 
 Sur **Dim. 2**, le côté positif est dominé par *vanilla;spicy;hot* (S16, 1.51), *woman;mature* (S7, 1.55), *sweet;too;strong* (S11, 1.43), *teenage;likeable* (S51, 1.54) et *vanilla;sweet* (S34, 1.05). Le côté négatif inclut *soap* (S12, -1.03) et *fresh* (S10, -0.50). La Dim. 2 oppose donc des parfums **vanillés, sucrés, enveloppants** à des profils **plus frais ou savonneux**.
 
 ### Analyse du graphique *Representation of the Stimuli According to Clusters*
+
+@fig-sorting-clusters montre la représentation des stimuli selon les clusters.
+
+![Représentation des stimuli selon les clusters issus de la classification HCPC.](images/sorting/sorting-clusters.png){#fig-sorting-clusters width=100% fig-align="center"}
 
 Avec **Number of components = 5**, HCPC travaille sur les cinq premières dimensions de l'ACM, qui cumulent **59.59 %** de l'inertie. La carte de classification affiche donc **26.06 %** sur Dim. 1 et **23.73 %** sur Dim. 2, au lieu de **15.53 %** et **14.14 %** sur la carte ACM : les pourcentages sont renormalisés dans l'espace à cinq dimensions effectivement utilisé pour la classification.
 
