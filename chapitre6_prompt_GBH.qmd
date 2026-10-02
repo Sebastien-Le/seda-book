@@ -195,7 +195,7 @@ The percentage displayed on each axis indicates the share of MCA inertia explain
 
 ### Representation of the Sorting Categories — category map
 
-@fig-sorting-categories shows the representation of the sorting categories in the factorial plane.
+Figure @fig-sorting-categories, obtained from the *perfumes_sorting* dataset, shows the representation of the sorting categories in the factorial plane.
 
 ![Representation of the sorting categories in the factorial plane.](images/sorting/sorting-categories.png){#fig-sorting-categories width=100% fig-align="center"}
 

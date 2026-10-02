@@ -2,7 +2,7 @@ project:
   output-dir: _render/fr
 
 book:
-  title: "Apprends moi à faire seul : analyse de données sensorielles avec jamovi et le module SEDA"
+  title: "Apprends-moi à faire seul : analyse de données sensorielles avec jamovi et le module SEDA"
   date: "2026-08-31"
   navbar:
     right:

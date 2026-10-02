@@ -196,7 +196,7 @@ Le pourcentage affiché sur chaque axe indique la part d'inertie de l'ACM expliq
 
 ### Representation of the Sorting Categories — carte des catégories
 
-@fig-sorting-categories montre la représentation des catégories de tri dans le plan factoriel.
+La figure @fig-sorting-categories, obtenue avec le jeu de données *perfumes_sorting*, montre la représentation des catégories de tri dans le plan factoriel.
 
 ![Représentation des catégories de tri dans le plan factoriel.](images/sorting/sorting-categories.png){#fig-sorting-categories width=100% fig-align="center"}
 
