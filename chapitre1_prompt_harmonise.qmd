@@ -152,11 +152,19 @@ Pour reproduire cet exemple, voici les valeurs à utiliser.
 | **Sensory Attributes**         | tous les attributs sensoriels numériques |
 | **Significance threshold (%)** | 5                                        |
 
+@fig-qda-char-interface présente la configuration utilisée pour l’exemple *sensochoc*.
+
+![Configuration de la caractérisation QDA dans jamovi pour le jeu de données *sensochoc*.](images/qda-char/qda-char-interface.png){#fig-qda-char-interface width=62% fig-align="center"}
+
 ### Analyse du tableau *Identification of the Sensory Dimensions*
 
 Avec ces réglages, les 14 attributs ressortent tous comme discriminants au seuil de 5 %. Le tableau est trié par V-test décroissante : les attributs en tête sont ceux qui différencient le plus nettement les chocolats entre eux. *MilkF* arrive en premier (V-test = 16.40), suivi de *CocoaF* (13.48) et *Bitterness* (13.34). En bas du tableau, *Sticky* (V-test = 3.56) et *Granular* (4.37) sont significatifs mais moins structurants. Ce classement donne une première lecture de l'espace sensoriel : les oppositions entre chocolats reposent avant tout sur les dimensions lactée, cacaotée et amère.
 
 ### Analyse du tableau *Sensory Description of the Stimuli*
+
+@fig-qda-char-stimuli-description illustre la table de description des stimuli.
+
+![Extrait de la table *Sensory Description of the Stimuli*, qui caractérise chaque stimulus par les attributs sensoriels qui lui sont significativement associés.](images/qda-char/qda-char-stimuli-description.png){#fig-qda-char-stimuli-description width=95% fig-align="center"}
 
 La seconde table permet de lire le profil de chaque chocolat par rapport à la moyenne générale de l'ensemble des six chocolats.
 

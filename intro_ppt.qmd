@@ -8,6 +8,10 @@ En une phrase : *jamovi est un logiciel libre de statistique, moderne et accessi
 
 Développé par des contributeurs issus du projet JASP, jamovi repose sur R pour ses calculs statistiques tout en proposant une interface graphique qui ne requiert aucune ligne de code. Concrètement, son interface fonctionne comme un tableur dynamique[^intro_ppt-1] : les données sont visibles et modifiables dans une feuille à gauche, et les résultats s'actualisent en temps réel à droite. Cette organisation rend l'outil accessible aussi bien aux débutants qu'aux utilisateurs expérimentés.
 
+@fig-intro-jamovi-interface présente l’interface générale de jamovi.
+
+![Interface générale de jamovi : feuille de données à gauche et résultats d’analyse à droite.](images/intro/jamovi-interface.png){#fig-intro-jamovi-interface width=100% fig-align="center"}
+
 [^intro_ppt-1]: Un *tableur* est un outil de traitement de données organisé en lignes et colonnes, comme Microsoft Excel ou Google Sheets.
 
 Un avantage souvent sous-estimé de jamovi est sa capacité à tout sauvegarder dans un seul fichier `.omv` : les données, les options d'analyse choisies et les résultats. Cela facilite considérablement la reproductibilité et le partage du travail, deux points sur lesquels les tableurs classiques montrent leurs limites.
@@ -48,11 +52,19 @@ L'écosystème des modules de jamovi est déjà riche et couvre de nombreux beso
 
 Pour installer un module, il suffit d'ouvrir jamovi, d'aller dans l'onglet **Modules** en haut à droite, de sélectionner **jamovi library**, puis de choisir le module souhaité et de cliquer sur **Installer**. Certains modules en cours de développement peuvent également être installés manuellement à partir d'un fichier `.jmo`.
 
+@fig-intro-modules-seda illustre l’installation d’un module depuis la bibliothèque de jamovi.
+
+![Installation du module SEDA depuis la bibliothèque de modules de jamovi.](images/intro/jamovi-modules-seda.png){#fig-intro-modules-seda width=85% fig-align="center"}
+
 ## Le module SEDA
 
 SEDA (*Sensory Evaluation Data Analysis*) est le module jamovi dédié à l'analyse statistique de données sensorielles. Il repose sur le package R *SensoMineR* et rend accessibles, via une interface graphique, les principales méthodes statistiques utilisées en analyse sensorielle — sans nécessiter d'écrire une seule ligne de code.
 
 Son menu est organisé en trois sections qui correspondent à trois grandes façons de produire des données sensorielles.
+
+@fig-intro-seda-menu présente l’organisation générale du menu SEDA.
+
+![Organisation du menu SEDA dans jamovi : données à liste fixe d’attributs, perception libre et données hédoniques.](images/intro/seda-menu.png){#fig-intro-seda-menu width=75% fig-align="center"}
 
 La première section, **Fixed List of Attributes**, regroupe les méthodes dans lesquelles les sujets évaluent les stimuli à partir d'une liste d'attributs définie à l'avance. C'est le cas classique des données de type QDA (*Quantitative Descriptive Analysis*), où un panel entraîné note l'intensité de chaque attribut sur chaque produit. SEDA propose ici deux analyses complémentaires : l'une pour **caractériser les stimuli attribut par attribut** (en identifiant quels attributs les différencient et lesquels caractérisent chaque stimulus en particulier), l'autre pour **représenter l'espace sensoriel de façon multivariée** (en produisant une carte des stimuli enrichie d'ellipses de confiance qui reflètent la stabilité des positions selon la composition du panel). Cette section accueille également l'analyse de données **CATA** (*Check-All-That-Apply*), où les répondants cochent parmi une liste les termes qui leur semblent présents dans un stimulus, et l'analyse de données **JAR** (*Just About Right*), où les répondants signalent si chaque attribut est trop fort, trop faible ou juste comme il faut — permettant d'estimer les *pénalités* que ces écarts font peser sur l'appréciation.
 

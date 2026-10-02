@@ -220,6 +220,17 @@ ul.task-list li input[type="checkbox"] {
 <h3 data-number="1.1.1" class="anchored" data-anchor-id="what-is-jamovi"><span class="header-section-number">1.1.1</span> What is jamovi?</h3>
 <p>In one sentence: <em>jamovi is a free, modern, and accessible statistics package, designed for both teaching and research</em>.</p>
 <p>Developed by contributors from the JASP project, jamovi relies on R for its statistical calculations while providing a graphical interface that requires no code at all. In practical terms, its interface works like a dynamic spreadsheet<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>: the data are visible and editable in a sheet on the left, and the results update in real time on the right. This organisation makes the tool accessible to both beginners and experienced users.</p>
+<p><a href="#fig-intro-jamovi-interface" class="quarto-xref">Figure&nbsp;<span>1.1</span></a> presents the general jamovi interface.</p>
+<div id="fig-intro-jamovi-interface" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intro-jamovi-interface-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/intro/jamovi-interface.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-jamovi-interface-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.1: General jamovi interface: data sheet on the left and results of analysis on the right.
+</figcaption>
+</figure>
+</div>
 <p>One often underestimated advantage of jamovi is its ability to save everything in a single <code>.omv</code> file: the data, the analysis options selected, and the results. This greatly facilitates reproducibility and the sharing of work, two areas in which traditional spreadsheets show their limits.</p>
 <p>A comparison with other common tools is useful for situating jamovi:</p>
 <table class="caption-top table">
@@ -314,11 +325,33 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <p>To install a module, simply open jamovi, go to the <strong>Modules</strong> tab in the top right-hand corner, select <strong>jamovi library</strong>, then choose the module you want and click <strong>Install</strong>. Some modules still under development may also be installed manually from a <code>.jmo</code> file.</p>
+<p><a href="#fig-intro-modules-seda" class="quarto-xref">Figure&nbsp;<span>1.2</span></a> illustrates installing a module from the jamovi library.</p>
+<div id="fig-intro-modules-seda" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intro-modules-seda-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/intro/jamovi-modules-seda.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-modules-seda-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.2: Installing the SEDA module from the jamovi module library.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="the-seda-module" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="the-seda-module"><span class="header-section-number">1.3</span> The SEDA module</h2>
 <p>SEDA (<em>Sensory Evaluation Data Analysis</em>) is the jamovi module dedicated to the statistical analysis of sensory data. It is based on the R package <em>SensoMineR</em> and makes the main statistical methods used in sensory analysis available through a graphical interface — without requiring a single line of code.</p>
 <p>Its menu is organised into three sections corresponding to three broad ways of producing sensory data.</p>
+<p><a href="#fig-intro-seda-menu" class="quarto-xref">Figure&nbsp;<span>1.3</span></a> presents the general organisation of the SEDA menu.</p>
+<div id="fig-intro-seda-menu" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intro-seda-menu-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/intro/seda-menu.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-seda-menu-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.3: Organisation of the SEDA menu in jamovi: fixed-list attributes, free perception, and hedonic data.
+</figcaption>
+</figure>
+</div>
 <p>The first section, <strong>Fixed List of Attributes</strong>, brings together methods in which subjects evaluate stimuli using a list of attributes defined in advance. This is the classic case of QDA (<em>Quantitative Descriptive Analysis</em>) data, where a trained panel scores the intensity of each attribute for each product. Here, SEDA offers two complementary analyses: one to <strong>characterise the stimuli attribute by attribute</strong> (by identifying which attributes differentiate them and which characterise each stimulus in particular), and another to <strong>represent the sensory space in a multivariate way</strong> (by producing a map of the stimuli enriched with confidence ellipses reflecting the stability of the positions according to panel composition). This section also includes the analysis of <strong>CATA</strong> (<em>Check-All-That-Apply</em>) data, in which respondents tick from a list the terms they feel are present in a stimulus, and the analysis of <strong>JAR</strong> (<em>Just About Right</em>) data, in which respondents indicate whether each attribute is too strong, too weak, or just about right — making it possible to estimate the <em>penalties</em> these deviations impose on liking.</p>
 <p>The second section brings together <strong>holistic approaches</strong>, in which subjects evaluate the stimuli globally, without any predefined list of attributes. Two methods are covered: <strong>Napping</strong> (<em>projective mapping</em>), in which each subject positions the stimuli on a rectangle according to their perceived similarities, and <strong>free sorting</strong> (<em>sorting task</em>), in which each subject freely groups the stimuli into categories. In both cases, SEDA produces a consensual representation of the stimuli by combining the individual maps — by Multiple Factor Analysis for Napping, and by Multiple Correspondence Analysis for free sorting — and may complement this representation with an automatic classification of the stimuli.</p>
 <p>The third section, <strong>Hedonic Data</strong>, is dedicated to <strong>liking data</strong>. It contains <strong>preference mapping</strong>, which combines an already constructed representation space (for example, from a PCA) with individual liking scores in order to identify favourable regions of that space. SEDA can also classify consumers from their centred liking profiles and produce preference maps for the resulting segments. This analysis is the natural extension of the previous analyses: once the sensory space has been constructed and interpreted, preference mapping helps identify which regions are favourable and whether the same preference structure is shared across consumer segments.</p>

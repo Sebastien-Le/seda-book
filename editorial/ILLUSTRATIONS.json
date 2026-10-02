@@ -622,6 +622,140 @@
           ]
         }
       }
+    },
+    "intro": {
+      "label": "Introduction — jamovi and SEDA",
+      "languages": {
+        "fr": {
+          "source": "intro_ppt.qmd",
+          "rendered_html": "intro_ppt.html",
+          "figures": [
+            {
+              "id": "fig-intro-jamovi-interface",
+              "image": "images/intro/jamovi-interface.png",
+              "caption": "Interface générale de jamovi : feuille de données à gauche et résultats d’analyse à droite.",
+              "width": "100%",
+              "anchor_line": "Développé par des contributeurs issus du projet JASP, jamovi repose sur R pour ses calculs statistiques tout en proposant une interface graphique qui ne requiert aucune ligne de code. Concrètement, son interface fonctionne comme un tableur dynamique[^intro_ppt-1] : les données sont visibles et modifiables dans une feuille à gauche, et les résultats s'actualisent en temps réel à droite. Cette organisation rend l'outil accessible aussi bien aux débutants qu'aux utilisateurs expérimentés.",
+              "position": "after",
+              "reference": "@fig-intro-jamovi-interface présente l’interface générale de jamovi.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-intro-modules-seda",
+              "image": "images/intro/jamovi-modules-seda.png",
+              "caption": "Installation du module SEDA depuis la bibliothèque de modules de jamovi.",
+              "width": "85%",
+              "anchor_line": "Pour installer un module, il suffit d'ouvrir jamovi, d'aller dans l'onglet **Modules** en haut à droite, de sélectionner **jamovi library**, puis de choisir le module souhaité et de cliquer sur **Installer**. Certains modules en cours de développement peuvent également être installés manuellement à partir d'un fichier `.jmo`.",
+              "position": "after",
+              "reference": "@fig-intro-modules-seda illustre l’installation d’un module depuis la bibliothèque de jamovi.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-intro-seda-menu",
+              "image": "images/intro/seda-menu.png",
+              "caption": "Organisation du menu SEDA dans jamovi : données à liste fixe d’attributs, perception libre et données hédoniques.",
+              "width": "75%",
+              "anchor_line": "Son menu est organisé en trois sections qui correspondent à trois grandes façons de produire des données sensorielles.",
+              "position": "after",
+              "reference": "@fig-intro-seda-menu présente l’organisation générale du menu SEDA.",
+              "reference_position": "before"
+            }
+          ]
+        },
+        "en": {
+          "source": "intro_ppt_GB.qmd",
+          "rendered_html": "intro_ppt_GB.html",
+          "figures": [
+            {
+              "id": "fig-intro-jamovi-interface",
+              "image": "images/intro/jamovi-interface.png",
+              "caption": "General jamovi interface: data sheet on the left and results of analysis on the right.",
+              "width": "100%",
+              "anchor_line": "Developed by contributors from the JASP project, jamovi relies on R for its statistical calculations while providing a graphical interface that requires no code at all. In practical terms, its interface works like a dynamic spreadsheet[^intro_ppt-1]: the data are visible and editable in a sheet on the left, and the results update in real time on the right. This organisation makes the tool accessible to both beginners and experienced users.",
+              "position": "after",
+              "reference": "@fig-intro-jamovi-interface presents the general jamovi interface.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-intro-modules-seda",
+              "image": "images/intro/jamovi-modules-seda.png",
+              "caption": "Installing the SEDA module from the jamovi module library.",
+              "width": "85%",
+              "anchor_line": "To install a module, simply open jamovi, go to the **Modules** tab in the top right-hand corner, select **jamovi library**, then choose the module you want and click **Install**. Some modules still under development may also be installed manually from a `.jmo` file.",
+              "position": "after",
+              "reference": "@fig-intro-modules-seda illustrates installing a module from the jamovi library.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-intro-seda-menu",
+              "image": "images/intro/seda-menu.png",
+              "caption": "Organisation of the SEDA menu in jamovi: fixed-list attributes, free perception, and hedonic data.",
+              "width": "75%",
+              "anchor_line": "Its menu is organised into three sections corresponding to three broad ways of producing sensory data.",
+              "position": "after",
+              "reference": "@fig-intro-seda-menu presents the general organisation of the SEDA menu.",
+              "reference_position": "before"
+            }
+          ]
+        }
+      }
+    },
+    "qda-char": {
+      "label": "QDA — characterization of the stimulus space",
+      "languages": {
+        "fr": {
+          "source": "chapitre1_prompt_harmonise.qmd",
+          "rendered_html": "chapitre1_prompt_harmonise.html",
+          "figures": [
+            {
+              "id": "fig-qda-char-interface",
+              "image": "images/qda-char/qda-char-interface.png",
+              "caption": "Configuration de la caractérisation QDA dans jamovi pour le jeu de données *sensochoc*.",
+              "width": "62%",
+              "anchor_line": "| **Significance threshold (%)** | 5                                        |",
+              "position": "after",
+              "reference": "@fig-qda-char-interface présente la configuration utilisée pour l’exemple *sensochoc*.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-qda-char-stimuli-description",
+              "image": "images/qda-char/qda-char-stimuli-description.png",
+              "caption": "Extrait de la table *Sensory Description of the Stimuli*, qui caractérise chaque stimulus par les attributs sensoriels qui lui sont significativement associés.",
+              "width": "95%",
+              "anchor_line": "### Analyse du tableau *Sensory Description of the Stimuli*",
+              "position": "after",
+              "reference": "@fig-qda-char-stimuli-description illustre la table de description des stimuli.",
+              "reference_position": "before"
+            }
+          ]
+        },
+        "en": {
+          "source": "chapitre1_prompt_GBH.qmd",
+          "rendered_html": "chapitre1_prompt_GBH.html",
+          "figures": [
+            {
+              "id": "fig-qda-char-interface",
+              "image": "images/qda-char/qda-char-interface.png",
+              "caption": "Configuration of the QDA characterization analysis in jamovi for the *sensochoc* dataset.",
+              "width": "62%",
+              "anchor_line": "| **Significance threshold (%)** | 5                              |",
+              "position": "after",
+              "reference": "@fig-qda-char-interface shows the configuration used for the *sensochoc* example.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-qda-char-stimuli-description",
+              "image": "images/qda-char/qda-char-stimuli-description.png",
+              "caption": "Excerpt from the *Sensory Description of the Stimuli* table, characterising each stimulus by the sensory attributes significantly associated with it.",
+              "width": "95%",
+              "anchor_line": "### Analysis of the *Sensory Description of the Stimuli* table",
+              "position": "after",
+              "reference": "@fig-qda-char-stimuli-description illustrates the stimulus description table.",
+              "reference_position": "before"
+            }
+          ]
+        }
+      }
     }
   }
 }

@@ -220,6 +220,17 @@ ul.task-list li input[type="checkbox"] {
 <h3 data-number="1.1.1" class="anchored" data-anchor-id="quest-ce-que-jamovi"><span class="header-section-number">1.1.1</span> Qu’est-ce que jamovi ?</h3>
 <p>En une phrase : <em>jamovi est un logiciel libre de statistique, moderne et accessible, conçu aussi bien pour l’enseignement que pour la recherche</em>.</p>
 <p>Développé par des contributeurs issus du projet JASP, jamovi repose sur R pour ses calculs statistiques tout en proposant une interface graphique qui ne requiert aucune ligne de code. Concrètement, son interface fonctionne comme un tableur dynamique<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> : les données sont visibles et modifiables dans une feuille à gauche, et les résultats s’actualisent en temps réel à droite. Cette organisation rend l’outil accessible aussi bien aux débutants qu’aux utilisateurs expérimentés.</p>
+<p><a href="#fig-intro-jamovi-interface" class="quarto-xref">Figure&nbsp;<span>1.1</span></a> présente l’interface générale de jamovi.</p>
+<div id="fig-intro-jamovi-interface" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intro-jamovi-interface-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/intro/jamovi-interface.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-jamovi-interface-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.1: Interface générale de jamovi : feuille de données à gauche et résultats d’analyse à droite.
+</figcaption>
+</figure>
+</div>
 <p>Un avantage souvent sous-estimé de jamovi est sa capacité à tout sauvegarder dans un seul fichier <code>.omv</code> : les données, les options d’analyse choisies et les résultats. Cela facilite considérablement la reproductibilité et le partage du travail, deux points sur lesquels les tableurs classiques montrent leurs limites.</p>
 <p>La comparaison avec d’autres outils courants est utile pour situer jamovi :</p>
 <table class="caption-top table">
@@ -314,11 +325,33 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <p>Pour installer un module, il suffit d’ouvrir jamovi, d’aller dans l’onglet <strong>Modules</strong> en haut à droite, de sélectionner <strong>jamovi library</strong>, puis de choisir le module souhaité et de cliquer sur <strong>Installer</strong>. Certains modules en cours de développement peuvent également être installés manuellement à partir d’un fichier <code>.jmo</code>.</p>
+<p><a href="#fig-intro-modules-seda" class="quarto-xref">Figure&nbsp;<span>1.2</span></a> illustre l’installation d’un module depuis la bibliothèque de jamovi.</p>
+<div id="fig-intro-modules-seda" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intro-modules-seda-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/intro/jamovi-modules-seda.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-modules-seda-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.2: Installation du module SEDA depuis la bibliothèque de modules de jamovi.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="le-module-seda" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="le-module-seda"><span class="header-section-number">1.3</span> Le module SEDA</h2>
 <p>SEDA (<em>Sensory Evaluation Data Analysis</em>) est le module jamovi dédié à l’analyse statistique de données sensorielles. Il repose sur le package R <em>SensoMineR</em> et rend accessibles, via une interface graphique, les principales méthodes statistiques utilisées en analyse sensorielle — sans nécessiter d’écrire une seule ligne de code.</p>
 <p>Son menu est organisé en trois sections qui correspondent à trois grandes façons de produire des données sensorielles.</p>
+<p><a href="#fig-intro-seda-menu" class="quarto-xref">Figure&nbsp;<span>1.3</span></a> présente l’organisation générale du menu SEDA.</p>
+<div id="fig-intro-seda-menu" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-intro-seda-menu-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/intro/seda-menu.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intro-seda-menu-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.3: Organisation du menu SEDA dans jamovi : données à liste fixe d’attributs, perception libre et données hédoniques.
+</figcaption>
+</figure>
+</div>
 <p>La première section, <strong>Fixed List of Attributes</strong>, regroupe les méthodes dans lesquelles les sujets évaluent les stimuli à partir d’une liste d’attributs définie à l’avance. C’est le cas classique des données de type QDA (<em>Quantitative Descriptive Analysis</em>), où un panel entraîné note l’intensité de chaque attribut sur chaque produit. SEDA propose ici deux analyses complémentaires : l’une pour <strong>caractériser les stimuli attribut par attribut</strong> (en identifiant quels attributs les différencient et lesquels caractérisent chaque stimulus en particulier), l’autre pour <strong>représenter l’espace sensoriel de façon multivariée</strong> (en produisant une carte des stimuli enrichie d’ellipses de confiance qui reflètent la stabilité des positions selon la composition du panel). Cette section accueille également l’analyse de données <strong>CATA</strong> (<em>Check-All-That-Apply</em>), où les répondants cochent parmi une liste les termes qui leur semblent présents dans un stimulus, et l’analyse de données <strong>JAR</strong> (<em>Just About Right</em>), où les répondants signalent si chaque attribut est trop fort, trop faible ou juste comme il faut — permettant d’estimer les <em>pénalités</em> que ces écarts font peser sur l’appréciation.</p>
 <p>La deuxième section regroupe les <strong>approches holistiques</strong>, dans lesquelles les sujets évaluent les stimuli de façon globale, sans liste d’attributs prédéfinie. Deux méthodes sont couvertes : le <strong>Napping</strong> (<em>projective mapping</em>), où chaque sujet positionne les stimuli sur un rectangle selon leurs ressemblances perçues, et le <strong>tri libre</strong> (<em>sorting task</em>), où chaque sujet regroupe librement les stimuli en catégories. Dans les deux cas, SEDA produit une représentation consensuelle des stimuli en combinant les cartes individuelles — par Analyse Factorielle Multiple pour le Napping, par Analyse des Correspondances Multiples pour le tri libre — et peut compléter cette représentation par une classification automatique des stimuli.</p>
 <p>La troisième section, <strong>Hedonic Data</strong>, est dédiée aux <strong>données de liking</strong>. Elle contient la <strong>cartographie des préférences</strong>, qui combine un espace de représentation déjà construit (issu par exemple d’une ACP) avec des notes d’appréciation individuelles afin d’identifier les zones favorables de cet espace. SEDA peut également classer les consommateurs à partir de leurs profils de liking centrés et produire une carte de préférence pour chaque segment obtenu. Cette analyse constitue le prolongement naturel des analyses précédentes : une fois l’espace sensoriel construit et interprété, la cartographie permet d’identifier les régions favorables et de vérifier si la même structure de préférence est partagée par les différents segments de consommateurs.</p>
@@ -447,7 +480,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+  var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

@@ -464,6 +464,17 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+<p><a href="#fig-qda-char-interface" class="quarto-xref">Figure&nbsp;<span>2.1</span></a> présente la configuration utilisée pour l’exemple <em>sensochoc</em>.</p>
+<div id="fig-qda-char-interface" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-qda-char-interface-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/qda-char/qda-char-interface.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:62.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qda-char-interface-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: Configuration de la caractérisation QDA dans jamovi pour le jeu de données <em>sensochoc</em>.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="analyse-du-tableau-identification-of-the-sensory-dimensions" class="level3" data-number="2.7.2">
 <h3 data-number="2.7.2" class="anchored" data-anchor-id="analyse-du-tableau-identification-of-the-sensory-dimensions"><span class="header-section-number">2.7.2</span> Analyse du tableau <em>Identification of the Sensory Dimensions</em></h3>
@@ -471,6 +482,17 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="analyse-du-tableau-sensory-description-of-the-stimuli" class="level3" data-number="2.7.3">
 <h3 data-number="2.7.3" class="anchored" data-anchor-id="analyse-du-tableau-sensory-description-of-the-stimuli"><span class="header-section-number">2.7.3</span> Analyse du tableau <em>Sensory Description of the Stimuli</em></h3>
+<p><a href="#fig-qda-char-stimuli-description" class="quarto-xref">Figure&nbsp;<span>2.2</span></a> illustre la table de description des stimuli.</p>
+<div id="fig-qda-char-stimuli-description" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-qda-char-stimuli-description-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/qda-char/qda-char-stimuli-description.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qda-char-stimuli-description-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.2: Extrait de la table <em>Sensory Description of the Stimuli</em>, qui caractérise chaque stimulus par les attributs sensoriels qui lui sont significativement associés.
+</figcaption>
+</figure>
+</div>
 <p>La seconde table permet de lire le profil de chaque chocolat par rapport à la moyenne générale de l’ensemble des six chocolats.</p>
 <p><strong>choc1</strong> est caractérisé par un profil très contrasté. Pour ce chocolat, côté positif, <em>Bitterness</em> ressort avec la V-test la plus élevée (9.95, coefficient +2.46) et une moyenne ajustée de 7.07, nettement au-dessus de la moyenne de l’ensemble. <em>CocoaF</em> (V-test = 8.48), <em>Astringency</em> (7.08) et <em>Acidity</em> (6.14) complètent ce profil. Côté négatif, <em>Sweetness</em> (V-test = -8.29, coefficient -1.95, moyenne ajustée 3.14) et <em>MilkF</em> (V-test = -8.70) désignent un chocolat très peu sucré et très peu lacté.</p>
 <p><strong>choc3</strong> présente le profil opposé. Il est fortement caractérisé par <em>MilkF</em> (V-test = 16.52, la plus élevée du tableau), <em>Caramel</em> (11.52), <em>Sweetness</em> (10.39) et <em>Melting</em> (9.19). À l’inverse, il est négativement caractérisé par <em>Bitterness</em> (-12.42), <em>Crunchy</em> (-12.49) et <em>CocoaF</em> (-13.33). C’est le chocolat le plus lacté, sucré et fondant, et le moins amer et cacaoté. Au vu du nombre d’attributs sensoriels significatifs, <strong>choc3</strong> semble être le chocolat dont le profil va s’écarter le plus nettement de la moyenne.</p>
@@ -608,7 +630,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+  var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
