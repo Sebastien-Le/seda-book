@@ -202,6 +202,10 @@ Pour reproduire cet exemple, voici les valeurs à utiliser.
 | **Number of dimensions for clustering** | 5                         |
 | **Number of clusters**         | -1 (automatic)                     |
 
+@fig-cata-interface présente la configuration utilisée pour l’exemple CATA.
+
+![Configuration de l’analyse CATA dans jamovi pour le jeu de données *Giacalone_et_al_cata*.](images/cata/cata-interface.png){#fig-cata-interface width=62% fig-align="center"}
+
 ### Analyse du tableau *Description of the Stimuli According to CATA*
 
 La table permet une lecture stimulus par stimulus avec les valeurs test et fréquences réelles.
@@ -222,11 +226,19 @@ La table permet une lecture stimulus par stimulus avec les valeurs test et fréq
 
 ### Analyse du graphique *Representation of the Stimuli and the CATA*
 
+@fig-cata-stimuli-cata montre la représentation factorielle utilisée dans cet exemple.
+
+![Représentation des stimuli et des termes CATA dans le plan factoriel.](images/cata/cata-stimuli-cata.png){#fig-cata-stimuli-cata width=100% fig-align="center"}
+
 La première dimension explique 85.59 % de l'inertie — c'est une valeur remarquablement élevée, qui signifie que l'opposition principale entre les stimuli est très forte et très lisible sur l'axe horizontal. La seconde dimension n'explique que 7.43 %, mais affine des distinctions secondaires.
 
 Sur la carte, *SSA* se situe très nettement à droite, isolé près de *Gift*, *FineDinning* et *Achievement*. À gauche se regroupent *LR*, *GMA* et *SC*, proches de *Rugby* et *CampingFishing*. *MBB*, *HPW*, *PKB*, *MHR* et *STG* occupent une position centrale ou légèrement à droite, entre les deux pôles. Sur la seconde dimension, *LR* se situe légèrement plus haut que *GMA* et *SC*, ce qui reflète sa plus forte association à *Rugby*.
 
 ### Analyse du graphique *Representation of the Stimuli According to Clusters et de la Description of the Clusters*
+
+@fig-cata-clusters montre la partition des stimuli retenue par la classification.
+
+![Représentation des stimuli selon les clusters issus de la classification HCPC.](images/cata/cata-clusters.png){#fig-cata-clusters width=100% fig-align="center"}
 
 La classification automatique retient **trois clusters** :
 

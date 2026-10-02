@@ -202,6 +202,10 @@ To reproduce this example, use the following values.
 | **Number of dimensions for clustering** | 5                             |
 | **Number of clusters**         | -1 (automatic)                         |
 
+@fig-cata-interface shows the configuration used for the CATA example.
+
+![Configuration of the CATA analysis in jamovi for the *Giacalone_et_al_cata* dataset.](images/cata/cata-interface.png){#fig-cata-interface width=62% fig-align="center"}
+
 ### Analysis of the *Description of the Stimuli According to CATA* table
 
 The table allows a stimulus-by-stimulus reading with test values and actual frequencies.
@@ -222,11 +226,19 @@ The table allows a stimulus-by-stimulus reading with test values and actual freq
 
 ### Analysis of the *Representation of the Stimuli and the CATA* graph
 
+@fig-cata-stimuli-cata shows the factorial representation used in this example.
+
+![Representation of the stimuli and CATA terms in the factorial plane.](images/cata/cata-stimuli-cata.png){#fig-cata-stimuli-cata width=100% fig-align="center"}
+
 The first dimension explains 85.59% of the inertia — a remarkably high value, meaning that the main opposition between stimuli is very strong and very readable on the horizontal axis. The second dimension explains only 7.43%, but refines secondary distinctions.
 
 On the map, *SSA* is located very clearly on the right, isolated near *Gift*, *FineDinning*, and *Achievement*. On the left are grouped *LR*, *GMA*, and *SC*, close to *Rugby* and *CampingFishing*. *MBB*, *HPW*, *PKB*, *MHR*, and *STG* occupy a central or slightly right-hand position, between the two poles. On the second dimension, *LR* is located slightly higher than *GMA* and *SC*, which reflects its stronger association with *Rugby*.
 
 ### Analysis of the *Representation of the Stimuli According to Clusters and the Description of the Clusters* graph and table
+
+@fig-cata-clusters shows the partition of the stimuli retained by the classification.
+
+![Representation of the stimuli according to the clusters obtained from HCPC.](images/cata/cata-clusters.png){#fig-cata-clusters width=100% fig-align="center"}
 
 The automatic classification retains **three clusters**:
 

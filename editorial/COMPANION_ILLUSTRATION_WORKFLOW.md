@@ -4,6 +4,8 @@ Prototype based on the stabilised QDA multivariate chapter.
 
 Files:
 - `editorial/ILLUSTRATIONS.json`: declarative figure manifest.
+- `images/<chapter>/`: human-approved final illustration files. Prepare and approve these images outside Codex, then place them directly in this directory. Automation must not crop, resize, redraw, or otherwise modify their pixels; it may only control their display size through Quarto figure attributes.
+- `illustrations/inbox/`: optional ignored area for raw screenshots. Raw screenshots are never committed and are not required for the normal workflow.
 - `scripts/apply_illustrations.py`: inserts/validates figures in FR and EN `.qmd`.
 - `scripts/publish_companion.py`: renders, validates and copies only the chapter outputs, figures, search indexes and PDFs into `docs/`.
 

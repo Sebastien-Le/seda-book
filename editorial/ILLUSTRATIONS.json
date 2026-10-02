@@ -117,6 +117,83 @@
           ]
         }
       }
+    },
+    "cata": {
+      "label": "CATA — correspondence analysis and clustering",
+      "languages": {
+        "fr": {
+          "source": "chapitre3_prompt_harmonise.qmd",
+          "rendered_html": "chapitre3_prompt_harmonise.html",
+          "figures": [
+            {
+              "id": "fig-cata-interface",
+              "image": "images/cata/cata-interface.png",
+              "caption": "Configuration de l’analyse CATA dans jamovi pour le jeu de données *Giacalone_et_al_cata*.",
+              "width": "62%",
+              "anchor_line": "### Analyse du tableau *Description of the Stimuli According to CATA*",
+              "position": "before",
+              "reference": "@fig-cata-interface présente la configuration utilisée pour l’exemple CATA.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-cata-stimuli-cata",
+              "image": "images/cata/cata-stimuli-cata.png",
+              "caption": "Représentation des stimuli et des termes CATA dans le plan factoriel.",
+              "width": "100%",
+              "anchor_line": "### Analyse du graphique *Representation of the Stimuli and the CATA*",
+              "position": "before",
+              "reference": "@fig-cata-stimuli-cata montre la représentation factorielle utilisée dans cet exemple.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-cata-clusters",
+              "image": "images/cata/cata-clusters.png",
+              "caption": "Représentation des stimuli selon les clusters issus de la classification HCPC.",
+              "width": "100%",
+              "anchor_line": "### Analyse du graphique *Representation of the Stimuli According to Clusters et de la Description of the Clusters*",
+              "position": "before",
+              "reference": "@fig-cata-clusters montre la partition des stimuli retenue par la classification.",
+              "reference_position": "before"
+            }
+          ]
+        },
+        "en": {
+          "source": "chapitre3_prompt_GBH.qmd",
+          "rendered_html": "chapitre3_prompt_GBH.html",
+          "figures": [
+            {
+              "id": "fig-cata-interface",
+              "image": "images/cata/cata-interface.png",
+              "caption": "Configuration of the CATA analysis in jamovi for the *Giacalone_et_al_cata* dataset.",
+              "width": "62%",
+              "anchor_line": "### Analysis of the *Description of the Stimuli According to CATA* table",
+              "position": "before",
+              "reference": "@fig-cata-interface shows the configuration used for the CATA example.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-cata-stimuli-cata",
+              "image": "images/cata/cata-stimuli-cata.png",
+              "caption": "Representation of the stimuli and CATA terms in the factorial plane.",
+              "width": "100%",
+              "anchor_line": "### Analysis of the *Representation of the Stimuli and the CATA* graph",
+              "position": "before",
+              "reference": "@fig-cata-stimuli-cata shows the factorial representation used in this example.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-cata-clusters",
+              "image": "images/cata/cata-clusters.png",
+              "caption": "Representation of the stimuli according to the clusters obtained from HCPC.",
+              "width": "100%",
+              "anchor_line": "### Analysis of the *Representation of the Stimuli According to Clusters and the Description of the Clusters* graph and table",
+              "position": "before",
+              "reference": "@fig-cata-clusters shows the partition of the stimuli retained by the classification.",
+              "reference_position": "before"
+            }
+          ]
+        }
+      }
     }
   }
 }
