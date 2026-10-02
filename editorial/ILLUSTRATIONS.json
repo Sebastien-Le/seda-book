@@ -291,6 +291,103 @@
           ]
         }
       }
+    },
+    "napping": {
+      "label": "Napping — stimulus, subject, and cluster representations",
+      "languages": {
+        "fr": {
+          "source": "chapitre5_prompt_harmonise.qmd",
+          "rendered_html": "chapitre5_prompt_harmonise.html",
+          "figures": [
+            {
+              "id": "fig-napping-interface",
+              "image": "images/napping/napping-interface.png",
+              "caption": "Configuration de l’analyse Napping dans jamovi pour le jeu de données *perfumes_napping*.",
+              "width": "62%",
+              "anchor_line": "### Analyse du graphique *Representation of the Stimuli*",
+              "position": "before",
+              "reference": "@fig-napping-interface présente la configuration utilisée pour l’exemple Napping.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-napping-stimuli",
+              "image": "images/napping/napping-stimuli.png",
+              "caption": "Représentation des stimuli dans le plan factoriel Napping.",
+              "width": "100%",
+              "anchor_line": "### Analyse du graphique *Representation of the Stimuli*",
+              "position": "after",
+              "reference": "@fig-napping-stimuli montre la représentation des stimuli dans l’espace factoriel commun.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-napping-subjects",
+              "image": "images/napping/napping-subjects.png",
+              "caption": "Représentation des sujets dans le plan factoriel Napping.",
+              "width": "100%",
+              "anchor_line": "### Analyse du graphique *Representation of the Subjects*",
+              "position": "after",
+              "reference": "@fig-napping-subjects montre la représentation des configurations individuelles des sujets.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-napping-clusters",
+              "image": "images/napping/napping-clusters.png",
+              "caption": "Représentation des stimuli selon les clusters issus de la classification HCPC.",
+              "width": "100%",
+              "anchor_line": "### Analyse du graphique *Representation of the Stimuli According to Clusters*",
+              "position": "after",
+              "reference": "@fig-napping-clusters montre la représentation des stimuli selon les clusters.",
+              "reference_position": "before"
+            }
+          ]
+        },
+        "en": {
+          "source": "chapitre5_prompt_GBH.qmd",
+          "rendered_html": "chapitre5_prompt_GBH.html",
+          "figures": [
+            {
+              "id": "fig-napping-interface",
+              "image": "images/napping/napping-interface.png",
+              "caption": "Configuration of the Napping analysis in jamovi for the *perfumes_napping* dataset.",
+              "width": "62%",
+              "anchor_line": "### Analysis of the *Representation of the Stimuli* graph",
+              "position": "before",
+              "reference": "@fig-napping-interface shows the configuration used for the Napping example.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-napping-stimuli",
+              "image": "images/napping/napping-stimuli.png",
+              "caption": "Representation of the stimuli in the Napping factorial plane.",
+              "width": "100%",
+              "anchor_line": "### Analysis of the *Representation of the Stimuli* graph",
+              "position": "after",
+              "reference": "@fig-napping-stimuli shows the representation of the stimuli in the common factor space.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-napping-subjects",
+              "image": "images/napping/napping-subjects.png",
+              "caption": "Representation of the subjects in the Napping factorial plane.",
+              "width": "100%",
+              "anchor_line": "### Analysis of the *Representation of the Subjects* graph",
+              "position": "after",
+              "reference": "@fig-napping-subjects shows the representation of the subjects’ individual configurations.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-napping-clusters",
+              "image": "images/napping/napping-clusters.png",
+              "caption": "Representation of the stimuli according to the clusters obtained from HCPC.",
+              "width": "100%",
+              "anchor_line": "### Analysis of the *Representation of the Stimuli According to Clusters* graph",
+              "position": "after",
+              "reference": "@fig-napping-clusters shows the representation of the stimuli according to the clusters.",
+              "reference_position": "before"
+            }
+          ]
+        }
+      }
     }
   }
 }

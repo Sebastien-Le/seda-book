@@ -212,11 +212,23 @@ Pour reproduire cet exemple, voici les valeurs à utiliser.
 | **Number of clusters** | -1 |
 | **R code** | coché |
 
+@fig-napping-interface présente la configuration utilisée pour l’exemple Napping.
+
+![Configuration de l’analyse Napping dans jamovi pour le jeu de données *perfumes_napping*.](images/napping/napping-interface.png){#fig-napping-interface width=62% fig-align="center"}
+
 ### Analyse du graphique *Representation of the Stimuli*
+
+@fig-napping-stimuli montre la représentation des stimuli dans l’espace factoriel commun.
+
+![Représentation des stimuli dans le plan factoriel Napping.](images/napping/napping-stimuli.png){#fig-napping-stimuli width=100% fig-align="center"}
 
 La carte fait apparaître une structure perceptive assez nette sur le plan Dim. 1 (25.07 %) / Dim. 2 (18.03 %). Sur l'axe horizontal, **Aromatics Elixir** et **Shalimar** se situent clairement à droite (coordonnées positives sur Dim. 1), tandis que **J'adore EP**, **J'adore ET**, **Coco Mademoiselle**, **Cinéma**, **Pleasures** et **Pure Poison** se trouvent à gauche. **Chanel N5** se distingue de ce groupe de droite par une position basse sur la seconde dimension (valeur fortement négative sur Dim. 2), ce qui l'isole légèrement du couple Shalimar / Aromatics Elixir. Sur l'axe vertical, **Angel**, **Lolita Lempicka** et **L'instant** se situent nettement au-dessus du centre, constituant un groupe perceptif cohérent en haut du plan.
 
 ### Analyse du graphique *Representation of the Subjects*
+
+@fig-napping-subjects montre la représentation des configurations individuelles des sujets.
+
+![Représentation des sujets dans le plan factoriel Napping.](images/napping/napping-subjects.png){#fig-napping-subjects width=100% fig-align="center"}
 
 La carte des sujets représente les 60 groupes de coordonnées, S1 à S60. Les groupes situés loin de l'origine sur Dim. 1, comme **S1** ou **S20**, sont fortement liés à la première dimension commune. Des groupes comme **S4** ou **S30**, situés plus haut sur Dim. 2, sont davantage liés à la seconde. Les nombreux groupes proches de l'origine sont moins fortement associés aux deux dimensions affichées. Cette carte renseigne donc sur la relation entre les configurations individuelles et le compromis ; elle ne constitue pas, à elle seule, un indice numérique de consensus.
 
@@ -229,6 +241,10 @@ Les deux premières dimensions expliquent 43.09 % de la variance totale (Dim. 1 
 La sortie **Automatic Description of the Dimensions** identifie les coordonnées X/Y les plus corrélées à chaque axe. Pour **Dim. 1**, les corrélations positives les plus fortes sont **X20** (r = 0.93), **X1** (r = 0.92) et **Y21** (r = 0.90). À l'opposé, **Y48** (r = -0.91) et **X42** (r = -0.85) présentent les corrélations négatives les plus fortes. Ces résultats indiquent quelles directions des configurations individuelles sont les plus alignées, ou opposées, à la première dimension du compromis. Ils n'attribuent pas à eux seuls une signification sensorielle à l'axe.
 
 ### Analyse du graphique *Representation of the Stimuli According to Clusters*
+
+@fig-napping-clusters montre la représentation des stimuli selon les clusters.
+
+![Représentation des stimuli selon les clusters issus de la classification HCPC.](images/napping/napping-clusters.png){#fig-napping-clusters width=100% fig-align="center"}
 
 Avec **Number of dimensions to save/use for clustering = 5**, les dimensions AFM retenues cumulent 72.95 % de l'inertie totale. La carte HCPC exprime donc Dim. 1 et Dim. 2 relativement à cet espace à cinq dimensions : environ **34.37 %** et **24.72 %**, au lieu de 25.07 % et 18.03 % sur la carte AFM complète.
 

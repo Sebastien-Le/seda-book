@@ -212,11 +212,23 @@ To reproduce this example, use the following values.
 | **Number of clusters** | -1 |
 | **R code** | checked |
 
+@fig-napping-interface shows the configuration used for the Napping example.
+
+![Configuration of the Napping analysis in jamovi for the *perfumes_napping* dataset.](images/napping/napping-interface.png){#fig-napping-interface width=62% fig-align="center"}
+
 ### Analysis of the *Representation of the Stimuli* graph
+
+@fig-napping-stimuli shows the representation of the stimuli in the common factor space.
+
+![Representation of the stimuli in the Napping factorial plane.](images/napping/napping-stimuli.png){#fig-napping-stimuli width=100% fig-align="center"}
 
 The map reveals a fairly clear perceptual structure on the Dim. 1 (25.07%) / Dim. 2 (18.03%) plane. On the horizontal axis, **Aromatics Elixir** and **Shalimar** are clearly located on the right (positive coordinates on Dim. 1), whereas **J'adore EP**, **J'adore ET**, **Coco Mademoiselle**, **Cinéma**, **Pleasures**, and **Pure Poison** are located on the left. **Chanel N5** differs from this right-hand group by a low position on the second dimension (strongly negative value on Dim. 2), which slightly isolates it from the Shalimar / Aromatics Elixir pair. On the vertical axis, **Angel**, **Lolita Lempicka**, and **L'instant** are clearly located above the centre, forming a coherent perceptual group at the top of the plane.
 
 ### Analysis of the *Representation of the Subjects* graph
+
+@fig-napping-subjects shows the representation of the subjects’ individual configurations.
+
+![Representation of the subjects in the Napping factorial plane.](images/napping/napping-subjects.png){#fig-napping-subjects width=100% fig-align="center"}
 
 The subject map represents the 60 coordinate groups, S1 to S60. Groups far from the origin on Dim. 1, such as **S1** or **S20**, are strongly related to the first common dimension. Groups such as **S4** or **S30**, located higher on Dim. 2, are more strongly related to the second. The many groups close to the origin are less strongly associated with the two displayed dimensions. This map therefore describes the relationship between individual configurations and the compromise; it is not, by itself, a numerical index of consensus.
 
@@ -229,6 +241,10 @@ The first two dimensions explain 43.09% of the total variance (Dim. 1: 25.07%, D
 The **Automatic Description of the Dimensions** output identifies the X/Y coordinates most correlated with each axis. For **Dim. 1**, the strongest positive correlations are **X20** (r = 0.93), **X1** (r = 0.92), and **Y21** (r = 0.90). At the opposite end, **Y48** (r = -0.91) and **X42** (r = -0.85) have the strongest negative correlations. These results identify which directions of the individual configurations are most aligned with, or opposed to, the first compromise dimension. They do not by themselves provide a sensory meaning for the axis.
 
 ### Analysis of the *Representation of the Stimuli According to Clusters* graph
+
+@fig-napping-clusters shows the representation of the stimuli according to the clusters.
+
+![Representation of the stimuli according to the clusters obtained from HCPC.](images/napping/napping-clusters.png){#fig-napping-clusters width=100% fig-align="center"}
 
 With **Number of dimensions to save/use for clustering = 5**, the retained MFA dimensions account for 72.95% of the total inertia. The HCPC map therefore expresses Dim. 1 and Dim. 2 relative to this five-dimensional space: approximately **34.37%** and **24.72%**, rather than 25.07% and 18.03% on the full MFA map.
 
