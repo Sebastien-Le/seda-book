@@ -279,6 +279,10 @@ Cet exemple est particulièrement utile parce qu'il montre que les lectures **gl
 | **Below-JAR keywords** | `too low|not enough|too weak|plain|low` |
 | **Above-JAR keywords** | `too high|too much|too strong|vivid|high|too_fluid` |
 
+@fig-jar-interface présente la configuration utilisée pour l’exemple JAR.
+
+![Configuration de l’analyse JAR dans jamovi pour le jeu de données *milkshake*.](images/jar/jar-interface.png){#fig-jar-interface width=62% fig-align="center"}
+
 Le dernier terme ajouté à **Above-JAR keywords** permet de classer correctement la modalité `Too_fluid` comme **Above JAR**. SEDA accepte aussi la forme `too fluid` : les libellés originaux et leur forme normalisée sont désormais tous deux reconnus.
 
 ### Vérifier d'abord le codage JAR
@@ -354,7 +358,15 @@ Pour **284**, plusieurs points significatifs se situent dans ou à proximité de
 
 Pour **859**, *Fluidity — Above JAR* et *Texture — Below JAR* sont très à droite du graphique, donc très fréquents, mais restent sous ou autour du seuil de mean drop et ne sont pas significatifs. Les deux effets significatifs ont au contraire de grands mean drops mais se situent très à gauche, car ils concernent peu de consommateurs.
 
+@fig-jar-penalty-859 montre la pénalité spécifique au produit 859.
+
+![Graphique de pénalité spécifique au produit 859.](images/jar/jar-penalty-859.png){#fig-jar-penalty-859 width=95% fig-align="center"}
+
 Pour **972**, *Taste_Van — Above JAR* combine fréquence, taille d'effet et évidence statistique, tandis que *Fluidity — Above JAR* constitue un signal plus incertain.
+
+@fig-jar-penalty-972 montre la pénalité spécifique au produit 972.
+
+![Graphique de pénalité spécifique au produit 972.](images/jar/jar-penalty-972.png){#fig-jar-penalty-972 width=95% fig-align="center"}
 
 Ces graphiques montrent pourquoi fréquence, taille d'effet et incertitude doivent être considérées simultanément.
 
@@ -369,6 +381,10 @@ Le produit **972** est notamment orienté vers *Sweetness = Too_much_sweetness* 
 Le produit **284** présente une structure moins marquée ; sa modalité positive la plus nette est *Color = A_little_plain* (V-test = 1.32, p = 0.187).
 
 ### Representation of the Products and the Defects
+
+@fig-jar-products-defects montre la structure factorielle des produits et des défauts.
+
+![Représentation des produits et des défauts dans le plan factoriel.](images/jar/jar-products-defects.png){#fig-jar-products-defects width=100% fig-align="center"}
 
 L'analyse des correspondances est entièrement résumée par les deux dimensions disponibles : **Dim. 1 = 74.78 %** et **Dim. 2 = 25.22 %**.
 

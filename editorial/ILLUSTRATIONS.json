@@ -194,6 +194,103 @@
           ]
         }
       }
+    },
+    "jar": {
+      "label": "JAR — defect and penalty analysis",
+      "languages": {
+        "fr": {
+          "source": "chapitre4_prompt_harmonise.qmd",
+          "rendered_html": "chapitre4_prompt_harmonise.html",
+          "figures": [
+            {
+              "id": "fig-jar-interface",
+              "image": "images/jar/jar-interface.png",
+              "caption": "Configuration de l’analyse JAR dans jamovi pour le jeu de données *milkshake*.",
+              "width": "62%",
+              "anchor_line": "Le dernier terme ajouté à **Above-JAR keywords** permet de classer correctement la modalité `Too_fluid` comme **Above JAR**. SEDA accepte aussi la forme `too fluid` : les libellés originaux et leur forme normalisée sont désormais tous deux reconnus.",
+              "position": "before",
+              "reference": "@fig-jar-interface présente la configuration utilisée pour l’exemple JAR.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-jar-penalty-859",
+              "image": "images/jar/jar-penalty-859.png",
+              "caption": "Graphique de pénalité spécifique au produit 859.",
+              "width": "95%",
+              "anchor_line": "Pour **859**, *Fluidity — Above JAR* et *Texture — Below JAR* sont très à droite du graphique, donc très fréquents, mais restent sous ou autour du seuil de mean drop et ne sont pas significatifs. Les deux effets significatifs ont au contraire de grands mean drops mais se situent très à gauche, car ils concernent peu de consommateurs.",
+              "position": "after",
+              "reference": "@fig-jar-penalty-859 montre la pénalité spécifique au produit 859.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-jar-penalty-972",
+              "image": "images/jar/jar-penalty-972.png",
+              "caption": "Graphique de pénalité spécifique au produit 972.",
+              "width": "95%",
+              "anchor_line": "Pour **972**, *Taste_Van — Above JAR* combine fréquence, taille d'effet et évidence statistique, tandis que *Fluidity — Above JAR* constitue un signal plus incertain.",
+              "position": "after",
+              "reference": "@fig-jar-penalty-972 montre la pénalité spécifique au produit 972.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-jar-products-defects",
+              "image": "images/jar/jar-products-defects.png",
+              "caption": "Représentation des produits et des défauts dans le plan factoriel.",
+              "width": "100%",
+              "anchor_line": "L'analyse des correspondances est entièrement résumée par les deux dimensions disponibles : **Dim. 1 = 74.78 %** et **Dim. 2 = 25.22 %**.",
+              "position": "before",
+              "reference": "@fig-jar-products-defects montre la structure factorielle des produits et des défauts.",
+              "reference_position": "before"
+            }
+          ]
+        },
+        "en": {
+          "source": "chapitre4_prompt_GBH.qmd",
+          "rendered_html": "chapitre4_prompt_GBH.html",
+          "figures": [
+            {
+              "id": "fig-jar-interface",
+              "image": "images/jar/jar-interface.png",
+              "caption": "Configuration of the JAR analysis in jamovi for the *milkshake* dataset.",
+              "width": "62%",
+              "anchor_line": "The final term added to **Above-JAR keywords** correctly classifies `Too_fluid` as **Above JAR**. SEDA accepts both `Too_fluid` and `too fluid`: original labels and their normalised forms are recognised.",
+              "position": "before",
+              "reference": "@fig-jar-interface shows the configuration used for the JAR example.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-jar-penalty-859",
+              "image": "images/jar/jar-penalty-859.png",
+              "caption": "Product-specific penalty plot for product 859.",
+              "width": "95%",
+              "anchor_line": "For **859**, *Fluidity — Above JAR* and *Texture — Below JAR* lie far to the right of the graph, meaning that they are very frequent, but remain below or around the mean-drop threshold and are not significant. The two significant effects instead have large mean drops but lie far to the left because they concern few consumers.",
+              "position": "after",
+              "reference": "@fig-jar-penalty-859 shows the product-specific penalty plot for product 859.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-jar-penalty-972",
+              "image": "images/jar/jar-penalty-972.png",
+              "caption": "Product-specific penalty plot for product 972.",
+              "width": "95%",
+              "anchor_line": "For **972**, *Taste_Van — Above JAR* combines frequency, effect size, and statistical evidence, whereas *Fluidity — Above JAR* is a more uncertain signal.",
+              "position": "after",
+              "reference": "@fig-jar-penalty-972 shows the product-specific penalty plot for product 972.",
+              "reference_position": "before"
+            },
+            {
+              "id": "fig-jar-products-defects",
+              "image": "images/jar/jar-products-defects.png",
+              "caption": "Representation of the products and the defects in the factorial plane.",
+              "width": "100%",
+              "anchor_line": "The correspondence analysis is entirely summarised by the two available dimensions: **Dim. 1 = 74.78%** and **Dim. 2 = 25.22%**.",
+              "position": "before",
+              "reference": "@fig-jar-products-defects shows the factorial structure of the products and the defects.",
+              "reference_position": "before"
+            }
+          ]
+        }
+      }
     }
   }
 }

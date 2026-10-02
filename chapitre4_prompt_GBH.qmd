@@ -279,6 +279,10 @@ This example is especially useful because it shows that the **global** and **pro
 | **Below-JAR keywords** | `too low|not enough|too weak|plain|low` |
 | **Above-JAR keywords** | `too high|too much|too strong|vivid|high|too_fluid` |
 
+@fig-jar-interface shows the configuration used for the JAR example.
+
+![Configuration of the JAR analysis in jamovi for the *milkshake* dataset.](images/jar/jar-interface.png){#fig-jar-interface width=62% fig-align="center"}
+
 The final term added to **Above-JAR keywords** correctly classifies `Too_fluid` as **Above JAR**. SEDA accepts both `Too_fluid` and `too fluid`: original labels and their normalised forms are recognised.
 
 ### Check the JAR coding first
@@ -354,7 +358,15 @@ For **284**, several significant points lie in or near the upper-right region, e
 
 For **859**, *Fluidity — Above JAR* and *Texture — Below JAR* lie far to the right of the graph, meaning that they are very frequent, but remain below or around the mean-drop threshold and are not significant. The two significant effects instead have large mean drops but lie far to the left because they concern few consumers.
 
+@fig-jar-penalty-859 shows the product-specific penalty plot for product 859.
+
+![Product-specific penalty plot for product 859.](images/jar/jar-penalty-859.png){#fig-jar-penalty-859 width=95% fig-align="center"}
+
 For **972**, *Taste_Van — Above JAR* combines frequency, effect size, and statistical evidence, whereas *Fluidity — Above JAR* is a more uncertain signal.
+
+@fig-jar-penalty-972 shows the product-specific penalty plot for product 972.
+
+![Product-specific penalty plot for product 972.](images/jar/jar-penalty-972.png){#fig-jar-penalty-972 width=95% fig-align="center"}
 
 These plots show why frequency, effect size, and uncertainty should be considered together.
 
@@ -369,6 +381,10 @@ Product **972** is notably oriented toward *Sweetness = Too_much_sweetness* (V-t
 Product **284** shows a less marked structure; its strongest positive category is *Color = A_little_plain* (V-test = 1.32, p = 0.187).
 
 ### Representation of the Products and the Defects
+
+@fig-jar-products-defects shows the factorial structure of the products and the defects.
+
+![Representation of the products and the defects in the factorial plane.](images/jar/jar-products-defects.png){#fig-jar-products-defects width=100% fig-align="center"}
 
 The correspondence analysis is entirely summarised by the two available dimensions: **Dim. 1 = 74.78%** and **Dim. 2 = 25.22%**.
 
